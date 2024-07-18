@@ -8,6 +8,8 @@ import { Login } from "components/pages/Login";
 import { ResetPassword } from "components/pages/ResetPassword";
 import { ConfirmEmail } from "components/pages/ConfirmEmail";
 import { Dashboard } from "components/pages/Dashboard";
+import { Auth } from "components/templates/Auth";
+import { AccountSetup } from "components/pages/AccountSetup";
 
 const routes = createBrowserRouter([
   {
@@ -17,11 +19,13 @@ const routes = createBrowserRouter([
     children: [
       {
         path: Routes.SignUp,
-        element: <SignUp />,
+        element: <Auth />,
+        children: [{ path: Routes.SignUp, element: <SignUp /> }],
       },
       {
         path: Routes.Login,
-        element: <Login />,
+        element: <Auth />,
+        children: [{ path: Routes.Login, element: <Login /> }],
       },
       {
         path: Routes.ConfirmEmail,
@@ -29,7 +33,7 @@ const routes = createBrowserRouter([
       },
       {
         path: Routes.AccountSetup,
-        element: <Login />,
+        element: <AccountSetup />,
       },
       {
         path: Routes.ResetPassword,
