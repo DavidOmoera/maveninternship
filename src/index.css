@@ -17,28 +17,40 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.font-medium {
-  font-weight: 500;
-}
-.font-bold {
-  font-weight: 800;
-}
-
-.font-extra-bold {
-  font-weight: 900;
+#root {
+  height: 100vh;
+  width: 100vw;
 }
 
 p {
   @apply font-medium;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+.btn {
+  @apply h-[3rem] flex items-center justify-center rounded-lg px-14 py-3 text-base whitespace-nowrap shadow-sm hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:brightness-100;
 }
-a:hover {
-  color: #535bf2;
+
+.btn-primary {
+  @apply bg-primary text-white font-bold;
+}
+
+.btn-primary-text {
+  @apply text-white font-bold;
+}
+.btn-secondary {
+  @apply bg-transparent border-primary text-neutral950 border font-bold;
+}
+
+.btn-secondary-text {
+  @apply text-neutral950 font-bold;
+}
+
+.row {
+  @apply flex flex-row;
+}
+
+.col {
+  @apply flex flex-col;
 }
 
 body {
