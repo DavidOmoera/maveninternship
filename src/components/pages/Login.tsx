@@ -1,9 +1,15 @@
 import { Button } from "components/atoms/Button";
 import TextField from "@mui/material/TextField";
 import { Routes } from "types/routes";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
 export function Login() {
-  function handleLogin() {}
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  function handleLogin() {
+    // Navigate to the dashboard page when login is successful
+    navigate(Routes.Dashboard);
+  }
 
   return (
     <div className="w-full flex flex-col justify-center items-center h-full">
