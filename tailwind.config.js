@@ -17,6 +17,7 @@ export default {
         "orange-light": "#FCF2DE",
         error: "#FF2A58",
         "error-light": "#FFEAF1",
+        neutral25: "#F2F4FB",
         neutral50: "#F6F6F6",
         neutral100: "#E7E7E7",
         neutral200: "#D1D1D1",
