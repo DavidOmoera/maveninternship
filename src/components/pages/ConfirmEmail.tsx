@@ -9,7 +9,7 @@ export function ConfirmEmail() {
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="flex flex-col items-center gap-4 text-center">
         <div className="w-16 h-16 bg-blue-100 flex items-center justify-center rounded-full">
-          <img src="/src/assets/email-login.svg" alt="Email icon" className="w-8 h-8" />
+          <img src={email} alt="Email icon" className="w-8 h-8" />
         </div>
         <h2 className=" text-2xl font-extrabold text-neutral-900">
           Confirm Email Address
