@@ -1,3 +1,5 @@
+import topRepresentative from "assets/top_representative.png";
+
 export const STATES = [
   { name: "Alabama", code: "AL" },
   { name: "Alaska", code: "AK" },
@@ -49,4 +51,76 @@ export const STATES = [
   { name: "West Virginia", code: "WV" },
   { name: "Wisconsin", code: "WI" },
   { name: "Wyoming", code: "WY" },
+];
+
+export const topRepresentatives = [
+  {
+    title: "Most Votes",
+    representative: "Sen. Ivy Adams",
+    district: "District 1",
+    image: topRepresentative,
+  },
+  {
+    title: "Most Votes of the Week",
+    representative: "Sen. Ivy Adams",
+    district: "District 1",
+    image: topRepresentative,
+  },
+  {
+    title: "Least Votes",
+    representative: "Sen. Ivy Adams",
+    district: "District 1",
+    image: topRepresentative,
+  },
+];
+
+export const watchedBills = [
+  {
+    state: "Texas",
+    title: "Secure the Border Act of 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
+    status: "Introduced",
+    relativeTime: "2w ago",
+  },
+  {
+    state: "Wyoming",
+    title: "Secure the Border Act of 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
+    status: "Introduced",
+    relativeTime: "2w ago",
+  },
+  {
+    state: "Washington",
+    title: "Secure the Border Act of 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
+    status: "Introduced",
+    relativeTime: "2w ago",
+  },
+  {
+    state: "Ohio",
+    title: "Secure the Border Act of 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
+    status: "Introduced",
+    relativeTime: "2w ago",
+  },
+  {
+    state: "West Virginia",
+    title: "Secure the Border Act of 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
+    status: "Introduced",
+    relativeTime: "2w ago",
+  },
+  {
+    state: "Colorado",
+    title: "Secure the Border Act of 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
+    status: "Introduced",
+    relativeTime: "2w ago",
+  },
 ];
