@@ -15,23 +15,42 @@ import { STATES } from "constants/common";
 import { Legislature, TState } from "components/atoms/Legislature";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import usCongress from "assets/us_congress.png";
+import stateCongress from "assets/state_congress.png";
+import { Home } from "../../assets/Home";
+import { Gavel } from "../../assets/Gavel";
+import { Group } from "../../assets/Group";
+import { Timeline } from "../../assets/Timeline";
+import { SupportAgent } from "../../assets/SupportAgent";
+import { Settings } from "../../assets/Settings";
+import { Logout } from "../../assets/Logout";
 
 const sideNavItems = [
   {
     title: "Overview",
     buttons: [
-      { text: "Dashboard", icon: "" },
-      { text: "Bills", icon: "" },
-      { text: "Representatives", icon: "" },
-      { text: "Activity Feed", icon: "" },
+      { text: "Dashboard", icon: Home, iconColor: "", onClick: () => {} },
+      { text: "Bills", icon: Gavel, iconColor: "", onClick: () => {} },
+      {
+        text: "Representatives",
+        icon: Group,
+        iconColor: "",
+        onClick: () => {},
+      },
+      {
+        text: "Activity Feed",
+        icon: Timeline,
+        iconColor: "",
+        onClick: () => {},
+      },
     ],
   },
   {
     title: "Settings",
     buttons: [
-      { text: "Profile Settings", icon: "" },
-      { text: "Help & Support", icon: "" },
-      { text: "Logout", icon: "" },
+      { text: "Profile Settings", icon: Settings, iconColor: "" },
+      { text: "Help & Support", icon: SupportAgent, iconColor: "" },
+      { text: "Logout", icon: Logout, iconColor: "#FF2A58" },
     ],
   },
 ];
@@ -60,7 +79,8 @@ export function AuthenticatedRoot() {
     setIsLegislatureModalOpen(false);
   }
 
-  function onClickMenuItem(itemName: string) {
+  function onClickMenuItem(itemName: string, callBack?: () => void) {
+    callBack?.();
     setActiveMenuItem(itemName);
   }
 
@@ -104,7 +124,7 @@ export function AuthenticatedRoot() {
 
   return (
     <main className="bg-neutral25 row">
-      <aside className="invisible md:visible basis-[21%] h-screen bg-white px-4 py-9 overflow-y-auto">
+      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto">
         {/** Logo */}
         <a
           className="flex flex-col pl-7 pt-9 pb-6 max-w-44"
@@ -129,6 +149,7 @@ export function AuthenticatedRoot() {
                   key={state.code}
                   isChecked={isChecked}
                   state={state}
+                  icon={state.code === "US" ? usCongress : stateCongress}
                   onClick={(selectedState) =>
                     onSelectLegislature(selectedState, isChecked)
                   }
@@ -154,15 +175,24 @@ export function AuthenticatedRoot() {
               </p>
               {navGroup.buttons.map((navButton) => {
                 const isActive = activeMenuItem === navButton.text;
+                const Icon = navButton.icon;
 
                 return (
                   <li
                     key={navButton.text}
-                    className={`group row gap-3 rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
+                    className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
                       isActive ? "border-r-4 bg-accent50 border-accent800" : ""
                     }`}
                     onClick={() => onClickMenuItem(navButton.text)}
                   >
+                    {Icon ? (
+                      <Icon
+                        color={
+                          navButton.iconColor ||
+                          (isActive ? "#172B98" : "#454545")
+                        }
+                      />
+                    ) : null}
                     <h6
                       className={`group-hover:text-accent800 ${
                         isActive
@@ -181,9 +211,7 @@ export function AuthenticatedRoot() {
       </aside>
 
       <div className="basis-[79%]">
-        <nav />
         <Outlet />
-        <footer />
       </div>
 
       {/* Add Legislature Modal */}
