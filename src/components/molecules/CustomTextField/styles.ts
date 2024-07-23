@@ -11,7 +11,7 @@ export const customStyleCreator = ({
   iconPadding,
   borderColor,
   borderRadius,
-  backGroundColor,
+  backgroundColor,
   placeHolderColor,
 }: TCustomStylesCreatorParams) => {
   return {
@@ -42,7 +42,7 @@ export const customStyleCreator = ({
       borderColor: "transparent",
       lineHeight: "normal !important",
       height: "unset !important",
-      backgroundColor: `${backGroundColor} !important`,
+      backgroundColor: `${backgroundColor} !important`,
       borderRadius: borderRadius || "10px",
 
       "& input": {
@@ -57,7 +57,7 @@ export const customStyleCreator = ({
 
       "& input:-webkit-autofill": {
         WebkitBoxShadow:
-          "0 0 0px 1000px " + (backGroundColor || "#f2f2f2") + " inset",
+          "0 0 0px 1000px " + (backgroundColor || "#f2f2f2") + " inset",
         WebkitTextFillColor: color || "inherit",
       },
 
