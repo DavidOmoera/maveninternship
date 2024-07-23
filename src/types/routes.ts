@@ -12,5 +12,5 @@ export enum Routes {
   // Authenticated
   Dashboard = "/dashboard",
   ChangePassword = "/change-password",
-  ActivityLog = "/dashboard/activity-log",
+  ActivityFeed = "/dashboard/activity-feed",
 }

@@ -10,7 +10,7 @@ import { ConfirmEmail } from "components/pages/ConfirmEmail";
 import { Dashboard } from "components/pages/Dashboard";
 import { Auth } from "components/templates/Auth";
 import { AccountSetup } from "components/pages/AccountSetup";
-import { ActivityLog } from "components/pages/ActivityLog";
+import { ActivityFeed } from "components/pages/ActivityFeed";
 
 const routes = createBrowserRouter([
   {
@@ -53,8 +53,8 @@ const routes = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: Routes.ActivityLog,
-        element: <ActivityLog />,
+        path: Routes.ActivityFeed,
+        element: <ActivityFeed />,
       },
     ],
   },
