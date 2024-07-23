@@ -4,11 +4,6 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  TextField,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -33,8 +28,19 @@ import notification from "assets/notification.svg";
 import message from "assets/message.svg";
 import profilePicture from "assets/profile_picture.png";
 import { Pill } from "components/molecules/Pill";
-import { topRepresentatives, watchedBills } from "constants/common";
+import {
+  BILL_TYPES,
+  BILL_YEARS,
+  topRepresentatives,
+  watchedBills,
+} from "constants/common";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { billSearchSchema } from "constants/schemas";
+import { ControlledInput } from "components/organisms/ControlledInput";
+import { ControlledSelect } from "components/organisms/ControlledSelect";
+import CustomTextField from "components/molecules/CustomTextField";
 
 const stages = [
   "Filed",
@@ -51,6 +57,15 @@ const stages = [
   "Amendment-withdrawal",
 ];
 
+type TBillSearchForm = {
+  searchValue: string;
+} & Partial<{
+  chamber: string;
+  billType: string;
+  billStatus: string;
+  year: string;
+}>;
+
 export const Dashboard: React.FC = () => {
   const [openBillStatusDialog, setOpenBillStatusDialog] = useState(false);
   const [areUpdatesVisible, setAreUpdatesVisible] = useState(false);
@@ -58,8 +73,15 @@ export const Dashboard: React.FC = () => {
   const [search, setSearch] = useState("");
   const handleOpenBillStatusDialog = () => setOpenBillStatusDialog(true);
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
-  const dropdownStyle = { width: "110px", marginRight: "9px" };
   const navigate = useNavigate();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TBillSearchForm>({
+    resolver: yupResolver(billSearchSchema),
+  });
 
   const sectionsToExplore = [
     {
@@ -132,6 +154,12 @@ export const Dashboard: React.FC = () => {
     setAreUpdatesVisible((prevState) => !prevState);
   }
 
+  const onSearchBill: SubmitHandler<TBillSearchForm> = (
+    formData: TBillSearchForm
+  ) => {
+    console.log("search form data", formData);
+  };
+
   return (
     <div className="col h-full">
       {/* Header */}
@@ -167,59 +195,54 @@ export const Dashboard: React.FC = () => {
               Search for Bills
             </h3>
             <div className="row items-center w-full gap-3">
-              <TextField
-                label="Search by keyword, bill # or legislator name"
-                variant="outlined"
-                className="mb-4"
-                sx={{
-                  flexBasis: "40%",
-                  borderRadius: "8px",
-                }}
-                InputProps={{ startAdornment: <SearchIcon /> }}
+              <ControlledInput
+                required
+                control={control}
+                name="searchValue"
+                placeholder="Search by keyword, bill # or legislator name"
+                leftIcon={<SearchIcon />}
+                containerClasses="basis-[40%] rounded-lg"
+                error={!!errors?.searchValue}
+                helperText={(errors?.searchValue?.message as string) ?? ""}
               />
               <div className="h-12 w-[1px] bg-neutral200" />
-              <div className="gap-3">
-                <FormControl sx={dropdownStyle}>
-                  <InputLabel>Chamber</InputLabel>
-                  <Select defaultValue="" label="Bill Type">
-                    <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="proposed">Proposed</MenuItem>
-                    <MenuItem value="amended">Amended</MenuItem>
-                    <MenuItem value="vetoed">Vetoed</MenuItem>
-                    <MenuItem value="passed">Passed</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={dropdownStyle}>
-                  <InputLabel>Bill Type</InputLabel>
-                  <Select defaultValue="" label="Bill Type">
-                    <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="proposed">Proposed</MenuItem>
-                    <MenuItem value="amended">Amended</MenuItem>
-                    <MenuItem value="vetoed">Vetoed</MenuItem>
-                    <MenuItem value="passed">Passed</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={dropdownStyle}>
-                  <InputLabel>Bill Status</InputLabel>
-                  <Select
-                    defaultValue=""
-                    label="Bill Status"
-                    onClick={handleOpenBillStatusDialog}
-                  >
-                    <MenuItem value="select">select</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={dropdownStyle}>
-                  <InputLabel>Year</InputLabel>
-                  <Select defaultValue="" label="Session/Year">
-                    <MenuItem value="2024">2024</MenuItem>
-                    <MenuItem value="2023">2023</MenuItem>
-                    <MenuItem value="2022">2022</MenuItem>
-                  </Select>
-                </FormControl>
+              <div className="gap-3 grid grid-cols-4 basis-[60%]">
+                <ControlledSelect
+                  control={control}
+                  name="chamber"
+                  label="Chamber"
+                  defaultValue=""
+                  options={BILL_TYPES}
+                />
+                <ControlledSelect
+                  control={control}
+                  name="billType"
+                  label="Bill Type"
+                  defaultValue=""
+                  options={BILL_TYPES}
+                />
+                <ControlledSelect
+                  control={control}
+                  name="billStatus"
+                  label="Bill Status"
+                  options={[]}
+                  defaultValue=""
+                  onClick={handleOpenBillStatusDialog}
+                />
+                <ControlledSelect
+                  control={control}
+                  name="year"
+                  label="Year"
+                  defaultValue=""
+                  options={BILL_YEARS}
+                />
               </div>
             </div>
-            <Button text="Search Bill" className="mt-4" />
+            <Button
+              text="Search Bill"
+              className="mt-4"
+              onClick={handleSubmit(onSearchBill)}
+            />
           </div>
 
           {/* Ask Coterie AI and Explore Bills Sections */}
@@ -256,56 +279,47 @@ export const Dashboard: React.FC = () => {
 
             {/** Search Bills */}
             <div className="row items-center w-full gap-3 mt-8 mb-6">
-              <TextField
-                label="Search by keyword, bill # or legislator name"
-                variant="outlined"
-                className="mb-4"
-                sx={{
-                  flexBasis: "40%",
-                  borderRadius: "8px",
-                }}
-                InputProps={{ startAdornment: <SearchIcon /> }}
+              <ControlledInput
+                required
+                control={control}
+                name="searchValue"
+                placeholder="Search by keyword, bill # or legislator name"
+                leftIcon={<SearchIcon />}
+                containerClasses="basis-[40%] rounded-lg"
+                error={!!errors?.searchValue}
+                helperText={(errors?.searchValue?.message as string) ?? ""}
               />
               <div className="h-12 w-[1px] bg-neutral200" />
-              <div className="gap-3">
-                <FormControl sx={dropdownStyle}>
-                  <InputLabel>Chamber</InputLabel>
-                  <Select defaultValue="" label="Bill Type">
-                    <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="proposed">Proposed</MenuItem>
-                    <MenuItem value="amended">Amended</MenuItem>
-                    <MenuItem value="vetoed">Vetoed</MenuItem>
-                    <MenuItem value="passed">Passed</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={dropdownStyle}>
-                  <InputLabel>Bill Type</InputLabel>
-                  <Select defaultValue="" label="Bill Type">
-                    <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="proposed">Proposed</MenuItem>
-                    <MenuItem value="amended">Amended</MenuItem>
-                    <MenuItem value="vetoed">Vetoed</MenuItem>
-                    <MenuItem value="passed">Passed</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={dropdownStyle}>
-                  <InputLabel>Bill Status</InputLabel>
-                  <Select
-                    defaultValue=""
-                    label="Bill Status"
-                    onClick={handleOpenBillStatusDialog}
-                  >
-                    <MenuItem value="select">select</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={dropdownStyle}>
-                  <InputLabel>Year</InputLabel>
-                  <Select defaultValue="" label="Session/Year">
-                    <MenuItem value="2024">2024</MenuItem>
-                    <MenuItem value="2023">2023</MenuItem>
-                    <MenuItem value="2022">2022</MenuItem>
-                  </Select>
-                </FormControl>
+              <div className="gap-3 grid grid-cols-4 basis-[60%]">
+                <ControlledSelect
+                  control={control}
+                  name="chamber"
+                  label="Chamber"
+                  defaultValue=""
+                  options={BILL_TYPES}
+                />
+                <ControlledSelect
+                  control={control}
+                  name="billType"
+                  label="Bill Type"
+                  defaultValue=""
+                  options={BILL_TYPES}
+                />
+                <ControlledSelect
+                  control={control}
+                  name="billStatus"
+                  label="Bill Status"
+                  options={[]}
+                  defaultValue=""
+                  onClick={handleOpenBillStatusDialog}
+                />
+                <ControlledSelect
+                  control={control}
+                  name="year"
+                  label="Year"
+                  defaultValue=""
+                  options={BILL_YEARS}
+                />
               </div>
             </div>
 
@@ -321,7 +335,7 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** All bills */}
-            <div className="row gap-5 flex-wrap">
+            <div className="row gap-5 flex-wrap ">
               {watchedBills.map((watchedBill) => (
                 <div
                   key={watchedBill.state}
@@ -474,10 +488,8 @@ export const Dashboard: React.FC = () => {
       <Dialog open={openBillStatusDialog} onClose={handleCloseBillStatusDialog}>
         <DialogTitle>Bill Status</DialogTitle>
         <DialogContent>
-          <TextField
-            fullWidth
+          <CustomTextField
             label="Find stage"
-            variant="outlined"
             value={search}
             onChange={handleSearchChange}
             className="mb-4"

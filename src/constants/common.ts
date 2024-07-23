@@ -1,5 +1,41 @@
 import topRepresentative from "assets/top_representative.png";
 
+export enum colors {
+  primary = "#0C0853",
+  white = "#FFFFFF",
+  black = "#000000",
+  neutral25 = "#F2F4FB",
+  neutral50 = "#F6F6F6",
+  neutral100 = "#E7E7E7",
+  neutral200 = "#D1D1D1",
+  neutral300 = "#B0B0B0",
+  neutral400 = "#888888",
+  neutral450 = "#7F8082",
+  neutral500 = "#6D6D6D",
+  neutral600 = "#5D5D5D",
+  neutral700 = "#4F4F4F",
+  neutral800 = "#454545",
+  neutral900 = "#3D3D3D",
+  neutral950 = "#212121",
+  grey = "#F6F7FB",
+  accent50 = "#E9F3FF",
+  accent100 = "#D7E9FF",
+  accent200 = "#B8D6FF",
+  accent300 = "#8DB9FF",
+  accent400 = "#608EFF",
+  accent500 = "#3B64FF",
+  accent600 = "#1A36FF",
+  accent700 = "#132BF3",
+  accent800 = "#1026C3",
+  accent900 = "#172B98",
+  accent950 = "#0E1858",
+  dark_mode_bg = "#1f1f1f",
+  light_silver = "#F8F8F8",
+  soft_silver = "#EDEFF1",
+  enigmatic_midnight = "#667085",
+  crimson_red = "#d32f2f",
+}
+
 export const STATES = [
   { name: "Alabama", code: "AL" },
   { name: "Alaska", code: "AK" },
@@ -123,4 +159,26 @@ export const watchedBills = [
     status: "Introduced",
     relativeTime: "2w ago",
   },
+];
+
+export const DEFAULT_FONT_NAME = "Mulish";
+
+export const BILL_TYPES = [
+  { id: 1, value: "All", label: "All" },
+  { id: 1, value: "Proposed", label: "Proposed" },
+  { id: 1, value: "Amended", label: "Amended" },
+  { id: 1, value: "Vetoed", label: "Vetoed" },
+  { id: 1, value: "Passed", label: "Passed" },
+];
+
+export const BILL_YEARS = [
+  { id: 1, value: "2016", label: "2016" },
+  { id: 1, value: "2017", label: "2017" },
+  { id: 1, value: "2018", label: "2018" },
+  { id: 1, value: "2019", label: "2019" },
+  { id: 1, value: "2020", label: "2020" },
+  { id: 1, value: "2021", label: "2021" },
+  { id: 1, value: "2022", label: "2022" },
+  { id: 1, value: "2023", label: "2023" },
+  { id: 1, value: "2024", label: "2024" },
 ];
