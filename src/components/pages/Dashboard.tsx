@@ -145,7 +145,7 @@ export const Dashboard: React.FC = () => {
   };
 
   function goToActivityFeed() {
-    navigate("/dashboard/activity-log");
+    navigate("/dashboard/activity-feed");
   }
 
   function goToRepresentatives() {}

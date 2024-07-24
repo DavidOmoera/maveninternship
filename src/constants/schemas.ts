@@ -10,3 +10,12 @@ export const billSearchSchema = yup.object().shape({
   billStatus: yup.string().trim(),
   year: yup.string().trim(),
 });
+
+
+export const activitySearchSchema = yup.object().shape({
+  searchValue: yup
+    .string()
+    .trim(),
+  activity: yup.string().trim(),
+  noOfDays: yup.string().trim(),
+})
