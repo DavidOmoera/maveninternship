@@ -19,7 +19,7 @@ export type TCustomStylesCreatorParams = {
   borderColor: string;
   borderWidth: string;
   borderRadius: string;
-  backGroundColor: string;
+  backgroundColor: string;
   height: string | number;
   placeHolderColor: string;
 } & Partial<{
@@ -27,17 +27,18 @@ export type TCustomStylesCreatorParams = {
   warning: string | boolean;
 }>;
 
-export type TCustomTextFieldProps = TextFieldPropsColorOverrides & {
-  placeholder: string;
-} & Partial<{
+export type TCustomTextFieldProps = TextFieldPropsColorOverrides &
+  Partial<{
+    id: string;
     name: string;
     type: string;
+    placeholder: string;
     rows: number;
     error: boolean;
     label: string;
     value: string;
     height: string;
-    asText: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     inputRef: React.Ref<any>;
     padding: string;
     focused: boolean;
@@ -46,10 +47,9 @@ export type TCustomTextFieldProps = TextFieldPropsColorOverrides & {
     className: string;
     required: boolean;
     disabled: boolean;
-    readonly: boolean;
+    readOnly: boolean;
     autoFocus: boolean;
-    id: string | number;
-    labelColor: string;
+    labelcolor: string;
     selected: boolean;
     borderWidth: string;
     helperText: string;
@@ -62,14 +62,12 @@ export type TCustomTextFieldProps = TextFieldPropsColorOverrides & {
     initialValue: string;
     fromPayment: boolean;
     withHelperText: boolean;
-    backGroundColor: string;
-    fromRequisition: boolean;
+    backgroundColor: string;
     placeHolderColor: string;
     containerClasses: string;
     leftIcon: React.ReactNode;
     maxWidth: string | number;
     rightIcon: React.ReactNode;
-    isFromAutoComplete: boolean;
     onChange: TInputEventCallback;
     inputProps: InputBaseComponentProps;
     onEndAdornmentClick: TMouseEventCallback;
@@ -78,6 +76,7 @@ export type TCustomTextFieldProps = TextFieldPropsColorOverrides & {
     onBlur: React.FocusEventHandler<HTMLInputElement>;
     onFocus: React.FocusEventHandler<HTMLInputElement>;
     onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
+    onClick: () => void;
     fontFamily: string;
     color:
       | "primary"
