@@ -3,8 +3,7 @@ import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import message from "assets/message.svg";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/profile_picture.png";
-import sendIcon from "assets/send_icon.svg";
-import chatboxicon from "assets/chatbox_icon.svg";
+
 import senatemat from "assets/senate_mat.svg";
 import { PageContainer } from "components/templates/PageContainer";
 import { Tabs } from "components/molecules/Tabs";
@@ -17,6 +16,12 @@ import { TickSquare } from "assets/TickSquare";
 const AboutBill = lazy(() =>
   import("components/organisms/AboutBill").then((module) => ({
     default: module.AboutBill,
+  }))
+);
+
+const BillDetailsMessageBox = lazy(() =>
+  import("components/organisms/BillDetailsMessageBox").then((module) => ({
+    default: module.BillDetailsMessageBox,
   }))
 );
 
@@ -188,22 +193,9 @@ const DetailsOfBill: React.FC = () => {
 
             {/* Message Box */}
             {activeTab === BILL_TAB.ABOUT ? (
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg flex items-center">
-                <img
-                  src={chatboxicon}
-                  alt="User"
-                  className="w-10 h-10 rounded-full mr-3"
-                />
-                <input
-                  type="text"
-                  placeholder="Message Coterie"
-                  className="flex-1 p-2 bg-white border rounded-lg outline-none"
-                  style={{ paddingRight: "3rem" }}
-                />
-                <button className="absolute right-3">
-                  <img src={sendIcon} alt="Send" className="h-6 w-6" />
-                </button>
-              </div>
+              <Suspense fallback={null}>
+                <BillDetailsMessageBox />
+              </Suspense>
             ) : null}
           </div>
         </div>
