@@ -11,6 +11,7 @@ import { Dashboard } from "components/pages/Dashboard";
 import { Auth } from "components/templates/Auth";
 import { AccountSetup } from "components/pages/AccountSetup";
 import { ActivityFeed } from "components/pages/ActivityFeed";
+import { Summary } from "components/pages/Summary";
 
 const routes = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const routes = createBrowserRouter([
       {
         path: Routes.ActivityFeed,
         element: <ActivityFeed />,
+      },
+      {
+        path: Routes.Summary,
+        element: <Summary />
       },
     ],
   },

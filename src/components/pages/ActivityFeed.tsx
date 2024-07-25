@@ -122,8 +122,8 @@ export function ActivityFeed() {
   
 
   return (
-    <div className="w-full h-screen p-8 bg-gray-100">
-      <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
+    <div className="w-full h-screen p-4 bg-gray-100">
+      <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-5 flex items-center justify-between">
         <h1 className="text-neutral950 font-extrabold text-4xl">
           Activity Feed
         </h1>
@@ -148,7 +148,7 @@ export function ActivityFeed() {
         </div>
       </div>
 
-      <div className="h-screen p-8 px-9 py-6 mb-4 mx-9 mt-9 bg-white rounded-xl">
+      <div className="h-screen p-8 px-9 py-6 mb-4 mx-9 mt-5 bg-white rounded-xl">
         <div className="flex flex-row justify-between">
           <div className="flex gap-4">
             <select
@@ -184,11 +184,11 @@ export function ActivityFeed() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {activities.map((activity, index) => (
-            <div key={index} className="flex flex-col gap-6">
-              <div className="flex item-start gap-2">
-                <span className="text-gray-500 text-sm text-justify">{activity.time}</span>
+            <div key={index} className="flex flex-col gap-6 text-justify">
+              <div className="flex item-start gap-2 text-justify">
+                <span className="text-gray-500 text-sm text-justify ">{activity.time}</span>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 text-justify">
                   <span
                     className={`bg-${
                       activity.type === "Removed"
