@@ -1,4 +1,4 @@
-type THomeProps = { color: string } & React.SVGProps<SVGSVGElement>;
+type THomeProps = { color?: string } & React.SVGProps<SVGSVGElement>;
 
 export function Home({ color = "#1026C3", ...props }: THomeProps) {
   return (
