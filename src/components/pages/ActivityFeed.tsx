@@ -116,12 +116,7 @@ export function ActivityFeed() {
     },
   ];
 
-  type TActivitySearchForm = {
-    searchValue: string;
-  } & Partial<{
-    last180days: string;
-    activities: string;
-  }>;
+  
 
 
   
@@ -153,7 +148,7 @@ export function ActivityFeed() {
         </div>
       </div>
 
-      <div className="h-screen p-8 px-9 py-6 mb-4 mx-9 mt-9 bg-white">
+      <div className="h-screen p-8 px-9 py-6 mb-4 mx-9 mt-9 bg-white rounded-xl">
         <div className="flex flex-row justify-between">
           <div className="flex gap-4">
             <select
@@ -191,7 +186,7 @@ export function ActivityFeed() {
           {activities.map((activity, index) => (
             <div key={index} className="flex flex-col gap-6">
               <div className="flex item-start gap-2">
-                <span className="text-gray-500 text-sm">{activity.time}</span>
+                <span className="text-gray-500 text-sm text-justify">{activity.time}</span>
 
                 <div className="flex items-center gap-2">
                   <span
@@ -203,16 +198,16 @@ export function ActivityFeed() {
                         : activity.type === "Edited"
                         ? "gray"
                         : "gray"
-                    }-200 p-1 rounded-full`}
+                    }-200 p-1 rounded-full text-justify`}
                   >
                     <img
                       src={activity.icon}
                       alt={activity.icon}
-                      className="w-4 h-4"
+                      className="w-4 h-4 text-justify"
                     />
                   </span>
 
-                  <span className="text-gray-700">
+                  <span className="text-gray-700 text-justify">
                     You{" "}
                     <strong
                       className={`text-${
@@ -223,13 +218,13 @@ export function ActivityFeed() {
                           : activity.type === "Edited"
                           ? "blue"
                           : "gray"
-                      }-500`}
+                      }-500 text-justify`}
                     >
                       {activity.type}
                     </strong>{" "}
                     {activity.label}
                     {activity.link && (
-                      <a href="#" className="text-blue-500 ml-1 border-bg-blue border-blue">
+                      <a href="#" className="text-blue-500 ml-1 border-bg-blue border-blue text-justify">
                         {activity.link}
                       </a>
                     )}

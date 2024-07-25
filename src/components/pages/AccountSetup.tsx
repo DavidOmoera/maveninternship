@@ -1,5 +1,8 @@
 import { TextField } from "@mui/material";
 import { Button } from "components/atoms/Button";
+// import WestIcon from '@mui/icons-material/West';
+// import EastIcon from '@mui/icons-material/East';
+
 
 export function AccountSetup() {
   function handleAccountSetup() {}
@@ -56,12 +59,14 @@ export function AccountSetup() {
 
         <div className="w-full flex justify-between mt-6">
           <Button
-            text="← Previous"
+            // icon={WestIcon}
+            text="<< Previous"
             className="bg-white-500"
             onClick={handleAccountSetup}
           />
           <Button
-            text="Next →"
+            //icon={EastIcon}
+            text="Next >>"
             className="text-white bg-blue-500"
             onClick={handleAccountSetup}
           />
