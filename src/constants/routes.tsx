@@ -10,6 +10,7 @@ import { ConfirmEmail } from "components/pages/ConfirmEmail";
 import { Dashboard } from "components/pages/Dashboard";
 import { Auth } from "components/templates/Auth";
 import { AccountSetup } from "components/pages/AccountSetup";
+import DetailsOfBill from "components/pages/DetailsOfBill";
 
 const routes = createBrowserRouter([
   {
@@ -47,8 +48,12 @@ const routes = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: Routes.Dashboard,
+        path: '',
         element: <Dashboard />,
+      },
+      {
+        path: Routes.DetailsOfBill,
+        element: <DetailsOfBill />,
       },
     ],
   },
