@@ -28,6 +28,8 @@ import notification from "assets/notification.svg";
 import message from "assets/message.svg";
 import profilePicture from "assets/profile_picture.png";
 import { Pill } from "components/molecules/Pill";
+import DetailsOfBill from "components/pages/DetailsOfBill";
+
 import {
   BILL_TYPES,
   BILL_YEARS,
@@ -118,7 +120,7 @@ export const Dashboard: React.FC = () => {
       image: closed,
     },
   ];
-
+ 
   const pills = [
     { firstText: "Social Housing", secondText: "(27)" },
     { firstText: "Health", secondText: "(15)" },
@@ -139,6 +141,16 @@ export const Dashboard: React.FC = () => {
         : [...prevState, stage]
     );
   };
+  const handleSecuretheBorder = () => {
+    // Implement the logic to navigate to the bill details page
+    navigate('/details-of-bill', { state: { bill: watchedBills[0] } });
+  };
+
+  const handleBillClick = (bill: typeof watchedBills[0]) => {
+    // Navigate to the details page with the bill data
+    navigate('/details-of-bill', { state: { bill } });
+  };
+
 
   const handleSaveBillStatus = () => {
     handleCloseBillStatusDialog();
@@ -148,6 +160,7 @@ export const Dashboard: React.FC = () => {
     navigate("/dashboard/activity-log");
   }
 
+ 
   function goToRepresentatives() {}
 
   function toggleUpdatesSection() {
