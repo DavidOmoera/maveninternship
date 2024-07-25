@@ -13,6 +13,9 @@ import sendIcon from "assets/send_icon.svg"; // Add the send icon
 import chatboxicon from "assets/chatbox_icon.svg";
 import senatemat from "assets/senate_mat.svg";
 import { Button } from "components/atoms/Button";
+import { ArrowRight } from "assets/ArrowRight";
+import download from "assets/download.svg";
+
 const DetailsOfBill: React.FC = () => {
   const navigate = useNavigate();
 
@@ -64,10 +67,9 @@ const DetailsOfBill: React.FC = () => {
             >
               Secure the Border Act of 2023
             </h2>
+            <p className="text-sm text-neutral600 mb-6">May 29, 2023</p>
             <p className="text-sm text-neutral600 mb-6">
-              May 29, 2023
-              <p className="text-sm text-neutral600 mb-6"></p>Security,
-              Immigration, Borders
+              Security, Immigration, Borders
             </p>
             <div className="mb-6">
               <h3 className="text-lg font-bold mb-2">Details</h3>
@@ -104,9 +106,7 @@ const DetailsOfBill: React.FC = () => {
               </div>
             </div>
             <div className="mt-6">
-              <p>
-                <strong>Author:</strong>
-              </p>
+              <strong>Author:</strong>
               <div className="flex items-center mt-2">
                 <img
                   src={senatemat}
@@ -153,9 +153,11 @@ const DetailsOfBill: React.FC = () => {
 
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold">Introduction</h3>
-              <button className="bg-primary text-white py-2 px-4 rounded">
-                Download Bill
-              </button>
+              <Button
+                variant="secondary"
+                text="Download Bill"
+                leftIcon={<img src={download} className="w-4 h-4" />}
+              />
             </div>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
@@ -172,9 +174,7 @@ const DetailsOfBill: React.FC = () => {
                   Read Coterie AI's Summary instead.
                 </p>
               </div>
-              <button className="bg-primary text-white py-2 px-4 rounded">
-                View Summary
-              </button>
+              <Button rightIcon={<ArrowRight />} text="View Summary" />
             </div>
 
             {/* Message Box */}
