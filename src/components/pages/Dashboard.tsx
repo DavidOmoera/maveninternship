@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   List,
   ListItem,
@@ -20,7 +20,7 @@ import { Button } from "components/atoms/Button";
 import { DashboardExplore } from "components/atoms/DashboardExplore";
 import coterieBot from "assets/coterie_bot.svg";
 import bills from "assets/bills.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import edited from "assets/edited.svg";
 import closed from "assets/closed.svg";
 import done from "assets/done.svg";
@@ -28,7 +28,6 @@ import notification from "assets/notification.svg";
 import message from "assets/message.svg";
 import profilePicture from "assets/profile_picture.png";
 import { Pill } from "components/molecules/Pill";
-import DetailsOfBill from "components/pages/DetailsOfBill";
 
 import {
   BILL_TYPES,
@@ -43,6 +42,7 @@ import { billSearchSchema } from "constants/schemas";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import { ControlledSelect } from "components/organisms/ControlledSelect";
 import CustomTextField from "components/molecules/CustomTextField";
+import { Routes } from "types/routes";
 
 const stages = [
   "Filed",
@@ -76,6 +76,7 @@ export const Dashboard: React.FC = () => {
   const handleOpenBillStatusDialog = () => setOpenBillStatusDialog(true);
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     control,
@@ -120,7 +121,7 @@ export const Dashboard: React.FC = () => {
       image: closed,
     },
   ];
- 
+
   const pills = [
     { firstText: "Social Housing", secondText: "(27)" },
     { firstText: "Health", secondText: "(15)" },
@@ -141,26 +142,19 @@ export const Dashboard: React.FC = () => {
         : [...prevState, stage]
     );
   };
-  const handleSecuretheBorder = () => {
-    // Implement the logic to navigate to the bill details page
-    navigate('/details-of-bill', { state: { bill: watchedBills[0] } });
-  };
 
-  const handleBillClick = (bill: typeof watchedBills[0]) => {
-    // Navigate to the details page with the bill data
-    navigate('/details-of-bill', { state: { bill } });
-  };
-
+  function onClickBill() {
+    navigate(Routes.DetailsOfBill);
+  }
 
   const handleSaveBillStatus = () => {
     handleCloseBillStatusDialog();
   };
 
   function goToActivityFeed() {
-    navigate("/dashboard/activity-log");
+    navigate("/dashboard/activity-feed");
   }
 
- 
   function goToRepresentatives() {}
 
   function toggleUpdatesSection() {
@@ -172,6 +166,10 @@ export const Dashboard: React.FC = () => {
   ) => {
     console.log("search form data", formData);
   };
+
+  useEffect(() => {
+    if (location.pathname) window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="col h-full">
@@ -352,7 +350,8 @@ export const Dashboard: React.FC = () => {
               {watchedBills.map((watchedBill) => (
                 <div
                   key={watchedBill.state}
-                  className="w-[349px] h-[245px] px-4 pt-5"
+                  className="w-[349px] h-[245px] px-4 pt-5 cursor-pointer"
+                  onClick={onClickBill}
                 >
                   <div className="row justify-between items-center">
                     <Pill

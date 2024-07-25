@@ -10,7 +10,5 @@ export enum Routes {
   // Authenticated
   Dashboard = "/dashboard",
   ChangePassword = "/change-password",
-
-  // Bill Details
-  DetailsOfBill = "/dashboard/details-of-bill",
+  DetailsOfBill = "/dashboard/bill",
 }

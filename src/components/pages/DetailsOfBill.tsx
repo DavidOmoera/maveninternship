@@ -1,26 +1,79 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { lazy, Suspense, useState } from "react";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import message from "assets/message.svg";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/profile_picture.png";
-import aboutIcon from "assets/about_icon.svg"; // Add the necessary icons
-import askAIIcon from "assets/ask_ai_icon.svg";
-import summaryIcon from "assets/summary_icon.svg";
-import similarBillsIcon from "assets/similar_bills_icon.svg";
-import votingIcon from "assets/voting_icon.svg";
-import sendIcon from "assets/send_icon.svg"; // Add the send icon
-import chatboxicon from "assets/chatbox_icon.svg";
+
 import senatemat from "assets/senate_mat.svg";
-import { Button } from "components/atoms/Button";
-import { ArrowRight } from "assets/ArrowRight";
-import download from "assets/download.svg";
+import { PageContainer } from "components/templates/PageContainer";
+import { Tabs } from "components/molecules/Tabs";
+import { colors } from "constants/common";
+import { Home2 } from "assets/Home2";
+import { Chat } from "assets/Chat";
+import { Activity } from "assets/Activity";
+import { Clipboard } from "assets/Clipboard";
+import { TickSquare } from "assets/TickSquare";
+const AboutBill = lazy(() =>
+  import("components/organisms/AboutBill").then((module) => ({
+    default: module.AboutBill,
+  }))
+);
+
+const BillDetailsMessageBox = lazy(() =>
+  import("components/organisms/BillDetailsMessageBox").then((module) => ({
+    default: module.BillDetailsMessageBox,
+  }))
+);
+
+enum BILL_TAB {
+  ABOUT = "About",
+  ASK_AI = "Ask AI",
+  SUMMARY = "Summary",
+  SIMILAR_BILLS = "Similar Bills",
+  VOTING = "Voting",
+}
 
 const DetailsOfBill: React.FC = () => {
-  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<BILL_TAB>(BILL_TAB.ABOUT);
+
+  function onChangeTab(value: string) {
+    setActiveTab(value as BILL_TAB);
+  }
+
+  function getSVGColor(tab: string) {
+    return tab === activeTab ? colors.primary : colors.neutral500;
+  }
+
+  const BILL_TABS = [
+    {
+      value: BILL_TAB.ABOUT,
+      label: "About",
+      leftIcon: <Home2 color={getSVGColor(BILL_TAB.ABOUT)} />,
+    },
+    {
+      value: BILL_TAB.ASK_AI,
+      label: "Ask AI",
+      leftIcon: <Chat color={getSVGColor(BILL_TAB.ASK_AI)} />,
+    },
+    {
+      value: BILL_TAB.SUMMARY,
+      label: "Summary",
+      leftIcon: <Activity color={getSVGColor(BILL_TAB.SUMMARY)} />,
+    },
+    {
+      value: BILL_TAB.SIMILAR_BILLS,
+      label: "Similar Bills",
+      leftIcon: <Clipboard color={getSVGColor(BILL_TAB.SIMILAR_BILLS)} />,
+    },
+    {
+      value: BILL_TAB.VOTING,
+      label: "Voting",
+      leftIcon: <TickSquare color={getSVGColor(BILL_TAB.VOTING)} />,
+    },
+  ];
 
   return (
-    <div className="col h-full">
+    <PageContainer className="col h-full">
       {/* Header */}
       <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
         <h1 className="text-neutral950 font-extrabold text-4xl">H.RES.964</h1>
@@ -121,83 +174,33 @@ const DetailsOfBill: React.FC = () => {
             </div>
           </div>
 
-          {/* Introduction Section */}
-          <div className="flex-1 p-9 bg-white rounded-xl mb-6 basis-3/4">
-            {/* Navigation Bar */}
-            <div className="flex mt-6 mb-6 space-x-4 text-neutral600">
-              <div className="flex items-center cursor-pointer">
-                <img src={aboutIcon} className="h-6 w-6 mr-2" alt="About" />
-                <span className="font-semibold">About</span>
-              </div>
-              <div className="flex items-center cursor-pointer">
-                <img src={askAIIcon} className="h-6 w-6 mr-2" alt="Ask AI" />
-                <span className="font-semibold">Ask AI</span>
-              </div>
-              <div className="flex items-center cursor-pointer">
-                <img src={summaryIcon} className="h-6 w-6 mr-2" alt="Summary" />
-                <span className="font-semibold">Summary</span>
-              </div>
-              <div className="flex items-center cursor-pointer">
-                <img
-                  src={similarBillsIcon}
-                  className="h-6 w-6 mr-2"
-                  alt="Similar Bills"
-                />
-                <span className="font-semibold">Similar Bills</span>
-              </div>
-              <div className="flex items-center cursor-pointer">
-                <img src={votingIcon} className="h-6 w-6 mr-2" alt="Voting" />
-                <span className="font-semibold">Voting</span>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold">Introduction</h3>
-              <Button
-                variant="secondary"
-                text="Download Bill"
-                leftIcon={<img src={download} className="w-4 h-4" />}
+          {/* Main Tabs */}
+          <div className="flex-1 gap-6 basis-3/4">
+            <div className="flex-1 p-9 bg-white rounded-xl">
+              {/* Navigation Bar */}
+              <Tabs
+                tabs={BILL_TABS}
+                activeTab={activeTab}
+                setActiveTab={onChangeTab}
+                className="w-full mb-9"
               />
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              tristique lectus non quam euismod cursus. Nam eleifend, urna in
-              pretium posuere, massa dui sagittis nulla, molestie mollis mi leo
-              vel neque. Nunc gravida tristique orci at hendrerit. Sed erat
-              elit, egestas a nisl vel, gravida vehicula magna.
-            </p>
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg flex justify-between items-center">
-              <div>
-                <h4 className="font-bold">Skip the Jargon!</h4>
-
-                <p className="text-neutral600">
-                  Read Coterie AI's Summary instead.
-                </p>
-              </div>
-              <Button rightIcon={<ArrowRight />} text="View Summary" />
+              {activeTab === BILL_TAB.ABOUT ? (
+                <Suspense fallback={null}>
+                  <AboutBill />
+                </Suspense>
+              ) : null}
             </div>
 
             {/* Message Box */}
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg flex items-center">
-              <img
-                src={chatboxicon}
-                alt="User"
-                className="w-10 h-10 rounded-full mr-3"
-              />
-              <input
-                type="text"
-                placeholder="Message Coterie"
-                className="flex-1 p-2 bg-white border rounded-lg outline-none"
-                style={{ paddingRight: "3rem" }}
-              />
-              <button className="absolute right-3">
-                <img src={sendIcon} alt="Send" className="h-6 w-6" />
-              </button>
-            </div>
+            {activeTab === BILL_TAB.ABOUT ? (
+              <Suspense fallback={null}>
+                <BillDetailsMessageBox />
+              </Suspense>
+            ) : null}
           </div>
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 };
 
