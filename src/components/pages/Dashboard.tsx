@@ -35,7 +35,6 @@ import {
   topRepresentatives,
   watchedBills,
 } from "constants/common";
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { billSearchSchema } from "constants/schemas";
@@ -43,6 +42,7 @@ import { ControlledInput } from "components/organisms/ControlledInput";
 import { ControlledSelect } from "components/organisms/ControlledSelect";
 import CustomTextField from "components/molecules/CustomTextField";
 import { Routes } from "types/routes";
+import { Bill } from "components/organisms/Bill";
 
 const stages = [
   "Filed",
@@ -156,6 +156,10 @@ export const Dashboard: React.FC = () => {
   }
 
   function goToRepresentatives() {}
+
+  function onClickRepresentative() {
+    navigate(Routes.RepProfile);
+  }
 
   function toggleUpdatesSection() {
     setAreUpdatesVisible((prevState) => !prevState);
@@ -346,35 +350,13 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** All bills */}
-            <div className="row gap-5 flex-wrap ">
+            <div className="row gap-5 flex-wrap mt-8">
               {watchedBills.map((watchedBill) => (
-                <div
-                  key={watchedBill.state}
-                  className="w-[349px] h-[245px] px-4 pt-5 cursor-pointer"
+                <Bill
+                  key={watchedBill.description}
                   onClick={onClickBill}
-                >
-                  <div className="row justify-between items-center">
-                    <Pill
-                      text={watchedBill.state}
-                      textClass="font-semibold text-primary text-sm"
-                    />
-                    <MoreHorizOutlinedIcon />
-                  </div>
-
-                  <h4 className="line-clamp-2 py-2">{watchedBill.title}</h4>
-                  <div className="row justify-between items-center pb-3">
-                    <h6 className="text-primary text-sm font-semibold">
-                      {watchedBill.status}
-                    </h6>
-                    <p className="text-neutral500 text-xs line-clamp-3">
-                      {watchedBill.relativeTime}
-                    </p>
-                  </div>
-
-                  <p className="text-sm text-neutral500">
-                    {watchedBill.description}
-                  </p>
-                </div>
+                  {...watchedBill}
+                />
               ))}
             </div>
           </section>
@@ -443,6 +425,7 @@ export const Dashboard: React.FC = () => {
                   <div
                     className="gap-3 cursor-pointer"
                     key={representative.title}
+                    onClick={onClickRepresentative}
                   >
                     <h6 className="text-primary font-bold text-[14px] pb-4">
                       {representative.title}

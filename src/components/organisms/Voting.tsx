@@ -38,7 +38,10 @@ function VotingSection({ title, voters, className }: TVotingSectionProps) {
       <h4 className="text-neutral950">{title}</h4>
       <div className="row flex-wrap gap-3">
         {voters.map((voter) => (
-          <div className="row justify-between items-center p-3 rounded-lg bg-grey">
+          <div
+            key={voter.name}
+            className="row justify-between items-center p-3 rounded-lg bg-grey"
+          >
             <div className="gap-2 row items-center">
               <img src={voter.profilePicture} className="w-8 h-8" />
               <div className="col text-start">
@@ -123,6 +126,7 @@ export function Voting() {
           {VOTING_SECTIONS.map((votingSection, index) => (
             <>
               <VotingSection
+                key={votingSection.title}
                 title={votingSection.title}
                 voters={votingSection.voters}
               />

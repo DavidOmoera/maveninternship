@@ -1,9 +1,4 @@
 import React, { lazy, Suspense, useState } from "react";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
-import message from "assets/message.svg";
-import notification from "assets/notification.svg";
-import profilePicture from "assets/profile_picture.png";
-
 import senatemat from "assets/senate_mat.svg";
 import { PageContainer } from "components/templates/PageContainer";
 import { Tabs } from "components/molecules/Tabs";
@@ -40,6 +35,12 @@ const VotingSummary = lazy(() =>
 const Voting = lazy(() =>
   import("components/organisms/Voting").then((module) => ({
     default: module.Voting,
+  }))
+);
+
+const SimilarBills = lazy(() =>
+  import("components/organisms/SimilarBills").then((module) => ({
+    default: module.SimilarBills,
   }))
 );
 
@@ -95,35 +96,7 @@ const DetailsOfBill: React.FC = () => {
   ];
 
   return (
-    <PageContainer className="col h-full">
-      {/* Header */}
-      <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
-        <h1 className="text-neutral950 font-extrabold text-4xl">H.RES.964</h1>
-        <div className="row gap-6">
-          <div className="row gap-3">
-            <img src={message} className="cursor-pointer" alt="Message" />
-            <img
-              src={notification}
-              className="cursor-pointer"
-              alt="Notification"
-            />
-          </div>
-          <div className="row gap-3 items-center">
-            <img src={profilePicture} alt="Profile" />
-            <article className="col gap-1">
-              <h6 className="text-neutral950 font-bold">Anita Lever</h6>
-              <p>
-                <span className="text-neutral600 text-sm font-medium">
-                  Coterie
-                </span>
-                <span className="text-primary text-sm font-extrabold">Pro</span>
-              </p>
-            </article>
-            <ExpandMoreOutlinedIcon />
-          </div>
-        </div>
-      </div>
-
+    <PageContainer title="H.RES.964" className="col h-full">
       {/* Main Content */}
       <div className="flex-1 bg-gray-100 px-9 flex">
         <div className="w-full flex gap-4">
@@ -218,6 +191,11 @@ const DetailsOfBill: React.FC = () => {
               {activeTab === BILL_TAB.VOTING ? (
                 <Suspense fallback={null}>
                   <VotingSummary />
+                </Suspense>
+              ) : null}
+              {activeTab === BILL_TAB.SIMILAR_BILLS ? (
+                <Suspense fallback={null}>
+                  <SimilarBills />
                 </Suspense>
               ) : null}
             </div>
