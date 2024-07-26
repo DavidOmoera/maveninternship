@@ -350,7 +350,7 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** All bills */}
-            <div className="row gap-5 flex-wrap ">
+            <div className="row gap-5 flex-wrap mt-8">
               {watchedBills.map((watchedBill) => (
                 <Bill
                   key={watchedBill.description}
