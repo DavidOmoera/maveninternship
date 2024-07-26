@@ -7,12 +7,18 @@ import profilePicture from "assets/profile_picture.png";
 import senatemat from "assets/senate_mat.svg";
 import { PageContainer } from "components/templates/PageContainer";
 import { Tabs } from "components/molecules/Tabs";
-import { colors } from "constants/common";
 import { Home2 } from "assets/Home2";
 import { Chat } from "assets/Chat";
 import { Activity } from "assets/Activity";
 import { Clipboard } from "assets/Clipboard";
 import { TickSquare } from "assets/TickSquare";
+import { getTabSVGColor } from "utils/helpers";
+import {
+  ABSTAINED_VOTERS,
+  NO_VOTERS,
+  TOTAL_VOTERS_COUNT,
+  YES_VOTERS,
+} from "constants/common";
 const AboutBill = lazy(() =>
   import("components/organisms/AboutBill").then((module) => ({
     default: module.AboutBill,
@@ -22,6 +28,18 @@ const AboutBill = lazy(() =>
 const BillDetailsMessageBox = lazy(() =>
   import("components/organisms/BillDetailsMessageBox").then((module) => ({
     default: module.BillDetailsMessageBox,
+  }))
+);
+
+const VotingSummary = lazy(() =>
+  import("components/organisms/VotingSummary").then((module) => ({
+    default: module.VotingSummary,
+  }))
+);
+
+const Voting = lazy(() =>
+  import("components/organisms/Voting").then((module) => ({
+    default: module.Voting,
   }))
 );
 
@@ -40,35 +58,39 @@ const DetailsOfBill: React.FC = () => {
     setActiveTab(value as BILL_TAB);
   }
 
-  function getSVGColor(tab: string) {
-    return tab === activeTab ? colors.primary : colors.neutral500;
-  }
-
   const BILL_TABS = [
     {
       value: BILL_TAB.ABOUT,
       label: "About",
-      leftIcon: <Home2 color={getSVGColor(BILL_TAB.ABOUT)} />,
+      leftIcon: <Home2 color={getTabSVGColor(activeTab === BILL_TAB.ABOUT)} />,
     },
     {
       value: BILL_TAB.ASK_AI,
       label: "Ask AI",
-      leftIcon: <Chat color={getSVGColor(BILL_TAB.ASK_AI)} />,
+      leftIcon: <Chat color={getTabSVGColor(activeTab === BILL_TAB.ASK_AI)} />,
     },
     {
       value: BILL_TAB.SUMMARY,
       label: "Summary",
-      leftIcon: <Activity color={getSVGColor(BILL_TAB.SUMMARY)} />,
+      leftIcon: (
+        <Activity color={getTabSVGColor(activeTab === BILL_TAB.SUMMARY)} />
+      ),
     },
     {
       value: BILL_TAB.SIMILAR_BILLS,
       label: "Similar Bills",
-      leftIcon: <Clipboard color={getSVGColor(BILL_TAB.SIMILAR_BILLS)} />,
+      leftIcon: (
+        <Clipboard
+          color={getTabSVGColor(activeTab === BILL_TAB.SIMILAR_BILLS)}
+        />
+      ),
     },
     {
       value: BILL_TAB.VOTING,
       label: "Voting",
-      leftIcon: <TickSquare color={getSVGColor(BILL_TAB.VOTING)} />,
+      leftIcon: (
+        <TickSquare color={getTabSVGColor(activeTab === BILL_TAB.VOTING)} />
+      ),
     },
   ];
 
@@ -143,19 +165,23 @@ const DetailsOfBill: React.FC = () => {
               </p>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
-              <p className="text-4xl font-extrabold">34</p>
+              <p className="text-4xl font-extrabold">{TOTAL_VOTERS_COUNT}</p>
               <p className="text-lg text-neutral600">Votes for bill:</p>
               <div className="flex items-center mt-2">
                 <span className="w-3 h-3 rounded-full bg-green-500 inline-block mr-2"></span>
-                <p className="text-green-600">Votes for: 25</p>
+                <p className="text-green-600">Votes for: {YES_VOTERS.length}</p>
               </div>
               <div className="flex items-center mt-2">
                 <span className="w-3 h-3 rounded-full bg-red-500 inline-block mr-2"></span>
-                <p className="text-red-600">Votes against: 9</p>
+                <p className="text-red-600">
+                  Votes against: {NO_VOTERS.length}
+                </p>
               </div>
               <div className="flex items-center mt-2">
                 <span className="w-3 h-3 rounded-full bg-yellow-500 inline-block mr-2"></span>
-                <p className="text-yellow-600">Abstained: 2</p>
+                <p className="text-yellow-600">
+                  Abstained: {ABSTAINED_VOTERS.length}
+                </p>
               </div>
             </div>
             <div className="mt-6">
@@ -189,12 +215,22 @@ const DetailsOfBill: React.FC = () => {
                   <AboutBill />
                 </Suspense>
               ) : null}
+              {activeTab === BILL_TAB.VOTING ? (
+                <Suspense fallback={null}>
+                  <VotingSummary />
+                </Suspense>
+              ) : null}
             </div>
 
             {/* Message Box */}
             {activeTab === BILL_TAB.ABOUT ? (
               <Suspense fallback={null}>
                 <BillDetailsMessageBox />
+              </Suspense>
+            ) : null}
+            {activeTab === BILL_TAB.VOTING ? (
+              <Suspense fallback={null}>
+                <Voting />
               </Suspense>
             ) : null}
           </div>
