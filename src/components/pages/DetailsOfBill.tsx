@@ -44,6 +44,12 @@ const SimilarBills = lazy(() =>
   }))
 );
 
+const BillSummary = lazy(() =>
+  import("components/organisms/BillSummary").then((module) => ({
+    default: module.BillSummary,
+  }))
+);
+
 enum BILL_TAB {
   ABOUT = "About",
   ASK_AI = "Ask AI",
@@ -188,14 +194,19 @@ const DetailsOfBill: React.FC = () => {
                   <AboutBill />
                 </Suspense>
               ) : null}
-              {activeTab === BILL_TAB.VOTING ? (
+              {activeTab === BILL_TAB.SUMMARY ? (
                 <Suspense fallback={null}>
-                  <VotingSummary />
+                  <BillSummary />
                 </Suspense>
               ) : null}
               {activeTab === BILL_TAB.SIMILAR_BILLS ? (
                 <Suspense fallback={null}>
                   <SimilarBills />
+                </Suspense>
+              ) : null}
+              {activeTab === BILL_TAB.VOTING ? (
+                <Suspense fallback={null}>
+                  <VotingSummary />
                 </Suspense>
               ) : null}
             </div>
