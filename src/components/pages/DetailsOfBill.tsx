@@ -38,6 +38,12 @@ const Voting = lazy(() =>
   }))
 );
 
+const SimilarBills = lazy(() =>
+  import("components/organisms/SimilarBills").then((module) => ({
+    default: module.SimilarBills,
+  }))
+);
+
 enum BILL_TAB {
   ABOUT = "About",
   ASK_AI = "Ask AI",
@@ -185,6 +191,11 @@ const DetailsOfBill: React.FC = () => {
               {activeTab === BILL_TAB.VOTING ? (
                 <Suspense fallback={null}>
                   <VotingSummary />
+                </Suspense>
+              ) : null}
+              {activeTab === BILL_TAB.SIMILAR_BILLS ? (
+                <Suspense fallback={null}>
+                  <SimilarBills />
                 </Suspense>
               ) : null}
             </div>
