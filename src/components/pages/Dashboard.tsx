@@ -157,6 +157,10 @@ export const Dashboard: React.FC = () => {
 
   function goToRepresentatives() {}
 
+  function onClickRepresentative() {
+    navigate(Routes.RepProfile);
+  }
+
   function toggleUpdatesSection() {
     setAreUpdatesVisible((prevState) => !prevState);
   }
@@ -417,6 +421,7 @@ export const Dashboard: React.FC = () => {
                   <div
                     className="gap-3 cursor-pointer"
                     key={representative.title}
+                    onClick={onClickRepresentative}
                   >
                     <h6 className="text-primary font-bold text-[14px] pb-4">
                       {representative.title}
