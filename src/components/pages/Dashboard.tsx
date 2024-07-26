@@ -352,7 +352,11 @@ export const Dashboard: React.FC = () => {
             {/** All bills */}
             <div className="row gap-5 flex-wrap ">
               {watchedBills.map((watchedBill) => (
-                <Bill onClick={onClickBill} {...watchedBill} />
+                <Bill
+                  key={watchedBill.description}
+                  onClick={onClickBill}
+                  {...watchedBill}
+                />
               ))}
             </div>
           </section>

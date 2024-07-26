@@ -105,7 +105,7 @@ export function RepProfile() {
             <h5 className="text-neutral950">Contact</h5>
             <div className="row gap-6 flex-wrap">
               {SOCIALS.map((social) => (
-                <div className="row items-center gap-2">
+                <div key={social.handle} className="row items-center gap-2">
                   <img src={social.icon} />
                   <p className="text-neutral500">{social.handle}</p>
                 </div>
@@ -133,7 +133,7 @@ export function RepProfile() {
 
           <div className="grid grid-cols-4 gap-6 w-full">
             {BIO_DATA.map((data) => (
-              <BioData {...data} />
+              <BioData key={data.description} {...data} />
             ))}
           </div>
         </section>
@@ -153,7 +153,7 @@ export function RepProfile() {
 
           <div className="overflow-y-scroll">
             {watchedBills.map((bill) => (
-              <Bill onClick={onClickBill} {...bill} />
+              <Bill key={bill.description} onClick={onClickBill} {...bill} />
             ))}
           </div>
         </section>
