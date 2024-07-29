@@ -6,6 +6,7 @@ import { ControlledInput } from "components/organisms/ControlledInput";
 import SearchIcon from "@mui/icons-material/Search";
 import { ACTIVITIES, colors } from "constants/common";
 import { PageContainer } from "components/templates/PageContainer";
+import { Pill } from "components/molecules/Pill";
 
 const ACTIVITY_OPTIONS = [
   { id: 1, label: "All Activity", value: "all" },
@@ -30,7 +31,6 @@ export function ActivityFeed() {
   const {
     control: activityControl,
     formState: { errors: activityFormErrors },
-    getValues,
   } = useForm<TActivitySearchForm>({
     resolver: yupResolver(activitySearchSchema),
   });
@@ -40,8 +40,8 @@ export function ActivityFeed() {
       title="Activity Feed"
       className="w-full h-screen bg-gray-100"
     >
-      <div className="h-screen p-8 px-9 py-6 mb-4 mx-9 mt-5 bg-white rounded-xl">
-        <div className="flex flex-row justify-between">
+      <div className="p-9 mb-9 mx-9 mt-6 bg-white rounded-xl">
+        <div className="row justify-between mb-9">
           <div className="flex gap-3 w-96">
             <ControlledSelect
               name="noOfDays"
@@ -69,64 +69,32 @@ export function ActivityFeed() {
           />
         </div>
 
-        <br />
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {ACTIVITIES.map((activity, index) => (
-            <div key={index} className="flex flex-col gap-6 text-justify">
-              <div className="flex item-start gap-2 text-justify">
-                <span className="text-gray-500 text-sm text-justify ">
-                  {activity.time}
-                </span>
-
-                <div className="flex items-center gap-2 text-justify">
-                  <span
-                    className={`bg-${
-                      activity.type === "Removed"
-                        ? "red"
-                        : activity.type === "Added"
-                        ? "blue"
-                        : activity.type === "Edited"
-                        ? "gray"
-                        : "gray"
-                    }-200 p-1 rounded-full text-justify`}
-                  >
-                    <img
-                      src={activity.icon}
-                      alt={activity.icon}
-                      className="w-4 h-4 text-justify"
-                    />
-                  </span>
-
-                  <span className="text-gray-700 text-justify">
-                    You{" "}
-                    <strong
-                      className={`text-${
-                        activity.type === "Removed"
-                          ? "red"
-                          : activity.type === "Added"
-                          ? "green"
-                          : activity.type === "Edited"
-                          ? "blue"
-                          : "gray"
-                      }-500 text-justify`}
+          {ACTIVITIES.map(
+            ({ time, icon, type, label, iconBackgroundColor, link }, index) => (
+              <div key={index} className="flex flex-col gap-6 ">
+                <div className="row items-center gap-2 ">
+                  <div className="w-36">
+                    <p className="text-gray-500 text-sm ">{time}</p>
+                  </div>
+                  <div className="row items-center gap-2">
+                    <div
+                      className="p-1 rounded-full"
+                      style={{ backgroundColor: iconBackgroundColor }}
                     >
-                      {activity.type}
-                    </strong>{" "}
-                    {activity.label}
-                    {activity.link && (
-                      <a
-                        href="#"
-                        className="text-blue-500 ml-1 border-bg-blue border-blue text-justify"
-                      >
-                        {activity.link}
-                      </a>
-                    )}
-                  </span>
+                      <img src={icon} alt={type} className="w-4 h-4 " />
+                    </div>
+
+                    <span className="text-gray-700 ">
+                      You <strong className="text-neutral950">{type}</strong>{" "}
+                      {label}
+                    </span>
+                    {link && <Pill text={link} />}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
     </PageContainer>
