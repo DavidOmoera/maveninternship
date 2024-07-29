@@ -20,6 +20,7 @@ import voter18 from "assets/voter_18.png";
 
 export enum colors {
   primary = "#0C0853",
+  error = "#FF2A58",
   white = "#FFFFFF",
   black = "#000000",
   neutral25 = "#F2F4FB",
