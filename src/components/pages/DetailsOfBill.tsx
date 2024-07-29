@@ -3,7 +3,7 @@ import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import message from "assets/message.svg";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/profile_picture.png";
-
+import arrow_back from "assets/arrow_back.svg";
 import senatemat from "assets/senate_mat.svg";
 import { PageContainer } from "components/templates/PageContainer";
 import { Tabs } from "components/molecules/Tabs";
@@ -16,6 +16,12 @@ import { TickSquare } from "assets/TickSquare";
 const AboutBill = lazy(() =>
   import("components/organisms/AboutBill").then((module) => ({
     default: module.AboutBill,
+  }))
+);
+
+const AskAi = lazy(() =>
+  import("components/organisms/AskAi").then((module) => ({
+    default: module.ASK_AI,
   }))
 );
 
@@ -76,7 +82,12 @@ const DetailsOfBill: React.FC = () => {
     <PageContainer className="col h-full">
       {/* Header */}
       <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
-        <h1 className="text-neutral950 font-extrabold text-4xl">H.RES.964</h1>
+        <div className="flex items-center">
+          <a href="path-to-previous-page" className="flex items-center gap-2">
+            <img src={arrow_back} className="cursor-pointer" alt="Go Back" />
+          </a>
+          <h1 className="text-neutral950 font-extrabold text-4xl ml-2">H.RES.964</h1>
+        </div>
         <div className="row gap-6">
           <div className="row gap-3">
             <img src={message} className="cursor-pointer" alt="Message" />
@@ -184,13 +195,20 @@ const DetailsOfBill: React.FC = () => {
                 setActiveTab={onChangeTab}
                 className="w-full mb-9"
               />
+              
               {activeTab === BILL_TAB.ABOUT ? (
                 <Suspense fallback={null}>
                   <AboutBill />
                 </Suspense>
               ) : null}
             </div>
-
+            
+            {activeTab === BILL_TAB.ASK_AI ? (
+  <Suspense fallback={null}>
+    <AskAi />
+  </Suspense>
+) : null}
+ 
             {/* Message Box */}
             {activeTab === BILL_TAB.ABOUT ? (
               <Suspense fallback={null}>
