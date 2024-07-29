@@ -20,6 +20,12 @@ const AboutBill = lazy(() =>
   }))
 );
 
+const AskAi = lazy(() =>
+  import("components/organisms/AskAi").then((module) => ({
+    default: module.ASK_AI,
+  }))
+);
+
 const BillDetailsMessageBox = lazy(() =>
   import("components/organisms/BillDetailsMessageBox").then((module) => ({
     default: module.BillDetailsMessageBox,
@@ -189,6 +195,7 @@ const DetailsOfBill: React.FC = () => {
                 setActiveTab={onChangeTab}
                 className="w-full mb-9"
               />
+              
               {activeTab === BILL_TAB.ABOUT ? (
                 <Suspense fallback={null}>
                   <AboutBill />
@@ -210,7 +217,13 @@ const DetailsOfBill: React.FC = () => {
                 </Suspense>
               ) : null}
             </div>
-
+            
+            {activeTab === BILL_TAB.ASK_AI ? (
+  <Suspense fallback={null}>
+    <AskAi />
+  </Suspense>
+) : null}
+ 
             {/* Message Box */}
             {activeTab === BILL_TAB.ABOUT ? (
               <Suspense fallback={null}>
