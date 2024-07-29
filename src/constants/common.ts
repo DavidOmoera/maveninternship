@@ -1,4 +1,11 @@
 import topRepresentative from "assets/top_representative.png";
+import login from "assets/login.svg";
+import logout from "assets/logout.svg";
+import minuscirlce from "assets/minus-cirlce.svg";
+import addcircle from "assets/add-circle.svg";
+import archiveminus from "assets/archive-minus.svg";
+import archiveadd from "assets/archive-add.svg";
+import useredit from "assets/user-edit.svg";
 import voter1 from "assets/voter_1.png";
 import voter2 from "assets/voter_2.png";
 import voter3 from "assets/voter_3.png";
@@ -387,3 +394,104 @@ export const ABSTAINED_VOTERS = [
 
 export const TOTAL_VOTERS_COUNT =
   YES_VOTERS.length + NO_VOTERS.length + ABSTAINED_VOTERS.length;
+
+export const ACTIVITIES = [
+  {
+    time: "20 mins ago",
+    type: "Removed",
+    label: "bill",
+    link: "Secure the Border Act of 2023",
+    icon: archiveminus,
+  },
+  {
+    time: "4 hrs ago",
+    type: "Added",
+    label: "bill",
+    link: "Secure the Border Act of 2023",
+    icon: archiveadd,
+  },
+  {
+    time: "Yesterday, 5:34 pm",
+    type: "Edited",
+    label: "Profile",
+    link: "",
+    icon: useredit,
+  },
+  {
+    time: "Yesterday, 2:45 pm",
+    type: "Removed",
+    label: "Legislature",
+    link: "Texas",
+    icon: minuscirlce,
+  },
+  {
+    time: "22/04/2023, 8:22 am",
+    type: "Added",
+    label: "Legislature",
+    link: "Alaska",
+    icon: addcircle,
+  },
+  {
+    time: "21/04/2023, 8:19 am",
+    type: "Logged in",
+    label: "account",
+    link: "",
+    icon: login,
+  },
+  {
+    time: "20/04/2023, 7:32 am",
+    type: "Logged out",
+    label: "account",
+    link: "",
+    icon: logout,
+  },
+  {
+    time: "4w ago",
+    type: "Removed",
+    label: "bill",
+    link: "Secure the Border Act of 2023",
+    icon: archiveminus,
+  },
+  {
+    time: "5w ago",
+    type: "Added",
+    label: "bill",
+    link: "Secure the Border Act of 2023",
+    icon: archiveadd,
+  },
+  {
+    time: "6w ago",
+    type: "Edited",
+    label: "Profile",
+    link: "",
+    icon: useredit,
+  },
+  {
+    time: "7w ago",
+    type: "Removed",
+    label: "Legislature",
+    link: "Texas",
+    icon: minuscirlce,
+  },
+  {
+    time: "2 months ago",
+    type: "Added",
+    label: "Legislature",
+    link: "Alaska",
+    icon: addcircle,
+  },
+  {
+    time: "3 months ago",
+    type: "Logged in",
+    label: "account",
+    link: "",
+    icon: login,
+  },
+  {
+    time: "4 months ago",
+    type: "Logged out",
+    label: "account",
+    link: "",
+    icon: logout,
+  },
+];
