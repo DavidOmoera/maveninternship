@@ -12,4 +12,5 @@ export enum Routes {
   ChangePassword = "/change-password",
   DetailsOfBill = "/dashboard/bill",
   RepProfile = "/dashboard/representative",
+  Profile = "/dashboard/profile",
 }

@@ -12,6 +12,7 @@ import { Auth } from "components/templates/Auth";
 import { AccountSetup } from "components/pages/AccountSetup";
 import DetailsOfBill from "components/pages/DetailsOfBill";
 import { RepProfile } from "components/pages/RepProfile";
+import { Profile } from "components/pages/Profile";
 
 const routes = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const routes = createBrowserRouter([
       {
         path: Routes.RepProfile,
         element: <RepProfile />,
+      },
+      {
+        path: Routes.Profile,
+        element: <Profile />,
       },
     ],
   },

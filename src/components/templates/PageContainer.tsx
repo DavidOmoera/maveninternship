@@ -26,6 +26,10 @@ export function PageContainer({
     navigate(Routes.Dashboard);
   }
 
+  function goToProfile() {
+    navigate(Routes.Profile);
+  }
+
   useEffect(() => {
     if (location.pathname) window.scrollTo(0, 0);
   }, [location.pathname]);
@@ -58,7 +62,10 @@ export function PageContainer({
               alt="Notification"
             />
           </div>
-          <div className="row gap-3 items-center">
+          <div
+            className="row gap-3 items-center cursor-pointer"
+            onClick={goToProfile}
+          >
             <img src={profilePicture} alt="Profile" />
             <article className="col gap-1">
               <h6 className="text-neutral950 font-bold">Anita Lever</h6>
@@ -69,8 +76,8 @@ export function PageContainer({
                 <span className="text-primary text-sm font-extrabold">Pro</span>
               </p>
             </article>
-            <ExpandMoreOutlinedIcon />
           </div>
+          <ExpandMoreOutlinedIcon />
         </div>
       </div>
       {children}
