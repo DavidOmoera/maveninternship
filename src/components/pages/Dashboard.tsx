@@ -11,7 +11,6 @@ import {
   Checkbox,
   Divider,
 } from "@mui/material";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import StartOutlinedIcon from "@mui/icons-material/StartOutlined";
 import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
 import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
@@ -24,9 +23,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import edited from "assets/edited.svg";
 import closed from "assets/closed.svg";
 import done from "assets/done.svg";
-import notification from "assets/notification.svg";
-import message from "assets/message.svg";
-import profilePicture from "assets/profile_picture.png";
 import { Pill } from "components/molecules/Pill";
 
 import {
@@ -43,6 +39,7 @@ import { ControlledSelect } from "components/organisms/ControlledSelect";
 import CustomTextField from "components/molecules/CustomTextField";
 import { Routes } from "types/routes";
 import { Bill } from "components/organisms/Bill";
+import { PageContainer } from "components/templates/PageContainer";
 
 const stages = [
   "Filed",
@@ -176,31 +173,7 @@ export const Dashboard: React.FC = () => {
   }, [location.pathname]);
 
   return (
-    <div className="col h-full">
-      {/* Header */}
-      <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
-        <h1 className="text-neutral950 font-extrabold text-4xl">Dashboard</h1>
-        <div className="row gap-6">
-          <div className="row gap-3">
-            <img src={message} className="cursor-pointer" />
-            <img src={notification} className="cursor-pointer" />
-          </div>
-          <div className="row gap-3 items-center">
-            <img src={profilePicture} />
-            <article className="col gap-1">
-              <h6 className="text-neutral950 font-bold">Anita Lever</h6>
-              <p>
-                <span className="text-neutral600 text-sm font-medium">
-                  Coterie
-                </span>{" "}
-                <span className="text-primary text-sm font-extrabold">Pro</span>
-              </p>
-            </article>
-            <ExpandMoreOutlinedIcon />
-          </div>
-        </div>
-      </div>
-
+    <PageContainer title="Dashboard">
       {/* Main Content */}
       <div className="flex-1 bg-gray-100 px-9 flex">
         <div className="flex-1 basis-[74%] pr-4">
@@ -520,6 +493,6 @@ export const Dashboard: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </PageContainer>
   );
 };
