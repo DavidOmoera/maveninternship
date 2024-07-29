@@ -18,6 +18,7 @@ export function Tabs({ tabs, className, setActiveTab, activeTab }: TTabs) {
     >
       {tabs.map((tab) => (
         <Tab
+          key={tab.value}
           isActive={tab.value === activeTab}
           onClickTab={setActiveTab}
           {...tab}

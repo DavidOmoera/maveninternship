@@ -11,6 +11,7 @@ import { Dashboard } from "components/pages/Dashboard";
 import { Auth } from "components/templates/Auth";
 import { AccountSetup } from "components/pages/AccountSetup";
 import DetailsOfBill from "components/pages/DetailsOfBill";
+import { RepProfile } from "components/pages/RepProfile";
 
 const routes = createBrowserRouter([
   {
@@ -48,12 +49,16 @@ const routes = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: '',
+        path: "",
         element: <Dashboard />,
       },
       {
         path: Routes.DetailsOfBill,
         element: <DetailsOfBill />,
+      },
+      {
+        path: Routes.RepProfile,
+        element: <RepProfile />,
       },
     ],
   },

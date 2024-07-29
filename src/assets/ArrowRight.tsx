@@ -1,9 +1,11 @@
+import { TSVGProps } from "types/common";
+
 export function ArrowRight({
   color = "white",
   width = 16,
   height = 17,
   ...props
-}) {
+}: TSVGProps) {
   return (
     <svg
       width={width}
