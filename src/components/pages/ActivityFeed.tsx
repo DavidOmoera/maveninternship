@@ -2,7 +2,6 @@ import notification from "assets/notification.svg";
 import message from "assets/message.svg";
 import profilePicture from "assets/profile_picture.png";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
-import { useState } from "react";
 import login from "assets/login.svg";
 import logout from "assets/logout.svg";
 import minuscirlce from "assets/minus-cirlce.svg";
@@ -10,116 +9,142 @@ import addcircle from "assets/add-circle.svg";
 import archiveminus from "assets/archive-minus.svg";
 import archiveadd from "assets/archive-add.svg";
 import useredit from "assets/user-edit.svg";
+import { ControlledSelect } from "components/organisms/ControlledSelect";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { activitySearchSchema } from "constants/schemas";
+import { ControlledInput } from "components/organisms/ControlledInput";
+import SearchIcon from "@mui/icons-material/Search";
+import { colors } from "constants/common";
 
+const activities = [
+  {
+    time: "20 mins ago",
+    type: "Removed",
+    label: "bill",
+    link: "Secure the Border Act of 2023",
+    icon: archiveminus,
+  },
+  {
+    time: "4 hrs ago",
+    type: "Added",
+    label: "bill",
+    link: "Secure the Border Act of 2023",
+    icon: archiveadd,
+  },
+  {
+    time: "Yesterday, 5:34 pm",
+    type: "Edited",
+    label: "Profile",
+    link: "",
+    icon: useredit,
+  },
+  {
+    time: "Yesterday, 2:45 pm",
+    type: "Removed",
+    label: "Legislature",
+    link: "Texas",
+    icon: minuscirlce,
+  },
+  {
+    time: "22/04/2023, 8:22 am",
+    type: "Added",
+    label: "Legislature",
+    link: "Alaska",
+    icon: addcircle,
+  },
+  {
+    time: "21/04/2023, 8:19 am",
+    type: "Logged in",
+    label: "account",
+    link: "",
+    icon: login,
+  },
+  {
+    time: "20/04/2023, 7:32 am",
+    type: "Logged out",
+    label: "account",
+    link: "",
+    icon: logout,
+  },
+  {
+    time: "4w ago",
+    type: "Removed",
+    label: "bill",
+    link: "Secure the Border Act of 2023",
+    icon: archiveminus,
+  },
+  {
+    time: "5w ago",
+    type: "Added",
+    label: "bill",
+    link: "Secure the Border Act of 2023",
+    icon: archiveadd,
+  },
+  {
+    time: "6w ago",
+    type: "Edited",
+    label: "Profile",
+    link: "",
+    icon: useredit,
+  },
+  {
+    time: "7w ago",
+    type: "Removed",
+    label: "Legislature",
+    link: "Texas",
+    icon: minuscirlce,
+  },
+  {
+    time: "2 months ago",
+    type: "Added",
+    label: "Legislature",
+    link: "Alaska",
+    icon: addcircle,
+  },
+  {
+    time: "3 months ago",
+    type: "Logged in",
+    label: "account",
+    link: "",
+    icon: login,
+  },
+  {
+    time: "4 months ago",
+    type: "Logged out",
+    label: "account",
+    link: "",
+    icon: logout,
+  },
+];
+
+const ACTIVITY_OPTIONS = [
+  { id: 1, label: "All Activity", value: "all" },
+  { id: 1, label: "Added a bill", value: "add_bill" },
+  { id: 1, label: "Removed a bill", value: "removed_bill" },
+  { id: 1, label: "Edited a bill", value: "edited_bill" },
+];
+
+const PERIOD_OPTIONS = [
+  { id: 1, label: "Last 180 days", value: "180_days" },
+  { id: 1, label: "Last 30 days", value: "30_days" },
+  { id: 1, label: "Last 7 days", value: "7_days" },
+];
+
+type TActivitySearchForm = Partial<{
+  activity: string;
+  searchValue: string;
+  noOfDays: string;
+}>;
 
 export function ActivityFeed() {
-  const [activityFilter, setActivityFilter] = useState("All activity");
-
-  const activities = [
-    {
-      time: "20 mins ago",
-      type: "Removed",
-      label: "bill",
-      link: "Secure the Border Act of 2023",
-      icon: archiveminus,
-    },
-    {
-      time: "4 hrs ago",
-      type: "Added",
-      label: "bill",
-      link: "Secure the Border Act of 2023",
-      icon: archiveadd,
-    },
-    {
-      time: "Yesterday, 5:34 pm",
-      type: "Edited",
-      label: "Profile",
-      link: "",
-      icon: useredit,
-    },
-    {
-      time: "Yesterday, 2:45 pm",
-      type: "Removed",
-      label: "Legislature",
-      link: "Texas",
-      icon: minuscirlce,
-    },
-    {
-      time: "22/04/2023, 8:22 am",
-      type: "Added",
-      label: "Legislature",
-      link: "Alaska",
-      icon: addcircle,
-    },
-    {
-      time: "21/04/2023, 8:19 am",
-      type: "Logged in",
-      label: "account",
-      link: "",
-      icon: login,
-    },
-    {
-      time: "20/04/2023, 7:32 am",
-      type: "Logged out",
-      label: "account",
-      link: "",
-      icon: logout,
-    },
-    {
-      time: "4w ago",
-      type: "Removed",
-      label: "bill",
-      link: "Secure the Border Act of 2023",
-      icon: archiveminus,
-    },
-    {
-      time: "5w ago",
-      type: "Added",
-      label: "bill",
-      link: "Secure the Border Act of 2023",
-      icon: archiveadd,
-    },
-    {
-      time: "6w ago",
-      type: "Edited",
-      label: "Profile",
-      link: "",
-      icon: useredit,
-    },
-    {
-      time: "7w ago",
-      type: "Removed",
-      label: "Legislature",
-      link: "Texas",
-      icon: minuscirlce,
-    },
-    {
-      time: "2 months ago",
-      type: "Added",
-      label: "Legislature",
-      link: "Alaska",
-      icon: addcircle,
-    },
-    {
-      time: "3 months ago",
-      type: "Logged in",
-      label: "account",
-      link: "",
-      icon: login,
-    },
-    {
-      time: "4 months ago",
-      type: "Logged out",
-      label: "account",
-      link: "",
-      icon: logout,
-    },
-  ];
-
-  
-
-
-  
+  const {
+    control: activityControl,
+    formState: { errors: activityFormErrors },
+    getValues,
+  } = useForm<TActivitySearchForm>({
+    resolver: yupResolver(activitySearchSchema),
+  });
 
   return (
     <div className="w-full h-screen p-4 bg-gray-100">
@@ -150,33 +175,30 @@ export function ActivityFeed() {
 
       <div className="h-screen p-8 px-9 py-6 mb-4 mx-9 mt-5 bg-white rounded-xl">
         <div className="flex flex-row justify-between">
-          <div className="flex gap-4">
-            <select
-              value={activityFilter}
-              onChange={(e) => setActivityFilter(e.target.value)}
-              className="border bg-white border-gray p-2 rounded"
-            >
-              <option>Last 180 days</option>
-              <option>Last 30 days</option>
-              <option>Last 7 days</option>
-            </select>
-
-            <select
-              value={activityFilter}
-              onChange={(e) => setActivityFilter(e.target.value)}
-              className="border bg-white border-gray p-2 rounded"
-            >
-              <option>All Activity</option>
-              <option>Added a bill</option>
-              <option>Removed a bill</option>
-              <option>Edited Profile</option>
-            </select>
+          <div className="flex gap-4 w-80">
+            <ControlledSelect
+              name="noOfDays"
+              control={activityControl}
+              defaultValue="180_days"
+              options={PERIOD_OPTIONS}
+              helperText={activityFormErrors.noOfDays?.message as string}
+            />
+            <ControlledSelect
+              name="activity"
+              control={activityControl}
+              defaultValue="all"
+              options={ACTIVITY_OPTIONS}
+              helperText={activityFormErrors.activity?.message as string}
+            />
           </div>
-
-          <input
-            type="text"
+          <ControlledInput
+            name="searchValue"
             placeholder="Search Activity"
-            className="border bg-white border-gray-300 p-2 rounded w-64"
+            control={activityControl}
+            leftIcon={<SearchIcon />}
+            backgroundColor={colors.neutral50}
+            containerClasses="w-52 bg-neutral50"
+            helperText={activityFormErrors.searchValue?.message as string}
           />
         </div>
 
@@ -186,7 +208,9 @@ export function ActivityFeed() {
           {activities.map((activity, index) => (
             <div key={index} className="flex flex-col gap-6 text-justify">
               <div className="flex item-start gap-2 text-justify">
-                <span className="text-gray-500 text-sm text-justify ">{activity.time}</span>
+                <span className="text-gray-500 text-sm text-justify ">
+                  {activity.time}
+                </span>
 
                 <div className="flex items-center gap-2 text-justify">
                   <span
@@ -224,7 +248,10 @@ export function ActivityFeed() {
                     </strong>{" "}
                     {activity.label}
                     {activity.link && (
-                      <a href="#" className="text-blue-500 ml-1 border-bg-blue border-blue text-justify">
+                      <a
+                        href="#"
+                        className="text-blue-500 ml-1 border-bg-blue border-blue text-justify"
+                      >
                         {activity.link}
                       </a>
                     )}
