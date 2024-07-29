@@ -6,11 +6,12 @@ export enum Routes {
   ConfirmEmail = "/confirm-email",
   AccountSetup = "/account-setup",
   ResetPassword = "/reset-password",
-  
- 
 
   // Authenticated
   Dashboard = "/dashboard",
   ChangePassword = "/change-password",
   ActivityFeed = "/dashboard/activity-feed",
+  DetailsOfBill = "/dashboard/bill",
+  RepProfile = "/dashboard/representative",
+  Profile = "/dashboard/profile",
 }

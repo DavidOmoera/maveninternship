@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   List,
   ListItem,
@@ -11,7 +11,6 @@ import {
   Checkbox,
   Divider,
 } from "@mui/material";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import StartOutlinedIcon from "@mui/icons-material/StartOutlined";
 import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
 import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
@@ -20,27 +19,27 @@ import { Button } from "components/atoms/Button";
 import { DashboardExplore } from "components/atoms/DashboardExplore";
 import coterieBot from "assets/coterie_bot.svg";
 import bills from "assets/bills.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import edited from "assets/edited.svg";
 import closed from "assets/closed.svg";
 import done from "assets/done.svg";
-import notification from "assets/notification.svg";
-import message from "assets/message.svg";
-import profilePicture from "assets/profile_picture.png";
 import { Pill } from "components/molecules/Pill";
+
 import {
   BILL_TYPES,
   BILL_YEARS,
   topRepresentatives,
   watchedBills,
 } from "constants/common";
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { billSearchSchema } from "constants/schemas";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import { ControlledSelect } from "components/organisms/ControlledSelect";
 import CustomTextField from "components/molecules/CustomTextField";
+import { Routes } from "types/routes";
+import { Bill } from "components/organisms/Bill";
+import { PageContainer } from "components/templates/PageContainer";
 
 const stages = [
   "Filed",
@@ -74,6 +73,7 @@ export const Dashboard: React.FC = () => {
   const handleOpenBillStatusDialog = () => setOpenBillStatusDialog(true);
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     control,
@@ -140,6 +140,10 @@ export const Dashboard: React.FC = () => {
     );
   };
 
+  function onClickBill() {
+    navigate(Routes.DetailsOfBill);
+  }
+
   const handleSaveBillStatus = () => {
     handleCloseBillStatusDialog();
   };
@@ -149,6 +153,10 @@ export const Dashboard: React.FC = () => {
   }
 
   function goToRepresentatives() {}
+
+  function onClickRepresentative() {
+    navigate(Routes.RepProfile);
+  }
 
   function toggleUpdatesSection() {
     setAreUpdatesVisible((prevState) => !prevState);
@@ -160,32 +168,12 @@ export const Dashboard: React.FC = () => {
     console.log("search form data", formData);
   };
 
-  return (
-    <div className="col h-full">
-      {/* Header */}
-      <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
-        <h1 className="text-neutral950 font-extrabold text-4xl">Dashboard</h1>
-        <div className="row gap-6">
-          <div className="row gap-3">
-            <img src={message} className="cursor-pointer" />
-            <img src={notification} className="cursor-pointer" />
-          </div>
-          <div className="row gap-3 items-center">
-            <img src={profilePicture} />
-            <article className="col gap-1">
-              <h6 className="text-neutral950 font-bold">Anita Lever</h6>
-              <p>
-                <span className="text-neutral600 text-sm font-medium">
-                  Coterie
-                </span>{" "}
-                <span className="text-primary text-sm font-extrabold">Pro</span>
-              </p>
-            </article>
-            <ExpandMoreOutlinedIcon />
-          </div>
-        </div>
-      </div>
+  useEffect(() => {
+    if (location.pathname) window.scrollTo(0, 0);
+  }, [location.pathname]);
 
+  return (
+    <PageContainer title="Dashboard">
       {/* Main Content */}
       <div className="flex-1 bg-gray-100 px-9 flex">
         <div className="flex-1 basis-[74%] pr-4">
@@ -335,34 +323,13 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** All bills */}
-            <div className="row gap-5 flex-wrap ">
+            <div className="row gap-5 flex-wrap mt-8">
               {watchedBills.map((watchedBill) => (
-                <div
-                  key={watchedBill.state}
-                  className="w-[349px] h-[245px] px-4 pt-5"
-                >
-                  <div className="row justify-between items-center">
-                    <Pill
-                      text={watchedBill.state}
-                      textClass="font-semibold text-primary text-sm"
-                    />
-                    <MoreHorizOutlinedIcon />
-                  </div>
-
-                  <h4 className="line-clamp-2 py-2">{watchedBill.title}</h4>
-                  <div className="row justify-between items-center pb-3">
-                    <h6 className="text-primary text-sm font-semibold">
-                      {watchedBill.status}
-                    </h6>
-                    <p className="text-neutral500 text-xs line-clamp-3">
-                      {watchedBill.relativeTime}
-                    </p>
-                  </div>
-
-                  <p className="text-sm text-neutral500">
-                    {watchedBill.description}
-                  </p>
-                </div>
+                <Bill
+                  key={watchedBill.description}
+                  onClick={onClickBill}
+                  {...watchedBill}
+                />
               ))}
             </div>
           </section>
@@ -431,6 +398,7 @@ export const Dashboard: React.FC = () => {
                   <div
                     className="gap-3 cursor-pointer"
                     key={representative.title}
+                    onClick={onClickRepresentative}
                   >
                     <h6 className="text-primary font-bold text-[14px] pb-4">
                       {representative.title}
@@ -525,6 +493,6 @@ export const Dashboard: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </PageContainer>
   );
 };

@@ -27,7 +27,7 @@ p {
 }
 
 .btn {
-  @apply h-[3rem] flex items-center justify-center rounded-lg px-14 py-3 text-base whitespace-nowrap shadow-sm hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:brightness-100;
+  @apply h-[3rem] flex items-center justify-center rounded-lg px-5 py-3 text-base whitespace-nowrap shadow-sm hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:brightness-100;
 }
 
 .btn-primary {

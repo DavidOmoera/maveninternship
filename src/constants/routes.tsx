@@ -11,7 +11,9 @@ import { Dashboard } from "components/pages/Dashboard";
 import { Auth } from "components/templates/Auth";
 import { AccountSetup } from "components/pages/AccountSetup";
 import { ActivityFeed } from "components/pages/ActivityFeed";
-
+import DetailsOfBill from "components/pages/DetailsOfBill";
+import { RepProfile } from "components/pages/RepProfile";
+import { Profile } from "components/pages/Profile";
 
 const routes = createBrowserRouter([
   {
@@ -41,7 +43,6 @@ const routes = createBrowserRouter([
         path: Routes.ResetPassword,
         element: <ResetPassword />,
       },
-      
     ],
   },
   {
@@ -50,14 +51,25 @@ const routes = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: Routes.Dashboard,
+        path: "",
         element: <Dashboard />,
       },
       {
         path: Routes.ActivityFeed,
         element: <ActivityFeed />,
       },
-      
+      {
+        path: Routes.DetailsOfBill,
+        element: <DetailsOfBill />,
+      },
+      {
+        path: Routes.RepProfile,
+        element: <RepProfile />,
+      },
+      {
+        path: Routes.Profile,
+        element: <Profile />,
+      },
     ],
   },
 ]);
