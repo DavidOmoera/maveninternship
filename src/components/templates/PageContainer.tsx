@@ -73,7 +73,9 @@ export function PageContainer({
                 <span className="text-neutral600 text-sm font-medium">
                   Coterie
                 </span>
-                <span className="text-primary text-sm font-extrabold">Pro</span>
+                <span className="text-primary text-sm font-extrabold pl-1">
+                  Pro
+                </span>
               </p>
             </article>
           </div>
