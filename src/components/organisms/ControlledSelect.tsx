@@ -4,7 +4,7 @@ import { DEFAULT_FONT_NAME } from "constants/common";
 import { Dispatch, SetStateAction } from "react";
 import { Control, Controller } from "react-hook-form";
 
-type TTControlledSelectProps = {
+export type TTControlledSelectProps = {
   name: string;
   options: TOption[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
