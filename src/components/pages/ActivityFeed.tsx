@@ -38,9 +38,10 @@ export function ActivityFeed() {
   return (
     <PageContainer
       title="Activity Feed"
-      className="w-full h-screen bg-gray-100"
+      className="w-full bg-gray-100"
     >
       <div className="p-9 mb-9 mx-9 mt-6 bg-white rounded-xl">
+        {/** Input fields */}
         <div className="row justify-between mb-9">
           <div className="flex gap-3 w-96">
             <ControlledSelect
@@ -69,6 +70,7 @@ export function ActivityFeed() {
           />
         </div>
 
+        {/** Activity feed */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {ACTIVITIES.map(
             ({ time, icon, type, label, iconBackgroundColor, link }, index) => (
