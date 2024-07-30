@@ -2,6 +2,7 @@ import { Dialog } from "@mui/material";
 import CloseIcon from "assets/start.svg";
 import SettingsIcon from "assets/setting-notif.svg";
 import SenMat from "assets/senate_mat.svg";
+import { Dashboard } from "components/pages/Dashboard";
 
 interface NotificationItems {
   title: string;
@@ -63,9 +64,14 @@ export function Notifications({ open }: TNotificationsProps) {
             <img
               src={SettingsIcon}
               alt="setting icon"
+              className="cursor-pointer p-3"
+            />
+            <img
+              src={CloseIcon}
+              alt="Close Icon"
+              onClick={Dashboard}
               className="cursor-pointer"
             />
-            <CloseIcon />
           </div>
         </div>
 
@@ -76,14 +82,16 @@ export function Notifications({ open }: TNotificationsProps) {
               className="flex items-start py-2 border-b border-gray-200"
             >
               <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-4"></div>
-              <img
-                src={SenMat}
-                alt="mat-photo"
-                className="w-8 h-8 rounded-full mr-4"
-              />
+
               <div className="flex-1">
-                <p className="{`text-sm ${notification.status === 'rejected' ? 'text-red-500' : notification.status === 'passed' ? 'text-green-500' : notification.status === 'signing' ? 'text-blue-500' : ''}`}">
+                <p className={`text-sm ${notification.status === 'rejected' ? 'text-red-500' : notification.status === 'passed' ? 'text-green-500' : notification.status === 'signing' ? 'text-blue-500' :  ''}`}>
                   {notification.title}
+
+                  <img
+                    src={SenMat}
+                    alt="mat-photo"
+                    className="w-8 h-8 rounded-md mr-4"
+                  />
                   <span className="block text-gray-600 text-xs">
                     Sen. Mat Adams
                   </span>
