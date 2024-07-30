@@ -1,74 +1,118 @@
-import { TextField } from "@mui/material";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ArrowRight } from "assets/ArrowRight";
+import classNames from "classnames";
 import { Button } from "components/atoms/Button";
-// import WestIcon from '@mui/icons-material/West';
-// import EastIcon from '@mui/icons-material/East';
+import { Pill } from "components/molecules/Pill";
+import { AboutUser } from "components/organisms/AboutUser";
+import { colors } from "constants/common";
+import { aboutUserSchema } from "constants/schemas";
+import { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
 
+export type TAboutUserForm = {
+  firstName: string;
+  lastName: string;
+  industryAffiliation: string;
+  industrySize: string;
+};
+
+const TOTAL_STEPS = 4;
+const STEP_TITLES = [
+  "Account Setup",
+  "Personal Account Set-Up",
+  "Organization Account Set-Up",
+  "Account Setup",
+  "Account Setup",
+];
 
 export function AccountSetup() {
-  function handleAccountSetup() {}
+  const [step, setStep] = useState(1);
+
+  const {
+    control: aboutUserControl,
+    handleSubmit: handleAboutUserFormSubmit,
+    formState: {
+      errors: aboutUserFormErrors,
+      isDirty: isAboutUserFormDirty,
+      isSubmitting: isAboutUserFormSubmitting,
+      isValid: isAboutUserFormValid,
+    },
+  } = useForm<TAboutUserForm>({
+    resolver: yupResolver(aboutUserSchema),
+  });
+
+  const isNextButtonDisabled = useMemo(() => {
+    switch (step) {
+      case 1:
+        return (
+          !isAboutUserFormDirty ||
+          !isAboutUserFormValid ||
+          isAboutUserFormSubmitting
+        );
+
+      default:
+        break;
+    }
+  }, [
+    isAboutUserFormDirty,
+    isAboutUserFormSubmitting,
+    isAboutUserFormValid,
+    step,
+  ]);
+
+  const isPreviousButtonDisabled = useMemo(() => step === 1, [step]);
+
+  function goToPreviousStep() {
+    if (step !== 0) setStep((prevStep) => prevStep - 1);
+  }
+
+  function goToNextStep() {
+    if (step < TOTAL_STEPS) setStep((prevStep) => prevStep + 1);
+  }
 
   return (
-    <div className="w-full flex flex-col justify-center items-center h-full p-4">
-      <div className="w-[464px] flex flex-col items-center gap-4">
-        <h3 className="font-extrabold text-xl">Personal Account Set-up</h3>
-        <div className="w-full flex justify-between items-center">
-          <span className="text-sm font-bold">1/3</span>
-          <div className="flex-1 h-1 mx-2 bg-gray-200">
-            <div className="w-1/3 h-full bg-blue-500"></div>
+    <div className="w-full col items-center h-[90vh] mt-16">
+      <div className="w-[70%] col justify-between h-full">
+        <div className="gap-4">
+          <div className="row w-full justify-between">
+            <h4 className="font-extrabold text-xl">{STEP_TITLES[step]}</h4>
+            <Pill text={`${step}/${TOTAL_STEPS}`} />
           </div>
+          <div className="w-full flex justify-between mt-7 mb-10">
+            <div className="flex-1 h-1 mx-2 bg-gray-200">
+              <div
+                className={classNames("h-full bg-blue-500", {
+                  "w-1/4": step === 1,
+                  "w-2/4": step === 2,
+                  "w-3/4": step === 3,
+                  "w-full": step === 4,
+                })}
+              />
+            </div>
+          </div>
+          {step === 1 && (
+            <AboutUser
+              control={aboutUserControl}
+              errors={aboutUserFormErrors}
+            />
+          )}
         </div>
 
-        <h2 className="font-extrabold text-2xl">Create your Account</h2>
-        <p className="text-neutral450 text-center">
-          Empower your experience, sign up for a premium account today.
-        </p>
-        <h3 className="font-extrabold text-lg w-full text-left">About You</h3>
-        <div className="flex flex-col gap-4 mt-4 mb-6 w-full">
-          <div className="flex gap-4">
-            <TextField
-              fullWidth
-              label="First Name"
-              type="first-name"
-              variant="outlined"
-            />
-
-            <TextField
-              fullWidth
-              label="Last Name"
-              type="last-name"
-              variant="outlined"
-            />
-          </div>
-
-          <div className="flex gap-4">
-            <TextField
-              fullWidth
-              label="Industry Affiliation"
-              type="industry-affiliation"
-              variant="outlined"
-            />
-
-            <TextField
-              fullWidth
-              label="Industry Size"
-              type="industry-size"
-              variant="outlined"
-            />
-          </div>
-        </div>
-
-        <div className="w-full flex justify-between mt-6">
+        <div className="w-full  bottom-0 flex justify-between mt-6">
           <Button
-            // icon={WestIcon}
-            text="<< Previous"
-            className="bg-white-500"
-            onClick={handleAccountSetup}
+            text="Previous"
+            disabled={isPreviousButtonDisabled}
+            variant="secondary"
+            leftIcon={
+              <ArrowRight color={colors.primary} className="rotate-180" />
+            }
+            onClick={goToPreviousStep}
           />
           <Button
-            //icon={EastIcon}
-            text="Next >>"
-            className="text-white bg-blue-500"
-            onClick={handleAccountSetup}
+            text="Next"
+            disabled={isNextButtonDisabled}
+            onClick={goToNextStep}
+            rightIcon={<ArrowRight />}
           />
         </div>
       </div>

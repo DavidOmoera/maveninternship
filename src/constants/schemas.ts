@@ -59,3 +59,13 @@ export const orgContactSchema = yup.object().shape({
     })
     .required(),
 });
+
+export const aboutUserSchema = yup.object().shape({
+  firstName: yup.string().trim().required("Please enter your first name"),
+  lastName: yup.string().trim().required("Please enter your last name"),
+  industryAffiliation: yup
+    .string()
+    .trim()
+    .required("Please enter your industry affiliation"),
+  industrySize: yup.string().trim().required("Please enter your industry size"),
+});
