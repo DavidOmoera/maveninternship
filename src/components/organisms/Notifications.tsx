@@ -90,7 +90,7 @@ export function Notifications({ open }: TNotificationsProps) {
                   <img
                     src={SenMat}
                     alt="mat-photo"
-                    className="w-8 h-8 rounded-md mr-4"
+                    className="w-8 h-8 rounded-md mr-4 md:flex"
                   />
                   <span className="block text-gray-600 text-xs">
                     Sen. Mat Adams
