@@ -11,6 +11,12 @@ export const billSearchSchema = yup.object().shape({
   year: yup.string().trim(),
 });
 
+export const activitySearchSchema = yup.object().shape({
+  searchValue: yup.string().trim(),
+  activity: yup.string().trim(),
+  noOfDays: yup.string().trim(),
+});
+
 export const feedbackSchema = yup.object().shape({
   issues: yup.string().trim().required("Please select an issue"),
   duration: yup.string().trim().required("Please choose a duration"),
@@ -52,4 +58,14 @@ export const orgContactSchema = yup.object().shape({
       message: "Enter a valid zip code",
     })
     .required(),
+});
+
+export const aboutUserSchema = yup.object().shape({
+  firstName: yup.string().trim().required("Please enter your first name"),
+  lastName: yup.string().trim().required("Please enter your last name"),
+  industryAffiliation: yup
+    .string()
+    .trim()
+    .required("Please enter your industry affiliation"),
+  industrySize: yup.string().trim().required("Please enter your industry size"),
 });

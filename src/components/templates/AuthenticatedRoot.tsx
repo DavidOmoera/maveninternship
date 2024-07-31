@@ -175,7 +175,7 @@ export function AuthenticatedRoot() {
         <div className="my-6 mx-4 px-5 py-6 bg-accent50 col items-center rounded-xl">
           <p className="text-sm pb-2 text-neutral400">My Workspace</p>
           <h6 className="pb-4">Select Legislature</h6>
-          <div className="col gap-2 overflow-y-auto max-h-60">
+          <div className="col gap-2 overflow-y-auto max-h-60 items-center max-w-[90%]">
             {selectedStates.map((state) => {
               const isChecked = isLegislatureSelected(state.code);
 
@@ -193,7 +193,7 @@ export function AuthenticatedRoot() {
             })}
           </div>
           <div
-            className="row justify-center p-2 gap-1 mt-2 border border-primary border-dashed rounded-lg w-[248px] cursor-pointer"
+            className="row justify-center p-2 gap-1 mt-2 border border-primary border-dashed rounded-lg cursor-pointer"
             onClick={onOpenLegislatureModal}
           >
             <AddOutlinedIcon />

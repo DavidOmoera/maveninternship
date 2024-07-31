@@ -26,7 +26,7 @@ export function SimilarBills() {
       </div>
       <div className="grid grid-cols-3 gap-5">
         {watchedBills.map((bill) => (
-          <Bill key={bill.description} onClick={onClickBill} {...bill} />
+          <Bill key={bill.state + bill.description} onClick={onClickBill} {...bill} />
         ))}
       </div>
     </div>

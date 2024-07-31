@@ -326,7 +326,7 @@ export const Dashboard: React.FC = () => {
             <div className="row gap-5 flex-wrap mt-8">
               {watchedBills.map((watchedBill) => (
                 <Bill
-                  key={watchedBill.description}
+                  key={watchedBill.state + watchedBill.description}
                   onClick={onClickBill}
                   {...watchedBill}
                 />

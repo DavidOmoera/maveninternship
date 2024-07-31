@@ -124,16 +124,15 @@ export function Voting() {
       {activeTab === ETabs.ALL ? (
         <div className="py-6">
           {VOTING_SECTIONS.map((votingSection, index) => (
-            <>
+            <div key={votingSection.title}>
               <VotingSection
-                key={votingSection.title}
                 title={votingSection.title}
                 voters={votingSection.voters}
               />
               {index !== VOTING_SECTIONS.length - 1 ? (
                 <hr className="bg-neutral100 my-6" />
               ) : null}
-            </>
+            </div>
           ))}
         </div>
       ) : null}
