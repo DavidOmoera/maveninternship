@@ -8,7 +8,7 @@ import mastercard from "assets/mastercard.svg";
 import pencil from "assets/pencil.svg";
 import successCheck from "assets/success_check.svg";
 import orgLogo from "assets/org_logo.png";
-
+import visaLogo from "assets/visa_logo.svg";
 import { Pill } from "components/molecules/Pill";
 import { CoterieBot } from "assets/CoterieBot";
 import { colors } from "constants/common";
@@ -23,12 +23,16 @@ import {
   feedbackSchema,
   orgContactSchema,
   orgDetailsSchema,
+  changePasswordSchema,
+  EditProfileSchema,
+  ManagePaymentMethodSchema,
 } from "constants/schemas";
 import { useState } from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import Checkbox from "@mui/material/Checkbox";
 
 const CONTACT_DETAILS = [
   { icon: envelope, text: "09090909090" },
@@ -110,12 +114,36 @@ type TOrgContactForm = {
   zip_code: string;
 };
 
+type TChangePasswordForm = {
+  current_password: string;
+  new_password: string;
+  confirm_password: string;
+};
+
+type TEditProfileForm = {
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  email_address: string;
+}
+
+type TManagePaymentMethodForm = {
+  card_number: string;
+  expiry_date: string;
+  cvv: string;
+  card_holder_name: string;
+}
+
 export function Profile() {
   const [showFeedbackSuccess, setFeedbackSuccess] = useState<boolean>(false);
   const [showOrganizationDetailsForm, setShowOrganizationDetailsForm] =
     useState<boolean>(false);
   const [showOrganizationContactForm, setShowOrganizationContactForm] =
     useState<boolean>(false);
+    const [showChangePasswordForm, setShowChangePasswordForm] = useState<boolean>(false);
+    const [showEditProfileForm, setShowEditProfileForm] = useState<boolean>(false);
+    const [showManagePaymentMethodForm, setShowManagePaymentMethodForm] = useState(false);
+    
 
   const {
     control: feedbackControl,
@@ -141,11 +169,42 @@ export function Profile() {
     resolver: yupResolver(orgContactSchema),
   });
 
+  const {
+    control: changePasswordControl,
+    handleSubmit: handleChangePasswordSubmit,
+    formState: { errors: changePasswordErrors, isValid: isChangePasswordFormValid },
+  } = useForm<TChangePasswordForm>({
+    resolver: yupResolver(changePasswordSchema),
+  });
+
+  const {
+    control: EditProfileControl,
+    handleSubmit: handleEditProfileSubmit,
+    formState: { errors: EditProfileErrors, isValid: isEditProfileFormValid },
+  } = useForm<TEditProfileForm>({
+    resolver: yupResolver(EditProfileSchema),
+  });
+
+  const {
+    control: ManagePaymentMethodControl,
+    handleSubmit: handleManagePaymentMethodSubmit,
+    formState: { errors: ManagePaymentMethodErrors, isValid: isManagePaymentMethodFormValid },
+  } = useForm<TManagePaymentMethodForm>({
+    resolver: yupResolver(ManagePaymentMethodSchema),
+  });
+  
+
   function onClickChangePhoto() {}
-  function onClickEditProfile() {}
-  function onClickChangePassword() {}
+  function onClickEditProfile() {
+    setShowEditProfileForm(true);
+  }
+  function onClickChangePassword() {
+    setShowChangePasswordForm(true);
+  }
   function onClickChangePlan() {}
-  function onClickManagePaymentMethod() {}
+  function onClickManagePaymentMethod() { 
+    setShowManagePaymentMethodForm(true);
+  }
   function onClickEditOrgDetails() {
     setShowOrganizationDetailsForm(true);
   }
@@ -186,6 +245,28 @@ export function Profile() {
     if (isOrgContactFormValid) setShowOrganizationContactForm(false);
   };
 
+  const onSaveChangePassword: SubmitHandler<TChangePasswordForm> = (
+    formData: TChangePasswordForm
+  ) => {
+    console.log("change password", formData);
+    if (isChangePasswordFormValid) setShowChangePasswordForm(false);
+  };
+
+  const onSaveEditProfile: SubmitHandler<TEditProfileForm> = (
+    formData: TEditProfileForm
+  ) => {
+    console.log("edit profile", formData);
+    if (isEditProfileFormValid) setShowEditProfileForm(false);
+  };
+
+  const onSaveManagePaymentMethod: SubmitHandler<TManagePaymentMethodForm> = (
+    formData: TManagePaymentMethodForm
+  ) => {
+    console.log("manage payment method", formData);
+    if (isManagePaymentMethodFormValid) setShowManagePaymentMethodForm(false);
+  };
+  
+ 
   return (
     <PageContainer title="Profile">
       <div className="grid grid-cols-2 gap-6 mx-9">
@@ -502,6 +583,233 @@ export function Profile() {
           />
         </div>
       </Dialog>
-    </PageContainer>
+      <Dialog
+        open={showChangePasswordForm}
+        onClose={() => setShowChangePasswordForm(false)}
+        fullWidth
+      >
+        <div className="col gap-6 p-9 w-full">
+          <div className="row justify-between pb-3 border-b border-neutral50">
+            <h3 className="text-neutral950">Change Password</h3>
+            <IconButton onClick={() => setShowChangePasswordForm(false)}>
+              <CloseOutlinedIcon />
+            </IconButton>
+          </div>
+          <div className="col gap-6">
+            <ControlledInput
+              control={changePasswordControl}
+              name="current_password"
+              label="Current Password"
+              type="password"
+              required
+              placeholder="Current Password"
+              error={!!changePasswordErrors?.current_password}
+              helperText={
+                (changePasswordErrors?.current_password?.message as string) ?? ""
+              }
+            />
+            <ControlledInput
+              control={changePasswordControl}
+              name="new_password"
+              label="New Password"
+              type="password"
+              required
+              placeholder="New Password"
+              error={!!changePasswordErrors?.new_password}
+              helperText={
+                (changePasswordErrors?.new_password?.message as string) ?? ""
+              }
+            />
+            <ControlledInput
+              control={changePasswordControl}
+              name="confirm_password"
+              label="Confirm New Password"
+              type="password"
+              required
+              placeholder="Confirm New Password"
+              error={!!changePasswordErrors?.confirm_password}
+              helperText={
+                (changePasswordErrors?.confirm_password?.message as string) ?? ""
+              }
+            />
+          </div>
+          <div className="row justify-end">
+            <Button
+              text="Save Changes"
+              onClick={handleChangePasswordSubmit(onSaveChangePassword)}
+            />
+          </div>
+        </div>
+      </Dialog>
+
+
+      <Dialog open={showEditProfileForm} 
+  onClose={() => setShowEditProfileForm(false)}
+  fullWidth
+>
+  <div className="col gap-6 p-9 w-full">
+    <div className="row justify-between pb-3 border-b border-neutral50">
+      <h3 className="text-neutral950">Edit Your Details</h3>
+      <IconButton onClick={() => setShowEditProfileForm(false)}>
+        <CloseOutlinedIcon />
+      </IconButton>
+    </div>
+    <div className="col gap-6">
+      <ControlledInput
+        name="first_name"
+        control={EditProfileControl}
+        placeholder="First Name"
+        label="First Name"
+        type="text"
+        required
+        error={!!EditProfileErrors?.first_name}
+        helperText={(EditProfileErrors?.first_name?.message as string) ?? ""}
+      />
+      <ControlledInput
+        name="last_name"
+        control={EditProfileControl}
+        placeholder="Last Name"
+        label="Last Name"
+        type="text"
+        required
+        error={!!EditProfileErrors?.last_name}
+        helperText={(EditProfileErrors?.last_name?.message as string) ?? ""}
+      />
+      <ControlledInput
+        name="phone_number"
+        control={EditProfileControl}
+        placeholder="Phone Number"
+        label="Phone Number"
+        type="text"
+        required
+        error={!!EditProfileErrors?.phone_number}
+        helperText={(EditProfileErrors?.phone_number?.message as string) ?? ""}
+      />
+      <ControlledInput
+        name="email_address"
+        control={EditProfileControl}
+        placeholder="Email Address"
+        label="Email Address"
+        type="email"
+        required
+        error={!!EditProfileErrors?.email_address}
+        helperText={(EditProfileErrors?.email_address?.message as string) ?? ""}
+      />
+    </div>
+    <div className="row justify-end">
+      <Button
+        text="Save Changes"
+        onClick={handleEditProfileSubmit(onSaveEditProfile)}
+      />
+    </div>
+  </div>
+</Dialog>
+
+<Dialog open={showManagePaymentMethodForm} onClose={() => setShowManagePaymentMethodForm(false)} fullWidth>
+  <div className="col gap-6 p-9 w-full">
+    <div className="relative">
+      {/* Close Button */}
+      <IconButton
+        onClick={() => setShowManagePaymentMethodForm(false)}
+        style={{ position: 'absolute', top: '0px', right: '0px' }} // Adjust positioning as needed
+      >
+        <CloseOutlinedIcon />
+      </IconButton>
+      <div className="row pb-3 border-b border-neutral50" style={{ display: 'flex', flexDirection: 'column' }}>
+        <h3 className="text-neutral950">Manage Payment Method</h3>
+        <h5
+          style={{
+            fontFamily: 'Mulish, sans-serif',
+            fontSize: '20px',
+            fontWeight: '700',
+            lineHeight: '28px',
+            letterSpacing: '-0.02em',
+            textAlign: 'left',
+            color: '#212121',
+            marginTop: '38px'
+          }}
+          className="text-neutral950"
+        >
+          Card Details
+        </h5>
+      </div>
+    </div>
+    <div className="col gap-6">
+      <div className="relative">
+        <img src={visaLogo} alt="Visa" className="absolute left-4 top-4 h-6" />
+        <ControlledInput
+          name="card_number"
+          control={ManagePaymentMethodControl}
+          placeholder="Card Number"
+          label="Card Number"
+          type="text"
+          required
+          error={!!ManagePaymentMethodErrors?.card_number}
+          helperText={(ManagePaymentMethodErrors?.card_number?.message as string) ?? ""}
+          className="pl-16" // Adjust padding to make space for the Visa logo
+        />
+      </div>
+      <div className="row gap-6">
+        <ControlledInput
+          name="expiry_date"
+          control={ManagePaymentMethodControl}
+          placeholder="MM/YY"
+          label="Expiry Date"
+          type="text"
+          required
+          error={!!ManagePaymentMethodErrors?.expiry_date}
+          helperText={(ManagePaymentMethodErrors?.expiry_date?.message as string) ?? ""}
+          className="w-1/2" // Adjust width as needed
+        />
+        <ControlledInput
+          name="cvv"
+          control={ManagePaymentMethodControl}
+          placeholder="CVV"
+          label="CVV"
+          type="text"
+          required
+          error={!!ManagePaymentMethodErrors?.cvv}
+          helperText={(ManagePaymentMethodErrors?.cvv?.message as string) ?? ""}
+          className="w-1/2" // Adjust width as needed
+        />
+      </div>
+      <ControlledInput
+        name="card_holder_name"
+        control={ManagePaymentMethodControl}
+        placeholder="Card Holder's Name"
+        label="Card Holder's Name"
+        type="text"
+        required
+        error={!!ManagePaymentMethodErrors?.card_holder_name}
+        helperText={(ManagePaymentMethodErrors?.card_holder_name?.message as string) ?? ""}
+      />
+    </div>
+    <div>
+      <p style={{
+        fontFamily: 'Mulish, sans-serif',
+        fontSize: '16px',
+        fontWeight: '400',
+        lineHeight: '25.6px',
+        letterSpacing: '-0.01em',
+        textAlign: 'left',
+        color: 'var(--Neutral-600, #5D5D5D)'
+      }}>
+        By checking the checkbox below, you agree that Legislative AI will automatically continue your membership and charge the membership fee (currently $1,000/month) to your payment method until you cancel. You may cancel at any time to avoid future charges.
+      </p>
+      <div className="row items-center mt-4">
+        <Checkbox id="agree" name="agree" className="mr-2" />
+        <label htmlFor="agree" className="text-neutral950">I agree</label>
+      </div>
+    </div>
+    <div className="row justify-end mt-6">
+      <Button
+        text="Save Payment Method"
+        onClick={handleManagePaymentMethodSubmit(onSaveManagePaymentMethod)}
+      />
+    </div>
+  </div>
+</Dialog>
+</PageContainer>
+            
   );
 }
