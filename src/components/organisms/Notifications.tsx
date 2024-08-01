@@ -1,8 +1,7 @@
 import { Dialog } from "@mui/material";
 import CloseIcon from "assets/start.svg";
 import SettingsIcon from "assets/setting-notif.svg";
-import SenMat from "assets/senate_mat.svg";
-import { Dashboard } from "components/pages/Dashboard";
+import SenMat from "assets/sen-adams.svg";
 
 interface NotificationItems {
   title: string;
@@ -13,42 +12,42 @@ interface NotificationItems {
 const notifications: NotificationItems[] = [
   {
     title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "default",
+    status: "Level 1",
     time: "2w ago",
   },
   {
     title: "Secure the Border Act of 2023 has been Rejected",
-    status: "rejected",
+    status: "Rejected",
     time: "2w ago",
   },
   {
     title: "Secure the Border Act of 2023 has commenced to Signing",
-    status: "signing",
+    status: "Signing",
     time: "2w ago",
   },
   {
     title: "Secure the Border Act of 2023 has commenced been Passed",
-    status: "passed",
+    status: "Passed",
     time: "2w ago",
   },
   {
     title: "Secure the Border Act of 2023 has commenced to Level 2",
-    status: "level2",
+    status: "Level 2",
     time: "2w ago",
   },
   {
     title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "default",
+    status: "Level 1",
     time: "2w ago",
   },
   {
     title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "default",
+    status: "Level 1",
     time: "2w ago",
   },
   {
     title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "default",
+    status: "Level 1",
     time: "2w ago",
   },
 ];
@@ -57,7 +56,7 @@ type TNotificationsProps = { open: boolean };
 export function Notifications({ open }: TNotificationsProps) {
   return (
     <Dialog open={open}>
-      <div className="w-full max-w-sm p-4 bg-white rounded-xl shadow-lg">
+      <div className="w-full max-w-md p-6 bg-white rounded-xl shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Notifications</h2>
           <div className="flex items-center">
@@ -66,36 +65,59 @@ export function Notifications({ open }: TNotificationsProps) {
               alt="setting icon"
               className="cursor-pointer p-3"
             />
-            <img
-              src={CloseIcon}
-              alt="Close Icon"
-              onClick={Dashboard}
-              className="cursor-pointer"
-            />
+            <button className="flex items-center ml-4 bg-gray-300 rounded-full">
+              <span className="pr-2">Close</span>
+              <img
+                src={CloseIcon}
+                alt="Close Icon"
+                className="cursor-pointer mr-2"
+              />
+            </button>
           </div>
         </div>
-
+        <hr className="mb-4" />
         <ul>
           {notifications.map((notification, index) => (
             <li
               key={index}
-              className="flex items-start py-2 border-b border-gray-200"
+              className="flex items-center py-4 border-b border-gray-200"
             >
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-4"></div>
-
+              <div className="w-2 h-2 bg-blue-800 rounded-full mr-4"></div>
               <div className="flex-1">
-                <p className={`text-sm ${notification.status === 'rejected' ? 'text-red-500' : notification.status === 'passed' ? 'text-green-500' : notification.status === 'signing' ? 'text-blue-500' :  ''}`}>
-                  {notification.title}
-
-                  <img
-                    src={SenMat}
-                    alt="mat-photo"
-                    className="w-8 h-8 rounded-md mr-4 md:flex"
-                  />
-                  <span className="block text-gray-600 text-xs">
-                    Sen. Mat Adams
+                <p
+                  className={`text-sm ${
+                    notification.status === "Rejected"
+                      ? "text-red-500"
+                      : notification.status === "Passed"
+                      ? "text-green-500"
+                      : notification.status === "Signing"
+                      ? "text-blue-800"
+                      : ""
+                  }`}
+                >
+                  <span className="font-bold text-blue-800">
+                    Secure the Border Act of 2023
+                  </span>{" "}
+                  has commenced to
+                  <span
+                    className={`font-bold ${
+                      notification.status === "Rejected"
+                        ? "text-red-500"
+                        : notification.status === "Passed"
+                        ? "text-green-500"
+                        : notification.status === "Signing"
+                        ? "text-blue-800"
+                        : "text-blue-800"
+                    }`}
+                  >
+                    {" "}
+                    {notification.status}
                   </span>
                 </p>
+                <div className="flex items-center">
+                  <img src={SenMat} alt="mat-photo" className="w-8 h-8 mr-2" />
+                  <span className="text-gray-600 text-xs">Sen. Mat Adams</span>
+                </div>
               </div>
               <span className="text-gray-500 text-xs">{notification.time}</span>
             </li>
