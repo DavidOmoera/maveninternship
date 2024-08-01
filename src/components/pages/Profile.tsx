@@ -1,5 +1,5 @@
 import { PageContainer } from "components/templates/PageContainer";
-import profilePicture from "assets/profile_picture_large.png";
+import profilePicture from "assets/profile_picture.webp";
 import photo from "assets/photo.svg";
 import envelope from "assets/envelope2.svg";
 import phone from "assets/phone.svg";
@@ -32,7 +32,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const CONTACT_DETAILS = [
   { icon: envelope, text: "09090909090" },
-  { icon: phone, text: "anitalever@greenfelder.com" },
+  { icon: phone, text: "jasminecrockett@uscongress.com" },
 ];
 
 const ORG_DETAILS = [
@@ -192,7 +192,10 @@ export function Profile() {
         <section className="col gap-5 p-9 rounded-xl bg-white">
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4">
-            <img src={profilePicture} className="w-20 h-20" />
+            <img
+              src={profilePicture}
+              className="w-20 h-20 object-cover rounded"
+            />
             <div className="col items-start gap-2">
               <h6 className="text-neutral950">Profile Photo</h6>
               <Pill
@@ -205,7 +208,7 @@ export function Profile() {
           </div>
           <div className="col p-6 gap-4 items-start bg-neutral50">
             <div className="row justify-between w-full">
-              <h2 className="text-neutral950">Anita Lever</h2>
+              <h2 className="text-neutral950">Jasmine Crockett</h2>
               <div
                 className="row gap-1 items-center cursor-pointer"
                 onClick={onClickEditProfile}
@@ -346,11 +349,12 @@ export function Profile() {
             />
           </div>
 
-          <Button
-            text="Submit"
-            className="w-full"
-            onClick={handleFeedbackFormSubmit(onSubmitFeedbackForm)}
-          />
+          <div className="w-full row justify-start">
+            <Button
+              text="Submit"
+              onClick={handleFeedbackFormSubmit(onSubmitFeedbackForm)}
+            />
+          </div>
         </section>
       </div>
       <Dialog

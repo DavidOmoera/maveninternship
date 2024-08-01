@@ -1,4 +1,4 @@
-import profilePicture from "assets/profile_picture.png";
+import profilePicture from "assets/profile_picture.webp";
 import coterieBot from "assets/coterie_bot.svg";
 import sendIcon from "assets/send_icon.svg";
 import XAndShare from "assets/X_and_share.svg";
@@ -73,7 +73,7 @@ export function ASK_AI() {
                       <img
                         src={profilePicture}
                         alt="Profile"
-                        className="w-10 h-10 rounded-full flex-shrink-0 mt-1"
+                        className="w-10 h-10 object-cover rounded-full flex-shrink-0 mt-1"
                       />
                     </>
                   ) : (

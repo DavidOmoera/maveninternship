@@ -17,7 +17,7 @@ export function AboutUser({ control, errors }: TAboutUserProps) {
       </p>
       <h3 className="font-extrabold text-lg w-full text-left">About You</h3>
       <div className="flex flex-col gap-4 mt-4 mb-6 w-full">
-        <div className="flex gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <ControlledInput
             control={control}
             label="First Name"
@@ -39,9 +39,6 @@ export function AboutUser({ control, errors }: TAboutUserProps) {
             error={!!errors?.lastName}
             helperText={(errors?.lastName?.message as string) ?? ""}
           />
-        </div>
-
-        <div className="flex gap-4">
           <ControlledInput
             control={control}
             label="Industry Affiliation"
