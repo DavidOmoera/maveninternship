@@ -707,33 +707,13 @@ export function Profile() {
 
 <Dialog open={showManagePaymentMethodForm} onClose={() => setShowManagePaymentMethodForm(false)} fullWidth>
   <div className="col gap-6 p-9 w-full">
-    <div className="relative">
-      {/* Close Button */}
-      <IconButton
-        onClick={() => setShowManagePaymentMethodForm(false)}
-        style={{ position: 'absolute', top: '0px', right: '0px' }} // Adjust positioning as needed
-      >
-        <CloseOutlinedIcon />
-      </IconButton>
-      <div className="row pb-3 border-b border-neutral50" style={{ display: 'flex', flexDirection: 'column' }}>
-        <h3 className="text-neutral950">Manage Payment Method</h3>
-        <h5
-          style={{
-            fontFamily: 'Mulish, sans-serif',
-            fontSize: '20px',
-            fontWeight: '700',
-            lineHeight: '28px',
-            letterSpacing: '-0.02em',
-            textAlign: 'left',
-            color: '#212121',
-            marginTop: '38px'
-          }}
-          className="text-neutral950"
-        >
-          Card Details
-        </h5>
-      </div>
-    </div>
+          <div className="row justify-between pb-3 border-b border-neutral50">
+            <h3 className="text-neutral950">Manage Payment Method</h3>
+            <IconButton onClick={() => setShowManagePaymentMethodForm(false)}>
+              <CloseOutlinedIcon />
+            </IconButton>
+          </div>
+          <h5 className="text-neutral950 mt-9 mb-6">Card Details</h5>
     <div className="col gap-6">
       <div className="relative">
         <img src={visaLogo} alt="Visa" className="absolute left-4 top-4 h-6" />
