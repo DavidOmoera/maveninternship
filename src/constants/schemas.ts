@@ -95,7 +95,7 @@ export const editProfileSchema = yup.object().shape({
   email_address: yup.string().email('Invalid email address').required('Email address is required'),
 });
 
-export const ManagePaymentMethodSchema = yup.object().shape({
+export const managePaymentMethodSchema = yup.object().shape({
   card_number: yup.string().required('Card number is required').matches(/^\d{16}$/, 'Card number must be 16 digits'),
   expiry_date: yup.string().required('Expiry date is required').matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Expiry date must be in MM/YY format'),
   cvv: yup.string().required('CVV is required').matches(/^\d{3}$/, 'CVV must be 3 digits'),
