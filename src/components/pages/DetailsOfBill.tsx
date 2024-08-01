@@ -228,6 +228,11 @@ const DetailsOfBill: React.FC = () => {
                   <AboutBill />
                 </Suspense>
               ) : null}
+              {activeTab === BILL_TAB.ASK_AI ? (
+                <Suspense fallback={null}>
+                  <AskAi />
+                </Suspense>
+              ) : null}
               {activeTab === BILL_TAB.SUMMARY ? (
                 <Suspense fallback={null}>
                   <BillSummary />
@@ -244,12 +249,6 @@ const DetailsOfBill: React.FC = () => {
                 </Suspense>
               ) : null}
             </div>
-
-            {activeTab === BILL_TAB.ASK_AI ? (
-              <Suspense fallback={null}>
-                <AskAi />
-              </Suspense>
-            ) : null}
 
             {/* Message Box */}
             {activeTab === BILL_TAB.ABOUT ? (
