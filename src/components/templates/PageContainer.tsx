@@ -26,6 +26,7 @@ export function PageContainer({
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
   const [OpenNotificationStatusDialog, setOpenNotificationStatusDialog] = useState(false);
   const handleOpenNotificationStatusDialog =() => setOpenNotificationStatusDialog(true);
+  const handleCloseNotificationStatusDialog = () => setOpenNotificationStatusDialog(false);
 
 
   function onClickBack() {
@@ -90,7 +91,7 @@ export function PageContainer({
         </div>
       </div>
       {children}
-      <Notifications open={OpenNotificationStatusDialog}/>
+      <Notifications open={OpenNotificationStatusDialog} onClose={handleCloseNotificationStatusDialog}/>
     </div>
 
   );

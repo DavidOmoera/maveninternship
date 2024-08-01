@@ -52,10 +52,10 @@ const notifications: NotificationItems[] = [
   },
 ];
 
-type TNotificationsProps = { open: boolean };
-export function Notifications({ open }: TNotificationsProps) {
+type TNotificationsProps = { open: boolean; onClose: () => void };
+export function Notifications({ open, onClose }: TNotificationsProps) {
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onClose={onClose}>
       <div className="w-full max-w-md p-6 bg-white rounded-xl shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Notifications</h2>
