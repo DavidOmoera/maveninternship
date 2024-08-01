@@ -765,15 +765,7 @@ export function Profile() {
       />
     </div>
     <div>
-      <p style={{
-        fontFamily: 'Mulish, sans-serif',
-        fontSize: '16px',
-        fontWeight: '400',
-        lineHeight: '25.6px',
-        letterSpacing: '-0.01em',
-        textAlign: 'left',
-        color: 'var(--Neutral-600, #5D5D5D)'
-      }}>
+            <p className="text-neutral600">
         By checking the checkbox below, you agree that Legislative AI will automatically continue your membership and charge the membership fee (currently $1,000/month) to your payment method until you cancel. You may cancel at any time to avoid future charges.
       </p>
       <div className="row items-center mt-4">
