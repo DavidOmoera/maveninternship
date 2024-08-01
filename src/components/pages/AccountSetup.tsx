@@ -3,9 +3,10 @@ import { ArrowRight } from "assets/ArrowRight";
 import classNames from "classnames";
 import { Button } from "components/atoms/Button";
 import { Pill } from "components/molecules/Pill";
+import { AboutOrganization } from "components/organisms/AboutOrganization";
 import { AboutUser } from "components/organisms/AboutUser";
 import { colors } from "constants/common";
-import { aboutUserSchema } from "constants/schemas";
+import { aboutOrgSchema, aboutUserSchema } from "constants/schemas";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -14,6 +15,20 @@ export type TAboutUserForm = {
   lastName: string;
   industryAffiliation: string;
   industrySize: string;
+};
+
+export type TAboutOrganizationForm = {
+  organization_name: string;
+  industry: string;
+  business_type: string;
+  organization_size: string;
+  firstName: string;
+  lastName: string;
+  email_address: string;
+  address: string;
+  city: string;
+  state: string;
+  zip_code: string;
 };
 
 const TOTAL_STEPS = 4;
@@ -26,11 +41,10 @@ const STEP_TITLES = [
 ];
 
 export function AccountSetup() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
 
   const {
     control: aboutUserControl,
-    handleSubmit: handleAboutUserFormSubmit,
     formState: {
       errors: aboutUserFormErrors,
       isDirty: isAboutUserFormDirty,
@@ -41,6 +55,18 @@ export function AccountSetup() {
     resolver: yupResolver(aboutUserSchema),
   });
 
+  const {
+    control: aboutOrganizationControl,
+    formState: {
+      errors: aboutOrganizationFormErrors,
+      isDirty: isAboutOrganizationFormDirty,
+      isSubmitting: isAboutOrganizationFormSubmitting,
+      isValid: isAboutOrganizationFormValid,
+    },
+  } = useForm<TAboutOrganizationForm>({
+    resolver: yupResolver(aboutOrgSchema),
+  });
+
   const isNextButtonDisabled = useMemo(() => {
     switch (step) {
       case 1:
@@ -49,11 +75,19 @@ export function AccountSetup() {
           !isAboutUserFormValid ||
           isAboutUserFormSubmitting
         );
-
+      case 2:
+        return (
+          !isAboutOrganizationFormDirty ||
+          !isAboutOrganizationFormValid ||
+          isAboutOrganizationFormSubmitting
+        );
       default:
         break;
     }
   }, [
+    isAboutOrganizationFormDirty,
+    isAboutOrganizationFormSubmitting,
+    isAboutOrganizationFormValid,
     isAboutUserFormDirty,
     isAboutUserFormSubmitting,
     isAboutUserFormValid,
@@ -72,7 +106,7 @@ export function AccountSetup() {
 
   return (
     <div className="w-full col items-center h-[90vh] mt-16">
-      <div className="w-[70%] col justify-between h-full">
+      <div className="w-full md:w-[70%] px-4 md:px-0 col justify-between h-full">
         <div className="gap-4">
           <div className="row w-full justify-between">
             <h4 className="font-extrabold text-xl">{STEP_TITLES[step]}</h4>
@@ -96,9 +130,15 @@ export function AccountSetup() {
               errors={aboutUserFormErrors}
             />
           )}
+          {step === 2 && (
+            <AboutOrganization
+              control={aboutOrganizationControl}
+              errors={aboutOrganizationFormErrors}
+            />
+          )}
         </div>
 
-        <div className="w-full  bottom-0 flex justify-between mt-6">
+        <div className="w-full row justify-between mt-6">
           <Button
             text="Previous"
             disabled={isPreviousButtonDisabled}

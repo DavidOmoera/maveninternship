@@ -20,11 +20,12 @@ export function AboutBill() {
         tristique orci at hendrerit. Sed erat elit, egestas a nisl vel, gravida
         vehicula magna.
       </p>
-      <div className="mt-6 p-4 bg-gray-50 rounded-lg flex justify-between items-center">
+      <div className="mt-9 p-6 bg-neutral50 rounded-lg flex justify-between items-center">
         <div>
-          <h4 className="font-bold">Skip the Jargon!</h4>
-
-          <p className="text-neutral600">Read Coterie AI's Summary instead.</p>
+          <h5 className="font-bold">Skip the Jargon!</h5>
+          <p className="text-neutral500 text-sm">
+            Read Coterie AI's Summary instead.
+          </p>
         </div>
         <Button rightIcon={<ArrowRight />} text="View Summary" />
       </div>

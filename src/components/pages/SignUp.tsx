@@ -29,7 +29,7 @@ export function SignUp() {
         <span className="flex flex-row gap-2">
           <p className="text-neutral450">Already have an account?</p>
           <a href={Routes.Login}>
-            <h4 className="text-accent900 font-bold">Login</h4>
+            <h6 className="text-accent900 font-bold">Login</h6>
           </a>
         </span>
 
@@ -103,11 +103,11 @@ export function SignUp() {
           <span className="flex flex-row gap-2">
             <p className="text-neutral450">I agree with the</p>
             <a href="#">
-              <h4 className="text-accent900 font-bold">Terms & Conditions</h4>
+              <h6 className="text-accent900 font-bold">Terms & Conditions</h6>
             </a>
             <p>and</p>
             <a href="#">
-              <h4 className="text-accent900 font-bold">Privacy Policy</h4>
+              <h6 className="text-accent900 font-bold">Privacy Policy</h6>
             </a>
           </span>
         </div>

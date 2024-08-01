@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import message from "assets/message.svg";
 import notification from "assets/notification.svg";
-import profilePicture from "assets/profile_picture.png";
+import profilePicture from "assets/profile_picture.webp";
 import { Routes } from "types/routes";
 import classNames from "classnames";
 import { ArrowRight } from "assets/ArrowRight";
@@ -66,9 +66,13 @@ export function PageContainer({
             className="row gap-3 items-center cursor-pointer"
             onClick={goToProfile}
           >
-            <img src={profilePicture} alt="Profile" />
+            <img
+              src={profilePicture}
+              alt="Profile"
+              className="w-12 h-12 object-cover rounded"
+            />
             <article className="col gap-1">
-              <h6 className="text-neutral950 font-bold">Anita Lever</h6>
+              <h6 className="text-neutral950 font-bold">Jasmine Crockett</h6>
               <p>
                 <span className="text-neutral600 text-sm font-medium">
                   Coterie

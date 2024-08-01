@@ -18,7 +18,7 @@ export function Login() {
         <span className="flex flex-row gap-2">
           <p className="text-neutral450">Don't have an account?</p>
           <a href={Routes.SignUp}>
-            <h4 className="text-accent900 font-bold">Sign Up</h4>
+            <h6 className="text-accent900 font-bold">Sign Up</h6>
           </a>
         </span>
         <div className="flex flex-col gap-4 mt-8 mb-6 w-full">
