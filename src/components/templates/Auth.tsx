@@ -15,14 +15,16 @@ export function Auth() {
         <Button
           variant="secondary"
           text="Sign up with Google"
-          icon={<img src={GoogleLogo} className="logo" alt="Google logo" />}
+          leftIcon={<img src={GoogleLogo} className="logo" alt="Google logo" />}
           className="w-[372px]"
           onClick={onSocialSignIn}
         />
         <Button
           variant="secondary"
           text="Sign up with Outlook"
-          icon={<img src={OutlookLogo} className="logo" alt="Outlook logo" />}
+          leftIcon={
+            <img src={OutlookLogo} className="logo" alt="Outlook logo" />
+          }
           className="w-[372px]"
           onClick={onSocialSignIn}
         />
