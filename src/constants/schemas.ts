@@ -88,7 +88,7 @@ export const changePasswordSchema = yup.object().shape({
     .required("Please confirm your new password"),
 });
 
-export const EditProfileSchema = yup.object().shape({
+export const editProfileSchema = yup.object().shape({
   first_name: yup.string().required('First name is required'),
   last_name: yup.string().required('Last name is required'),
   phone_number: yup.string().required('Phone number is required'),
