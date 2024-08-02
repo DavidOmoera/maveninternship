@@ -65,7 +65,7 @@ export function AuthenticatedRoot() {
           text: "Activity Feed",
           icon: Timeline,
           iconColor: "",
-          link: "",
+          link: Routes.ActivityFeed,
           onClick: () => {},
         },
       ],
@@ -76,7 +76,7 @@ export function AuthenticatedRoot() {
         {
           text: "Profile Settings",
           icon: Settings,
-          link: "",
+          link: Routes.Profile,
           iconColor: "",
           onClick: () => {},
         },
@@ -90,7 +90,7 @@ export function AuthenticatedRoot() {
         {
           text: "Logout",
           icon: Logout,
-          link: "",
+          link: Routes.Login,
           iconColor: "#FF2A58",
           onClick: () => {},
         },
@@ -113,7 +113,6 @@ export function AuthenticatedRoot() {
   ) {
     if (link) {
       navigate(link);
-      return;
     }
     callBack?.();
     setActiveMenuItem(itemName);
@@ -175,7 +174,7 @@ export function AuthenticatedRoot() {
         <div className="my-6 mx-4 px-5 py-6 bg-accent50 col items-center rounded-xl">
           <p className="text-sm pb-2 text-neutral400">My Workspace</p>
           <h6 className="pb-4">Select Legislature</h6>
-          <div className="col gap-2 overflow-y-auto max-h-60 items-center max-w-[90%]">
+          <div className="col gap-2 overflow-y-auto max-h-60 items-center w-full">
             {selectedStates.map((state) => {
               const isChecked = isLegislatureSelected(state.code);
 
@@ -193,7 +192,7 @@ export function AuthenticatedRoot() {
             })}
           </div>
           <div
-            className="row justify-center p-2 gap-1 mt-2 border border-primary border-dashed rounded-lg cursor-pointer"
+            className="row justify-center p-2 gap-1 mt-2 border border-primary border-dashed w-full rounded-lg cursor-pointer"
             onClick={onOpenLegislatureModal}
           >
             <AddOutlinedIcon />
@@ -209,7 +208,9 @@ export function AuthenticatedRoot() {
                 {navGroup.title}
               </p>
               {navGroup.buttons.map((navButton) => {
-                const isActive = activeMenuItem === navButton.text;
+                const isActive = navButton.link
+                  ? location.pathname === navButton.link
+                  : activeMenuItem === navButton.text;
                 const Icon = navButton.icon;
 
                 return (
