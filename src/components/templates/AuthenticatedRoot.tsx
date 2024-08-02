@@ -1,6 +1,6 @@
 import { Logo } from "components/atoms/Logo";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Routes } from "types/routes";
 import {
   Typography,
@@ -25,36 +25,6 @@ import { SupportAgent } from "../../assets/SupportAgent";
 import { Settings } from "../../assets/Settings";
 import { Logout } from "../../assets/Logout";
 
-const sideNavItems = [
-  {
-    title: "Overview",
-    buttons: [
-      { text: "Dashboard", icon: Home, iconColor: "", onClick: () => {} },
-      { text: "Bills", icon: Gavel, iconColor: "", onClick: () => {} },
-      {
-        text: "Representatives",
-        icon: Group,
-        iconColor: "",
-        onClick: () => {},
-      },
-      {
-        text: "Activity Feed",
-        icon: Timeline,
-        iconColor: "",
-        onClick: () => {},
-      },
-    ],
-  },
-  {
-    title: "Settings",
-    buttons: [
-      { text: "Profile Settings", icon: Settings, iconColor: "" },
-      { text: "Help & Support", icon: SupportAgent, iconColor: "" },
-      { text: "Logout", icon: Logout, iconColor: "#FF2A58" },
-    ],
-  },
-];
-
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
 export function AuthenticatedRoot() {
@@ -70,6 +40,63 @@ export function AuthenticatedRoot() {
   const [selectedLegislatures, setSelectedLegislatures] = useState<TState[]>(
     []
   );
+  const navigate = useNavigate();
+
+  const sideNavItems = [
+    {
+      title: "Overview",
+      buttons: [
+        {
+          text: "Dashboard",
+          icon: Home,
+          iconColor: "",
+          link: Routes.Dashboard,
+          onClick: () => {},
+        },
+        { text: "Bills", icon: Gavel, iconColor: "", onClick: () => {} },
+        {
+          text: "Representatives",
+          icon: Group,
+          iconColor: "",
+          link: "",
+          onClick: () => {},
+        },
+        {
+          text: "Activity Feed",
+          icon: Timeline,
+          iconColor: "",
+          link: Routes.ActivityFeed,
+          onClick: () => {},
+        },
+      ],
+    },
+    {
+      title: "Settings",
+      buttons: [
+        {
+          text: "Profile Settings",
+          icon: Settings,
+          link: Routes.Profile,
+          iconColor: "",
+          onClick: () => {},
+        },
+        {
+          text: "Help & Support",
+          icon: SupportAgent,
+          link: "",
+          iconColor: "",
+          onClick: () => {},
+        },
+        {
+          text: "Logout",
+          icon: Logout,
+          link: Routes.Login,
+          iconColor: "#FF2A58",
+          onClick: () => {},
+        },
+      ],
+    },
+  ];
 
   function onOpenLegislatureModal() {
     setIsLegislatureModalOpen(true);
@@ -79,7 +106,14 @@ export function AuthenticatedRoot() {
     setIsLegislatureModalOpen(false);
   }
 
-  function onClickMenuItem(itemName: string, callBack?: () => void) {
+  function onClickMenuItem(
+    itemName: string,
+    link?: string,
+    callBack?: () => void
+  ) {
+    if (link) {
+      navigate(link);
+    }
     callBack?.();
     setActiveMenuItem(itemName);
   }
@@ -124,7 +158,7 @@ export function AuthenticatedRoot() {
 
   return (
     <main className="bg-neutral25 row">
-      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto">
+      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 max-h-screen overflow-y-auto">
         {/** Logo */}
         <a
           className="flex flex-col pl-7 pt-9 pb-6 max-w-44"
@@ -140,7 +174,7 @@ export function AuthenticatedRoot() {
         <div className="my-6 mx-4 px-5 py-6 bg-accent50 col items-center rounded-xl">
           <p className="text-sm pb-2 text-neutral400">My Workspace</p>
           <h6 className="pb-4">Select Legislature</h6>
-          <div className="col gap-2 overflow-y-auto max-h-60">
+          <div className="col gap-2 overflow-y-auto max-h-60 items-center w-full">
             {selectedStates.map((state) => {
               const isChecked = isLegislatureSelected(state.code);
 
@@ -158,7 +192,7 @@ export function AuthenticatedRoot() {
             })}
           </div>
           <div
-            className="row justify-center p-2 gap-1 mt-2 border border-primary border-dashed rounded-lg w-[248px] cursor-pointer"
+            className="row justify-center p-2 gap-1 mt-2 border border-primary border-dashed w-full rounded-lg cursor-pointer"
             onClick={onOpenLegislatureModal}
           >
             <AddOutlinedIcon />
@@ -174,7 +208,9 @@ export function AuthenticatedRoot() {
                 {navGroup.title}
               </p>
               {navGroup.buttons.map((navButton) => {
-                const isActive = activeMenuItem === navButton.text;
+                const isActive = navButton.link
+                  ? location.pathname === navButton.link
+                  : activeMenuItem === navButton.text;
                 const Icon = navButton.icon;
 
                 return (
@@ -183,7 +219,13 @@ export function AuthenticatedRoot() {
                     className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
                       isActive ? "border-r-4 bg-accent50 border-accent800" : ""
                     }`}
-                    onClick={() => onClickMenuItem(navButton.text)}
+                    onClick={() =>
+                      onClickMenuItem(
+                        navButton.text,
+                        navButton.link,
+                        navButton.onClick
+                      )
+                    }
                   >
                     {Icon ? (
                       <Icon

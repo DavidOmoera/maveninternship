@@ -1,7 +1,35 @@
 import topRepresentative from "assets/top_representative.png";
+import login from "assets/login.svg";
+import logout from "assets/logout.svg";
+import minuscirlce from "assets/minus-cirlce.svg";
+import addcircle from "assets/add-circle.svg";
+import archiveminus from "assets/archive-minus.svg";
+import archiveadd from "assets/archive-add.svg";
+import useredit from "assets/user-edit.svg";
+import voter1 from "assets/voter_1.png";
+import voter2 from "assets/voter_2.png";
+import voter3 from "assets/voter_3.png";
+import voter4 from "assets/voter_4.png";
+import voter5 from "assets/voter_5.png";
+import voter6 from "assets/voter_6.png";
+import voter7 from "assets/voter_7.png";
+import voter8 from "assets/voter_8.png";
+import voter9 from "assets/voter_9.png";
+import voter10 from "assets/voter_10.png";
+import voter11 from "assets/voter_11.png";
+import voter12 from "assets/voter_12.png";
+import voter13 from "assets/voter_13.png";
+import voter14 from "assets/voter_14.png";
+import voter15 from "assets/voter_15.png";
+import voter16 from "assets/voter_16.png";
+import voter17 from "assets/voter_17.png";
+import voter18 from "assets/voter_18.png";
 
 export enum colors {
   primary = "#0C0853",
+  error = "#FF2A58",
+  success = "#05A919",
+  orange = "#FE9500",
   white = "#FFFFFF",
   black = "#000000",
   neutral25 = "#F2F4FB",
@@ -181,4 +209,305 @@ export const BILL_YEARS = [
   { id: 1, value: "2022", label: "2022" },
   { id: 1, value: "2023", label: "2023" },
   { id: 1, value: "2024", label: "2024" },
+];
+
+export const YES_VOTERS = [
+  {
+    name: "Pat Schiller",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter1,
+  },
+  {
+    name: "Susan Feest",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter2,
+  },
+  {
+    name: "Sadie Barton",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter3,
+  },
+  {
+    name: "Ivan Barrows",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter4,
+  },
+  {
+    name: "Alicia Mueller",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter5,
+  },
+  {
+    name: "Arlene Bergstrom",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter6,
+  },
+  {
+    name: "Vera Bernhard",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter7,
+  },
+  {
+    name: "Ms. Wilbert Beahan",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter8,
+  },
+  {
+    name: "Ms. Guillermo Rath",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter9,
+  },
+  {
+    name: "Chad Blick",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter10,
+  },
+  {
+    name: "Mr. Benny Heathcote",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter11,
+  },
+  {
+    name: "Alan Hodkiewicz",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter12,
+  },
+  {
+    name: "Krystal Koepp",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter13,
+  },
+  {
+    name: "Mabel Reynolds",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter14,
+  },
+  {
+    name: "Jenna Shields",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter15,
+  },
+  {
+    name: "Willard Batz",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter16,
+  },
+  {
+    name: "Brett O'kon",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter17,
+  },
+  {
+    name: "James Witting",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter18,
+  },
+];
+
+export const NO_VOTERS = [
+  {
+    name: "Essie Swaniawski",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter2,
+  },
+  {
+    name: "Raquel O'Conner",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter12,
+  },
+  {
+    name: "Tamara Bahringer",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter14,
+  },
+  {
+    name: "Gene Kuphal",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter3,
+  },
+  {
+    name: "Connie Maggio",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter12,
+  },
+  {
+    name: "Mrs. Leroy Grimes",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter17,
+  },
+  {
+    name: "Jean Champlin",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter18,
+  },
+  {
+    name: "Velma Cremin",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter11,
+  },
+  {
+    name: "Margie Schaden",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter4,
+  },
+];
+
+export const ABSTAINED_VOTERS = [
+  {
+    name: "Alfredo Farell",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter13,
+  },
+  {
+    name: "Ian Donnelly",
+    designation: "Senator",
+    dateVoted: "05/23/2024",
+    profilePicture: voter15,
+  },
+];
+
+export const TOTAL_VOTERS_COUNT =
+  YES_VOTERS.length + NO_VOTERS.length + ABSTAINED_VOTERS.length;
+
+export const ACTIVITIES = [
+  {
+    time: "20 mins ago",
+    type: "Removed",
+    label: "a bill",
+    link: "Secure the Border Act of 2023",
+    iconBackgroundColor: "#FDEAEC",
+    icon: archiveminus,
+  },
+  {
+    time: "4 hrs ago",
+    type: "Added",
+    label: "a bill",
+    link: "Secure the Border Act of 2023",
+    iconBackgroundColor: "#E9F3FF",
+    icon: archiveadd,
+  },
+  {
+    time: "Yesterday, 5:34 pm",
+    type: "Edited",
+    label: "your Profile",
+    link: "",
+    iconBackgroundColor: "#E1F8FD",
+    icon: useredit,
+  },
+  {
+    time: "Yesterday, 2:45 pm",
+    type: "Removed",
+    label: "a Legislature",
+    link: "Texas",
+    iconBackgroundColor: "#FFEAF1",
+    icon: minuscirlce,
+  },
+  {
+    time: "22/04/2023, 8:22 am",
+    type: "Added",
+    label: "a Legislature",
+    link: "Alaska",
+    iconBackgroundColor: "#E4F9ED",
+    icon: addcircle,
+  },
+  {
+    time: "21/04/2023, 8:19 am",
+    type: "Logged in",
+    label: "to your account",
+    link: "",
+    iconBackgroundColor: "#E4F9ED",
+    icon: login,
+  },
+  {
+    time: "20/04/2023, 7:32 am",
+    type: "Logged out",
+    label: "of your account",
+    link: "",
+    iconBackgroundColor: "#FFEAF1",
+    icon: logout,
+  },
+  {
+    time: "4w ago",
+    type: "Removed",
+    label: "a bill",
+    link: "Secure the Border Act of 2023",
+    iconBackgroundColor: "#FFEAF1",
+    icon: archiveminus,
+  },
+  {
+    time: "5w ago",
+    type: "Added",
+    label: "a bill",
+    link: "Secure the Border Act of 2023",
+    iconBackgroundColor: "#E9F3FF",
+    icon: archiveadd,
+  },
+  {
+    time: "6w ago",
+    type: "Edited",
+    label: "your Profile",
+    link: "",
+    iconBackgroundColor: "#E1F8FD",
+    icon: useredit,
+  },
+  {
+    time: "7w ago",
+    type: "Removed",
+    label: "a Legislature",
+    link: "Texas",
+    iconBackgroundColor: "#FFEAF1",
+    icon: minuscirlce,
+  },
+  {
+    time: "2 months ago",
+    type: "Added",
+    label: "a Legislature",
+    link: "Alaska",
+    iconBackgroundColor: "#E4F9ED",
+    icon: addcircle,
+  },
+  {
+    time: "3 months ago",
+    type: "Logged in",
+    label: "to your account",
+    link: "",
+    iconBackgroundColor: "#E4F9ED",
+    icon: login,
+  },
+  {
+    time: "4 months ago",
+    type: "Logged out",
+    label: "of your account",
+    link: "",
+    iconBackgroundColor: "#FFEAF1",
+    icon: logout,
+  },
 ];

@@ -18,7 +18,7 @@ export function Legislature({
   const { name, code } = state;
 
   return (
-    <div className="py-3 px-2 row justify-between bg-primary rounded-lg w-[248px]">
+    <div className="py-3 px-2 row justify-between bg-primary rounded-lg w-full">
       {/** Text */}
       <article className="row gap-2 items-center max-w-44">
         {icon ? <img className="w-4 h-4" src={icon} /> : null}
