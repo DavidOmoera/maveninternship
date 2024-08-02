@@ -2,6 +2,7 @@ import { Dialog } from "@mui/material";
 import CloseIcon from "assets/start.svg";
 import SettingsIcon from "assets/setting-notif.svg";
 import SenMat from "assets/sen-adams.svg";
+import { Pill } from "components/molecules/Pill";
 
 interface NotificationItems {
   title: string;
@@ -56,7 +57,17 @@ type TNotificationsProps = { open: boolean; onClose: () => void };
 export function Notifications({ open, onClose }: TNotificationsProps) {
   return (
     <Dialog open={open} onClose={onClose}>
-      <div className="w-full max-w-md p-6 bg-white rounded-xl shadow-lg">
+      <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
+        <div className="row justify-end">
+          <Pill
+            text="Close"
+            rightIcon={
+              <img src={CloseIcon} alt="Close Icon" className="mr-2" />
+            }
+            containerClassName="row items-center rounded-[2.37rem] px-3 py-2 gap-1 bg-neutral50 cursor-pointer"
+            onClick={onClose}
+          />
+        </div>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Notifications</h2>
           <div className="flex items-center">
@@ -65,14 +76,6 @@ export function Notifications({ open, onClose }: TNotificationsProps) {
               alt="setting icon"
               className="cursor-pointer p-3"
             />
-            <button className="flex items-center ml-4 bg-gray-300 rounded-full">
-              <span className="pr-2">Close</span>
-              <img
-                src={CloseIcon}
-                alt="Close Icon"
-                className="cursor-pointer mr-2"
-              />
-            </button>
           </div>
         </div>
         <hr className="mb-4" />
@@ -98,7 +101,12 @@ export function Notifications({ open, onClose }: TNotificationsProps) {
                   <span className="font-bold text-blue-800">
                     Secure the Border Act of 2023
                   </span>{" "}
-                  has commenced to
+                  <span className="text-neutral950">
+                    {notification.status === "Rejected" ||
+                    notification.status === "Passed"
+                      ? "has been"
+                      : "has commenced to"}
+                  </span>
                   <span
                     className={`font-bold ${
                       notification.status === "Rejected"
