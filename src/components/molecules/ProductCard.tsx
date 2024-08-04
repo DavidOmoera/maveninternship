@@ -1,0 +1,63 @@
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Button } from "components/atoms/Button";
+
+interface ProductCardProps {
+  icon: string;
+  title: string;
+  description: string;
+  price: string;
+  onClick: () => void;
+  isSelected: boolean;
+}
+
+const features: string[] = [
+  "Maximum of two active sessions",
+  "Phasellus tristique augue nec arcu pulvinar",
+  "Aliquam hendrerit",
+  "Nullam dignissim imperdiet",
+  "Maximum of two active sessions",
+];
+
+export const ProductCard: React.FC<ProductCardProps> = ({
+  icon,
+  title,
+  description,
+  price,
+  onClick,
+  isSelected,
+}) => (
+  <div
+    className={`bg-blue-50 shadow-sm px-4 py-5 mb-4 border rounded-lg w-1/3 min-w-56 cursor-pointer ${
+      isSelected ? "border-blue-500" : "border-gray-300"
+    }`}
+    onClick={onClick}
+  >
+    <img src={icon} alt="product icon" />
+    <h2 className="font-extrabold text-lg mt-3">{title}</h2>
+    <p className="text-neutral450 pb-6 mt-1 text-sm">{description}</p>
+    <h2 className="font-extrabold text-2xl">{price}</h2>
+    <p className=" text-neutral450 text-sm mb-3">/year</p>
+    <ul className="py-3">
+      {features.map((feature) => (
+        <li key={feature} className="font-medium text-xs mb-1">
+          <CheckCircleIcon
+            style={{
+              marginRight: "8px",
+              color: "#1026C3",
+              padding: "2px",
+            }}
+          />
+          {feature}
+        </li>
+      ))}
+    </ul>
+    <Button
+      text="Choose Product"
+      variant={isSelected ? "primary" : "secondary"}
+      className="my-4 w-full"
+    />
+    <p className="font-medium text-xs">
+      *Introductory offer, subject to change
+    </p>
+  </div>
+);
