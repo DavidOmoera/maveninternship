@@ -3,7 +3,6 @@ import { PaymentDetails } from "components/pages/AccountSetup";
 import { ControlledInput } from "./ControlledInput";
 import { Control, FieldErrors } from "react-hook-form";
 import bankLogo from "../../assets/bankLogo.svg";
-import CustomSelect from "components/molecules/CustomSelect";
 
 type PaymentDetailsProps = {
   control: Control<PaymentDetails, any>;
@@ -65,36 +64,32 @@ export const Payment: React.FC<PaymentDetailsProps> = ({ control, errors }) => {
           </div>
 
           <h2 className="font-bold text-xl mt-8">Billing Address</h2>
-          <div className="grid grid-row-2 grid-cols-2 gap-4 my-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
             <ControlledInput
               control={control}
               name="phoneNumber"
               placeholder="Phone Number"
-              containerClasses=""
               error={!!errors?.phoneNumber}
               helperText={(errors?.phoneNumber?.message as string) ?? ""}
-            />{" "}
+            />
             <ControlledInput
               control={control}
               name="address"
               placeholder="Address"
-              containerClasses=""
               error={!!errors?.address}
               helperText={(errors?.address?.message as string) ?? ""}
-            />{" "}
+            />
             <ControlledInput
               control={control}
               name="organizationSize"
               placeholder="Organisation Size"
-              containerClasses=""
               error={!!errors?.organizationSize}
               helperText={(errors?.organizationSize?.message as string) ?? ""}
-            />{" "}
+            />
             <ControlledInput
               control={control}
               name="zipCode"
               placeholder="Zip Code"
-              containerClasses=""
               error={!!errors?.zipCode}
               helperText={(errors?.zipCode?.message as string) ?? ""}
             />

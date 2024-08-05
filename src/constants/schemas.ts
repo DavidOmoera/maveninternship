@@ -143,6 +143,6 @@ export const paymentSchema = yup.object().shape({
   zipCode: yup
     .string()
     .trim()
-    .matches(/^[0-9]{5,10}$/, "Zip code must be between 5 and 10 digits")
+    .matches(/^\d{5}(-\d{4})?$/, "Zip code must be between 5 and 10 digits")
     .required("Please enter the zip code"),
 });

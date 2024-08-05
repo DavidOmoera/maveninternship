@@ -1,8 +1,9 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { CoterieBot } from "assets/CoterieBot";
 import { Button } from "components/atoms/Button";
 
 interface ProductCardProps {
-  icon: string;
+  color: string;
   title: string;
   description: string;
   price: string;
@@ -19,7 +20,7 @@ const features: string[] = [
 ];
 
 export const ProductCard: React.FC<ProductCardProps> = ({
-  icon,
+  color,
   title,
   description,
   price,
@@ -27,12 +28,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   isSelected,
 }) => (
   <div
-    className={`bg-blue-50 shadow-sm px-4 py-5 mb-4 border rounded-lg w-1/3 min-w-56 cursor-pointer ${
+    className={`bg-blue-50 shadow-sm px-4 py-5 mb-4 border rounded-lg w-full min-w-56 cursor-pointer ${
       isSelected ? "border-blue-500" : "border-gray-300"
     }`}
     onClick={onClick}
   >
-    <img src={icon} alt="product icon" />
+    <CoterieBot color={color} className="w-8" />
     <h2 className="font-extrabold text-lg mt-3">{title}</h2>
     <p className="text-neutral450 pb-6 mt-1 text-sm">{description}</p>
     <h2 className="font-extrabold text-2xl">{price}</h2>

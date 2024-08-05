@@ -11,7 +11,7 @@ export const SelectProduct: React.FC<{
 
   const handleProductSelect = (product: string) => {
     setSelectedProduct(product);
-    onProductSelect(product); // Notify the parent component of the selection
+    onProductSelect(product);
   };
 
   return (
@@ -22,7 +22,7 @@ export const SelectProduct: React.FC<{
       </p>
       <div className="flex justify-between gap-3 flex-wrap md:flex-nowrap">
         <ProductCard
-          icon={legislativeIcon}
+          color="blue"
           title="Legislative AI"
           description="The perfect Legislature analysis tool"
           price="$000*"
@@ -30,7 +30,7 @@ export const SelectProduct: React.FC<{
           isSelected={selectedProduct === "Legislative AI"}
         />
         <ProductCard
-          icon={regulatoryIcon}
+          color="red"
           title="Regulatory AI"
           description="The perfect Legislature analysis tool"
           price="$000*"
@@ -38,7 +38,7 @@ export const SelectProduct: React.FC<{
           isSelected={selectedProduct === "Regulatory AI"}
         />
         <ProductCard
-          icon={proIcon}
+          color="green"
           title="Pro"
           description="The perfect Legislature analysis tool"
           price="$000*"
