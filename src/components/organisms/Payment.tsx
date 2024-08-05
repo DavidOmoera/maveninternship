@@ -2,7 +2,7 @@ import React from "react";
 import { PaymentDetails } from "components/pages/AccountSetup";
 import { ControlledInput } from "./ControlledInput";
 import { Control, FieldErrors } from "react-hook-form";
-import visaLogo from "../../assets/visa_logo.svg";
+import VisaLogo from "components/atoms/VisaLogo";
 
 type PaymentDetailsProps = {
   control: Control<PaymentDetails, any>;
@@ -22,14 +22,9 @@ export const Payment: React.FC<PaymentDetailsProps> = ({ control, errors }) => {
         <div>
           <h4 className="text-sm font-semibold mt-4">Card Number</h4>
           <div className="flex">
-            {/* <img
-              src=
-              alt="bank logo"
-              className="border border-gray-300 h-14 p-4 border-r-0 mt-3 rounded"
-            /> */}
             <ControlledInput
               control={control}
-              leftIcon={visaLogo}
+              leftIcon={<VisaLogo />}
               name="cardNumber"
               placeholder="XXXX  XXXX  XXX  2347"
               containerClasses="w-full rounded-lg my-3"
