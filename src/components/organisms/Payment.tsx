@@ -26,7 +26,7 @@ export const Payment: React.FC<PaymentDetailsProps> = ({ control, errors }) => {
             <img
               src={bankLogo}
               alt="bank logo"
-              className="border h-14 p-4 border-r-0 mt-3 rounded"
+              className="border border-gray-300 h-14 p-4 border-r-0 mt-3 rounded"
             />
             <ControlledInput
               control={control}
