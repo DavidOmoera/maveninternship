@@ -14,6 +14,7 @@ import { ActivityFeed } from "components/pages/ActivityFeed";
 import DetailsOfBill from "components/pages/DetailsOfBill";
 import { RepProfile } from "components/pages/RepProfile";
 import { Profile } from "components/pages/Profile";
+import { HelpAndSupport } from "components/pages/HelpAndSupport";
 
 const routes = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const routes = createBrowserRouter([
       {
         path: Routes.Profile,
         element: <Profile />,
+      },
+      {
+        path: Routes.HelpAndSupport,
+        element: <HelpAndSupport />,
       },
     ],
   },

@@ -11,7 +11,7 @@ import orgLogo from "assets/org_logo.png";
 import visaLogo from "assets/visa_logo.svg";
 import { Pill } from "components/molecules/Pill";
 import { CoterieBot } from "assets/CoterieBot";
-import { colors } from "constants/common";
+import { colors, ISSUES_OPTIONS } from "constants/common";
 import { Button } from "components/atoms/Button";
 import {
   ControlledSelect,
@@ -51,18 +51,6 @@ const ORG_CONTACTS = [
   { title: "Email Address", description: "bayer@greenfelder.com" },
   { title: "Address", description: "77164 Robin Drive, Dalla, Carlifonia" },
   { title: "Zip Code", description: "86517-3971" },
-];
-
-const ISSUES_OPTIONS = [
-  { id: 1, label: "Issue 1", value: "issue1" },
-  { id: 2, label: "Issue 2", value: "issue2" },
-  { id: 3, label: "Issue 3", value: "issue3" },
-  { id: 4, label: "Issue 4", value: "issue4" },
-  { id: 5, label: "Issue 5", value: "issue5" },
-  { id: 6, label: "Issue 6", value: "issue6" },
-  { id: 7, label: "Issue 7", value: "issue7" },
-  { id: 8, label: "Issue 8", value: "issue8" },
-  { id: 9, label: "Issue 9", value: "issue9" },
 ];
 
 const DURATION_OPTIONS = [

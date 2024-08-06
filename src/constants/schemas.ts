@@ -153,3 +153,16 @@ export const aboutOrgSchema = yup.object().shape({
     })
     .required(),
 });
+
+export const helpAndSupportSchema = yup.object().shape({
+  first_name: yup.string().trim().required("Please enter your first name"),
+  last_name: yup.string().trim().required("Please enter your last name"),
+  email_address: yup
+    .string()
+    .trim()
+    .email()
+    .required("Please enter your email address"),
+  company_name: yup.string().trim(),
+  issue: yup.string().trim(),
+  message: yup.string().trim().required("Please enter your message"),
+});

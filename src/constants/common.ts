@@ -64,6 +64,18 @@ export enum colors {
   crimson_red = "#d32f2f",
 }
 
+export const ISSUES_OPTIONS = [
+  { id: 1, label: "Issue 1", value: "issue1" },
+  { id: 2, label: "Issue 2", value: "issue2" },
+  { id: 3, label: "Issue 3", value: "issue3" },
+  { id: 4, label: "Issue 4", value: "issue4" },
+  { id: 5, label: "Issue 5", value: "issue5" },
+  { id: 6, label: "Issue 6", value: "issue6" },
+  { id: 7, label: "Issue 7", value: "issue7" },
+  { id: 8, label: "Issue 8", value: "issue8" },
+  { id: 9, label: "Issue 9", value: "issue9" },
+];
+
 export const STATES = [
   { name: "Alabama", code: "AL" },
   { name: "Alaska", code: "AK" },
