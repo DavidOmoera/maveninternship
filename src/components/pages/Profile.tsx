@@ -728,17 +728,13 @@ export function Profile() {
           <h5 className="text-neutral950 mt-9 mb-6">Card Details</h5>
           <div className="col gap-6">
             <div className="relative">
-              <img
-                src={visaLogo}
-                alt="Visa"
-                className="absolute left-4 top-4 h-6"
-              />
               <ControlledInput
                 name="card_number"
                 control={ManagePaymentMethodControl}
                 placeholder="Card Number"
                 label="Card Number"
                 type="text"
+                leftIcon={<img src={visaLogo} alt="Visa" />}
                 required
                 error={!!ManagePaymentMethodErrors?.card_number}
                 helperText={
