@@ -9,8 +9,7 @@ import classNames from "classnames";
 import { ArrowRight } from "assets/ArrowRight";
 import { colors } from "constants/common";
 import { Notifications } from "components/organisms/Notifications";
-
-
+import { NotificationSettings } from "components/organisms/NotificationSettings";
 
 type TPageContainerProps = { title: string } & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -24,10 +23,21 @@ export function PageContainer({
   const location = useLocation();
   const navigate = useNavigate();
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
-  const [OpenNotificationStatusDialog, setOpenNotificationStatusDialog] = useState(false);
-  const handleOpenNotificationStatusDialog =() => setOpenNotificationStatusDialog(true);
-  const handleCloseNotificationStatusDialog = () => setOpenNotificationStatusDialog(false);
-
+  const [OpenNotificationStatusDialog, setOpenNotificationStatusDialog] =
+    useState(false);
+  const handleOpenNotificationStatusDialog = () =>
+    setOpenNotificationStatusDialog(true);
+  const handleCloseNotificationStatusDialog = () =>
+    setOpenNotificationStatusDialog(false);
+   const [OpenNotificationSettingsDialog, setOpenNotificationSettingsDialog] = useState(false);
+   const handleOpenNotificationSettingsDialog =() => {
+    setOpenNotificationSettingsDialog(true);
+    handleCloseNotificationStatusDialog();
+   };  
+   const handleCloseNotificationSettingsDialog = () => {
+    setOpenNotificationSettingsDialog(false);
+    handleOpenNotificationStatusDialog();
+   } 
 
   function onClickBack() {
     navigate(Routes.Dashboard);
@@ -95,8 +105,14 @@ export function PageContainer({
         </div>
       </div>
       {children}
-      <Notifications open={OpenNotificationStatusDialog} onClose={handleCloseNotificationStatusDialog}/>
+      <Notifications
+        open={OpenNotificationStatusDialog}
+        onClose={handleCloseNotificationStatusDialog}
+        onClickSettings={handleOpenNotificationSettingsDialog}
+      />
+      <NotificationSettings
+      open={OpenNotificationSettingsDialog}
+      onClose={handleCloseNotificationSettingsDialog}/>
     </div>
-
   );
 }
