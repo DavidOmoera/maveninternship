@@ -58,7 +58,7 @@ const STEP_TITLES = [
 ];
 
 export function AccountSetup() {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
   const {

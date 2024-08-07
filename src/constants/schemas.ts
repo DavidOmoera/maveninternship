@@ -70,6 +70,53 @@ export const aboutUserSchema = yup.object().shape({
   industrySize: yup.string().trim().required("Please enter your industry size"),
 });
 
+export const changePasswordSchema = yup.object().shape({
+  current_password: yup
+    .string()
+    .trim()
+    .min(6, "Password must be at least 6 characters long")
+    .required("Please enter your current password"),
+  new_password: yup
+    .string()
+    .trim()
+    .min(6, "New password must be at least 6 characters long")
+    .required("Please enter a new password"),
+  confirm_password: yup
+    .string()
+    .trim()
+    .oneOf([yup.ref("new_password")], "Passwords must match")
+    .required("Please confirm your new password"),
+});
+
+export const editProfileSchema = yup.object().shape({
+  first_name: yup.string().required("First name is required"),
+  last_name: yup.string().required("Last name is required"),
+  phone_number: yup.string().required("Phone number is required"),
+  email_address: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email address is required"),
+});
+
+export const managePaymentMethodSchema = yup.object().shape({
+  card_number: yup
+    .string()
+    .required("Card number is required")
+    .matches(/^\d{16}$/, "Card number must be 16 digits"),
+  expiry_date: yup
+    .string()
+    .required("Expiry date is required")
+    .matches(
+      /^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
+      "Expiry date must be in MM/YY format"
+    ),
+  cvv: yup
+    .string()
+    .required("CVV is required")
+    .matches(/^\d{3}$/, "CVV must be 3 digits"),
+  card_holder_name: yup.string().required("Card holder's name is required"),
+});
+
 export const aboutOrgSchema = yup.object().shape({
   organization_name: yup
     .string()
@@ -145,4 +192,17 @@ export const paymentSchema = yup.object().shape({
     .trim()
     .matches(/^\d{5}(-\d{4})?$/, "Zip code must be between 5 and 10 digits")
     .required("Please enter the zip code"),
+});
+
+export const helpAndSupportSchema = yup.object().shape({
+  first_name: yup.string().trim().required("Please enter your first name"),
+  last_name: yup.string().trim().required("Please enter your last name"),
+  email_address: yup
+    .string()
+    .trim()
+    .email()
+    .required("Please enter your email address"),
+  company_name: yup.string().trim(),
+  issue: yup.string().trim(),
+  message: yup.string().trim().required("Please enter your message"),
 });
