@@ -15,6 +15,13 @@ import DetailsOfBill from "components/pages/DetailsOfBill";
 import { RepProfile } from "components/pages/RepProfile";
 import { Profile } from "components/pages/Profile";
 
+import { Representatives } from "components/pages/Representatives";
+import { TopReps } from "components/pages/TopReps";
+import {HouseReps} from "components/pages/HouseReps";
+import {SenateReps} from "components/pages/SenateReps";
+import { Bills } from "components/pages/Bills";
+import { HelpAndSupport } from "components/pages/HelpAndSupport"
+
 const routes = createBrowserRouter([
   {
     path: Routes.Home,
@@ -67,8 +74,32 @@ const routes = createBrowserRouter([
         element: <RepProfile />,
       },
       {
+        path: Routes.Representatives,
+        element: <Representatives />,
+      },
+      {
+        path: Routes.TopReps,
+        element: <TopReps />,
+      },
+      {
+        path: Routes.HouseReps,
+        element: <HouseReps />,
+      },
+      {
+        path: Routes.SenateReps,
+        element: <SenateReps />,
+      },
+      {
         path: Routes.Profile,
         element: <Profile />,
+      },
+      {
+        path: Routes.Bills,
+        element: <Bills />,
+      },
+      {
+        path: Routes.HelpAndSupport,
+        element: <HelpAndSupport />,
       },
     ],
   },

@@ -1,6 +1,6 @@
 import { Logo } from "components/atoms/Logo";
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate,useLocation } from "react-router-dom";
 import { Routes } from "types/routes";
 import {
   Typography,
@@ -8,7 +8,10 @@ import {
   Checkbox,
   FormControlLabel,
   IconButton,
-  checkboxClasses,
+  Collapse,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import { Button } from "components/atoms/Button";
 import { STATES } from "constants/common";
@@ -24,6 +27,8 @@ import { Timeline } from "../../assets/Timeline";
 import { SupportAgent } from "../../assets/SupportAgent";
 import { Settings } from "../../assets/Settings";
 import { Logout } from "../../assets/Logout";
+import expand from "assets/expand.svg";
+
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -40,7 +45,9 @@ export function AuthenticatedRoot() {
   const [selectedLegislatures, setSelectedLegislatures] = useState<TState[]>(
     []
   );
+  const [openRepresentatives, setOpenRepresentatives] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const sideNavItems = [
     {
@@ -53,13 +60,24 @@ export function AuthenticatedRoot() {
           link: Routes.Dashboard,
           onClick: () => {},
         },
-        { text: "Bills", icon: Gavel, iconColor: "", onClick: () => {} },
+        {
+          text: "Bills",
+          icon: Gavel,
+          iconColor: "",
+          link: Routes.Bills,
+          onClick: () => {},
+        },
         {
           text: "Representatives",
           icon: Group,
           iconColor: "",
-          link: "",
-          onClick: () => {},
+          link: Routes.Representatives,
+          onClick: () => setOpenRepresentatives(!openRepresentatives),
+          subItems: [
+            { text: "My Top Reps", link: Routes.TopReps },
+            { text: "House", link: Routes.HouseReps },
+            { text: "Senate", link: Routes.SenateReps },
+          ],
         },
         {
           text: "Activity Feed",
@@ -83,7 +101,7 @@ export function AuthenticatedRoot() {
         {
           text: "Help & Support",
           icon: SupportAgent,
-          link: "",
+          link: Routes.HelpAndSupport,
           iconColor: "",
           onClick: () => {},
         },
@@ -157,8 +175,8 @@ export function AuthenticatedRoot() {
   }
 
   return (
-    <main className="bg-neutral25 row">
-      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 max-h-screen overflow-y-auto">
+    <main className="bg-neutral25 row ">
+      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto min-w-80">
         {/** Logo */}
         <a
           className="flex flex-col pl-7 pt-9 pb-6 max-w-44"
@@ -200,59 +218,90 @@ export function AuthenticatedRoot() {
           </div>
         </div>
 
-        {/** Side Menu buttons */}
-        <nav className="col">
-          {sideNavItems.map((navGroup) => (
-            <ul key={navGroup.title} className="mt-6">
-              <p className="text-neutral400 text-xs font-extrabold uppercase pl-7 pb-2">
-                {navGroup.title}
-              </p>
-              {navGroup.buttons.map((navButton) => {
-                const isActive = navButton.link
-                  ? location.pathname === navButton.link
-                  : activeMenuItem === navButton.text;
-                const Icon = navButton.icon;
-
-                return (
-                  <li
-                    key={navButton.text}
-                    className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
-                      isActive ? "border-r-4 bg-accent50 border-accent800" : ""
+ {/* Sidebar Navigation */}
+<div className="overflow-y-auto">
+  {sideNavItems.map((item) => (
+    <div key={item.title}>
+      <div className="font-bold text-neutral600 pl-4 pt-2">{item.title}</div>
+      <List>
+        {item.buttons.map((button) => (
+          <div key={button.text}>
+            {button.text === "Representatives" ? (
+              <>
+                <ListItem
+                  className={`cursor-pointer ${
+                    activeMenuItem === button.text ? "bg-blue-100" : ""
+                  }`}
+                  onClick={() => {
+                    onClickMenuItem(button.text, undefined, button.onClick);
+                    setOpenRepresentatives(!openRepresentatives);
+                  }}
+                >
+                  <button.icon
+                    className={`mr-2 ${
+                      activeMenuItem === button.text ? "text-blue-900" : "text-neutral600"
                     }`}
-                    onClick={() =>
-                      onClickMenuItem(
-                        navButton.text,
-                        navButton.link,
-                        navButton.onClick
-                      )
-                    }
+                  />
+                  <ListItemText primary={button.text} />
+                  <IconButton
+                    edge="end"
+                    aria-label="more"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenRepresentatives(!openRepresentatives);
+                    }}
                   >
-                    {Icon ? (
-                      <Icon
-                        color={
-                          navButton.iconColor ||
-                          (isActive ? "#172B98" : "#454545")
-                        }
-                      />
-                    ) : null}
-                    <h6
-                      className={`group-hover:text-accent800 ${
-                        isActive
-                          ? "text-accent800 font-bold"
-                          : "text-neutral800 font-semibold"
+                    <img
+                      src={expand}
+                      alt="Expand"
+                      className={`transition-transform transform ${
+                        openRepresentatives ? "rotate-0" : "rotate-180"
                       }`}
-                    >
-                      {navButton.text}
-                    </h6>
-                  </li>
-                );
-              })}
-            </ul>
-          ))}
-        </nav>
+                    />
+                  </IconButton>
+                </ListItem>
+                <Collapse in={openRepresentatives}>
+                  <List component="div" disablePadding>
+                    {[
+                      { text: "My Top Reps", link: Routes.TopReps },
+                      { text: "House", link: Routes.HouseReps },
+                      { text: "Senate", link: Routes.SenateReps },
+                    ].map((subItem) => (
+                      <ListItem
+                        key={subItem.text}
+                        className={`cursor-pointer ${
+                          location.pathname === subItem.link ? "bg-blue-100" : ""
+                        }`}
+                        onClick={() => navigate(subItem.link)}
+                        style={{ paddingLeft: '40px' }} // Adjust this padding to align with "Representatives"
+                      >
+                        <ListItemText primary={subItem.text} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              </>
+            ) : (
+              <ListItem
+                className={`cursor-pointer ${
+                  location.pathname === button.link ? "bg-blue-100" : ""
+                }`}
+                onClick={() => onClickMenuItem(button.text, button.link, button.onClick)}
+              >
+                <button.icon className={`mr-2 ${location.pathname === button.link ? "text-blue-900" : "text-neutral600"}`} />
+                <ListItemText primary={button.text} />
+              </ListItem>
+            )}
+          </div>
+        ))}
+      </List>
+    </div>
+  ))}
+</div>
+
       </aside>
 
-      <div className="basis-[79%]">
+      <div className="md:basis-[79%]">
         <Outlet />
       </div>
 
@@ -294,16 +343,10 @@ export function AuthenticatedRoot() {
                     //   color: isSelected ? "#1026C3" : "#D1D1D1",
                     // }}
                     sx={{
-                      [`&, &.${checkboxClasses.colorPrimary}`]: {
-                        color: "#D1D1D1",
-                      },
-                      [`&, &.${checkboxClasses.checked}`]: {
+                      [`&, &.Mui-checked`]: {
                         color: "#1026C3",
-                        // backgroundColor: "#1026C3",
                       },
-                      "MuiSvgIcon-root": {
-                        color: "red",
-                      },
+                      color: "#D1D1D1",
                     }}
                   />
                 }
@@ -318,6 +361,7 @@ export function AuthenticatedRoot() {
             onClick={onCloseLegislatureModal}
             color="primary"
             text="Save Selections"
+            
           />
         </div>
       </Dialog>
