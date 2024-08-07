@@ -163,8 +163,8 @@ export function AuthenticatedRoot() {
   }
 
   return (
-    <main className="bg-neutral25 row">
-      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 max-h-screen overflow-y-auto min-w-80">
+    <main className="bg-neutral25 row ">
+      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto min-w-80">
         {/** Logo */}
         <a
           className="flex flex-col pl-7 pt-9 pb-6 max-w-44"

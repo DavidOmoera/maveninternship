@@ -63,17 +63,16 @@ export const Bills: React.FC = () => {
             name="searchValue"
             placeholder="Search by keyword, bill # or legislator name"
             leftIcon={<SearchIcon />}
-            containerClasses="w-full lg:basis-[80%] rounded-lg"
+            containerClasses="lg:basis-[90%] rounded-lg"
           />
           <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
-          <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full lg:w-auto ">
+          <div className="basis-full gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4  lg:w-fit w-full">
             <ControlledSelect
               control={control}
               name="chamber"
               label="Chamber"
               defaultValue=""
               options={BILL_TYPES}
-              labelClasses=""
             />
             <ControlledSelect
               control={control}
