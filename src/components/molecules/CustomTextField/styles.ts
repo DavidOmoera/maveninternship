@@ -62,7 +62,7 @@ export const customStyleCreator = ({
       },
 
       "& fieldset": {
-        borderColor,
+        borderColor: "#C0C0C0",
         borderWidth: "1px !important",
       },
 

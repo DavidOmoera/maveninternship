@@ -153,3 +153,56 @@ export const aboutOrgSchema = yup.object().shape({
     })
     .required(),
 });
+
+export const paymentSchema = yup.object().shape({
+  cardNumber: yup
+    .string()
+    .trim()
+    .matches(/^[0-9]{16}$/, "Card number must be 16 digits")
+    .required("Please enter the card number"),
+  cardHolderName: yup
+    .string()
+    .trim()
+    .required("Please enter the card holder's name"),
+  expiryDate: yup
+    .string()
+    .trim()
+    .matches(
+      /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/,
+      "Expiry date must be in MM/YY or MM/YYYY format"
+    )
+    .required("Please enter the expiry date"),
+  cvv: yup
+    .string()
+    .trim()
+    .matches(/^[0-9]{3,4}$/, "CVV must be 3 or 4 digits")
+    .required("Please enter the CVV"),
+  phoneNumber: yup
+    .string()
+    .trim()
+    .matches(/^[0-9]{10,15}$/, "Phone number must be between 10 and 15 digits")
+    .required("Please enter the phone number"),
+  address: yup.string().trim().required("Please enter the address"),
+  organizationSize: yup
+    .string()
+    .trim()
+    .required("Please state the size of the organization"),
+  zipCode: yup
+    .string()
+    .trim()
+    .matches(/^\d{5}(-\d{4})?$/, "Zip code must be between 5 and 10 digits")
+    .required("Please enter the zip code"),
+});
+
+export const helpAndSupportSchema = yup.object().shape({
+  first_name: yup.string().trim().required("Please enter your first name"),
+  last_name: yup.string().trim().required("Please enter your last name"),
+  email_address: yup
+    .string()
+    .trim()
+    .email()
+    .required("Please enter your email address"),
+  company_name: yup.string().trim(),
+  issue: yup.string().trim(),
+  message: yup.string().trim().required("Please enter your message"),
+});
