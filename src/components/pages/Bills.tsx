@@ -10,7 +10,6 @@ import { allBills, BILL_TYPES, BILL_YEARS } from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import filter from "assets/filter.svg";
 import grid from "assets/grid.svg";
-import { Voting } from "components/organisms/Voting";
 
 interface TBillSearchForm {
   searchValue: string;
@@ -48,32 +47,33 @@ export const Bills: React.FC = () => {
     <PageContainer title="Search">
       <div className="p-9 bg-white rounded-xl mx-8">
         <h3 className="text-primary font-extrabold text-xl pb-1">
-          Search for:{" "}
+          Search for:
           <span className="text-blue-700 font-extrabold">
             Secure Border Act
           </span>
         </h3>
         <p className="pb-6 font-normal">
-          in <span className="font-bold">Texas</span> &{" "}
+          in <span className="font-bold">Texas</span> &
           <span className="font-bold">Colorado</span>
         </p>
-        <div className="row items-center w-full gap-3 sm:block">
+        <div className="flex flex-col lg:flex-row items-center w-full gap-3">
           <ControlledInput
             required
             control={control}
             name="searchValue"
             placeholder="Search by keyword, bill # or legislator name"
             leftIcon={<SearchIcon />}
-            containerClasses="basis-[80%] rounded-lg sm:mb-2"
+            containerClasses="w-full lg:basis-[80%] rounded-lg"
           />
-          <div className="h-12 w-[1px] bg-neutral200 sm:hidden" />
-          <div className="gap-3 grid grid-cols-4 basis-[60%]">
+          <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
+          <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full lg:w-auto ">
             <ControlledSelect
               control={control}
               name="chamber"
               label="Chamber"
               defaultValue=""
               options={BILL_TYPES}
+              labelClasses=""
             />
             <ControlledSelect
               control={control}

@@ -53,7 +53,13 @@ export function AuthenticatedRoot() {
           link: Routes.Dashboard,
           onClick: () => {},
         },
-        { text: "Bills", icon: Gavel, iconColor: "", onClick: () => {} },
+        {
+          text: "Bills",
+          icon: Gavel,
+          iconColor: "",
+          link: Routes.Bills,
+          onClick: () => {},
+        },
         {
           text: "Representatives",
           icon: Group,
@@ -158,7 +164,7 @@ export function AuthenticatedRoot() {
 
   return (
     <main className="bg-neutral25 row">
-      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 max-h-screen overflow-y-auto">
+      <aside className="hidden md:block basis-[21%] flex-1 bg-white px-4 py-9 max-h-screen overflow-y-auto min-w-80">
         {/** Logo */}
         <a
           className="flex flex-col pl-7 pt-9 pb-6 max-w-44"
