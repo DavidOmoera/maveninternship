@@ -53,7 +53,7 @@ export const Bills: React.FC = () => {
           </span>
         </h3>
         <p className="pb-6 font-normal">
-          in <span className="font-bold">Texas</span> &
+          in <span className="font-bold">Texas</span> &{" "}
           <span className="font-bold">Colorado</span>
         </p>
         <div className="flex flex-col lg:flex-row items-center w-full gap-3">
