@@ -46,8 +46,8 @@ export const Bills: React.FC = () => {
   return (
     <PageContainer title="Search">
       <div className="p-9 bg-white rounded-xl mx-8">
-        <h3 className="text-primary font-extrabold text-xl pb-1">
-          Search for:
+        <h3 className="text-primary font-normal text-2xl pb-1">
+          Search for:{" "}
           <span className="text-blue-700 font-extrabold">
             Secure Border Act
           </span>
