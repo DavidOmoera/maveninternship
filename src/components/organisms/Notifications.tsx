@@ -9,7 +9,7 @@ interface NotificationItems {
   status: string;
   time: string;
 }
-
+ 
 const notifications: NotificationItems[] = [
   {
     title: "Secure the Border Act of 2023 has commenced to Level 1",
@@ -53,8 +53,16 @@ const notifications: NotificationItems[] = [
   },
 ];
 
-type TNotificationsProps = { open: boolean; onClose: () => void };
-export function Notifications({ open, onClose }: TNotificationsProps) {
+type TNotificationsProps = {
+  open: boolean;
+  onClose: () => void;
+  onClickSettings: () => void;
+};
+export function Notifications({
+  open,
+  onClose,
+  onClickSettings,
+}: TNotificationsProps) {
   return (
     <Dialog open={open} onClose={onClose}>
       <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
@@ -75,6 +83,7 @@ export function Notifications({ open, onClose }: TNotificationsProps) {
               src={SettingsIcon}
               alt="setting icon"
               className="cursor-pointer p-3"
+              onClick={onClickSettings}
             />
           </div>
         </div>
