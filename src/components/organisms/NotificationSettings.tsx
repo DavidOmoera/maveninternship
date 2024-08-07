@@ -4,11 +4,10 @@ import {
   FormControlLabel,
   Radio,
   Checkbox,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import { useState } from "react";
 import X from "assets/X.svg";
+import CustomSelect from "components/molecules/CustomSelect";
 
 type TNotificationSettingsProps = { open: boolean; onClose: () => void };
 
@@ -25,7 +24,7 @@ export function NotificationSettings({
   const handleUpdatePreferenceChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setUpdatePreference((event.target as HTMLInputElement).value);
+    setUpdatePreference(event.target.value);
   };
 
   const handleNotificationFrequencyChange = (
@@ -39,6 +38,12 @@ export function NotificationSettings({
   ) => {
     setDisableNotifications(event.target.checked);
   };
+
+  const TIME_OPTIONS = [
+    { id: 1, label: "Daily", value: "day" },
+    { id: 1, label: "Weekly", value: "week" },
+    { id: 1, label: "Monthly", value: "month" },
+  ];
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -76,15 +81,13 @@ export function NotificationSettings({
             </RadioGroup>
           </div>
           <div className="mb-4">
-            <h3 className="text-lg font-bold">
+            <h3 className="text-lg font-bold mb-4">
               How often would you like to be notified of changes on your tracked
               bills?
             </h3>
-            <Select value={notificationFrequency} fullWidth variant="outlined">
-              <MenuItem value="Daily">Daily</MenuItem>
-              <MenuItem value="Weekly">Weekly</MenuItem>
-              <MenuItem value="Monthly">Monthly</MenuItem>
-            </Select>
+            <div className="w-36">
+              <CustomSelect options={TIME_OPTIONS} />
+            </div>
           </div>
           <div className="mb-4">
             <h3 className="text-lg font-bold">Disable Notifications</h3>
