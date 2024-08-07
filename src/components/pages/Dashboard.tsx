@@ -152,8 +152,10 @@ export const Dashboard: React.FC = () => {
     navigate("/dashboard/activity-feed");
   }
 
-  function goToRepresentatives() {}
-
+  function goToRepresentatives() {
+  navigate(Routes.Representatives);
+}
+ 
   function onClickRepresentative() {
     navigate(Routes.RepProfile);
   }
@@ -430,6 +432,12 @@ export const Dashboard: React.FC = () => {
                   className="row gap-1 bg-white p-0 border-none hover:border-none"
                   onClick={goToRepresentatives}
                 >
+                 <div className="row justify-center mt-4">
+  
+
+
+
+</div>
                   <h6 className="text-primary font-bold text-[14px]">
                     See All Representatives
                   </h6>
