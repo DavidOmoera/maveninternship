@@ -5,10 +5,27 @@ import { Button } from "components/atoms/Button";
 import { Pill } from "components/molecules/Pill";
 import { AboutOrganization } from "components/organisms/AboutOrganization";
 import { AboutUser } from "components/organisms/AboutUser";
+import { Payment } from "components/organisms/Payment";
+import { SelectProduct } from "components/organisms/SelectProduct";
 import { colors } from "constants/common";
-import { aboutOrgSchema, aboutUserSchema } from "constants/schemas";
+import {
+  aboutOrgSchema,
+  aboutUserSchema,
+  paymentSchema,
+} from "constants/schemas";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+
+export type PaymentDetails = {
+  cardNumber: string;
+  cardHolderName: string;
+  expiryDate: string;
+  cvv: string;
+  phoneNumber: string;
+  address: string;
+  organizationSize: string;
+  zipCode: string;
+};
 
 export type TAboutUserForm = {
   firstName: string;
@@ -41,7 +58,20 @@ const STEP_TITLES = [
 ];
 
 export function AccountSetup() {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
+  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+
+  const {
+    control: paymentControl,
+    formState: {
+      errors: paymentFormErrors,
+      isDirty: isPaymentFormDirty,
+      isSubmitting: isPaymentFormSubmitting,
+      isValid: isPaymentFormValid,
+    },
+  } = useForm<PaymentDetails>({
+    resolver: yupResolver(paymentSchema),
+  });
 
   const {
     control: aboutUserControl,
@@ -81,17 +111,28 @@ export function AccountSetup() {
           !isAboutOrganizationFormValid ||
           isAboutOrganizationFormSubmitting
         );
+      case 3:
+        return selectedProduct === null;
+      case 4:
+        return (
+          !isPaymentFormDirty || !isPaymentFormValid || isPaymentFormSubmitting
+        );
+
       default:
-        break;
+        return false;
     }
   }, [
-    isAboutOrganizationFormDirty,
-    isAboutOrganizationFormSubmitting,
-    isAboutOrganizationFormValid,
-    isAboutUserFormDirty,
-    isAboutUserFormSubmitting,
-    isAboutUserFormValid,
     step,
+    isAboutUserFormDirty,
+    isAboutUserFormValid,
+    isAboutUserFormSubmitting,
+    isAboutOrganizationFormDirty,
+    isAboutOrganizationFormValid,
+    isAboutOrganizationFormSubmitting,
+    selectedProduct,
+    isPaymentFormDirty,
+    isPaymentFormValid,
+    isPaymentFormSubmitting,
   ]);
 
   const isPreviousButtonDisabled = useMemo(() => step === 1, [step]);
@@ -106,7 +147,7 @@ export function AccountSetup() {
 
   return (
     <div className="w-full col items-center h-[90vh] mt-16">
-      <div className="w-full md:w-[70%] px-4 md:px-0 col justify-between h-full">
+      <div className="w-full md:w-[82%] px-4 md:px-0 col justify-between h-full">
         <div className="gap-4">
           <div className="row w-full justify-between">
             <h4 className="font-extrabold text-xl">{STEP_TITLES[step]}</h4>
@@ -130,11 +171,16 @@ export function AccountSetup() {
               errors={aboutUserFormErrors}
             />
           )}
+
           {step === 2 && (
             <AboutOrganization
               control={aboutOrganizationControl}
               errors={aboutOrganizationFormErrors}
             />
+          )}
+          {step === 3 && <SelectProduct onProductSelect={setSelectedProduct} />}
+          {step === 4 && (
+            <Payment control={paymentControl} errors={paymentFormErrors} />
           )}
         </div>
 

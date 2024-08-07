@@ -89,7 +89,7 @@ export function AuthenticatedRoot() {
         {
           text: "Help & Support",
           icon: SupportAgent,
-          link: "",
+          link: Routes.HelpAndSupport,
           iconColor: "",
           onClick: () => {},
         },
@@ -258,7 +258,7 @@ export function AuthenticatedRoot() {
         </nav>
       </aside>
 
-      <div className="basis-[79%]">
+      <div className="md:basis-[79%]">
         <Outlet />
       </div>
 
