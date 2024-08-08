@@ -29,15 +29,16 @@ export function PageContainer({
     setOpenNotificationStatusDialog(true);
   const handleCloseNotificationStatusDialog = () =>
     setOpenNotificationStatusDialog(false);
-   const [OpenNotificationSettingsDialog, setOpenNotificationSettingsDialog] = useState(false);
-   const handleOpenNotificationSettingsDialog =() => {
+  const [OpenNotificationSettingsDialog, setOpenNotificationSettingsDialog] =
+    useState(false);
+  const handleOpenNotificationSettingsDialog = () => {
     setOpenNotificationSettingsDialog(true);
     handleCloseNotificationStatusDialog();
-   };  
-   const handleCloseNotificationSettingsDialog = () => {
+  };
+  const handleCloseNotificationSettingsDialog = () => {
     setOpenNotificationSettingsDialog(false);
     handleOpenNotificationStatusDialog();
-   } 
+  };
 
   function onClickBack() {
     navigate(Routes.Dashboard);
@@ -111,8 +112,9 @@ export function PageContainer({
         onClickSettings={handleOpenNotificationSettingsDialog}
       />
       <NotificationSettings
-      open={OpenNotificationSettingsDialog}
-      onClose={handleCloseNotificationSettingsDialog}/>
+        open={OpenNotificationSettingsDialog}
+        onClose={handleCloseNotificationSettingsDialog}
+      />
     </div>
   );
 }
