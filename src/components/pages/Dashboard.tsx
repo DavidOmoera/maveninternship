@@ -149,13 +149,13 @@ export const Dashboard: React.FC = () => {
   };
 
   function goToActivityFeed() {
-    navigate("/dashboard/activity-feed");
+    navigate(Routes.ActivityFeed);
   }
 
   function goToRepresentatives() {
-  navigate(Routes.Representatives);
-}
- 
+    navigate(Routes.Representatives);
+  }
+
   function onClickRepresentative() {
     navigate(Routes.RepProfile);
   }
@@ -432,7 +432,6 @@ export const Dashboard: React.FC = () => {
                   className="row gap-1 bg-white p-0 border-none hover:border-none"
                   onClick={goToRepresentatives}
                 >
-              
                   <h6 className="text-primary font-bold text-[14px]">
                     See All Representatives
                   </h6>
@@ -444,7 +443,7 @@ export const Dashboard: React.FC = () => {
         ) : (
           <div>
             <button
-              className="bg-neutral50 border-primary px-[18px] py-[21px]"
+              className="hidden md:block bg-neutral50 border-primary px-[18px] py-[21px]"
               onClick={toggleUpdatesSection}
             >
               <StartOutlinedIcon
