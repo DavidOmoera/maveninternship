@@ -1,4 +1,6 @@
-import topRepresentative from "assets/top_representative.png";
+import allenAlma from "assets/allen_alma.jpg";
+import allisonSteve from "assets/allison_steve.jpg";
+import anchiaRafael from "assets/anchia_rafael.jpg";
 import login from "assets/login.svg";
 import logout from "assets/logout.svg";
 import minuscirlce from "assets/minus-cirlce.svg";
@@ -133,21 +135,21 @@ export const STATES = [
 export const topRepresentatives = [
   {
     title: "Most Votes",
-    representative: "Sen. Ivy Adams",
-    district: "District 1",
-    image: topRepresentative,
+    representative: "Allen, Alma A.",
+    district: "District 131",
+    image: allenAlma,
   },
   {
     title: "Most Votes of the Week",
-    representative: "Sen. Ivy Adams",
-    district: "District 1",
-    image: topRepresentative,
+    representative: "Allison, Steve",
+    district: "District 121",
+    image: allisonSteve,
   },
   {
     title: "Least Votes",
-    representative: "Sen. Ivy Adams",
-    district: "District 1",
-    image: topRepresentative,
+    representative: "Anchía, Rafael",
+    district: "District 103",
+    image: anchiaRafael,
   },
 ];
 
