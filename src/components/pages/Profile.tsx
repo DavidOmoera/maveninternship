@@ -1,5 +1,5 @@
 import { PageContainer } from "components/templates/PageContainer";
-import profilePicture from "assets/profile_picture.webp";
+import profilePicture from "assets/rep18.svg";
 import photo from "assets/photo.svg";
 import envelope from "assets/envelope2.svg";
 import phone from "assets/phone.svg";
@@ -35,8 +35,8 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import Checkbox from "@mui/material/Checkbox";
 
 const CONTACT_DETAILS = [
-  { icon: envelope, text: "09090909090" },
-  { icon: phone, text: "jasminecrockett@uscongress.com" },
+  { icon: envelope, text: "sethrogan@gmail.com" },
+  { icon: phone, text: "872-314-8974" },
 ];
 
 const ORG_DETAILS = [
@@ -283,7 +283,7 @@ export function Profile() {
           </div>
           <div className="col p-6 gap-4 items-start bg-neutral50">
             <div className="row justify-between w-full">
-              <h2 className="text-neutral950">Jasmine Crockett</h2>
+              <h2 className="text-neutral950">Seth Rogan</h2>
               <div
                 className="row gap-1 items-center cursor-pointer"
                 onClick={onClickEditProfile}
