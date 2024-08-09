@@ -1,0 +1,109 @@
+import {
+  Dialog,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Checkbox,
+} from "@mui/material";
+import { useState } from "react";
+import X from "assets/X.svg";
+import CustomSelect from "components/molecules/CustomSelect";
+
+type TNotificationSettingsProps = { open: boolean; onClose: () => void };
+
+export function NotificationSettings({
+  open,
+  onClose,
+}: TNotificationSettingsProps) {
+  const [updatePreference, setUpdatePreference] = useState(
+    "Both Email and In-app"
+  );
+  const [notificationFrequency, setNotificationFrequency] = useState("Weekly");
+  const [disableNotifications, setDisableNotifications] = useState(false);
+
+  const handleUpdatePreferenceChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setUpdatePreference(event.target.value);
+  };
+
+  const handleNotificationFrequencyChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setNotificationFrequency(event.target.value as string);
+  };
+
+  const handleDisableNotificationsChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDisableNotifications(event.target.checked);
+  };
+
+  const TIME_OPTIONS = [
+    { id: 1, label: "Daily", value: "day" },
+    { id: 1, label: "Weekly", value: "week" },
+    { id: 1, label: "Monthly", value: "month" },
+  ];
+
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
+        <div className="row justify-end">
+          <img
+            src={X}
+            alt="close button"
+            className="cursor-pointer"
+            onClick={onClose}
+          />
+        </div>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Notification Settings</h2>
+        </div>
+        <form>
+          <div className="mb-4">
+            <h3 className="text-lg font-bold">
+              Get Updates on Your Watched Bills
+            </h3>
+            <RadioGroup
+              value={updatePreference}
+              onChange={handleUpdatePreferenceChange}
+            >
+              <FormControlLabel
+                value="In-app only"
+                control={<Radio />}
+                label="In-app only"
+              />
+              <FormControlLabel
+                value="Both Email and In-app"
+                control={<Radio />}
+                label="Both Email and In-app"
+              />
+            </RadioGroup>
+          </div>
+          <div className="mb-4">
+            <h3 className="text-lg font-bold mb-4">
+              How often would you like to be notified of changes on your tracked
+              bills?
+            </h3>
+            <div className="w-36">
+              <CustomSelect options={TIME_OPTIONS} />
+            </div>
+          </div>
+          <div className="mb-4">
+            <h3 className="text-lg font-bold">Disable Notifications</h3>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={disableNotifications}
+                  onChange={handleDisableNotificationsChange}
+                  name="disableNotifications"
+                />
+              }
+              label="I no longer want to receive notifications"
+            />
+          </div>
+        </form>
+      </div>
+    </Dialog>
+  );
+}
