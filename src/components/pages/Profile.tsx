@@ -1,5 +1,5 @@
 import { PageContainer } from "components/templates/PageContainer";
-import profilePicture from "assets/profile_picture.webp";
+import profilePicture from "assets/rep18.svg";
 import photo from "assets/photo.svg";
 import envelope from "assets/envelope2.svg";
 import phone from "assets/phone.svg";
@@ -27,7 +27,7 @@ import {
   editProfileSchema,
   managePaymentMethodSchema,
 } from "constants/schemas";
-import { useMemo, useState } from "react";
+import { useState, useRef, useMemo} from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -40,8 +40,8 @@ import { updateOrganizationData } from "store/slices/organization";
 import { updateUserData } from "store/slices/auth";
 
 const CONTACT_DETAILS = [
-  { icon: envelope, text: "09090909090" },
-  { icon: phone, text: "jasminecrockett@uscongress.com" },
+  { icon: envelope, text: "sethrogan@gmail.com" },
+  { icon: phone, text: "872-314-8974" },
 ];
 
 const DURATION_OPTIONS = [
@@ -183,6 +183,9 @@ export function Profile() {
     ]
   );
 
+  const [selectedProfilePicture, setSelectedProfilePicture] =
+    useState<string>(profilePicture);
+
   const {
     control: feedbackControl,
     handleSubmit: handleFeedbackFormSubmit,
@@ -237,7 +240,23 @@ export function Profile() {
     resolver: yupResolver(managePaymentMethodSchema),
   });
 
-  function onClickChangePhoto() {}
+  function onClickChangePhoto() {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  }
+
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setSelectedProfilePicture(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   function onClickEditProfile() {
     setShowEditProfileForm(true);
   }
@@ -343,6 +362,8 @@ export function Profile() {
     if (isManagePaymentMethodFormValid) setShowManagePaymentMethodForm(false);
   };
 
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <PageContainer title="Profile">
       <div className="grid grid-cols-2 gap-6 mx-9">
@@ -350,22 +371,24 @@ export function Profile() {
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4">
             <img
-              src={profilePicture}
+              src={selectedProfilePicture}
               className="w-20 h-20 object-cover rounded"
             />
             <div className="col items-start gap-2">
               <h6 className="text-neutral950">Profile Photo</h6>
-              <Pill
-                text="Change Photo"
-                containerClassName="row items-center rounded-[2.37rem] px-3 py-2 gap-1 bg-neutral50 cursor-pointer"
-                rightIcon={<img src={photo} className="w-3 h-3" />}
-                onClick={onClickChangePhoto}
+              <Pill onClick={onClickChangePhoto} text="Change Photo" />
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={handleFileChange}
               />
             </div>
           </div>
           <div className="col p-6 gap-4 items-start bg-neutral50">
             <div className="row justify-between w-full">
-              <h2 className="text-neutral950">Jasmine Crockett</h2>
+              <h2 className="text-neutral950">Seth Rogan</h2>
               <div
                 className="row gap-1 items-center cursor-pointer"
                 onClick={onClickEditProfile}
@@ -448,6 +471,13 @@ export function Profile() {
                 containerClassName="row items-center rounded-[2.37rem] px-3 py-2 gap-1 bg-neutral50 cursor-pointer"
                 rightIcon={<img src={photo} className="w-3 h-3" />}
                 onClick={onClickChangePhoto}
+              />
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={handleFileChange}
               />
             </div>
           </div>
