@@ -184,19 +184,16 @@ export const Dashboard: React.FC = () => {
             <h3 className="text-primary font-extrabold text-xl pb-6">
               Search for Bills
             </h3>
-            <div className="row items-center w-full gap-3">
+            <div className="flex flex-col lg:flex-row w-full gap-3 items-center">
               <ControlledInput
                 required
                 control={control}
                 name="searchValue"
                 placeholder="Search by keyword, bill # or legislator name"
                 leftIcon={<SearchIcon />}
-                containerClasses="basis-[40%] rounded-lg"
-                error={!!errors?.searchValue}
-                helperText={(errors?.searchValue?.message as string) ?? ""}
               />
-              <div className="h-12 w-[1px] bg-neutral200" />
-              <div className="gap-3 grid grid-cols-4 basis-[60%]">
+              <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
+              <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
                 <ControlledSelect
                   control={control}
                   name="chamber"
@@ -268,19 +265,16 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** Search Bills */}
-            <div className="row items-center w-full gap-3 mt-8 mb-6">
+            <div className="flex flex-col lg:flex-row w-full gap-3 items-center my-4">
               <ControlledInput
                 required
                 control={control}
                 name="searchValue"
                 placeholder="Search by keyword, bill # or legislator name"
                 leftIcon={<SearchIcon />}
-                containerClasses="basis-[40%] rounded-lg"
-                error={!!errors?.searchValue}
-                helperText={(errors?.searchValue?.message as string) ?? ""}
               />
-              <div className="h-12 w-[1px] bg-neutral200" />
-              <div className="gap-3 grid grid-cols-4 basis-[60%]">
+              <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
+              <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
                 <ControlledSelect
                   control={control}
                   name="chamber"

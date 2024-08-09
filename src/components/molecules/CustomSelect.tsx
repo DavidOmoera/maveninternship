@@ -112,6 +112,7 @@ const CustomSelect = forwardRef(
         sx={{
           m: 0,
           width: "100%",
+          minWidth: "125px",
           maxWidth: maxWidth,
           fontFamily: `${fontFamily} !important`,
           "& .MuiFormLabel-root": {
@@ -140,7 +141,7 @@ const CustomSelect = forwardRef(
         <Select
           required={required}
           disabled={disabled}
-          className="tracking-[0.08px] capitalize"
+          className="tracking-[0.08px] capitalize "
           sx={{
             "& .MuiSelect-icon": {
               right: "12px",

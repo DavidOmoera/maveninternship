@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
-import message from "assets/message.svg";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/profile_picture.webp";
 import { Routes } from "types/routes";
@@ -9,8 +8,6 @@ import classNames from "classnames";
 import { ArrowRight } from "assets/ArrowRight";
 import { colors } from "constants/common";
 import { Notifications } from "components/organisms/Notifications";
-
-
 
 type TPageContainerProps = { title: string } & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -24,10 +21,12 @@ export function PageContainer({
   const location = useLocation();
   const navigate = useNavigate();
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
-  const [OpenNotificationStatusDialog, setOpenNotificationStatusDialog] = useState(false);
-  const handleOpenNotificationStatusDialog =() => setOpenNotificationStatusDialog(true);
-  const handleCloseNotificationStatusDialog = () => setOpenNotificationStatusDialog(false);
-
+  const [OpenNotificationStatusDialog, setOpenNotificationStatusDialog] =
+    useState(false);
+  const handleOpenNotificationStatusDialog = () =>
+    setOpenNotificationStatusDialog(true);
+  const handleCloseNotificationStatusDialog = () =>
+    setOpenNotificationStatusDialog(false);
 
   function onClickBack() {
     navigate(Routes.Dashboard);
@@ -62,7 +61,6 @@ export function PageContainer({
         </div>
         <div className="row gap-6">
           <div className="row gap-3">
-            <img src={message} className="cursor-pointer" alt="Message" />
             <img
               src={notification}
               onClick={handleOpenNotificationStatusDialog}
@@ -91,12 +89,13 @@ export function PageContainer({
               </p>
             </article>
           </div>
-          <ExpandMoreOutlinedIcon />
         </div>
       </div>
       {children}
-      <Notifications open={OpenNotificationStatusDialog} onClose={handleCloseNotificationStatusDialog}/>
+      <Notifications
+        open={OpenNotificationStatusDialog}
+        onClose={handleCloseNotificationStatusDialog}
+      />
     </div>
-
   );
 }
