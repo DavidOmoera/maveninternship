@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Pill } from "components/molecules/Pill";
 import { allBills } from "constants/common";
 import BookmarkRemoveOutlinedIcon from "@mui/icons-material/BookmarkRemoveOutlined";
@@ -38,7 +38,7 @@ export function BillCard({
   return (
     <div
       key={state}
-      className="max-w-[474px] h-auto cursor-pointer mb-6 mt-10 rounded-xl bg-gray-100 shadow-4xl"
+      className="max-w-[474px] h-auto cursor-pointer mb-6 mt-10 rounded-xl bg-gray-100 shadow-4xl relative"
       onClick={onClick}
       style={{ boxShadow: "1px 1px 10px 0px #7979791A" }}
     >
@@ -63,22 +63,28 @@ export function BillCard({
             </span>
           )}
         </p>
-        <div className="ml-56 hover:bg-gray-100 rounded mt-1">
-          {isWatched ? (
-            <BookmarkRemoveOutlinedIcon sx={{ color: "red" }} />
-          ) : (
-            <BookmarkAddOutlinedIcon sx={{ color: "#0C0853" }} />
-          )}
-          <button
-            onClick={handleToggleWatch}
-            className={`w-48 text-sm py-3 px-1  font-semibold ${
-              isWatched ? "text-red-600" : "text-blue-600"
-            } bg-transparent focus:outline-none focus:ring-0 hover:border-none hover:ring-0`}
-          >
-            {isWatched
-              ? "Remove from watched bills"
-              : "Add to my watched bills"}
-          </button>
+        <div className="flex justify-end mt-2">
+          <div className="flex items-center gap-2 hover:bg-blue-50 rounded-lg p-1">
+            {isWatched ? (
+              <BookmarkRemoveOutlinedIcon
+                sx={{ color: "red", marginRight: "-10px" }}
+              />
+            ) : (
+              <BookmarkAddOutlinedIcon
+                sx={{ color: "#0C0853", marginRight: "-10px" }}
+              />
+            )}
+            <button
+              onClick={handleToggleWatch}
+              className={`text-sm py-2 px-1 font-semibold ${
+                isWatched ? "text-red-600" : "text-blue-600"
+              } bg-transparent focus:outline-none focus:ring-0 hover:border-none`}
+            >
+              {isWatched
+                ? "Remove from watched bills"
+                : "Add to my watched bills"}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -91,17 +97,33 @@ export function BillCard({
         </div>
         <div className="flex space-x-2 rounded-b-3xl">
           <div className="flex items-center">
-            <img src={supporter1} alt="supporter" className="w-6 h-6" />
-            <img src={supporter2} alt="supporter" className="w-6 h-6" />
-            <img src={supporter3} alt="supporter" className="w-6 h-6" />
-            <p className="ml-2 text-xs font-bold">{count1}</p>
+            <img src={supporter1} alt="supporter" className="w-6 h-6 " />
+            <img
+              src={supporter2}
+              alt="supporter"
+              className="w-6 h-6 hidden lg:block"
+            />
+            <img
+              src={supporter3}
+              alt="supporter"
+              className="w-6 h-6 hidden lg:block"
+            />
+            <p className=" text-xs font-bold">{count1}</p>
           </div>
           <span className="bg-gray-200 h-full w-1 border rounded-full"></span>
           <div className="flex items-center">
-            <img src={supporter4} alt="supporter" className="w-6 h-6" />
-            <img src={supporter5} alt="supporter" className="w-6 h-6" />
-            <img src={supporter6} alt="supporter" className="w-6 h-6" />
-            <p className="ml-2 text-xs font-bold">{count2}</p>
+            <img src={supporter4} alt="supporter" className="w-6 h-6 " />
+            <img
+              src={supporter5}
+              alt="supporter"
+              className="w-6 h-6 hidden lg:block"
+            />
+            <img
+              src={supporter6}
+              alt="supporter"
+              className="w-6 h-6 hidden lg:block"
+            />
+            <p className="ml-1 text-xs font-bold">{count2}</p>
           </div>
         </div>
       </div>

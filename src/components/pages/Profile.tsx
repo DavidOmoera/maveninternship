@@ -481,7 +481,7 @@ export function Profile() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 mt-5 gap-5">
+          <div className="grid grid-cols-1 mt-5 gap-5 xl:grid-cols-2">
             {orgDetails.map((details) => (
               <Info key={details.title + details.description} {...details} />
             ))}
@@ -497,7 +497,7 @@ export function Profile() {
                 <p className="text-primary font-medium">Edit Details</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-5 mt-5">
+            <div className="grid grid-cols-1 mt-5 gap-5 xl:grid-cols-2">
               {orgContacts.map((contact) => (
                 <Info key={contact.description + contact.title} {...contact} />
               ))}

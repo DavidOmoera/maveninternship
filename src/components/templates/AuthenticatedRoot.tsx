@@ -1,6 +1,6 @@
 import { Logo } from "components/atoms/Logo";
 import { useState } from "react";
-import { Outlet, useNavigate,useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Routes } from "types/routes";
 import {
   Typography,
@@ -28,7 +28,6 @@ import { SupportAgent } from "../../assets/SupportAgent";
 import { Settings } from "../../assets/Settings";
 import { Logout } from "../../assets/Logout";
 import expand from "assets/expand.svg";
-
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -192,7 +191,7 @@ export function AuthenticatedRoot() {
         <div className="my-6 mx-4 px-5 py-6 bg-accent50 col items-center rounded-xl">
           <p className="text-sm pb-2 text-neutral400">My Workspace</p>
           <h6 className="pb-4">Select Legislature</h6>
-          <div className="col gap-2 overflow-y-auto max-h-60 items-center w-full">
+          <div className="col gap-2 overflow-y-auto max-h-60 items-center w-full no-scrollbar">
             {selectedStates.map((state) => {
               const isChecked = isLegislatureSelected(state.code);
 
@@ -218,87 +217,148 @@ export function AuthenticatedRoot() {
           </div>
         </div>
 
- {/* Sidebar Navigation */}
-<div className="overflow-y-auto">
-  {sideNavItems.map((item) => (
-    <div key={item.title}>
-      <div className="font-bold text-neutral600 pl-4 pt-2">{item.title}</div>
-      <List>
-        {item.buttons.map((button) => (
-          <div key={button.text}>
-            {button.text === "Representatives" ? (
-              <>
-                <ListItem
-                  className={`cursor-pointer ${
-                    activeMenuItem === button.text ? "bg-blue-100" : ""
-                  }`}
-                  onClick={() => {
-                    onClickMenuItem(button.text, undefined, button.onClick);
-                    setOpenRepresentatives(!openRepresentatives);
-                  }}
-                >
-                  <button.icon
-                    className={`mr-2 ${
-                      activeMenuItem === button.text ? "text-blue-900" : "text-neutral600"
-                    }`}
-                  />
-                  <ListItemText primary={button.text} />
-                  <IconButton
-                    edge="end"
-                    aria-label="more"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setOpenRepresentatives(!openRepresentatives);
-                    }}
-                  >
-                    <img
-                      src={expand}
-                      alt="Expand"
-                      className={`transition-transform transform ${
-                        openRepresentatives ? "rotate-0" : "rotate-180"
-                      }`}
-                    />
-                  </IconButton>
-                </ListItem>
-                <Collapse in={openRepresentatives}>
-                  <List component="div" disablePadding>
-                    {[
-                      { text: "My Top Reps", link: Routes.TopReps },
-                      { text: "House", link: Routes.HouseReps },
-                      { text: "Senate", link: Routes.SenateReps },
-                    ].map((subItem) => (
+        {/* Sidebar Navigation */}
+        <div className="overflow-y-auto">
+          {sideNavItems.map((item) => (
+            <div key={item.title}>
+              <div className="text-neutral400 text-xs font-extrabold uppercase pl-7 pb-2">
+                {item.title}
+              </div>
+              <List>
+                {item.buttons.map((button) => (
+                  <div key={button.text}>
+                    {button.text === "Representatives" ? (
+                      <>
+                        <ListItem
+                          className={`group row gap-3 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
+                            activeMenuItem === button.text
+                              ? "bg-accent50 border-r-4 border-accent800"
+                              : ""
+                          }`}
+                          onClick={() => {
+                            onClickMenuItem(
+                              button.text,
+                              undefined,
+                              button.onClick
+                            );
+                            setOpenRepresentatives(!openRepresentatives);
+                          }}
+                        >
+                          <button.icon
+                            className={`mr-2 ${
+                              activeMenuItem === button.text
+                                ? "text-blue-900"
+                                : "text-neutral600"
+                            }`}
+                            color={
+                              button.iconColor ||
+                              (activeMenuItem === button.text
+                                ? "#172B98"
+                                : "#454545")
+                            }
+                          />
+                          <ListItemText
+                            primary={
+                              <h6
+                                className={`group-hover:text-accent800 ${
+                                  activeMenuItem === button.text
+                                    ? "text-accent800 font-bold"
+                                    : "text-neutral800 font-normal"
+                                }`}
+                              >
+                                {button.text}
+                              </h6>
+                            }
+                          />
+                          <IconButton
+                            edge="end"
+                            aria-label="more"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenRepresentatives(!openRepresentatives);
+                            }}
+                          >
+                            <img
+                              src={expand}
+                              alt="Expand"
+                              className={`transition-transform transform ${
+                                openRepresentatives ? "rotate-0" : "rotate-180"
+                              }`}
+                            />
+                          </IconButton>
+                        </ListItem>
+                        <Collapse in={openRepresentatives}>
+                          <List component="div" disablePadding>
+                            {[
+                              { text: "My Top Reps", link: Routes.TopReps },
+                              { text: "House", link: Routes.HouseReps },
+                              { text: "Senate", link: Routes.SenateReps },
+                            ].map((subItem) => (
+                              <ListItem
+                                key={subItem.text}
+                                className={`cursor-pointer ${
+                                  location.pathname === subItem.link
+                                    ? "bg-blue-100"
+                                    : ""
+                                }`}
+                                onClick={() => navigate(subItem.link)}
+                                style={{ paddingLeft: "40px" }}
+                              >
+                                <ListItemText primary={subItem.text} />
+                              </ListItem>
+                            ))}
+                          </List>
+                        </Collapse>
+                      </>
+                    ) : (
                       <ListItem
-                        key={subItem.text}
-                        className={`cursor-pointer ${
-                          location.pathname === subItem.link ? "bg-blue-100" : ""
+                        className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
+                          location.pathname === button.link
+                            ? "bg-accent50 border-r-4 border-accent800"
+                            : ""
                         }`}
-                        onClick={() => navigate(subItem.link)}
-                        style={{ paddingLeft: '40px' }} // Adjust this padding to align with "Representatives"
+                        onClick={() =>
+                          onClickMenuItem(
+                            button.text,
+                            button.link,
+                            button.onClick
+                          )
+                        }
                       >
-                        <ListItemText primary={subItem.text} />
+                        <button.icon
+                          className={`mr-2 ${
+                            location.pathname === button.link
+                              ? "text-blue-900"
+                              : "text-neutral600"
+                          }`}
+                          color={
+                            button.iconColor ||
+                            (location.pathname === button.link
+                              ? "#172B98"
+                              : "#454545")
+                          }
+                        />
+                        <ListItemText
+                          primary={
+                            <h6
+                              className={`group-hover:text-accent800 ${
+                                location.pathname === button.link
+                                  ? "text-accent800 font-semibold"
+                                  : "text-neutral800 font-medium text-base"
+                              }`}
+                            >
+                              {button.text}
+                            </h6>
+                          }
+                        />{" "}
                       </ListItem>
-                    ))}
-                  </List>
-                </Collapse>
-              </>
-            ) : (
-              <ListItem
-                className={`cursor-pointer ${
-                  location.pathname === button.link ? "bg-blue-100" : ""
-                }`}
-                onClick={() => onClickMenuItem(button.text, button.link, button.onClick)}
-              >
-                <button.icon className={`mr-2 ${location.pathname === button.link ? "text-blue-900" : "text-neutral600"}`} />
-                <ListItemText primary={button.text} />
-              </ListItem>
-            )}
-          </div>
-        ))}
-      </List>
-    </div>
-  ))}
-</div>
-
+                    )}
+                  </div>
+                ))}
+              </List>
+            </div>
+          ))}
+        </div>
       </aside>
 
       <div className="md:basis-[79%]">
@@ -361,7 +421,6 @@ export function AuthenticatedRoot() {
             onClick={onCloseLegislatureModal}
             color="primary"
             text="Save Selections"
-            
           />
         </div>
       </Dialog>

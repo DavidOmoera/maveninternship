@@ -44,10 +44,10 @@ export const Bills: React.FC = () => {
   }
 
   return (
-    <PageContainer title="Search">
+    <PageContainer title="Bills">
       <div className="p-9 bg-white rounded-xl mx-8">
-        <h3 className="text-primary font-normal text-2xl pb-1">
-          Search for:{" "}
+        <h3 className="text-primary font-normal text-2xl pb-2">
+          Search for:&nbsp;
           <span className="text-blue-700 font-extrabold">
             Secure Border Act
           </span>
@@ -56,17 +56,16 @@ export const Bills: React.FC = () => {
           in <span className="font-bold">Texas</span> &{" "}
           <span className="font-bold">Colorado</span>
         </p>
-        <div className="flex flex-col lg:flex-row items-center w-full gap-3">
+        <div className="flex flex-col lg:flex-row item-center w-full gap-3">
           <ControlledInput
             required
             control={control}
             name="searchValue"
             placeholder="Search by keyword, bill # or legislator name"
             leftIcon={<SearchIcon />}
-            containerClasses="lg:basis-[90%] rounded-lg"
           />
           <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
-          <div className="basis-full gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4  lg:w-fit w-full">
+          <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
             <ControlledSelect
               control={control}
               name="chamber"
@@ -108,7 +107,7 @@ export const Bills: React.FC = () => {
         <div className="flex flex-col space-y-4">
           {/* Search results */}
           <div className="row justify-between my-9">
-            <div className="row gap-2">
+            <div className="lg:flex gap-2 block">
               <h4 className="text-neutral950">205</h4>
               <span className="text-neutral950 text-xl">Results found</span>
             </div>
@@ -138,6 +137,7 @@ export const Bills: React.FC = () => {
 
           {/* BillCard */}
           <div className="row gap-5 flex-wrap mt-8">
+            {" "}
             {allBills.map((allBill) => (
               <BillCard
                 key={allBill.state + allBill.description}
