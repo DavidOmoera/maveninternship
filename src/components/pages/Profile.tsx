@@ -27,30 +27,21 @@ import {
   editProfileSchema,
   managePaymentMethodSchema,
 } from "constants/schemas";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import Checkbox from "@mui/material/Checkbox";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { userDataSelector } from "store/slices/auth/selectors";
+import { organizationDataSelector } from "store/slices/organization/selectors";
+import { updateOrganizationData } from "store/slices/organization";
+import { updateUserData } from "store/slices/auth";
 
 const CONTACT_DETAILS = [
   { icon: envelope, text: "09090909090" },
   { icon: phone, text: "jasminecrockett@uscongress.com" },
-];
-
-const ORG_DETAILS = [
-  { title: "Organization Name", description: "Greenfeld Group" },
-  { title: "Industry", description: "Legal" },
-  { title: "Business Type", description: "Consultant" },
-  { title: "Organization Size", description: "50 - 100" },
-];
-
-const ORG_CONTACTS = [
-  { title: "Contact's Name", description: "Rudy Bayer" },
-  { title: "Email Address", description: "bayer@greenfelder.com" },
-  { title: "Address", description: "77164 Robin Drive, Dalla, Carlifonia" },
-  { title: "Zip Code", description: "86517-3971" },
 ];
 
 const DURATION_OPTIONS = [
@@ -134,6 +125,63 @@ export function Profile() {
     useState<boolean>(false);
   const [showManagePaymentMethodForm, setShowManagePaymentMethodForm] =
     useState(false);
+  const dispatch = useAppDispatch();
+  const userData = useAppSelector(userDataSelector);
+  const organizationData = useAppSelector(organizationDataSelector);
+
+  const orgDetails = useMemo(
+    () => [
+      {
+        title: "Organization Name",
+        description: organizationData?.name ?? "Greenfeld Group",
+      },
+      { title: "Industry", description: organizationData?.industry ?? "Legal" },
+      {
+        title: "Business Type",
+        description: organizationData?.businessType ?? "Consultant",
+      },
+      {
+        title: "Organization Size",
+        description: organizationData?.size ?? "50 - 100",
+      },
+    ],
+    [
+      organizationData?.businessType,
+      organizationData?.industry,
+      organizationData?.name,
+      organizationData?.size,
+    ]
+  );
+
+  const orgContacts = useMemo(
+    () => [
+      {
+        title: "Contact's Name",
+        description: organizationData?.contact?.name ?? "Rudy Bayer",
+      },
+      {
+        title: "Email Address",
+        description:
+          organizationData?.contact?.email ?? "bayer@greenfelder.com",
+      },
+      {
+        title: "Address",
+        description:
+          organizationData?.contact?.address ??
+          "77164 Robin Drive, Dalla, Carlifonia",
+      },
+      {
+        title: "Zip Code",
+        description: organizationData?.contact?.zipCode ?? "86517-3971",
+      },
+    ],
+    [
+      organizationData?.contact?.address,
+      organizationData?.contact?.email,
+      organizationData?.contact?.name,
+      organizationData?.contact?.zipCode,
+    ]
+  );
 
   const {
     control: feedbackControl,
@@ -229,15 +277,38 @@ export function Profile() {
   const onSaveOrgDetails: SubmitHandler<TOrgDetailsForm> = (
     formData: TOrgDetailsForm
   ) => {
-    console.log("org details", formData);
-    if (isOrgDetailsFormValid) setShowOrganizationDetailsForm(false);
+    const { organization_name, organization_size, industry, business_type } =
+      formData ?? {};
+    if (isOrgDetailsFormValid) {
+      dispatch(
+        updateOrganizationData({
+          name: organization_name,
+          size: organization_size,
+          industry: industry,
+          businessType: business_type,
+        })
+      );
+      setShowOrganizationDetailsForm(false);
+    }
   };
 
   const onSaveOrgContact: SubmitHandler<TOrgContactForm> = (
     formData: TOrgContactForm
   ) => {
-    console.log("org contact", formData);
-    if (isOrgContactFormValid) setShowOrganizationContactForm(false);
+    const { contact_name, email_address, address, zip_code } = formData ?? {};
+    if (isOrgContactFormValid) {
+      dispatch(
+        updateOrganizationData({
+          contact: {
+            name: contact_name,
+            email: email_address,
+            address,
+            zipCode: zip_code,
+          },
+        })
+      );
+      setShowOrganizationContactForm(false);
+    }
   };
 
   const onSaveChangePassword: SubmitHandler<TChangePasswordForm> = (
@@ -250,8 +321,19 @@ export function Profile() {
   const onSaveEditProfile: SubmitHandler<TEditProfileForm> = (
     formData: TEditProfileForm
   ) => {
-    console.log("edit profile", formData);
-    if (isEditProfileFormValid) setShowEditProfileForm(false);
+    const { first_name, last_name, phone_number, email_address } =
+      formData ?? {};
+    if (isEditProfileFormValid) {
+      dispatch(
+        updateUserData({
+          firstName: first_name,
+          lastName: last_name,
+          phone: phone_number,
+          email: email_address,
+        })
+      );
+      setShowEditProfileForm(false);
+    }
   };
 
   const onSaveManagePaymentMethod: SubmitHandler<TManagePaymentMethodForm> = (
@@ -370,7 +452,7 @@ export function Profile() {
             </div>
           </div>
           <div className="grid grid-cols-2 mt-5 gap-5">
-            {ORG_DETAILS.map((details) => (
+            {orgDetails.map((details) => (
               <Info key={details.title + details.description} {...details} />
             ))}
           </div>
@@ -386,7 +468,7 @@ export function Profile() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-5 mt-5">
-              {ORG_CONTACTS.map((contact) => (
+              {orgContacts.map((contact) => (
                 <Info key={contact.description + contact.title} {...contact} />
               ))}
             </div>
@@ -450,6 +532,7 @@ export function Profile() {
               name="organization_name"
               label="Organization Name"
               required
+              defaultValue={organizationData?.name}
               placeholder="Organization Name"
               error={!!orgDetailsErrors?.organization_name}
               helperText={
@@ -461,6 +544,7 @@ export function Profile() {
               name="industry"
               label="Industry"
               required
+              defaultValue={organizationData?.industry}
               placeholder="Industry"
               error={!!orgDetailsErrors?.industry}
               helperText={(orgDetailsErrors?.industry?.message as string) ?? ""}
@@ -470,6 +554,7 @@ export function Profile() {
               name="business_type"
               label="Business Type"
               required
+              defaultValue={organizationData?.businessType}
               placeholder="Business Type"
               error={!!orgDetailsErrors?.business_type}
               helperText={
@@ -481,6 +566,7 @@ export function Profile() {
               name="organization_size"
               label="Organization Size"
               required
+              defaultValue={organizationData?.size}
               placeholder="Organization Size"
               error={!!orgDetailsErrors?.organization_size}
               helperText={
@@ -514,6 +600,7 @@ export function Profile() {
               name="contact_name"
               label="Contact's Name"
               required
+              defaultValue={organizationData?.contact?.name}
               placeholder="Contact name"
               error={!!orgContactErrors?.contact_name}
               helperText={
@@ -525,6 +612,7 @@ export function Profile() {
               name="email_address"
               label="Email Addresss"
               required
+              defaultValue={organizationData?.contact?.email}
               placeholder="Email Address"
               error={!!orgContactErrors?.email_address}
               helperText={
@@ -536,6 +624,7 @@ export function Profile() {
               name="address"
               label="Address"
               required
+              defaultValue={organizationData?.contact?.address}
               placeholder="Address"
               error={!!orgContactErrors?.address}
               helperText={(orgContactErrors?.address?.message as string) ?? ""}
@@ -545,6 +634,7 @@ export function Profile() {
               name="zip_code"
               label="Zip Code"
               required
+              defaultValue={organizationData?.contact?.zipCode}
               placeholder="Zip Code"
               error={!!orgContactErrors?.zip_code}
               helperText={(orgContactErrors?.zip_code?.message as string) ?? ""}
@@ -660,6 +750,7 @@ export function Profile() {
               control={EditProfileControl}
               placeholder="First Name"
               label="First Name"
+              defaultValue={userData?.firstName}
               type="text"
               required
               error={!!EditProfileErrors?.first_name}
@@ -672,6 +763,7 @@ export function Profile() {
               control={EditProfileControl}
               placeholder="Last Name"
               label="Last Name"
+              defaultValue={userData?.lastName}
               type="text"
               required
               error={!!EditProfileErrors?.last_name}
@@ -684,6 +776,7 @@ export function Profile() {
               control={EditProfileControl}
               placeholder="Phone Number"
               label="Phone Number"
+              defaultValue={userData?.phone}
               type="text"
               required
               error={!!EditProfileErrors?.phone_number}
@@ -696,6 +789,7 @@ export function Profile() {
               control={EditProfileControl}
               placeholder="Email Address"
               label="Email Address"
+              defaultValue={userData?.email}
               type="email"
               required
               error={!!EditProfileErrors?.email_address}
