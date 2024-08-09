@@ -7,34 +7,35 @@ import bookmark from "assets/bookmark.svg";
 import { PageContainer } from 'components/templates/PageContainer';
 import { Button } from 'components/atoms/Button';
 import { Pill } from "components/molecules/Pill";
-import rep1 from "assets/rep1.svg";
-import rep2 from "assets/rep2.svg";
-import rep3 from "assets/rep3.svg";
-import rep4 from "assets/rep4.svg";
-import rep5 from "assets/rep5.svg";
-import rep6 from "assets/rep6.svg";
-import rep7 from "assets/rep7.svg";
-import rep8 from "assets/rep8.svg";
-import rep9 from "assets/rep9.svg";
-import rep10 from "assets/rep10.svg";
-import rep11 from "assets/rep11.svg";
-import rep12 from "assets/rep12.svg";
-import rep13 from "assets/rep13.svg";
-import rep14 from "assets/rep14.svg";
-import rep15 from "assets/rep15.svg";
-import rep16 from "assets/rep16.svg";
-import rep17 from "assets/rep17.svg";
-import rep18 from "assets/rep18.svg";
+import sen1 from "assets/sen1.png";
+import sen2 from "assets/sen2.png";
+import sen3 from "assets/sen3.png";
+import sen4 from "assets/sen4.png";
+import sen5 from "assets/sen5.png";
+import sen6 from "assets/sen6.png";
+import sen7 from "assets/sen7.png";
+import sen8 from "assets/sen8.png";
+import sen9 from "assets/sen9.png";
+import sen10 from "assets/sen10.png";
+import sen11 from "assets/sen11.png";
+import sen12 from "assets/sen12.png";
+
 import { Outlet } from "react-router-dom";
 
-const repImages = [
-  rep1, rep2, rep3, rep4, rep5, rep6,
-  rep7, rep8, rep9, rep10, rep11, rep12,
-  rep13, rep14, rep15, rep16, rep17, rep18
-];
-
-const pills = [
-  { firstText: "Senator" },
+const representatives = [
+  { image: sen1, name: "Sen. Bryan Hughes", district: 1, description: "Occupation: Attorney\n\nEducation: BBA, University of Texas at Tyler; JD, Baylor University School of Law\n\nLegislative Experience: House Member, 2003 - 2017; Senate Member: 2017 - present\nHometown: Mineola\n\nParty: Republican" },
+  { image: sen2, name: "Sen. Bob Hall", district: 2, description: "Occupation: Captain, US Air Force; Business Owner (Retired)\n\nLegislative Experience: Senate Member: 2015 - present\n\nParty: Republican" },
+  { image: sen3, name: "Sen. Robert Nichols", district: 3, description: "Occupation: Engineer — Plastics manufacturing\n\nEducation: Lamar University, B.S., Industrial Engineering, 1968\n\nLegislative Experience: Senate Member: 2007 - present\nHometown: Jacksonville, Texas\n\nParty: Republican" },
+  { image: sen4, name: "Sen. Brandon Creighton", district: 4, description: "Occupation: Attorney\n\nEducation: BA University of Texas at Austin, JD Oklahoma City University School of Law\n\nLegislative Experience: House Member, 2007 - 2014; Senate Member: 2014 - present\nHometown: Conroe\n\nParty: Republican" },
+  { image: sen5, name: "Sen. Charles Schwertner", district: 5, description: "Occupation: Orthopedic Surgeon\n\nEducation: B.S. in Pharmacy from the University of Texas at Austin; M.D. from the University of Texas Medical Branch at Galveston\n\nLegislative Experience: House Member, 2011 - 2013; Senate Member: 2013 - present\nHometown: Georgetown\n\nParty: Republican" },
+  { image: sen6, name: "Sen. Carol Alvarado", district: 6, description: "Occupation: Small Business Owner\n\nEducation: University of Houston, B.A., M.B.A.\n\nLegislative Experience: House Member, 2009-2018; Senate Member: 2018 - present\nHometown: Houston\n\nParty: Democrat" },
+  { image: sen7, name: "Sen. Paul Bettencourt", district: 7, description: "Occupation: President and CEO, Bettencourt Tax Advisors L.L.C.\n\nLegislative Experience: Senate Member: 2015 - present\n\nParty: Republican" },
+  { image: sen8, name: "Sen. Angela Paxton", district: 8, description: "Occupation: Leadership Consultant, Former Educator\n\nEducation: Baylor University, B.S., University of Houston Clear Lake, M.Ed.\n\nLegislative Experience: Senate Member: 2019 - present\n\nHometown: McKinney\n\nParty: Republican" },
+  { image: sen9, name: "Sen. Kelly Hancock", district: 9, description: "Occupation: Business Owner\n\nEducation: Bachelor's degree in Business Administration, Baylor University\n\nLegislative Experience: House Member, 2006 - 2012; Senate Member: 2013 - present\n\nHometown: North Richland Hills\n\nParty: Republican" },
+  { image: sen10, name: "Sen. Phil King", district: 10, description: "Occupation: Attorney / Small Business Owner\n\nEducation: J.D., Texas A&M University School of Law; M.B.A., Dallas Baptist University; B.A., Dallas Baptist University\n\nLegislative Experience: House Member, 1999 - 2022; Senate Member: 2023 - present\n\nHometown: Weatherford\n\nParty: Republican" },
+  { image: sen11, name: "Sen. Mayes Middleton", district: 11, description: "Occupation: President & CEO, Middleton Oil\n\nEducation: University of Texas at Austin, J.D.; University of Texas at Austin, B.A.\n\nLegislative Experience: House Member, 2019-2022; Senate Member: 2023 - present\n\nHometown: Galveston\n\nParty: Republican" },
+  { image: sen12, name: "Sen. Tan Parker", district: 12, description: "Occupation: Businessman and entrepreneur\n\nEducation: London School of Economics, MSc; University of Dallas, BA\n\nLegislative Experience: House Member, 2007-2023; Senate Member: 2023 - present\n\nHometown: Flower Mound\n\nParty: Republican" },
+  
 ];
 
 type TActivitySearchForm = Partial<{
@@ -80,44 +81,49 @@ export function SenateReps() {
 
           <div className="bg-white rounded-xl p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {repImages.slice(6, 18).map((repImage, index) => (
-                <div key={index + 6} className="bg-white p-6 rounded-xl shadow">
-                  <div className="flex items-center mb-4">
-                    <img
-                      src={repImage}
-                      alt="Representative"
-                      style={{
-                        width: '64px',
-                        height: '64px',
-                        gap: '0px',
-                        borderRadius: '12px 0px 0px 0px',
-                        opacity: 1,
-                      }}
-                      className="mr-4"
-                    />
-                    <div>
-                      <h4 className="text-lg font-bold">Sen. Clara O'Conner</h4>
-                      <div className="flex items-center">
-                        {pills.map((pill) => (
+              {representatives.map((rep, index) => (
+                <div key={index} className="bg-white p-6 rounded-xl shadow relative flex flex-col justify-between" style={{ height: '400px' }}>
+                  <div>
+                    <div className="flex items-center mb-4">
+                      <img
+                        src={rep.image}
+                        alt="Representative"
+                        style={{
+                          width: '64px',
+                          height: '64px',
+                          gap: '0px',
+                          borderRadius: '12px 0px 0px 0px',
+                          opacity: 1,
+                        }}
+                        className="mr-4"
+                      />
+                      <div>
+                        <h4 className="text-lg font-bold">{rep.name}</h4>
+                        <div className="flex items-center">
                           <Pill
-                            key={pill.firstText}
-                            text={pill.firstText}
+                            text="Senator"
                             containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />
-                        ))}
-                        <span style={{ color: '#1026C3' }}>• District 45, Texas</span>
+                          <span style={{ color: '#1026C3' }}>• District {rep.district}, Texas</span>
+                        </div>
                       </div>
                     </div>
+                    <p className="text-gray-600 mb-4">
+                      {rep.description}
+                    </p>
                   </div>
-                  <p className="text-gray-600 mb-4">
-                    Etiam netus et feugiat sem. Accumsan augue malesuada id sit sit accumsan sit ullamcorper.
-                    Vel quisque egestas iaculis varius in nisl. Vitae egestas eget vitae elit phasellus.
-                    Risus pulvinar massa adipiscing...
-                  </p>
-                  <a href="#" className="flex items-center text-primary" style={{ color: '#0C0853' }}>
-                    <img src={bookmark} alt="Bookmark Icon" style={{ marginRight: '0.5rem', width: '24px', height: '24px' }} />
-                    <span>Add to Top Representatives</span>
+                  <a href="#" className="flex items-center text-primary absolute bottom-4 right-4" style={{ color: '#0C0853' }}>
+                  <img src={bookmark} alt="Bookmark Icon" style={{ marginRight: '0.5rem', width: '24px', height: '24px' }} />
+                  <span style={{ 
+                  fontFamily: 'Mulish', 
+                  fontSize: '14px', 
+                  fontWeight: '600', 
+                  lineHeight: '17.57px', 
+                  textAlign: 'left' 
+                  }}>
+                  Add to Top Representatives
+                  </span>
                   </a>
                 </div>
               ))}
