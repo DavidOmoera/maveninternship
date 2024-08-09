@@ -27,7 +27,7 @@ import {
   editProfileSchema,
   managePaymentMethodSchema,
 } from "constants/schemas";
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -389,6 +389,13 @@ export function Profile() {
                 containerClassName="row items-center rounded-[2.37rem] px-3 py-2 gap-1 bg-neutral50 cursor-pointer"
                 rightIcon={<img src={photo} className="w-3 h-3" />}
                 onClick={onClickChangePhoto}
+              />
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={handleFileChange}
               />
             </div>
           </div>
