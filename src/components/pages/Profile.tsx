@@ -27,7 +27,7 @@ import {
   editProfileSchema,
   managePaymentMethodSchema,
 } from "constants/schemas";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -135,6 +135,9 @@ export function Profile() {
   const [showManagePaymentMethodForm, setShowManagePaymentMethodForm] =
     useState(false);
 
+  const [selectedProfilePicture, setSelectedProfilePicture] =
+    useState<string>(profilePicture);
+
   const {
     control: feedbackControl,
     handleSubmit: handleFeedbackFormSubmit,
@@ -189,7 +192,23 @@ export function Profile() {
     resolver: yupResolver(managePaymentMethodSchema),
   });
 
-  function onClickChangePhoto() {}
+  function onClickChangePhoto() {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  }
+
+  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setSelectedProfilePicture(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   function onClickEditProfile() {
     setShowEditProfileForm(true);
   }
@@ -261,6 +280,8 @@ export function Profile() {
     if (isManagePaymentMethodFormValid) setShowManagePaymentMethodForm(false);
   };
 
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <PageContainer title="Profile">
       <div className="grid grid-cols-2 gap-6 mx-9">
@@ -268,16 +289,18 @@ export function Profile() {
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4">
             <img
-              src={profilePicture}
+              src={selectedProfilePicture}
               className="w-20 h-20 object-cover rounded"
             />
             <div className="col items-start gap-2">
               <h6 className="text-neutral950">Profile Photo</h6>
-              <Pill
-                text="Change Photo"
-                containerClassName="row items-center rounded-[2.37rem] px-3 py-2 gap-1 bg-neutral50 cursor-pointer"
-                rightIcon={<img src={photo} className="w-3 h-3" />}
-                onClick={onClickChangePhoto}
+              <Pill onClick={onClickChangePhoto} text="Change Photo" />
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={handleFileChange}
               />
             </div>
           </div>
