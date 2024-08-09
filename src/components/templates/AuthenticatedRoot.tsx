@@ -221,7 +221,7 @@ export function AuthenticatedRoot() {
         <div className="overflow-y-auto">
           {sideNavItems.map((item) => (
             <div key={item.title}>
-              <div className="font-bold text-neutral600 pl-4 pt-2">
+              <div className="text-neutral400 text-xs font-extrabold uppercase pl-7 pb-2">
                 {item.title}
               </div>
               <List>
@@ -230,8 +230,10 @@ export function AuthenticatedRoot() {
                     {button.text === "Representatives" ? (
                       <>
                         <ListItem
-                          className={`cursor-pointer ${
-                            activeMenuItem === button.text ? "bg-blue-100" : ""
+                          className={`group row gap-3 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
+                            activeMenuItem === button.text
+                              ? "bg-accent50 border-r-4 border-accent800"
+                              : ""
                           }`}
                           onClick={() => {
                             onClickMenuItem(
@@ -248,8 +250,26 @@ export function AuthenticatedRoot() {
                                 ? "text-blue-900"
                                 : "text-neutral600"
                             }`}
+                            color={
+                              button.iconColor ||
+                              (activeMenuItem === button.text
+                                ? "#172B98"
+                                : "#454545")
+                            }
                           />
-                          <ListItemText primary={button.text} />
+                          <ListItemText
+                            primary={
+                              <h6
+                                className={`group-hover:text-accent800 ${
+                                  activeMenuItem === button.text
+                                    ? "text-accent800 font-bold"
+                                    : "text-neutral800 font-normal"
+                                }`}
+                              >
+                                {button.text}
+                              </h6>
+                            }
+                          />
                           <IconButton
                             edge="end"
                             aria-label="more"
@@ -282,7 +302,7 @@ export function AuthenticatedRoot() {
                                     : ""
                                 }`}
                                 onClick={() => navigate(subItem.link)}
-                                style={{ paddingLeft: "40px" }} // Adjust this padding to align with "Representatives"
+                                style={{ paddingLeft: "40px" }}
                               >
                                 <ListItemText primary={subItem.text} />
                               </ListItem>
@@ -292,8 +312,10 @@ export function AuthenticatedRoot() {
                       </>
                     ) : (
                       <ListItem
-                        className={`cursor-pointer ${
-                          location.pathname === button.link ? "bg-blue-100" : ""
+                        className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
+                          location.pathname === button.link
+                            ? "bg-accent50 border-r-4 border-accent800"
+                            : ""
                         }`}
                         onClick={() =>
                           onClickMenuItem(
@@ -309,8 +331,26 @@ export function AuthenticatedRoot() {
                               ? "text-blue-900"
                               : "text-neutral600"
                           }`}
+                          color={
+                            button.iconColor ||
+                            (location.pathname === button.link
+                              ? "#172B98"
+                              : "#454545")
+                          }
                         />
-                        <ListItemText primary={button.text} />
+                        <ListItemText
+                          primary={
+                            <h6
+                              className={`group-hover:text-accent800 ${
+                                location.pathname === button.link
+                                  ? "text-accent800 font-semibold"
+                                  : "text-neutral800 font-medium text-base"
+                              }`}
+                            >
+                              {button.text}
+                            </h6>
+                          }
+                        />{" "}
                       </ListItem>
                     )}
                   </div>
