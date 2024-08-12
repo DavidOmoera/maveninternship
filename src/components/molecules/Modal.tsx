@@ -23,17 +23,14 @@ export const Modal: React.FC<ModalProps> = ({ onClose }) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // Disable scrolling on body
     document.body.style.overflow = "hidden";
 
-    // Re-enable scrolling on body when modal is closed
     return () => {
       document.body.style.overflow = "auto";
     };
   }, []);
 
   useEffect(() => {
-    // Scroll to the bottom when new messages are added
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
