@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/rep18.svg";
 import { Routes } from "types/routes";
@@ -9,7 +8,6 @@ import { ArrowRight } from "assets/ArrowRight";
 import { colors } from "constants/common";
 import { Notifications } from "components/organisms/Notifications";
 import { NotificationSettings } from "components/organisms/NotificationSettings";
-
 
 type TPageContainerProps = { title: string } & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -48,10 +46,6 @@ export function PageContainer({
   function goToProfile() {
     navigate(Routes.Profile);
   }
-
-  useEffect(() => {
-    if (location.pathname) window.scrollTo(0, 0);
-  }, [location.pathname]);
 
   return (
     <div {...props}>
