@@ -8,6 +8,7 @@ import { ArrowRight } from "assets/ArrowRight";
 import { colors } from "constants/common";
 import { Notifications } from "components/organisms/Notifications";
 import { NotificationSettings } from "components/organisms/NotificationSettings";
+import { Tooltip } from "@mui/material";
 
 type TPageContainerProps = { title: string } & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -68,12 +69,14 @@ export function PageContainer({
         </div>
         <div className="row gap-6">
           <div className="row gap-3">
-            <img
-              src={notification}
-              onClick={handleOpenNotificationStatusDialog}
-              className="cursor-pointer"
-              alt="Notification"
-            />
+            <Tooltip title="Notifications" placement="bottom">
+              <img
+                src={notification}
+                onClick={handleOpenNotificationStatusDialog}
+                className="cursor-pointer"
+                alt="Notification"
+              />
+            </Tooltip>
           </div>
           <div
             className="row gap-3 items-center cursor-pointer"

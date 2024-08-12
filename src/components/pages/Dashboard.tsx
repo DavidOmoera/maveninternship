@@ -10,6 +10,7 @@ import {
   DialogActions,
   Checkbox,
   Divider,
+  Tooltip,
 } from "@mui/material";
 import StartOutlinedIcon from "@mui/icons-material/StartOutlined";
 import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
@@ -487,14 +488,16 @@ export const Dashboard: React.FC = () => {
           </div>
         ) : (
           <div>
-            <button
-              className="hidden md:block bg-neutral50 border-primary px-[18px] py-[21px]"
-              onClick={toggleUpdatesSection}
-            >
-              <StartOutlinedIcon
-                sx={{ color: "#0C0853", transform: "rotate(180deg)" }}
-              />
-            </button>
+            <Tooltip title="My Updates" placement="left">
+              <button
+                className="hidden md:block bg-neutral50 border-primary px-[18px] py-[21px]"
+                onClick={toggleUpdatesSection}
+              >
+                <StartOutlinedIcon
+                  sx={{ color: "#0C0853", transform: "rotate(180deg)" }}
+                />
+              </button>
+            </Tooltip>
           </div>
         )}
       </div>
