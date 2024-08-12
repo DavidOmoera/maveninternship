@@ -27,7 +27,7 @@ import {
   editProfileSchema,
   managePaymentMethodSchema,
 } from "constants/schemas";
-import { useState, useRef, useMemo} from "react";
+import { useState, useRef, useMemo } from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -419,7 +419,7 @@ export function Profile() {
             <Pill text="Member since August 2024" />
           </div>
           <div className="col gap-3">
-            <CoterieBot color={colors.error} />
+            {/* <CoterieBot color={colors.error} /> */}
             <h2 className="text-black">Regulatory AI</h2>
             <span className="row items-center gap-1">
               <p className="text-neutral500">Next payment:</p>

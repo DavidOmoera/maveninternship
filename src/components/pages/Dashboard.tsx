@@ -233,7 +233,8 @@ export const Dashboard: React.FC = () => {
           </div>
 
           {/* Ask Coterie AI and Explore Bills Sections */}
-          <div className="row gap-6 my-6">
+          <div className="flex flex-col lg:flex-row gap-6 my-6">
+            {" "}
             {sectionsToExplore.map((sectionToExplore) => (
               <DashboardExplore
                 key={sectionToExplore.title}

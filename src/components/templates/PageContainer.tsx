@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/rep18.svg";
 import { Routes } from "types/routes";
@@ -9,7 +8,8 @@ import { ArrowRight } from "assets/ArrowRight";
 import { colors } from "constants/common";
 import { Notifications } from "components/organisms/Notifications";
 import { NotificationSettings } from "components/organisms/NotificationSettings";
-
+import { CoterieBot } from "assets/CoterieBot";
+import { Modal } from "components/molecules/Modal";
 
 type TPageContainerProps = { title: string } & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -23,6 +23,16 @@ export function PageContainer({
   const location = useLocation();
   const navigate = useNavigate();
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
+
+  // Chat with Bot modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const [OpenNotificationStatusDialog, setOpenNotificationStatusDialog] =
     useState(false);
   const handleOpenNotificationStatusDialog = () =>
@@ -74,6 +84,12 @@ export function PageContainer({
         </div>
         <div className="row gap-6">
           <div className="row gap-3">
+            <CoterieBot
+              className="w-8 cursor-pointer"
+              color="blue"
+              onClick={handleOpenModal}
+            />
+            {isModalOpen && <Modal onClose={handleCloseModal} />}
             <img
               src={notification}
               onClick={handleOpenNotificationStatusDialog}
