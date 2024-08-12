@@ -193,6 +193,10 @@ export const Dashboard: React.FC = () => {
     navigate(Routes.ActivityFeed);
   }
 
+  function goToBills() {
+    navigate(Routes.Bills);
+  }
+
   function goToRepresentatives() {
     navigate(Routes.Representatives);
   }
@@ -301,7 +305,7 @@ export const Dashboard: React.FC = () => {
               </div>
               <button
                 className="row gap-1 bg-white p-0 border-none hover:border-none"
-                onClick={goToActivityFeed}
+                onClick={goToBills}
               >
                 <h6 className="text-primary font-bold text-[14px]">See All</h6>
                 <EastOutlinedIcon sx={{ color: "#0C0853" }} />
