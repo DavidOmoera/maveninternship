@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   List,
   ListItem,
@@ -40,6 +40,7 @@ import CustomTextField from "components/molecules/CustomTextField";
 import { Routes } from "types/routes";
 import { Bill } from "components/organisms/Bill";
 import { PageContainer } from "components/templates/PageContainer";
+import { searchObjects } from "utils/helpers";
 
 const stages = [
   "Filed",
@@ -75,13 +76,53 @@ export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<TBillSearchForm>({
+  const { control, handleSubmit, watch } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
   });
+
+  const selectedBillStatus = watch("billStatus");
+  const selectedBillType = watch("billType");
+  const selectedChamber = watch("chamber");
+  const selectedYear = watch("year");
+  const searchValue = watch("searchValue");
+
+  const searchedBills: typeof watchedBills = useMemo(
+    () =>
+      searchObjects(watchedBills, searchValue, Object.keys(watchedBills[0])),
+    [searchValue]
+  );
+
+  const filteredBills = useMemo(() => {
+    return searchedBills.filter((bill) => {
+      let isFilteredBill = "";
+
+      if (selectedBillStatus) {
+        isFilteredBill += "bill.status === selectedBillStatus && ";
+      }
+
+      if (selectedBillType) {
+        isFilteredBill += "bill.billType === selectedBillType && ";
+      }
+
+      if (selectedChamber) {
+        isFilteredBill += "bill.chamber === selectedChamber && ";
+      }
+
+      if (selectedYear) {
+        isFilteredBill += "bill.year === selectedYear && ";
+      }
+
+      console.log("filtered ", isFilteredBill);
+
+      return isFilteredBill ? eval(isFilteredBill + "true") : true;
+    });
+  }, [
+    searchedBills,
+    selectedBillStatus,
+    selectedBillType,
+    selectedChamber,
+    selectedYear,
+  ]);
 
   const sectionsToExplore = [
     {
@@ -199,7 +240,10 @@ export const Dashboard: React.FC = () => {
                   name="chamber"
                   label="Chamber"
                   defaultValue=""
-                  options={BILL_TYPES}
+                  options={[
+                    { id: 1, value: "House", label: "House" },
+                    { id: 2, value: "Senate", label: "Senate" },
+                  ]}
                 />
                 <ControlledSelect
                   control={control}
@@ -252,7 +296,7 @@ export const Dashboard: React.FC = () => {
               <div className="row gap-3">
                 <h4 className="font-extrabold">My Watched Bills</h4>
                 <div className="py-1 px-2 rounded-xl border border-primary">
-                  <h6 className="text-primary">56</h6>
+                  <h6 className="text-primary">{filteredBills.length}</h6>
                 </div>
               </div>
               <button
@@ -280,7 +324,10 @@ export const Dashboard: React.FC = () => {
                   name="chamber"
                   label="Chamber"
                   defaultValue=""
-                  options={BILL_TYPES}
+                  options={[
+                    { id: 1, value: "House", label: "House" },
+                    { id: 2, value: "Senate", label: "Senate" },
+                  ]}
                 />
                 <ControlledSelect
                   control={control}
@@ -320,7 +367,7 @@ export const Dashboard: React.FC = () => {
 
             {/** All bills */}
             <div className="row gap-5 flex-wrap mt-8">
-              {watchedBills.map((watchedBill) => (
+              {filteredBills.map((watchedBill) => (
                 <Bill
                   key={watchedBill.state + watchedBill.description}
                   onClick={onClickBill}
