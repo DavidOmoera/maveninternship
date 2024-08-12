@@ -7,34 +7,34 @@ import bookmark from "assets/bookmark.svg";
 import { PageContainer } from 'components/templates/PageContainer';
 import { Button } from 'components/atoms/Button';
 import { Pill } from "components/molecules/Pill";
-import rep1 from "assets/rep1.svg";
-import rep2 from "assets/rep2.svg";
-import rep3 from "assets/rep3.svg";
-import rep4 from "assets/rep4.svg";
-import rep5 from "assets/rep5.svg";
-import rep6 from "assets/rep6.svg";
-import rep7 from "assets/rep7.svg";
-import rep8 from "assets/rep8.svg";
-import rep9 from "assets/rep9.svg";
-import rep10 from "assets/rep10.svg";
-import rep11 from "assets/rep11.svg";
-import rep12 from "assets/rep12.svg";
-import rep13 from "assets/rep13.svg";
-import rep14 from "assets/rep14.svg";
-import rep15 from "assets/rep15.svg";
-import rep16 from "assets/rep16.svg";
-import rep17 from "assets/rep17.svg";
-import rep18 from "assets/rep18.svg";
+import rep1 from "assets/rep1.png";
+import rep2 from "assets/rep2.png";
+import rep3 from "assets/rep3.png";
+import rep4 from "assets/rep4.png";
+import rep5 from "assets/rep5.png";
+import rep6 from "assets/rep6.png";
+import rep7 from "assets/rep7.png";
+import rep8 from "assets/rep8.png";
+import rep9 from "assets/rep9.png";
+import rep10 from "assets/rep10.png";
+import rep11 from "assets/rep11.png";
+import rep12 from "assets/rep12.png";
+
 import { Outlet } from "react-router-dom";
 
-const repImages = [
-  rep1, rep2, rep3, rep4, rep5, rep6,
-  rep7, rep8, rep9, rep10, rep11, rep12,
-  rep13, rep14, rep15, rep16, rep17, rep18
-];
-
-const pills = [
-  { firstText: "Senator" },
+const representatives = [
+  { image: rep6, name: "Rep. Bailes, Ernest", district: 18, description: "Elected in 2016, State Representative Ernest Bailes represents House District 18. Bailes, a lifelong rancher and agriculturalist, was raised on his family’s dairy and beef cattle operation in East Texas. He grew up in Shepherd and earned his B.S. from Texas A&M University in 2004." },
+  { image: rep8, name: "Rep. Bell, Keith", district: 4, description: "A lifelong Texan, State Representative Keith Bell resides in Forney, Texas. Before being elected to represent House District 4 in November 2018, Keith served as a trustee on the Forney ISD School Board for 20 years, elected as president for fourteen times." },
+  { image: rep1, name: "Rep. Allen, Alma A.", district: 131, description: "Prior to being elected to the Texas House of Representatives, State Representative Dr. Alma A. Allen was elected to, and served on, the State Board of Education for over 10 years." },
+  { image: rep4, name: "Rep. Anderson, Charles Doc", district: 56, description: "Chairman, Texas Legislative Rural Caucus Vice-Chairman, Texas House Aerospace Caucus Vice-Chairman, House Committee on Energy House Committee on Agriculture and Livestock" },
+  { image: rep10, name: "Rep. Bhojani, Salman", district: 92, description: "Born in Pakistan to a large family, Representative Salman Bhojani immigrated to Texas as a teenager. He worked three minimum wage jobs to help support his family–climbing the ladder from convenience store cashier to successful business owner, attorney, Euless City Councilman, and Mayor Pro Tem." },
+  { image: rep7, name: "Rep. Bell Jr., Cecil", district: 3, description: "Representative Cecil Bell, Jr. is a sixth generation Texan whose family has been in the State of Texas since 1852. The oldest of three siblings, he was born in Rosenberg but was raised all across Texas. A 2009 Ernst & Young Entrepreneur of the Year Finalist for the Southwest Region." },
+  { image: rep2, name: "Rep. Allison, Steve", district: 121, description: "State Representative Steve Allison represents House District 121, succeeding former Speaker of the House Joe Straus. District 121 covers parts of north central and northeast San Antonio, as well as the cities of Alamo Heights, Olmos Park, and Terrell Hills." },
+  { image: rep12, name: "Rep. Bowers, Rhetta Andrews", district: 113, description: "Representative Bowers was elected to serve House District 113 in the Texas House of Representatives on November 8, 2018. She made history as the first African American of Caribbean descent elected to represent this district." },
+  { image: rep5, name: "Rep. Ashby, Trent", district: 9, description: "Representative Trent Ashby was sworn into the Texas House of Representatives in January 2013. His district is comprised of Angelina, Houston, Polk, San Augustine, Trinity, and Tyler Counties. He currently serves as Chair of the House Committee on Culture, Recreation & Tourism." },
+  { image: rep3, name: "Rep. Anchía, Rafael", district: 103, description: "State Representative Rafael Anchía is currently serving his tenth term in the Texas Legislature and represents a western corridor of Dallas County, which includes the cities of Dallas, Carrollton, Farmers Branch, and Irving. Rep. Anchía currently serves on the House Committees on State Affairs and Energy Resources." },
+  { image: rep9, name: "Rep. Bernal, Diego M.", district: 123, description: "Representative Diego Bernal was born in South Texas and raised in San Antonio. After graduating from Thomas Jefferson High School, he attended the University of Michigan, where he earned his undergraduate degree, Master's in Social Work, and law degree." },
+  { image: rep11, name: "Rep. Bonnen, Gregn", district: 24, description: "Representative Greg Bonnen (Friendswood) is Chair of the House Appropriations Committee and is currently serving his fifth term as State Representative for House District 24.Prior to serving as Chair of the House Appropriations Committee." }
 ];
 
 type TActivitySearchForm = Partial<{
@@ -80,44 +80,49 @@ export function TopReps() {
 
           <div className="bg-white rounded-xl p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {repImages.slice(6, 18).map((repImage, index) => (
-                <div key={index + 6} className="bg-white p-6 rounded-xl shadow">
-                  <div className="flex items-center mb-4">
-                    <img
-                      src={repImage}
-                      alt="Representative"
-                      style={{
-                        width: '64px',
-                        height: '64px',
-                        gap: '0px',
-                        borderRadius: '12px 0px 0px 0px',
-                        opacity: 1,
-                      }}
-                      className="mr-4"
-                    />
-                    <div>
-                      <h4 className="text-lg font-bold">Sen. Clara O'Conner</h4>
-                      <div className="flex items-center">
-                        {pills.map((pill) => (
+              {representatives.map((rep, index) => (
+                <div key={index} className="bg-white p-6 rounded-xl shadow relative flex flex-col justify-between" style={{ height: '400px' }}>
+                  <div>
+                    <div className="flex items-center mb-4">
+                      <img
+                        src={rep.image}
+                        alt="Representative"
+                        style={{
+                          width: '64px',
+                          height: '64px',
+                          gap: '0px',
+                          borderRadius: '12px 0px 0px 0px',
+                          opacity: 1,
+                        }}
+                        className="mr-4"
+                      />
+                      <div>
+                        <h4 className="text-lg font-bold">{rep.name}</h4>
+                        <div className="flex items-center">
                           <Pill
-                            key={pill.firstText}
-                            text={pill.firstText}
+                            text="Senator"
                             containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />
-                        ))}
-                        <span style={{ color: '#1026C3' }}>• District 45, Texas</span>
+                          <span style={{ color: '#1026C3' }}>• District {rep.district}, Texas</span>
+                        </div>
                       </div>
                     </div>
+                    <p className="text-gray-600 mb-4">
+                      {rep.description}
+                    </p>
                   </div>
-                  <p className="text-gray-600 mb-4">
-                    Etiam netus et feugiat sem. Accumsan augue malesuada id sit sit accumsan sit ullamcorper.
-                    Vel quisque egestas iaculis varius in nisl. Vitae egestas eget vitae elit phasellus.
-                    Risus pulvinar massa adipiscing...
-                  </p>
-                  <a href="#" className="flex items-center text-primary" style={{ color: '#0C0853' }}>
+                  <a href="#" className="flex items-center text-primary absolute bottom-4 right-4" style={{ color: '#0C0853' }}>
                     <img src={bookmark} alt="Bookmark Icon" style={{ marginRight: '0.5rem', width: '24px', height: '24px' }} />
-                    <span>Add to Top Representatives</span>
+                    <span style={{ 
+                      fontFamily: 'Mulish', 
+                      fontSize: '14px', 
+                      fontWeight: '600', 
+                      lineHeight: '17.57px', 
+                      textAlign: 'left' 
+                    }}>
+                      Add to Top Representatives
+                    </span>
                   </a>
                 </div>
               ))}
