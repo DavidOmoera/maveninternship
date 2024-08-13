@@ -3,6 +3,8 @@ import copy from "assets/copy.svg";
 import download2 from "assets/download2.svg";
 import { useEffect, useRef, useState } from "react";
 
+const billTitle = "Summary of “Secure the Border Act of 2023”";
+
 export function BillSummary() {
   const copyTooltipTimeoutRef = useRef<number>();
   const [showCopyTooltip, setShowCopyTooltip] = useState<boolean>(false);
@@ -21,7 +23,18 @@ export function BillSummary() {
     }
   }
 
-  function onClickDownload() {}
+  function onClickDownload() {
+    const downloadButton = document.getElementById("download-bill-summary");
+    const summaryElement = document.getElementById("bill-summary");
+    const summaryText = summaryElement?.innerText;
+
+    if (summaryText) {
+      downloadButton?.setAttribute(
+        "href",
+        "data:text/plain;charset=utf-11," + encodeURIComponent(summaryText)
+      );
+    }
+  }
 
   useEffect(() => {
     if (showCopyTooltip)
@@ -55,16 +68,20 @@ export function BillSummary() {
             <h6 className="text-primary text-sm">Copy to Clipboard</h6>
           </div>
         )}
-        <div className="row items-center gap-1 cursor-pointer">
+        <a
+          id="download-bill-summary"
+          className="row items-center gap-1 cursor-pointer"
+          href=""
+          download={`${billTitle} summary.txt`}
+          onClick={onClickDownload}
+        >
           <img src={download2} className="w-4 h-4" />
           <h6 className="text-primary text-sm">Download</h6>
-        </div>
+        </a>
       </div>
 
       <article>
-        <h2 className="text-black">
-          Summary of “Secure the Border Act of 2023”
-        </h2>
+        <h2 className="text-black">{billTitle}</h2>
         <p
           id="bill-summary"
           className="text-neutral500 my-6 whitespace-pre-line"
