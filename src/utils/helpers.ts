@@ -13,3 +13,15 @@ export function getTabSVGColor(isActive: boolean) {
 export const useAppDispatch: () => AppDispatch = useDispatch;
 
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export function searchObjects(
+  list: Record<string, string>[],
+  searchText = "",
+  filterFields: string[]
+) {
+  return list?.filter((item) =>
+    filterFields.some((prop) =>
+      item[prop]?.toLowerCase().includes(searchText?.trim().toLowerCase())
+    )
+  );
+}

@@ -17,10 +17,11 @@ import { Profile } from "components/pages/Profile";
 
 import { Representatives } from "components/pages/Representatives";
 import { TopReps } from "components/pages/TopReps";
-import {HouseReps} from "components/pages/HouseReps";
-import {SenateReps} from "components/pages/SenateReps";
+import { HouseReps } from "components/pages/HouseReps";
+import { SenateReps } from "components/pages/SenateReps";
 import { Bills } from "components/pages/Bills";
-import { HelpAndSupport } from "components/pages/HelpAndSupport"
+import { HelpAndSupport } from "components/pages/HelpAndSupport";
+import { ChangePlan } from "components/pages/ChangePlan";
 
 const routes = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ const routes = createBrowserRouter([
       {
         path: Routes.HelpAndSupport,
         element: <HelpAndSupport />,
+      },
+      {
+        path: Routes.ChangePlan,
+        element: <ChangePlan />,
       },
     ],
   },

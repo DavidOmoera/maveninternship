@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/rep18.svg";
 import { Routes } from "types/routes";
@@ -9,14 +8,18 @@ import { ArrowRight } from "assets/ArrowRight";
 import { colors } from "constants/common";
 import { Notifications } from "components/organisms/Notifications";
 import { NotificationSettings } from "components/organisms/NotificationSettings";
+import { Tooltip } from "@mui/material";
 
-
-type TPageContainerProps = { title: string } & React.DetailedHTMLProps<
+type TPageContainerProps = {
+  title: string;
+  previousPageTitle?: string;
+} & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 >;
 export function PageContainer({
   title,
+  previousPageTitle,
   children,
   ...props
 }: TPageContainerProps) {
@@ -42,16 +45,12 @@ export function PageContainer({
   };
 
   function onClickBack() {
-    navigate(Routes.Dashboard);
+    previousPageTitle ? navigate(-1) : navigate(Routes.Dashboard);
   }
 
   function goToProfile() {
     navigate(Routes.Profile);
   }
-
-  useEffect(() => {
-    if (location.pathname) window.scrollTo(0, 0);
-  }, [location.pathname]);
 
   return (
     <div {...props}>
@@ -70,16 +69,28 @@ export function PageContainer({
               onClick={onClickBack}
             />
           ) : null}
-          <h1 className="text-neutral950 font-extrabold text-4xl">{title}</h1>
+          <div className="row gap-2">
+            <h1 className="text-neutral950 font-extrabold text-4xl">{title}</h1>
+            {previousPageTitle ? (
+              <>
+                <h1 className="text-neutral500 font-bold text-4xl">/</h1>
+                <h1 className="text-neutral500 font-medium text-4xl">
+                  {previousPageTitle}
+                </h1>
+              </>
+            ) : null}
+          </div>
         </div>
         <div className="row gap-6">
           <div className="row gap-3">
-            <img
-              src={notification}
-              onClick={handleOpenNotificationStatusDialog}
-              className="cursor-pointer"
-              alt="Notification"
-            />
+            <Tooltip title="Notifications" placement="bottom">
+              <img
+                src={notification}
+                onClick={handleOpenNotificationStatusDialog}
+                className="cursor-pointer"
+                alt="Notification"
+              />
+            </Tooltip>
           </div>
           <div
             className="row gap-3 items-center cursor-pointer"

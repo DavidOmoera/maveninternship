@@ -27,7 +27,7 @@ import {
   editProfileSchema,
   managePaymentMethodSchema,
 } from "constants/schemas";
-import { useState, useRef, useMemo} from "react";
+import { useState, useRef, useMemo } from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -38,6 +38,8 @@ import { userDataSelector } from "store/slices/auth/selectors";
 import { organizationDataSelector } from "store/slices/organization/selectors";
 import { updateOrganizationData } from "store/slices/organization";
 import { updateUserData } from "store/slices/auth";
+import { Routes } from "types/routes";
+import { useNavigate } from "react-router-dom";
 
 const CONTACT_DETAILS = [
   { icon: envelope, text: "sethrogan@gmail.com" },
@@ -128,6 +130,7 @@ export function Profile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userDataSelector);
   const organizationData = useAppSelector(organizationDataSelector);
+  const navigate = useNavigate();
 
   const orgDetails = useMemo(
     () => [
@@ -263,7 +266,9 @@ export function Profile() {
   function onClickChangePassword() {
     setShowChangePasswordForm(true);
   }
-  function onClickChangePlan() {}
+  function onClickChangePlan() {
+    navigate(Routes.ChangePlan);
+  }
   function onClickManagePaymentMethod() {
     setShowManagePaymentMethodForm(true);
   }
@@ -365,7 +370,7 @@ export function Profile() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   return (
-    <PageContainer title="Profile">
+    <PageContainer title="My Profile">
       <div className="grid grid-cols-2 gap-6 mx-9">
         <section className="col gap-5 p-9 rounded-xl bg-white">
           <h4 className="text-neutral950">Personal Details</h4>
