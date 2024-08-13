@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-// import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/rep18.svg";
 import { Routes } from "types/routes";
