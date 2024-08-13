@@ -71,24 +71,31 @@ export function ActivityFeed() {
         <div className="col gap-8">
           {ACTIVITIES.map(
             ({ time, icon, type, label, iconBackgroundColor, link }, index) => (
-              <div key={index} className="flex flex-col gap-6 ">
-                <div className="row items-center gap-2 ">
-                  <div className="w-36">
-                    <p className="text-gray-500 text-sm ">{time}</p>
+              <div key={index} className="flex flex-col gap-2">
+                <div
+                  className="row items-center gap-2 p-2 rounded-lg bg-blue-50 min-h-16
+                "
+                >
+                  <div className="w-44">
+                    <p className="text-gray-500 text-sm font-medium">{time}</p>
                   </div>
-                  <div className="row items-center gap-2">
+                  <div className="row items-center gap-2 flex-wrap">
                     <div
                       className="p-1 rounded-full"
                       style={{ backgroundColor: iconBackgroundColor }}
                     >
-                      <img src={icon} alt={type} className="w-4 h-4 " />
+                      <img src={icon} alt={type} className="w-4 h-4" />
                     </div>
-
-                    <span className="text-gray-700 ">
-                      You <strong className="text-neutral950">{type}</strong>{" "}
+                    <span className=" text-gray-700 text-base font-semibold min-w-fit">
+                      You <strong className="text-neutral-950">{type}</strong>{" "}
                       {label}
                     </span>
-                    {link && <Pill text={link} />}
+                    {link && (
+                      <Pill
+                        text={link}
+                        containerClassName="bg-blue-100 px-3 rounded-full"
+                      />
+                    )}
                   </div>
                 </div>
               </div>

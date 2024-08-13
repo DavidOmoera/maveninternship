@@ -8,6 +8,8 @@ import { ArrowRight } from "assets/ArrowRight";
 import { colors } from "constants/common";
 import { Notifications } from "components/organisms/Notifications";
 import { NotificationSettings } from "components/organisms/NotificationSettings";
+import { CoterieBot } from "assets/CoterieBot";
+import { Modal } from "components/molecules/ChatModal";
 import { Tooltip } from "@mui/material";
 
 type TPageContainerProps = {
@@ -26,6 +28,16 @@ export function PageContainer({
   const location = useLocation();
   const navigate = useNavigate();
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
+
+  // Chat with Bot modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   const [OpenNotificationStatusDialog, setOpenNotificationStatusDialog] =
     useState(false);
   const handleOpenNotificationStatusDialog = () =>
@@ -83,6 +95,14 @@ export function PageContainer({
         </div>
         <div className="row gap-6">
           <div className="row gap-3">
+            <Tooltip title="Chat with Bot" placement="bottom">
+              <CoterieBot
+                className="w-8 cursor-pointer"
+                color="blue"
+                onClick={handleOpenModal}
+              />
+              {isModalOpen && <Modal onClose={handleCloseModal} />}
+            </Tooltip>
             <Tooltip title="Notifications" placement="bottom">
               <img
                 src={notification}
