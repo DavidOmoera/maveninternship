@@ -379,7 +379,7 @@ export function Profile() {
               src={selectedProfilePicture}
               className="w-20 h-20 object-cover rounded"
             />
-            <div className="col items-start gap-2">
+            <div className="col items-start gap-2 cursor-pointer">
               <h6 className="text-neutral950">Profile Photo</h6>
               <Pill onClick={onClickChangePhoto} text="Change Photo" />
               <input
@@ -404,7 +404,7 @@ export function Profile() {
             </div>
             <div className="col gap-2">
               {CONTACT_DETAILS.map((contact) => (
-                <div className="row gap-3" key={contact.text}>
+                <div className="row gap-2 " key={contact.text}>
                   <img src={contact.icon} className="w-4 h-4" />
                   <p>{contact.text}</p>
                 </div>
