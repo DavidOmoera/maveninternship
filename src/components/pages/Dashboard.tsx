@@ -113,8 +113,6 @@ export const Dashboard: React.FC = () => {
         isFilteredBill += "bill.year === selectedYear && ";
       }
 
-      console.log("filtered ", isFilteredBill);
-
       return isFilteredBill ? eval(isFilteredBill + "true") : true;
     });
   }, [
