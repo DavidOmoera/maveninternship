@@ -1,0 +1,71 @@
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { CoterieBot } from "assets/CoterieBot";
+import { Button } from "components/atoms/Button";
+
+type TPlanCardProps = {
+  color: string;
+  title: string;
+  description: string;
+  price: string;
+  onSelectPlan: (title: string) => void;
+  isCurrentPlan: boolean;
+  onCancelPlan: () => void;
+};
+
+const features: string[] = [
+  "Maximum of two active sessions",
+  "Phasellus tristique augue nec arcu pulvinar",
+  "Aliquam hendrerit",
+  "Nullam dignissim imperdiet",
+  "Maximum of two active sessions",
+];
+
+export function PlanCard({
+  color,
+  title,
+  description,
+  price,
+  onSelectPlan,
+  isCurrentPlan,
+  onCancelPlan,
+}: TPlanCardProps) {
+  return (
+    <div className="bg-blue-50 shadow-sm px-4 py-5 mb-4 border rounded-lg w-full min-w-56 cursor-pointer">
+      <CoterieBot color={color} className="w-8" />
+      <h2 className="font-extrabold text-lg mt-3">{title}</h2>
+      <p className="text-neutral700 pb-6 mt-1 text-sm">{description}</p>
+      <h2 className="font-extrabold text-2xl">{price}</h2>
+      <p className=" text-neutral400 text-sm mb-3">/year</p>
+      <ul className="py-3">
+        {features.map((feature) => (
+          <li
+            key={feature}
+            className="font-medium text-xs mb-1 text-neutral-700"
+          >
+            <CheckCircleIcon
+              style={{
+                marginRight: "8px",
+                color: "#1026C3",
+                padding: "2px",
+              }}
+            />
+            {feature}
+          </li>
+        ))}
+      </ul>
+      <div className="col gap-5 items-center">
+        <Button
+          text={isCurrentPlan ? "Current Product" : "Choose Product"}
+          variant={isCurrentPlan ? "primary" : "secondary"}
+          className="my-4 w-full"
+          onClick={isCurrentPlan ? () => {} : () => onSelectPlan(title)}
+        />
+        {isCurrentPlan ? (
+          <h6 className="text-error" onClick={onCancelPlan}>
+            Cancel Plan
+          </h6>
+        ) : null}
+      </div>
+    </div>
+  );
+}
