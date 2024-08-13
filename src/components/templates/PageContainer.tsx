@@ -9,8 +9,7 @@ import { colors } from "constants/common";
 import { Notifications } from "components/organisms/Notifications";
 import { NotificationSettings } from "components/organisms/NotificationSettings";
 import { CoterieBot } from "assets/CoterieBot";
-import { Modal } from "components/molecules/Modal";
-type TPageContainerProps = { title: string } & React.DetailedHTMLProps<
+import { Modal } from "components/molecules/ChatModal";
 import { Tooltip } from "@mui/material";
 
 type TPageContainerProps = {
@@ -96,18 +95,14 @@ export function PageContainer({
         </div>
         <div className="row gap-6">
           <div className="row gap-3">
-            <CoterieBot
-              className="w-8 cursor-pointer"
-              color="blue"
-              onClick={handleOpenModal}
-            />
-            {isModalOpen && <Modal onClose={handleCloseModal} />}
-            <img
-              src={notification}
-              onClick={handleOpenNotificationStatusDialog}
-              className="cursor-pointer"
-              alt="Notification"
-            />
+            <Tooltip title="Chat with Bot" placement="bottom">
+              <CoterieBot
+                className="w-8 cursor-pointer"
+                color="blue"
+                onClick={handleOpenModal}
+              />
+              {isModalOpen && <Modal onClose={handleCloseModal} />}
+            </Tooltip>
             <Tooltip title="Notifications" placement="bottom">
               <img
                 src={notification}
