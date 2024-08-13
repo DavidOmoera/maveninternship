@@ -102,7 +102,10 @@ export const Dashboard: React.FC = () => {
       }
 
       if (selectedBillType) {
-        isFilteredBill += "bill.billType === selectedBillType && ";
+        isFilteredBill +=
+          selectedBillType === "All"
+            ? "true && "
+            : "bill.billType === selectedBillType && ";
       }
 
       if (selectedChamber) {
