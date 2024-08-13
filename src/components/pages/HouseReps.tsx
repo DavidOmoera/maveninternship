@@ -35,7 +35,6 @@ const representatives = [
   { image: rep10, name: "Rep. Bhojani, Salman", district: 92, description: "Born in Pakistan to a large family, Representative Salman Bhojani immigrated to Texas as a teenager. He worked three minimum wage jobs to help support his family–climbing the ladder from convenience store cashier to successful business owner, attorney, Euless City Councilman, and Mayor Pro Tem." },
   { image: rep11, name: "Rep. Bonnen, Gregn", district: 24, description: "Representative Greg Bonnen (Friendswood) is Chair of the House Appropriations Committee and is currently serving his fifth term as State Representative for House District 24.Prior to serving as Chair of the House Appropriations Committee. " },
   { image: rep12, name: "Rep. Bowers, Rhetta Andrews", district: 113, description: "Representative Bowers was elected to serve House District 113 in the Texas House of Representatives on November 8, 2018. She made history as the first African American of Caribbean descent elected to represent this district. " },
-  
 ];
 
 type TActivitySearchForm = Partial<{
@@ -85,27 +84,22 @@ export function HouseReps() {
                 <div key={index} className="bg-white p-6 rounded-xl shadow relative flex flex-col justify-between" style={{ height: '400px' }}>
                   <div>
                     <div className="flex items-center mb-4">
-                      <img
-                        src={rep.image}
-                        alt="Representative"
-                        style={{
-                          width: '64px',
-                          height: '64px',
-                          gap: '0px',
-                          borderRadius: '12px 0px 0px 0px',
-                          opacity: 1,
-                        }}
-                        className="mr-4"
-                      />
-                      <div>
+                      <div className="relative w-16 h-16 overflow-hidden rounded-xl">
+                        <img
+                          src={rep.image}
+                          alt="Representative"
+                          className="absolute inset-0 object-cover w-full h-full"
+                        />
+                      </div>
+                      <div className="ml-4">
                         <h4 className="text-lg font-bold">{rep.name}</h4>
                         <div className="flex items-center">
                           <Pill
-                            text="Senator"
+                            text="Representative"
                             containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />
-                          <span style={{ color: '#1026C3' }}>• District {rep.district}, Texas</span>
+                          <span className="text-[#1026C3]">• District {rep.district}, Texas</span>
                         </div>
                       </div>
                     </div>
@@ -114,16 +108,16 @@ export function HouseReps() {
                     </p>
                   </div>
                   <a href="#" className="flex items-center text-primary absolute bottom-4 right-4" style={{ color: '#0C0853' }}>
-                  <img src={bookmark} alt="Bookmark Icon" style={{ marginRight: '0.5rem', width: '24px', height: '24px' }} />
-                  <span style={{ 
-                  fontFamily: 'Mulish', 
-                  fontSize: '14px', 
-                  fontWeight: '600', 
-                  lineHeight: '17.57px', 
-                  textAlign: 'left' 
-                  }}>
-                  Add to Top Representatives
-                  </span>
+                    <img src={bookmark} alt="Bookmark Icon" className="mr-2 w-6 h-6" />
+                    <span style={{ 
+                      fontFamily: 'Mulish', 
+                      fontSize: '14px', 
+                      fontWeight: '600', 
+                      lineHeight: '17.57px', 
+                      textAlign: 'left' 
+                    }}>
+                      Add to Top Representatives
+                    </span>
                   </a>
                 </div>
               ))}

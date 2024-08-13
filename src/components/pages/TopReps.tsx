@@ -3,7 +3,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { activitySearchSchema } from 'constants/schemas';
 import { ControlledInput } from 'components/organisms/ControlledInput';
 import SearchIcon from '@mui/icons-material/Search';
-import bookmark from "assets/bookmark.svg";
 import { PageContainer } from 'components/templates/PageContainer';
 import { Button } from 'components/atoms/Button';
 import { Pill } from "components/molecules/Pill";
@@ -84,23 +83,18 @@ export function TopReps() {
                 <div key={index} className="bg-white p-6 rounded-xl shadow relative flex flex-col justify-between" style={{ height: '400px' }}>
                   <div>
                     <div className="flex items-center mb-4">
-                      <img
-                        src={rep.image}
-                        alt="Representative"
-                        style={{
-                          width: '64px',
-                          height: '64px',
-                          gap: '0px',
-                          borderRadius: '12px 0px 0px 0px',
-                          opacity: 1,
-                        }}
-                        className="mr-4"
-                      />
-                      <div>
+                      <div className="relative w-16 h-16 overflow-hidden rounded-lg">
+                        <img
+                          src={rep.image}
+                          alt="Representative"
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                      <div className="ml-4">
                         <h4 className="text-lg font-bold">{rep.name}</h4>
                         <div className="flex items-center">
                           <Pill
-                            text="Senator"
+                            text="Representative"
                             containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />
@@ -112,18 +106,6 @@ export function TopReps() {
                       {rep.description}
                     </p>
                   </div>
-                  <a href="#" className="flex items-center text-primary absolute bottom-4 right-4" style={{ color: '#0C0853' }}>
-                    <img src={bookmark} alt="Bookmark Icon" style={{ marginRight: '0.5rem', width: '24px', height: '24px' }} />
-                    <span style={{ 
-                      fontFamily: 'Mulish', 
-                      fontSize: '14px', 
-                      fontWeight: '600', 
-                      lineHeight: '17.57px', 
-                      textAlign: 'left' 
-                    }}>
-                      Add to Top Representatives
-                    </span>
-                  </a>
                 </div>
               ))}
             </div>
