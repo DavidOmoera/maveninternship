@@ -142,7 +142,7 @@ const DetailsOfBill: React.FC = () => {
 
             <div className="row items-center gap-3 flex-wrap mt-2">
               {TAGS.map((tag) => (
-                <div className="row gap-1 items-center">
+                <div key={tag} className="row gap-1 items-center">
                   <img src={tagIcon} className="w-4 h-4" />
                   <p className="text-xs text-neutral500">{tag}</p>
                 </div>
@@ -155,7 +155,7 @@ const DetailsOfBill: React.FC = () => {
               <h6 className="underline mb-3">Details</h6>
               <div className="col gap-2">
                 {DETAILS.map((detail) => (
-                  <div className="row justify-between w-full">
+                  <div key={detail.key} className="row justify-between w-full">
                     <p className="text-sm text-neutral500">{detail.key}</p>
                     <h6
                       className={classNames("text-sm text-neutral950", {
