@@ -94,7 +94,7 @@ export function PageContainer({
           </div>
         </div>
         <div className="row gap-6">
-          <div className="row gap-3">
+          <div className="row gap-3 items-center">
             <Tooltip title="Chat with Bot" placement="bottom">
               <CoterieBot
                 className="w-8 cursor-pointer"
