@@ -177,12 +177,7 @@ export function HouseReps() {
                       <img
                         src={rep.image}
                         alt="Representative"
-                        className="mr-4 rounded-tl-xl"
-                        style={{
-                          width: "64px",
-                          height: "64px",
-                          borderRadius: "12px",
-                        }}
+                        className="mr-4 object-cover w-16 h-16 rounded-xl"
                       />
                       <div>
                         <h4 className="text-lg font-bold mb-1">{rep.name}</h4>

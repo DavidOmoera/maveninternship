@@ -10,6 +10,8 @@ import { allBills, BILL_TYPES, BILL_YEARS } from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import filter from "assets/filter.svg";
 import grid from "assets/grid.svg";
+import { useNavigate } from "react-router-dom";
+import { Routes } from "types/routes";
 
 interface TBillSearchForm {
   searchValue: string;
@@ -29,6 +31,7 @@ const pills = [
 ];
 
 export const Bills: React.FC = () => {
+  const navigate = useNavigate();
   const { control, handleSubmit } = useForm<TBillSearchForm>();
 
   const onSearchBill: SubmitHandler<TBillSearchForm> = (formData) => {
@@ -40,7 +43,7 @@ export const Bills: React.FC = () => {
   };
 
   function onClickBill() {
-    console.log("Remove from watched bills");
+    navigate(Routes.DetailsOfBill);
   }
 
   return (
