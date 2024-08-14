@@ -17,9 +17,6 @@ import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
 import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "components/atoms/Button";
-import { DashboardExplore } from "components/atoms/DashboardExplore";
-import coterieBot from "assets/coterie_bot.svg";
-import bills from "assets/bills.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import edited from "assets/edited.svg";
 import closed from "assets/closed.svg";
@@ -125,21 +122,6 @@ export const Dashboard: React.FC = () => {
     selectedChamber,
     selectedYear,
   ]);
-
-  const sectionsToExplore = [
-    {
-      title: "Ask Coterie AI",
-      icon: coterieBot,
-      description: "Coterie AI is ready to answer any questions you may have",
-      onClick: () => {},
-    },
-    {
-      title: "Explore Bills",
-      icon: bills,
-      description: "Feeling explorative? Look through all available bills",
-      onClick: () => {},
-    },
-  ];
 
   const updates = [
     {
