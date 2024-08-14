@@ -404,7 +404,7 @@ export function Profile() {
             </div>
             <div className="col gap-2">
               {CONTACT_DETAILS.map((contact) => (
-                <div className="row gap-2 " key={contact.text}>
+                <div className="row gap-2 items-center" key={contact.text}>
                   <img src={contact.icon} className="w-4 h-4" />
                   <p>{contact.text}</p>
                 </div>
