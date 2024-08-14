@@ -401,9 +401,9 @@ export function Profile() {
                 <p className="text-primary font-medium">Edit Details</p>
               </div>
             </div>
-            <div className="col gap-2">
+             <div className="col gap-2">
               {CONTACT_DETAILS.map((contact) => (
-                <div className="row gap-2 flex-wrap" key={contact.text}>
+                <div className="row gap-2 flex-wrap items-center" key={contact.text}>
                   <img src={contact.icon} className="w-4 h-4" />
                   <p>{contact.text}</p>
                 </div>
@@ -869,7 +869,7 @@ export function Profile() {
                   (ManagePaymentMethodErrors?.card_number?.message as string) ??
                   ""
                 }
-                className="pl-16" // Adjust padding to make space for the Visa logo
+                className="pl-16" 
               />
             </div>
             <div className="row gap-6">
