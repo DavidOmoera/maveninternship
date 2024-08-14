@@ -156,11 +156,14 @@ export const topRepresentatives = [
 export const watchedBills = [
   {
     state: "Texas",
-    title: "Secure the Border Act of 2023",
+    title: "Secure the Border Act of 2024",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
     status: "Introduced",
     relativeTime: "2w ago",
+    chamber: "House",
+    billType: "Proposed",
+    year: "2024",
   },
   {
     state: "Wyoming",
@@ -169,38 +172,53 @@ export const watchedBills = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
     status: "Introduced",
     relativeTime: "2w ago",
+    chamber: "House",
+    billType: "Vetoed",
+    year: "2023",
   },
   {
     state: "Washington",
-    title: "Secure the Border Act of 2023",
+    title: "Secure the Border Act of 2022",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
     status: "Introduced",
     relativeTime: "2w ago",
+    chamber: "Senate",
+    billType: "Amended",
+    year: "2022",
   },
   {
     state: "Ohio",
-    title: "Secure the Border Act of 2023",
+    title: "Secure the Border Act of 2021",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
     status: "Introduced",
     relativeTime: "2w ago",
+    chamber: "Senate",
+    billType: "Vetoed",
+    year: "2021",
   },
   {
     state: "West Virginia",
-    title: "Secure the Border Act of 2023",
+    title: "Secure the Border Act of 2020",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
     status: "Introduced",
     relativeTime: "2w ago",
+    chamber: "Senate",
+    billType: "Passed",
+    year: "2020",
   },
   {
     state: "Colorado",
-    title: "Secure the Border Act of 2023",
+    title: "Secure the Border Act of 2019",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vitae ligula ac nisl maximus sollicit udin eget eget risus.",
     status: "Introduced",
     relativeTime: "2w ago",
+    chamber: "Senate",
+    billType: "Proposed",
+    year: "2019",
   },
 ];
 
