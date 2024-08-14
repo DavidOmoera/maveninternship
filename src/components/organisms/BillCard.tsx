@@ -59,7 +59,7 @@ export function BillCard({
               className="text-blue-500 cursor-pointer"
               onClick={handleToggleExpand}
             >
-              {isExpanded ? "..show less" : "..."}
+              {isExpanded ? "..show less" : "...show more"}
             </span>
           )}
         </p>

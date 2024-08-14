@@ -282,22 +282,8 @@ export const Dashboard: React.FC = () => {
             />
           </div>
 
-          {/* Ask Coterie AI and Explore Bills Sections */}
-          <div className="flex flex-col lg:flex-row gap-6 my-6">
-            {" "}
-            {sectionsToExplore.map((sectionToExplore) => (
-              <DashboardExplore
-                key={sectionToExplore.title}
-                title={sectionToExplore.title}
-                description={sectionToExplore.description}
-                icon={sectionToExplore.icon}
-                onClick={sectionToExplore.onClick}
-              />
-            ))}
-          </div>
-
           {/* Bills */}
-          <section className="w-full bg-white p-9 rounded-xl">
+          <section className="w-full bg-white p-9 rounded-xl my-6">
             {/** Bills Overview */}
             <div className="row justify-between items-center">
               <div className="row gap-3">

@@ -10,7 +10,6 @@ import successCheck from "assets/success_check.svg";
 import orgLogo from "assets/org_logo.png";
 import visaLogo from "assets/visa_logo.svg";
 import { Pill } from "components/molecules/Pill";
-import { CoterieBot } from "assets/CoterieBot";
 import { colors, ISSUES_OPTIONS } from "constants/common";
 import { Button } from "components/atoms/Button";
 import {
@@ -374,12 +373,12 @@ export function Profile() {
       <div className="grid grid-cols-2 gap-6 mx-9">
         <section className="col gap-5 p-9 rounded-xl bg-white">
           <h4 className="text-neutral950">Personal Details</h4>
-          <div className="row items-center gap-4">
+          <div className="row items-center gap-4 flex-wrap">
             <img
               src={selectedProfilePicture}
               className="w-20 h-20 object-cover rounded"
             />
-            <div className="col items-start gap-2">
+            <div className="col items-start gap-2 cursor-pointer">
               <h6 className="text-neutral950">Profile Photo</h6>
               <Pill onClick={onClickChangePhoto} text="Change Photo" />
               <input
@@ -392,19 +391,19 @@ export function Profile() {
             </div>
           </div>
           <div className="col p-6 gap-4 items-start bg-neutral50">
-            <div className="row justify-between w-full">
+            <div className="row justify-between w-full flex-wrap">
               <h2 className="text-neutral950">Seth Rogan</h2>
               <div
-                className="row gap-1 items-center cursor-pointer"
+                className="row gap-1 items-center cursor-pointer "
                 onClick={onClickEditProfile}
               >
                 <img src={pencil} className="w-3 h-3" />
                 <p className="text-primary font-medium">Edit Details</p>
               </div>
             </div>
-            <div className="col gap-2">
+             <div className="col gap-2">
               {CONTACT_DETAILS.map((contact) => (
-                <div className="row gap-3" key={contact.text}>
+                <div className="row gap-2 flex-wrap items-center" key={contact.text}>
                   <img src={contact.icon} className="w-4 h-4" />
                   <p>{contact.text}</p>
                 </div>
@@ -419,14 +418,14 @@ export function Profile() {
           </h6>
         </section>
         <section className="col gap-5 p-9 rounded-xl bg-white">
-          <div className="row justify-between w-full">
+          <div className="row justify-between w-full flex-wrap">
             <h4 className="text-neutral950">Your Plan</h4>
             <Pill text="Member since August 2024" />
           </div>
           <div className="col gap-3">
             {/* <CoterieBot color={colors.error} /> */}
             <h2 className="text-black">Regulatory AI</h2>
-            <span className="row items-center gap-1">
+            <span className="row items-center gap-1 flex-wrap">
               <p className="text-neutral500">Next payment:</p>
               <h6 className="text-neutral500">24 August, 2025</h6>
             </span>
@@ -439,8 +438,8 @@ export function Profile() {
 
           <hr className="bg-neutral100" />
 
-          <div className="row justify-between w-full">
-            <div className="row gap-2 items-center">
+          <div className="row justify-between w-full flex-wrap">
+            <div className="row gap-2 items-center flex-wrap">
               <img src={mastercard} className="w-8 h-8" />
               <h5 className="">
                 &#183;&#183;&#183;&#183; &#183;&#183;&#183;&#183;
@@ -457,7 +456,7 @@ export function Profile() {
           </div>
         </section>
         <section className="p-9 rounded-xl bg-white">
-          <div className="row justify-between">
+          <div className="row justify-between flex-wrap">
             <h4 className="text-neutral950">Organization Details</h4>
             <div
               className="row gap-1 items-center cursor-pointer"
@@ -467,7 +466,7 @@ export function Profile() {
               <p className="text-primary font-medium">Edit Details</p>
             </div>
           </div>
-          <div className="row items-center gap-4 my-5">
+          <div className="row items-center gap-4 my-5 flex-wrap">
             <img src={orgLogo} className="w-20 h-20" />
             <div className="col items-start gap-2">
               <h6 className="text-neutral950">Organization Logo</h6>
@@ -492,7 +491,7 @@ export function Profile() {
             ))}
           </div>
           <div className="mt-6">
-            <div className="row justify-between">
+            <div className="row justify-between flex-wrap">
               <h4 className="text-neutral950">Organization Contact</h4>
               <div
                 className="row gap-1 items-center cursor-pointer"
@@ -870,7 +869,7 @@ export function Profile() {
                   (ManagePaymentMethodErrors?.card_number?.message as string) ??
                   ""
                 }
-                className="pl-16" // Adjust padding to make space for the Visa logo
+                className="pl-16" 
               />
             </div>
             <div className="row gap-6">
