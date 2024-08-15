@@ -96,11 +96,13 @@ export function PageContainer({
         <div className="row gap-6">
           <div className="row gap-3 items-center">
             <Tooltip title="Chat with Bot" placement="bottom">
-              <CoterieBot
-                className="w-8 cursor-pointer"
-                color="blue"
-                onClick={handleOpenModal}
-              />
+              <div>
+                <CoterieBot
+                  className="w-8 cursor-pointer"
+                  color="blue"
+                  onClick={handleOpenModal}
+                />
+              </div>
             </Tooltip>
             {isModalOpen && <Modal onClose={handleCloseModal} />}
             <Tooltip title="Notifications" placement="bottom">
