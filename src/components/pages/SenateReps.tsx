@@ -19,9 +19,11 @@ import sen9 from "assets/sen9.png";
 import sen10 from "assets/sen10.png";
 import sen11 from "assets/sen11.png";
 import sen12 from "assets/sen12.png";
-
+import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
+import { useTopReps } from 'Context/TopRepsContext.tsx';
+import { Representative } from 'constants/Representatives.ts';
 
 const representatives = [
   {
@@ -118,6 +120,8 @@ type TActivitySearchForm = Partial<{
 
 export function SenateReps() {
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
+  const { addTopRep, removeTopRep, isRepInTopReps } = useTopReps(); // Use isRepInTopReps here
+  const navigate = useNavigate();
 
   const handleToggleExpand = (index: number) => {
     setExpandedIndexes((prev) => {
@@ -127,6 +131,14 @@ export function SenateReps() {
         return [...prev, index];
       }
     });
+  };
+
+  const handleAddToTopReps = (rep: Representative) => {
+    if (isRepInTopReps(rep)) {
+      removeTopRep(rep);
+    } else {
+      addTopRep(rep);
+    }
   };
 
   const {
@@ -221,6 +233,7 @@ export function SenateReps() {
                     href="#"
                     className="flex items-center text-primary absolute bottom-4 right-4"
                     style={{ color: "#0C0853" }}
+                    onClick={() => handleAddToTopReps(rep)}
                   >
                     <img
                       src={bookmark}
@@ -240,7 +253,7 @@ export function SenateReps() {
                         textAlign: "left",
                       }}
                     >
-                      Add to Top Representatives
+                      {isRepInTopReps(rep) ? "Remove from Top Representatives" : "Add to Top Representatives"}
                     </span>
                   </a>
                 </div>
