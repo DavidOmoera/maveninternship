@@ -78,7 +78,7 @@ const routes = createBrowserRouter([
         element: <Representatives />,
       },
       {
-        path: Routes.TopReps, // Update route to use TopReps
+        path: Routes.TopReps, // 
         element: <TopReps />,
       },
       {
