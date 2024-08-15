@@ -9,7 +9,6 @@ export const customStyleCreator = ({
   fontFamily,
   borderWidth,
   iconPadding,
-  borderColor,
   borderRadius,
   backgroundColor,
   placeHolderColor,

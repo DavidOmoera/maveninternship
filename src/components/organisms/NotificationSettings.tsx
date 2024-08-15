@@ -18,19 +18,12 @@ export function NotificationSettings({
   const [updatePreference, setUpdatePreference] = useState(
     "Both Email and In-app"
   );
-  const [notificationFrequency, setNotificationFrequency] = useState("Weekly");
   const [disableNotifications, setDisableNotifications] = useState(false);
 
   const handleUpdatePreferenceChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setUpdatePreference(event.target.value);
-  };
-
-  const handleNotificationFrequencyChange = (
-    event: React.ChangeEvent<{ value: unknown }>
-  ) => {
-    setNotificationFrequency(event.target.value as string);
   };
 
   const handleDisableNotificationsChange = (
