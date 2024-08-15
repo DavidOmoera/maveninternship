@@ -15,11 +15,22 @@ export function NotificationSettings({
   open,
   onClose,
 }: TNotificationSettingsProps) {
-  const [updatePreference, setUpdatePreference] = useState(
-    "Both Email and In-app"
-  );
-  const [notificationFrequency, setNotificationFrequency] = useState("Weekly");
-  const [disableNotifications, setDisableNotifications] = useState(false);
+  const [updatePreference, setUpdatePreference] = useState(() => {
+    const savedPreference = localStorage.getItem("updatePreference");
+    return savedPreference ? savedPreference : "Both Email and In-app";
+  });
+
+  const [notificationFrequency, setNotificationFrequency] = useState(() => {
+    const savedFrequency = localStorage.getItem("notificationFrequency");
+    return savedFrequency ? savedFrequency : "Weekly";
+  });
+
+  const [disableNotifications, setDisableNotifications] = useState(() => {
+    const savedDisableNotifications = localStorage.getItem(
+      "disableNotifications"
+    );
+    return savedDisableNotifications === "true";
+  });
 
   const handleUpdatePreferenceChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -28,9 +39,9 @@ export function NotificationSettings({
   };
 
   const handleNotificationFrequencyChange = (
-    event: React.ChangeEvent<{ value: unknown }>
+    event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setNotificationFrequency(event.target.value as string);
+    setNotificationFrequency(event.target.value);
   };
 
   const handleDisableNotificationsChange = (
@@ -39,10 +50,16 @@ export function NotificationSettings({
     setDisableNotifications(event.target.checked);
   };
 
+  const handleSaveChanges = () => {
+    localStorage.setItem("updatePreference", updatePreference);
+    localStorage.setItem("notificationFrequency", notificationFrequency);
+    localStorage.setItem("disableNotifications", String(disableNotifications));
+  };
+
   const TIME_OPTIONS = [
     { id: 1, label: "Daily", value: "day" },
-    { id: 1, label: "Weekly", value: "week" },
-    { id: 1, label: "Monthly", value: "month" },
+    { id: 2, label: "Weekly", value: "week" },
+    { id: 3, label: "Monthly", value: "month" },
   ];
 
   return (
@@ -86,7 +103,11 @@ export function NotificationSettings({
               bills?
             </h3>
             <div className="w-36">
-              <CustomSelect options={TIME_OPTIONS} />
+              <CustomSelect
+                options={TIME_OPTIONS}
+                value={notificationFrequency}
+                onChange={handleNotificationFrequencyChange}
+              />
             </div>
           </div>
           <div className="mb-4">
@@ -101,6 +122,14 @@ export function NotificationSettings({
               }
               label="I no longer want to receive notifications"
             />
+          </div>
+          <div className="flex justify-end mt-4">
+            <button
+              className="text-white bg-red-600"
+              onClick={handleSaveChanges}
+            >
+              Save Changes
+            </button>
           </div>
         </form>
       </div>

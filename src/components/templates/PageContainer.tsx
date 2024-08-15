@@ -82,7 +82,9 @@ export function PageContainer({
             />
           ) : null}
           <div className="row gap-2">
-            <h1 className="text-neutral950 font-extrabold text-4xl">{title}</h1>
+            <h1 className="text-3xl text-neutral950 font-extrabold lg:text-4xl">
+              {title}
+            </h1>
             {previousPageTitle ? (
               <>
                 <h1 className="text-neutral500 font-bold text-4xl">/</h1>
@@ -94,10 +96,10 @@ export function PageContainer({
           </div>
         </div>
         <div className="row gap-6">
-          <div className="row gap-3 items-center">
+          <div className="row gap-3 items-center -mr-6 lg:mr-0">
             <Tooltip title="Chat with Bot" placement="bottom">
               <CoterieBot
-                className="w-8 cursor-pointer"
+                className="w-6 -mr-2 cursor-pointer lg:w-6 lg:mr-2"
                 color="blue"
                 onClick={handleOpenModal}
               />
@@ -107,7 +109,7 @@ export function PageContainer({
               <img
                 src={notification}
                 onClick={handleOpenNotificationStatusDialog}
-                className="cursor-pointer"
+                className="cursor-pointer w-8 lg:w-12"
                 alt="Notification"
               />
             </Tooltip>
@@ -119,7 +121,7 @@ export function PageContainer({
             <img
               src={profilePicture}
               alt="Profile"
-              className="w-12 h-12 object-cover rounded"
+              className="w-8 h-8 object-cover rounded md:w-12 md:h-12"
             />
             <article className="col gap-1">
               <h6 className="text-neutral950 font-bold">Seth Rogan</h6>

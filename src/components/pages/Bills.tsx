@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/atoms/Button";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -9,9 +9,8 @@ import { Pill } from "components/molecules/Pill";
 import { allBills, BILL_TYPES, BILL_YEARS } from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import filter from "assets/filter.svg";
-import grid from "assets/grid.svg";
-import { useNavigate } from "react-router-dom";
-import { Routes } from "types/routes";
+import gridIcon from "assets/grid.svg";
+import listIcon from "assets/listView.svg";
 
 interface TBillSearchForm {
   searchValue: string;
@@ -31,8 +30,9 @@ const pills = [
 ];
 
 export const Bills: React.FC = () => {
-  const navigate = useNavigate();
   const { control, handleSubmit } = useForm<TBillSearchForm>();
+
+  const [isGridView, setIsGridView] = useState(true);
 
   const onSearchBill: SubmitHandler<TBillSearchForm> = (formData) => {
     console.log("search form data", formData);
@@ -43,8 +43,12 @@ export const Bills: React.FC = () => {
   };
 
   function onClickBill() {
-    navigate(Routes.DetailsOfBill);
+    console.log("Remove from watched bills");
   }
+
+  const toggleView = () => {
+    setIsGridView(!isGridView);
+  };
 
   return (
     <PageContainer title="Bills">
@@ -116,7 +120,12 @@ export const Bills: React.FC = () => {
             </div>
 
             <div className="row items-center gap-6">
-              <img src={grid} className="w-6 h-6" />
+              <img
+                src={isGridView ? listIcon : gridIcon}
+                className="w-6 h-6 cursor-pointer"
+                onClick={toggleView}
+                alt="toggle view"
+              />
               <Pill
                 icon={<img src={filter} />}
                 text="Filter Result"
@@ -138,13 +147,28 @@ export const Bills: React.FC = () => {
             ))}
           </div>
 
+          {/* ListView Title */}
+          {!isGridView && (
+            <div className="hidden lg:grid grid-cols-12 gap-2 p-4 bg-gray-100 rounded-lg shadow-md mt-8 text-sm font-bold">
+              <p className="col-span-2">Bill Name</p>
+              <p className="col-span-1">Author</p>
+              <p className="col-span-2">Co-Authors</p>
+              <p className="col-span-2">State</p>
+              <p className="col-span-1">State</p>
+              <p className="col-span-1">Bill Status</p>
+              <p className="col-span-1">Supported by</p>
+              <p className="col-span-1">Date Created</p>
+              <p className="col-span-1">Watched Bills</p>
+            </div>
+          )}
+
           {/* BillCard */}
-          <div className="row gap-5 flex-wrap mt-8">
-            {" "}
+          <div className={`${isGridView ? "row gap-5 flex-wrap mt-8" : "col"}`}>
             {allBills.map((allBill) => (
               <BillCard
                 key={allBill.state + allBill.description}
                 onClick={onClickBill}
+                isListView={!isGridView}
                 {...allBill}
               />
             ))}

@@ -1,6 +1,5 @@
 import { Pill } from "components/molecules/Pill";
 import { watchedBills } from "constants/common";
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
 type TBillProps = { onClick: () => void } & (typeof watchedBills)[0];
 
@@ -21,7 +20,6 @@ export function Bill({
     >
       <div className="row justify-between items-center">
         <Pill text={state} textClass="font-semibold text-primary text-sm" />
-        <MoreHorizOutlinedIcon />
       </div>
 
       <h4 className="line-clamp-2 py-2">{title}</h4>
