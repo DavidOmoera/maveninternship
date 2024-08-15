@@ -8,7 +8,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Pill } from "components/molecules/Pill";
 import { allBills, BILL_TYPES, BILL_YEARS } from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
-import filter from "assets/filter.svg";
 import gridIcon from "assets/grid.svg";
 import listIcon from "assets/listView.svg";
 
@@ -127,7 +126,6 @@ export const Bills: React.FC = () => {
                 alt="toggle view"
               />
               <Pill
-                icon={<img src={filter} />}
                 text="Filter Result"
                 containerClassName="row items-center rounded px-3 py-2 gap-1 bg-neutral50"
               />
