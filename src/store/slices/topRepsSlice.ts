@@ -1,31 +1,32 @@
 
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Representative } from 'types/common.ts';
+import { Representative } from 'types/common';
 
 export interface TopRepsState {  
   topReps: Representative[];
 }
-
 const initialState: TopRepsState = {
   topReps: [],
 };
 
-export const topRepsSlice = createSlice({
+const topRepsSlice = createSlice({
   name: 'topReps',
   initialState,
   reducers: {
-    addTopRep: (state, action: PayloadAction<Representative>) => {
-      if (!state.topReps.some(rep => rep.name === action.payload.name)) {
-        state.topReps.push(action.payload);
+    addTopRep(state, action: PayloadAction<Representative>) {
+      const rep = action.payload;
+      // Prevent adding duplicate representatives
+      if (!state.topReps.find(r => r.name === rep.name && r.district === rep.district)) {
+        state.topReps.push(rep);
       }
     },
-    removeTopRep: (state, action: PayloadAction<Representative>) => {
-      state.topReps = state.topReps.filter(rep => rep.name !== action.payload.name);
+    removeTopRep(state, action: PayloadAction<Representative>) {
+      const rep = action.payload;
+      state.topReps = state.topReps.filter(r => r.name !== rep.name || r.district !== rep.district);
     },
   },
 });
 
 export const { addTopRep, removeTopRep } = topRepsSlice.actions;
-
 export default topRepsSlice.reducer;
