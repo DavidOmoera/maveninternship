@@ -1,53 +1,33 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface Representative {
-  image: string;
-  name: string;
-  district: number;
-  description: string;
-}
 
-interface TopRepsContextType {
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Representative } from 'types/common';
+
+interface TopRepsState {
   topReps: Representative[];
-  addTopRep: (rep: Representative) => void;
-  removeTopRep: (rep: Representative) => void;
-  isRepInTopReps: (rep: Representative) => boolean; // New function to check if rep is in top reps
 }
 
-const TopRepsContext = createContext<TopRepsContextType | undefined>(undefined);
+const initialState: TopRepsState = {
+  topReps: [],
+};
 
-export const TopRepsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [topReps, setTopReps] = useState<Representative[]>([]);
-
-  const addTopRep = (rep: Representative) => {
-    // Prevent adding duplicate representatives
-    setTopReps((prev) => {
-      if (!prev.find((r) => r.name === rep.name && r.district === rep.district)) {
-        return [...prev, rep];
+const topRepsSlice = createSlice({
+  name: 'topReps',
+  initialState,
+  reducers: {
+    addTopRep(state, action: PayloadAction<Representative>) {
+      const rep = action.payload;
+      // Prevent adding duplicate representatives
+      if (!state.topReps.find(r => r.name === rep.name && r.district === rep.district)) {
+        state.topReps.push(rep);
       }
-      return prev;
-    });
-  };
+    },
+    removeTopRep(state, action: PayloadAction<Representative>) {
+      const rep = action.payload;
+      state.topReps = state.topReps.filter(r => r.name !== rep.name || r.district !== rep.district);
+    },
+  },
+});
 
-  const removeTopRep = (rep: Representative) => {
-    setTopReps((prev) => prev.filter((r) => r.name !== rep.name || r.district !== rep.district));
-  };
-
-  const isRepInTopReps = (rep: Representative) => {
-    return topReps.some((r) => r.name === rep.name && r.district === rep.district);
-  };
-
-  return (
-    <TopRepsContext.Provider value={{ topReps, addTopRep, removeTopRep, isRepInTopReps }}>
-      {children}
-    </TopRepsContext.Provider>
-  );
-};
-
-export const useTopReps = () => {
-  const context = useContext(TopRepsContext);
-  if (!context) {
-    throw new Error('useTopReps must be used within a TopRepsProvider');
-  }
-  return context;
-};
+export const { addTopRep, removeTopRep } = topRepsSlice.actions;
+export default topRepsSlice.reducer;
