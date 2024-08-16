@@ -182,11 +182,11 @@ export function AuthenticatedRoot() {
   }
 
   return (
-    <main className="bg-neutral25 row ">
+    <main className="bg-neutral25 row relative">
       {/* sidebar icon */}
-      <div className="relative">
+      <div>
         <button
-          className="block md:hidden mt-8 -mr-9 text-primary bg-transparent"
+          className="absolute block md:hidden mt-8  text-primary bg-transparent top-6 right-10"
           onClick={toggleSidebar}
         >
           <MenuIcon fontSize="large" />
