@@ -4,18 +4,21 @@ import { ControlledInput } from "components/organisms/ControlledInput";
 import { ControlledSelect } from "components/organisms/ControlledSelect";
 import { PageContainer } from "components/templates/PageContainer";
 import { helpAndSupportSchema } from "constants/schemas";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Envelope } from "assets/Envelope";
 import { Phone } from "assets/Phone";
 import { Social } from "assets/Social";
 import { LinkedIn } from "assets/LinkedIn";
 import { ISSUES_OPTIONS } from "constants/common";
+import { Dialog } from "@mui/material";
+import successCheck from "assets/success_check.svg";
+import { ArrowRight } from "assets/ArrowRight";
 
 const CONTACT_DETAILS = [
   {
     Icon: <Envelope color="#FFC700" />,
-    text: "jasminecrockett@uscongress.com",
+    text: "help@coterieai.com",
   },
   {
     Icon: <Phone color="#FFC700" />,
@@ -41,6 +44,8 @@ type THelpAndSupportForm = {
 };
 
 export function HelpAndSupport() {
+  const [showFeedbackSuccess, setShowFeedbackSuccess] =
+    useState<boolean>(false);
   const {
     control,
     formState: { errors, isDirty, isSubmitting, isValid },
@@ -57,8 +62,16 @@ export function HelpAndSupport() {
   const onSubmitMessage: SubmitHandler<THelpAndSupportForm> = (
     formData: THelpAndSupportForm
   ) => {
-    console.log("help and support data", formData);
+    if (formData && isValid) onOpenFeedbackSuccess();
   };
+
+  function onOpenFeedbackSuccess() {
+    setShowFeedbackSuccess(true);
+  }
+
+  function onCloseFeedbackSuccess() {
+    setShowFeedbackSuccess(false);
+  }
 
   return (
     <PageContainer title="Help & Support">
@@ -155,6 +168,29 @@ export function HelpAndSupport() {
           </div>
         </div>
       </div>
+      <Dialog
+        open={showFeedbackSuccess}
+        onClose={onCloseFeedbackSuccess}
+        sx={{ borderRadius: "24px" }}
+      >
+        <div className="col items-center gap-6 p-16">
+          <img src={successCheck} className="w-36 h-36" />
+          <article className="col gap-3 items-center">
+            <h2 className="text-neutral950 text-center">
+              Message Sent Successfully
+            </h2>
+            <p className="text-neutral500 text-center">
+              Your message has been sent. A member of our team will be reaching
+              out to you momentarily.
+            </p>
+          </article>
+          <Button
+            text="Done"
+            onClick={onCloseFeedbackSuccess}
+            rightIcon={<ArrowRight />}
+          />
+        </div>
+      </Dialog>
     </PageContainer>
   );
 }
