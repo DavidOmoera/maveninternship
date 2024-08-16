@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { PageContainer } from "components/templates/PageContainer";
-import { useTopReps } from 'Context/TopRepsContext'; // Import from the correct path
-import { Representative } from 'constants/Representatives'; // Import from the correct path
+import { Representative } from 'types/common'; 
 import { ControlledInput } from "components/organisms/ControlledInput";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "components/atoms/Button";
@@ -10,17 +9,21 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { activitySearchSchema } from "constants/schemas";
 import { Pill } from "components/molecules/Pill";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/slices/index'; 
+import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice'; 
 
-// Define the search form schema
 type TActivitySearchForm = Partial<{
   searchValue: string;
 }>;
 
-const TopReps = () => {
+const TopReps: React.FC = () => {
   const location = useLocation();
   const { state } = location;
-  const representative = state?.representative as Representative; // Type casting for representative
-  const { topReps, addTopRep, removeTopRep, isRepInTopReps } = useTopReps(); // Access top reps and functions from context
+  const representative = state?.representative as Representative;
+
+  const dispatch = useDispatch();
+  const topReps = useSelector((state: RootState) => state.topReps.topReps);
 
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
 
@@ -33,25 +36,23 @@ const TopReps = () => {
   });
 
   const onSearch: SubmitHandler<TActivitySearchForm> = (data) => {
-    // Implement search functionality here if needed
     console.log(data);
   };
 
   const handleToggleExpand = (index: number) => {
-    setExpandedIndexes((prev) => {
-      if (prev.includes(index)) {
-        return prev.filter((i) => i !== index);
-      } else {
-        return [...prev, index];
-      }
-    });
+    setExpandedIndexes((prev) =>
+      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
+    );
   };
+
+  const isRepInTopReps = (rep: Representative) => 
+    topReps.some(existingRep => existingRep.name === rep.name);
 
   const handleAddToTopReps = (rep: Representative) => {
     if (isRepInTopReps(rep)) {
-      removeTopRep(rep);
+      dispatch(removeTopRep(rep));
     } else {
-      addTopRep(rep);
+      dispatch(addTopRep(rep));
     }
   };
 
@@ -89,6 +90,7 @@ const TopReps = () => {
                   width: "64px",
                   height: "64px",
                   borderRadius: "12px",
+                  objectFit: "cover",
                   opacity: 1,
                 }}
                 className="mr-4"
@@ -97,7 +99,7 @@ const TopReps = () => {
                 <h4 className="text-lg font-bold">{representative.name}</h4>
                 <div className="flex items-center">
                   <Pill
-                    text="Senator"
+                    text={representative.pageType === 'House' ? "Representative" : "Senator"}
                     containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                     textClass="text-[#1026C3] text-sm"
                   />
@@ -112,7 +114,9 @@ const TopReps = () => {
             </p>
             <Button
               text={isRepInTopReps(representative) ? "Remove from Top Representatives" : "Add to Top Representatives"}
-              className={`bg-blue-900 text-white py-2 px-4 rounded-lg mt-4 ${isRepInTopReps(representative) ? "bg-red-500" : "bg-blue-900"}`}
+              className={`bg-blue-900 text-white py-2 px-4 rounded-lg mt-4 ${
+                isRepInTopReps(representative) ? "bg-red-500" : "bg-blue-900"
+              }`}
               onClick={() => handleAddToTopReps(representative)}
             />
           </div>
@@ -122,7 +126,7 @@ const TopReps = () => {
         <div className="bg-white rounded-xl p-4">
           <div className="flex flex-wrap gap-5 mt-8">
             {topReps.length > 0 ? (
-              topReps.map((rep, index) => (
+              topReps.map((rep: Representative, index: number) => (
                 <div key={index} className="flex flex-col p-6 rounded-xl shadow relative max-w-[460px]">
                   <div>
                     <div className="flex items-center mb-4">
@@ -133,6 +137,7 @@ const TopReps = () => {
                           width: "64px",
                           height: "64px",
                           borderRadius: "12px",
+                          objectFit: "cover",
                           opacity: 1,
                         }}
                         className="mr-4"
@@ -141,7 +146,7 @@ const TopReps = () => {
                         <h4 className="text-lg font-bold">{rep.name}</h4>
                         <div className="flex items-center">
                           <Pill
-                            text="Senator"
+                            text={rep.pageType === 'House' ? "Representative" : "Senator"}
                             containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />

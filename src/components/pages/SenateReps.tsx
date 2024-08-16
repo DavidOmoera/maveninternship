@@ -19,11 +19,14 @@ import sen9 from "assets/sen9.png";
 import sen10 from "assets/sen10.png";
 import sen11 from "assets/sen11.png";
 import sen12 from "assets/sen12.png";
-import { useNavigate } from "react-router-dom";
+
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
-import { useTopReps } from 'Context/TopRepsContext.tsx';
-import { Representative } from 'constants/Representatives.ts';
+
+import { Representative } from 'types/common.ts';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/slices/index.ts'; 
+import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice';
 
 const representatives = [
   {
@@ -120,8 +123,8 @@ type TActivitySearchForm = Partial<{
 
 export function SenateReps() {
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
-  const { addTopRep, removeTopRep, isRepInTopReps } = useTopReps(); // Use isRepInTopReps here
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const topReps = useSelector((state: RootState) => state.topReps.topReps);
 
   const handleToggleExpand = (index: number) => {
     setExpandedIndexes((prev) => {
@@ -134,12 +137,17 @@ export function SenateReps() {
   };
 
   const handleAddToTopReps = (rep: Representative) => {
-    if (isRepInTopReps(rep)) {
-      removeTopRep(rep);
+    const updatedRep: Representative = { ...rep, pageType: 'Senate' }; 
+    if (isRepInTopReps(updatedRep)) {
+      dispatch(removeTopRep(updatedRep));
     } else {
-      addTopRep(rep);
+      dispatch(addTopRep(updatedRep));
     }
   };
+  
+
+  const isRepInTopReps = (rep: Representative) => 
+    topReps.some(existingRep => existingRep.name === rep.name);
 
   const {
     control,
@@ -194,6 +202,7 @@ export function SenateReps() {
                           height: "64px",
                           gap: "0px",
                           borderRadius: "12px",
+                          objectFit: "cover",
                           opacity: 1,
                         }}
                         className="mr-4"
