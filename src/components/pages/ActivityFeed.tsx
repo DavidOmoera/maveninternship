@@ -26,6 +26,16 @@ const PERIOD_OPTIONS = [
   { id: 1, label: "Last 7 days", value: "7" },
 ];
 
+function isActivityXDaysAgo(noOfDays: string, daysAgo: number) {
+  return Number(noOfDays ?? 0) > daysAgo;
+}
+
+function isActivityType(activityType: string, selectedActivityType: string) {
+  return selectedActivityType === "All"
+    ? true
+    : activityType === selectedActivityType;
+}
+
 type TActivitySearchForm = Partial<{
   activity: string;
   searchValue: string;
@@ -51,20 +61,10 @@ export function ActivityFeed() {
       const activityDate = new Date(Number(activity.timestamp) * 1000);
       const daysAgo = now.diff(activityDate, "day");
 
-      let isFilteredActivity = "";
-
-      if (selectedActivityType) {
-        isFilteredActivity +=
-          selectedActivityType === "All"
-            ? "true && "
-            : "activity.type === selectedActivityType && ";
-      }
-
-      if (noOfDays) {
-        isFilteredActivity += "Number(noOfDays) > daysAgo && ";
-      }
-
-      return isFilteredActivity ? eval(isFilteredActivity + "true") : true;
+      return (
+        isActivityXDaysAgo(noOfDays as string, daysAgo) &&
+        isActivityType(activity.type, selectedActivityType as string)
+      );
     });
   }, [noOfDays, selectedActivityType]);
 
