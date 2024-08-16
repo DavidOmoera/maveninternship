@@ -23,6 +23,11 @@ import sen12 from "assets/sen12.png";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
+import { Representative } from 'types/common.ts';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/slices/index.ts'; 
+import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice';
+
 const representatives = [
   {
     image: sen1,
@@ -118,6 +123,8 @@ type TActivitySearchForm = Partial<{
 
 export function SenateReps() {
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
+  const dispatch = useDispatch();
+  const topReps = useSelector((state: RootState) => state.topReps.topReps);
 
   const handleToggleExpand = (index: number) => {
     setExpandedIndexes((prev) => {
@@ -128,6 +135,19 @@ export function SenateReps() {
       }
     });
   };
+
+  const handleAddToTopReps = (rep: Representative) => {
+    const updatedRep: Representative = { ...rep, pageType: 'Senate' }; 
+    if (isRepInTopReps(updatedRep)) {
+      dispatch(removeTopRep(updatedRep));
+    } else {
+      dispatch(addTopRep(updatedRep));
+    }
+  };
+  
+
+  const isRepInTopReps = (rep: Representative) => 
+    topReps.some(existingRep => existingRep.name === rep.name);
 
   const {
     control,
@@ -182,6 +202,7 @@ export function SenateReps() {
                           height: "64px",
                           gap: "0px",
                           borderRadius: "12px",
+                          objectFit: "cover",
                           opacity: 1,
                         }}
                         className="mr-4"
@@ -221,6 +242,7 @@ export function SenateReps() {
                     href="#"
                     className="flex items-center text-primary absolute bottom-4 right-4"
                     style={{ color: "#0C0853" }}
+                    onClick={() => handleAddToTopReps(rep)}
                   >
                     <img
                       src={bookmark}
@@ -240,7 +262,7 @@ export function SenateReps() {
                         textAlign: "left",
                       }}
                     >
-                      Add to Top Representatives
+                      {isRepInTopReps(rep) ? "Remove from Top Representatives" : "Add to Top Representatives"}
                     </span>
                   </a>
                 </div>
