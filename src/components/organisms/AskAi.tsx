@@ -25,11 +25,11 @@ export function ASK_AI() {
 
   return (
     <div className="w-full">
-      <div className="bg-white rounded-lg flex flex-col relative w-full">
+      <div className="bg-red-600 rounded-lg flex flex-col relative w-full">
         {/** Chat Header */}
         <div className="w-full row justify-between items-center mb-9">
           <div className="row items-center gap-4">
-            <div className="w-10 h-10 bg-accent100 rounded-full row items-center justify-center">
+            <div className="w-10 h-10 rounded-full row items-center justify-center bg-red-900">
               <img
                 src={coterieBot}
                 alt="Coterie Bot"
@@ -120,7 +120,7 @@ export function ASK_AI() {
           ))}
         </div>
         <div className="w-full mt-4">
-          <div className="flex items-center rounded-full p-2 h-12 w-[742px] bg-[#F5F6FB] gap-3">
+          <div className="flex items-center rounded-full p-2 h-12 max-w-[742px] bg-[#F5F6FB] gap-3">
             <input
               type="text"
               placeholder="Message Coterie"

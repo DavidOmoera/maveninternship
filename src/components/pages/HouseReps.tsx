@@ -23,6 +23,11 @@ import rep12 from "assets/rep12.png";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
+import { Representative } from 'types/common.ts';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/slices/index.ts'; 
+import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice';
+
 const representatives = [
   {
     image: rep1,
@@ -118,6 +123,8 @@ type TActivitySearchForm = Partial<{
 
 export function HouseReps() {
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
+  const dispatch = useDispatch();
+  const topReps = useSelector((state: RootState) => state.topReps.topReps);
 
   const handleToggleExpand = (index: number) => {
     setExpandedIndexes((prev) => {
@@ -128,6 +135,19 @@ export function HouseReps() {
       }
     });
   };
+
+  const handleAddToTopReps = (rep: Representative) => {
+    const updatedRep: Representative = { ...rep, pageType: 'House' }; 
+    if (isRepInTopReps(updatedRep)) {
+      dispatch(removeTopRep(updatedRep));
+    } else {
+      dispatch(addTopRep(updatedRep));
+    }
+  };
+  
+
+  const isRepInTopReps = (rep: Representative) => 
+    topReps.some(existingRep => existingRep.name === rep.name);
 
   const {
     control,
@@ -177,22 +197,25 @@ export function HouseReps() {
                       <img
                         src={rep.image}
                         alt="Representative"
-                        className="mr-4 rounded-tl-xl"
                         style={{
                           width: "64px",
                           height: "64px",
+                          gap: "0px",
                           borderRadius: "12px",
+                          objectFit: "cover",
+                          opacity: 1,
                         }}
+                        className="mr-4"
                       />
                       <div>
-                        <h4 className="text-lg font-bold mb-1">{rep.name}</h4>
-                        <div className="row items-center flex-wrap">
+                        <h4 className="text-lg font-bold">{rep.name}</h4>
+                        <div className="flex items-center">
                           <Pill
-                            text="Senator"
-                            containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1 mb-1 sm:mb-0"
+                            text="Representative"
+                            containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />
-                          <span className="text-[#1026C3] text-sm sm:ml-2">
+                          <span style={{ color: "#1026C3" }}>
                             • District {rep.district}, Texas
                           </span>
                         </div>
@@ -219,14 +242,27 @@ export function HouseReps() {
                     href="#"
                     className="flex items-center text-primary absolute bottom-4 right-4"
                     style={{ color: "#0C0853" }}
+                    onClick={() => handleAddToTopReps(rep)}
                   >
                     <img
                       src={bookmark}
                       alt="Bookmark Icon"
-                      className="mr-2 w-6 h-6"
+                      style={{
+                        marginRight: "0.5rem",
+                        width: "24px",
+                        height: "24px",
+                      }}
                     />
-                    <span className="font-mulish text-sm font-semibold">
-                      Add to Top Representatives
+                    <span
+                      style={{
+                        fontFamily: "Mulish",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        lineHeight: "17.57px",
+                        textAlign: "left",
+                      }}
+                    >
+                      {isRepInTopReps(rep) ? "Remove from Top Representatives" : "Add to Top Representatives"}
                     </span>
                   </a>
                 </div>

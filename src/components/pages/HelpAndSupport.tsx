@@ -4,18 +4,21 @@ import { ControlledInput } from "components/organisms/ControlledInput";
 import { ControlledSelect } from "components/organisms/ControlledSelect";
 import { PageContainer } from "components/templates/PageContainer";
 import { helpAndSupportSchema } from "constants/schemas";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Envelope } from "assets/Envelope";
 import { Phone } from "assets/Phone";
 import { Social } from "assets/Social";
 import { LinkedIn } from "assets/LinkedIn";
 import { ISSUES_OPTIONS } from "constants/common";
+import { Dialog } from "@mui/material";
+import successCheck from "assets/success_check.svg";
+import { ArrowRight } from "assets/ArrowRight";
 
 const CONTACT_DETAILS = [
   {
     Icon: <Envelope color="#FFC700" />,
-    text: "jasminecrockett@uscongress.com",
+    text: "help@coterieai.com",
   },
   {
     Icon: <Phone color="#FFC700" />,
@@ -41,6 +44,8 @@ type THelpAndSupportForm = {
 };
 
 export function HelpAndSupport() {
+  const [showFeedbackSuccess, setShowFeedbackSuccess] =
+    useState<boolean>(false);
   const {
     control,
     formState: { errors, isDirty, isSubmitting, isValid },
@@ -57,13 +62,21 @@ export function HelpAndSupport() {
   const onSubmitMessage: SubmitHandler<THelpAndSupportForm> = (
     formData: THelpAndSupportForm
   ) => {
-    console.log("help and support data", formData);
+    if (formData && isValid) onOpenFeedbackSuccess();
   };
+
+  function onOpenFeedbackSuccess() {
+    setShowFeedbackSuccess(true);
+  }
+
+  function onCloseFeedbackSuccess() {
+    setShowFeedbackSuccess(false);
+  }
 
   return (
     <PageContainer title="Help & Support">
-      <div className="row justify-between bg-white h-screen mx-9 mt-6 rounded-xl p-16">
-        <section className="col md:basis-[100%] md:max-w-[670px]">
+      <div className="row justify-between bg-white mx-9 mt-6 rounded-xl p-9 lg:py-10 lg:px-16 xl:py-20 xl:px-32 gap-32">
+        <section className="col md:basis-[52%] md:max-w-[670px]">
           <article className="col gap-1">
             <h1 className="text-black font-bold text-4xl">Get in Touch</h1>
             <p className="text-neutral500 text-lg">
@@ -138,7 +151,46 @@ export function HelpAndSupport() {
             className="mt-6"
           />
         </section>
+        <div className="hidden md:flex md:flex-col md:justify-start md:basis-[37%] max-w-[480px]">
+          <div className="bg-accent800 p-9 rounded-2xl gap-6">
+            <h1 className="font-bold text-4xl text-white">Contact Us Online</h1>
+            <div className="col gap-5 mt-6">
+              {CONTACT_DETAILS.map((contact, index) => (
+                <div
+                  key={contact.text + index}
+                  className="row gap-2 items-center"
+                >
+                  {contact.Icon}
+                  <p className="text-white text-lg">{contact.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
+      <Dialog
+        open={showFeedbackSuccess}
+        onClose={onCloseFeedbackSuccess}
+        sx={{ borderRadius: "24px" }}
+      >
+        <div className="col items-center gap-6 p-16">
+          <img src={successCheck} className="w-36 h-36" />
+          <article className="col gap-3 items-center">
+            <h2 className="text-neutral950 text-center">
+              Message Sent Successfully
+            </h2>
+            <p className="text-neutral500 text-center">
+              Your message has been sent. A member of our team will be reaching
+              out to you momentarily.
+            </p>
+          </article>
+          <Button
+            text="Done"
+            onClick={onCloseFeedbackSuccess}
+            rightIcon={<ArrowRight />}
+          />
+        </div>
+      </Dialog>
     </PageContainer>
   );
 }

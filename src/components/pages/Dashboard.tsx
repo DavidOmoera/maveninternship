@@ -17,9 +17,6 @@ import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
 import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "components/atoms/Button";
-import { DashboardExplore } from "components/atoms/DashboardExplore";
-import coterieBot from "assets/coterie_bot.svg";
-import bills from "assets/bills.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import edited from "assets/edited.svg";
 import closed from "assets/closed.svg";
@@ -27,6 +24,7 @@ import done from "assets/done.svg";
 import { Pill } from "components/molecules/Pill";
 
 import {
+  BILL_STATUSES,
   BILL_TYPES,
   BILL_YEARS,
   topRepresentatives,
@@ -42,6 +40,26 @@ import { Routes } from "types/routes";
 import { Bill } from "components/organisms/Bill";
 import { PageContainer } from "components/templates/PageContainer";
 import { searchObjects } from "utils/helpers";
+
+function isBillStatus(billStatus: string, selectedBillStatus: string) {
+  return selectedBillStatus ? billStatus === selectedBillStatus : true;
+}
+
+function isBillType(billType: string, selectedBillType: string) {
+  return !selectedBillType
+    ? true
+    : selectedBillType === "All"
+    ? true
+    : billType === selectedBillType;
+}
+
+function isBillChamber(billChamber: string, selectedChamber: string) {
+  return selectedChamber ? billChamber === selectedChamber : true;
+}
+
+function isBillYear(billYear: string, selectedYear: string) {
+  return selectedYear ? billYear === selectedYear : true;
+}
 
 const stages = [
   "Filed",
@@ -72,7 +90,6 @@ export const Dashboard: React.FC = () => {
   const [areUpdatesVisible, setAreUpdatesVisible] = useState(false);
   const [selectedStages, setSelectedStages] = useState<string[]>([]);
   const [search, setSearch] = useState("");
-  const handleOpenBillStatusDialog = () => setOpenBillStatusDialog(true);
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -81,65 +98,63 @@ export const Dashboard: React.FC = () => {
     resolver: yupResolver(billSearchSchema),
   });
 
+  const { control: watchedBillsControl, watch: watchWatchedBills } =
+    useForm<TBillSearchForm>({
+      resolver: yupResolver(billSearchSchema),
+    });
+
   const selectedBillStatus = watch("billStatus");
   const selectedBillType = watch("billType");
   const selectedChamber = watch("chamber");
   const selectedYear = watch("year");
   const searchValue = watch("searchValue");
 
-  const searchedBills: typeof watchedBills = useMemo(
-    () =>
-      searchObjects(watchedBills, searchValue, Object.keys(watchedBills[0])),
-    [searchValue]
-  );
+  const selectedWatchedBillStatus = watchWatchedBills("billStatus");
+  const selectedWatchedBillType = watchWatchedBills("billType");
+  const selectedWatchedBillChamber = watchWatchedBills("chamber");
+  const selectedWatchedBillYear = watchWatchedBills("year");
+  const watchedBillSearchValue = watchWatchedBills("searchValue");
 
   const filteredBills = useMemo(() => {
-    return searchedBills.filter((bill) => {
-      let isFilteredBill = "";
+    return watchedBills.filter(
+      (bill) =>
+        isBillStatus(bill.status, selectedBillStatus ?? "") &&
+        isBillType(bill.billType, selectedBillType ?? "") &&
+        isBillChamber(bill.chamber, selectedChamber ?? "") &&
+        isBillYear(bill.year, selectedYear ?? "")
+    );
+  }, [selectedBillStatus, selectedBillType, selectedChamber, selectedYear]);
 
-      if (selectedBillStatus) {
-        isFilteredBill += "bill.status === selectedBillStatus && ";
-      }
+  const searchedBills = useMemo(
+    () =>
+      searchObjects(filteredBills, searchValue, Object.keys(watchedBills[0])),
+    [filteredBills, searchValue]
+  );
 
-      if (selectedBillType) {
-        isFilteredBill +=
-          selectedBillType === "All"
-            ? "true && "
-            : "bill.billType === selectedBillType && ";
-      }
-
-      if (selectedChamber) {
-        isFilteredBill += "bill.chamber === selectedChamber && ";
-      }
-
-      if (selectedYear) {
-        isFilteredBill += "bill.year === selectedYear && ";
-      }
-
-      return isFilteredBill ? eval(isFilteredBill + "true") : true;
-    });
+  const filteredWatchedBills = useMemo(() => {
+    return watchedBills.filter(
+      (bill) =>
+        isBillStatus(bill.status, selectedWatchedBillStatus ?? "") &&
+        isBillType(bill.billType, selectedWatchedBillType ?? "") &&
+        isBillChamber(bill.chamber, selectedWatchedBillChamber ?? "") &&
+        isBillYear(bill.year, selectedWatchedBillYear ?? "")
+    );
   }, [
-    searchedBills,
-    selectedBillStatus,
-    selectedBillType,
-    selectedChamber,
-    selectedYear,
+    selectedWatchedBillChamber,
+    selectedWatchedBillStatus,
+    selectedWatchedBillType,
+    selectedWatchedBillYear,
   ]);
 
-  const sectionsToExplore = [
-    {
-      title: "Ask Coterie AI",
-      icon: coterieBot,
-      description: "Coterie AI is ready to answer any questions you may have",
-      onClick: () => {},
-    },
-    {
-      title: "Explore Bills",
-      icon: bills,
-      description: "Feeling explorative? Look through all available bills",
-      onClick: () => {},
-    },
-  ];
+  const searchedWatchedBills = useMemo(
+    () =>
+      searchObjects(
+        filteredWatchedBills,
+        watchedBillSearchValue,
+        Object.keys(watchedBills[0])
+      ),
+    [filteredWatchedBills, watchedBillSearchValue]
+  );
 
   const updates = [
     {
@@ -227,69 +242,84 @@ export const Dashboard: React.FC = () => {
       <div className="flex-1 bg-gray-100 px-9 flex">
         <div className="flex-1 basis-[74%] pr-4">
           {/* Search and Filter Section */}
-          <div className="p-9 bg-white rounded-xl">
-            <h3 className="text-primary font-extrabold text-xl pb-6">
-              Search for Bills
-            </h3>
-            <div className="flex flex-col lg:flex-row w-full gap-3 items-center">
-              <ControlledInput
-                required
-                control={control}
-                name="searchValue"
-                placeholder="Search by keyword, bill # or legislator name"
-                leftIcon={<SearchIcon />}
-              />
-              <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
-              <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
-                <ControlledSelect
+          <section className="p-9 bg-white rounded-xl">
+            <div>
+              <h3 className="text-primary font-extrabold text-xl pb-6">
+                All Bills
+              </h3>
+              <div className="flex flex-col lg:flex-row w-full gap-3 items-center">
+                <ControlledInput
+                  required
                   control={control}
-                  name="chamber"
-                  label="Chamber"
-                  defaultValue=""
-                  options={[
-                    { id: 1, value: "House", label: "House" },
-                    { id: 2, value: "Senate", label: "Senate" },
-                  ]}
+                  name="searchValue"
+                  placeholder="Search by keyword, bill # or legislator name"
+                  leftIcon={<SearchIcon />}
                 />
-                <ControlledSelect
-                  control={control}
-                  name="billType"
-                  label="Bill Type"
-                  defaultValue=""
-                  options={BILL_TYPES}
-                />
-                <ControlledSelect
-                  control={control}
-                  name="billStatus"
-                  label="Bill Status"
-                  options={[]}
-                  defaultValue=""
-                  onClick={handleOpenBillStatusDialog}
-                />
-                <ControlledSelect
-                  control={control}
-                  name="year"
-                  label="Year"
-                  defaultValue=""
-                  options={BILL_YEARS}
-                />
+                <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
+                <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
+                  <ControlledSelect
+                    control={control}
+                    name="chamber"
+                    label="Chamber"
+                    defaultValue=""
+                    options={[
+                      { id: 1, value: "House", label: "House" },
+                      { id: 2, value: "Senate", label: "Senate" },
+                    ]}
+                  />
+                  <ControlledSelect
+                    control={control}
+                    name="billType"
+                    label="Bill Type"
+                    defaultValue=""
+                    options={BILL_TYPES}
+                  />
+                  <ControlledSelect
+                    control={control}
+                    name="billStatus"
+                    label="Bill Status"
+                    options={BILL_STATUSES}
+                    defaultValue=""
+                  />
+                  <ControlledSelect
+                    control={control}
+                    name="year"
+                    label="Year"
+                    defaultValue=""
+                    options={BILL_YEARS}
+                  />
+                </div>
               </div>
+              <Button
+                text="Search Bill"
+                className="mt-4"
+                onClick={handleSubmit(onSearchBill)}
+              />
             </div>
-            <Button
-              text="Search Bill"
-              className="mt-4"
-              onClick={handleSubmit(onSearchBill)}
-            />
-          </div>
+            {/** All bills */}
+            <div className="row gap-5 flex-wrap mt-8">
+              {searchedBills.map((watchedBill) => {
+                const bill = watchedBill as (typeof watchedBills)[0];
 
-          {/* Bills */}
+                return (
+                  <Bill
+                    key={watchedBill.state + watchedBill.description}
+                    onClick={onClickBill}
+                    {...bill}
+                  />
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Watched Bills */}
           <section className="w-full bg-white p-9 rounded-xl my-6">
             {/** Bills Overview */}
             <div className="row justify-between items-center">
               <div className="row gap-3">
                 <h4 className="font-extrabold">My Watched Bills</h4>
                 <div className="py-1 px-2 rounded-xl border border-primary">
-                  <h6 className="text-primary">{filteredBills.length}</h6>
+                  <h6 className="text-primary">{searchedBills.length}</h6>
                 </div>
               </div>
               <button
@@ -301,11 +331,11 @@ export const Dashboard: React.FC = () => {
               </button>
             </div>
 
-            {/** Search Bills */}
+            {/** Search Watched Bills */}
             <div className="flex flex-col lg:flex-row w-full gap-3 items-center my-4">
               <ControlledInput
                 required
-                control={control}
+                control={watchedBillsControl}
                 name="searchValue"
                 placeholder="Search by keyword, bill # or legislator name"
                 leftIcon={<SearchIcon />}
@@ -313,7 +343,7 @@ export const Dashboard: React.FC = () => {
               <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
               <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
                 <ControlledSelect
-                  control={control}
+                  control={watchedBillsControl}
                   name="chamber"
                   label="Chamber"
                   defaultValue=""
@@ -323,22 +353,21 @@ export const Dashboard: React.FC = () => {
                   ]}
                 />
                 <ControlledSelect
-                  control={control}
+                  control={watchedBillsControl}
                   name="billType"
                   label="Bill Type"
                   defaultValue=""
                   options={BILL_TYPES}
                 />
                 <ControlledSelect
-                  control={control}
+                  control={watchedBillsControl}
                   name="billStatus"
                   label="Bill Status"
-                  options={[]}
+                  options={BILL_STATUSES}
                   defaultValue=""
-                  onClick={handleOpenBillStatusDialog}
                 />
                 <ControlledSelect
-                  control={control}
+                  control={watchedBillsControl}
                   name="year"
                   label="Year"
                   defaultValue=""
@@ -360,13 +389,17 @@ export const Dashboard: React.FC = () => {
 
             {/** All bills */}
             <div className="row gap-5 flex-wrap mt-8">
-              {filteredBills.map((watchedBill) => (
-                <Bill
-                  key={watchedBill.state + watchedBill.description}
-                  onClick={onClickBill}
-                  {...watchedBill}
-                />
-              ))}
+              {searchedWatchedBills.map((watchedBill) => {
+                const bill = watchedBill as (typeof watchedBills)[0];
+
+                return (
+                  <Bill
+                    key={watchedBill.state + watchedBill.description}
+                    onClick={onClickBill}
+                    {...bill}
+                  />
+                );
+              })}
             </div>
           </section>
         </div>

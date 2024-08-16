@@ -34,7 +34,7 @@ export function Tab({
   return (
     <div
       role="tab"
-      className="row px-3 pb-2 gap-2 items-center cursor-pointer"
+      className="flex flex-col lg:flex-row px-3 pb-2 gap-2 items-center cursor-pointer"
       style={{ borderBottomWidth: isActive ? 3 : 0, borderBottomColor: color }}
       onClick={() => onClickTab(value)}
     >

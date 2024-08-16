@@ -10,7 +10,7 @@ import successCheck from "assets/success_check.svg";
 import orgLogo from "assets/org_logo.png";
 import visaLogo from "assets/visa_logo.svg";
 import { Pill } from "components/molecules/Pill";
-import { colors, ISSUES_OPTIONS } from "constants/common";
+import { ISSUES_OPTIONS } from "constants/common";
 import { Button } from "components/atoms/Button";
 import {
   ControlledSelect,
@@ -39,11 +39,6 @@ import { updateOrganizationData } from "store/slices/organization";
 import { updateUserData } from "store/slices/auth";
 import { Routes } from "types/routes";
 import { useNavigate } from "react-router-dom";
-
-const CONTACT_DETAILS = [
-  { icon: envelope, text: "sethrogan@gmail.com" },
-  { icon: phone, text: "872-314-8974" },
-];
 
 const DURATION_OPTIONS = [
   { id: 1, label: "Less than a year", value: "less_than_year" },
@@ -153,6 +148,14 @@ export function Profile() {
       organizationData?.name,
       organizationData?.size,
     ]
+  );
+
+  const contactDetails = useMemo(
+    () => [
+      { icon: envelope, text: userData?.email ?? "sethrogan@gmail.com" },
+      { icon: phone, text: userData?.phone ?? "872-314-8974" },
+    ],
+    [userData?.email, userData?.phone]
   );
 
   const orgContacts = useMemo(
@@ -370,7 +373,7 @@ export function Profile() {
 
   return (
     <PageContainer title="My Profile">
-      <div className="grid grid-cols-2 gap-6 mx-9">
+      <div className="col xl:grid grid-cols-2 gap-6 mx-9">
         <section className="col gap-5 p-9 rounded-xl bg-white">
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4 flex-wrap">
@@ -392,7 +395,11 @@ export function Profile() {
           </div>
           <div className="col p-6 gap-4 items-start bg-neutral50">
             <div className="row justify-between w-full flex-wrap">
-              <h2 className="text-neutral950">Seth Rogan</h2>
+              <h2 className="text-neutral950">
+                {`${userData?.firstName ?? "Seth"} ${
+                  userData?.lastName ?? "Rogan"
+                }`}
+              </h2>
               <div
                 className="row gap-1 items-center cursor-pointer "
                 onClick={onClickEditProfile}
@@ -401,9 +408,12 @@ export function Profile() {
                 <p className="text-primary font-medium">Edit Details</p>
               </div>
             </div>
-             <div className="col gap-2">
-              {CONTACT_DETAILS.map((contact) => (
-                <div className="row gap-2 flex-wrap items-center" key={contact.text}>
+            <div className="col gap-2">
+              {contactDetails.map((contact) => (
+                <div
+                  className="row gap-2 flex-wrap items-center"
+                  key={contact.text}
+                >
                   <img src={contact.icon} className="w-4 h-4" />
                   <p>{contact.text}</p>
                 </div>
@@ -869,7 +879,7 @@ export function Profile() {
                   (ManagePaymentMethodErrors?.card_number?.message as string) ??
                   ""
                 }
-                className="pl-16" 
+                className="pl-16"
               />
             </div>
             <div className="row gap-6">

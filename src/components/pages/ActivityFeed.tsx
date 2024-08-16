@@ -7,19 +7,34 @@ import SearchIcon from "@mui/icons-material/Search";
 import { ACTIVITIES, colors } from "constants/common";
 import { PageContainer } from "components/templates/PageContainer";
 import { Pill } from "components/molecules/Pill";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { useMemo } from "react";
+import { searchObjects } from "utils/helpers";
+dayjs.extend(relativeTime);
 
 const ACTIVITY_OPTIONS = [
-  { id: 1, label: "All Activity", value: "all" },
-  { id: 1, label: "Added a bill", value: "add_bill" },
-  { id: 1, label: "Removed a bill", value: "removed_bill" },
-  { id: 1, label: "Edited a bill", value: "edited_bill" },
+  { id: 1, label: "All Activity", value: "All" },
+  { id: 1, label: "Added a bill", value: "Added" },
+  { id: 1, label: "Removed a bill", value: "Removed" },
+  { id: 1, label: "Edited a bill", value: "Edited" },
 ];
 
 const PERIOD_OPTIONS = [
-  { id: 1, label: "Last 180 days", value: "180_days" },
-  { id: 1, label: "Last 30 days", value: "30_days" },
-  { id: 1, label: "Last 7 days", value: "7_days" },
+  { id: 1, label: "Last 180 days", value: "180" },
+  { id: 1, label: "Last 30 days", value: "30" },
+  { id: 1, label: "Last 7 days", value: "7" },
 ];
+
+function isActivityXDaysAgo(noOfDays: string, daysAgo: number) {
+  return Number(noOfDays ?? 0) > daysAgo;
+}
+
+function isActivityType(activityType: string, selectedActivityType: string) {
+  return selectedActivityType === "All"
+    ? true
+    : activityType === selectedActivityType;
+}
 
 type TActivitySearchForm = Partial<{
   activity: string;
@@ -31,9 +46,33 @@ export function ActivityFeed() {
   const {
     control: activityControl,
     formState: { errors: activityFormErrors },
+    watch,
   } = useForm<TActivitySearchForm>({
     resolver: yupResolver(activitySearchSchema),
   });
+
+  const selectedActivityType = watch("activity");
+  const searchValue = watch("searchValue");
+  const noOfDays = watch("noOfDays");
+
+  const filteredActivities = useMemo(() => {
+    return ACTIVITIES.filter((activity) => {
+      const now = dayjs();
+      const activityDate = new Date(Number(activity.timestamp) * 1000);
+      const daysAgo = now.diff(activityDate, "day");
+
+      return (
+        isActivityXDaysAgo(noOfDays as string, daysAgo) &&
+        isActivityType(activity.type, selectedActivityType as string)
+      );
+    });
+  }, [noOfDays, selectedActivityType]);
+
+  const searchedActivities = useMemo(
+    () =>
+      searchObjects(filteredActivities, searchValue, ["type", "label", "link"]),
+    [filteredActivities, searchValue]
+  );
 
   return (
     <PageContainer title="Activity Feed" className="w-full bg-gray-100">
@@ -44,14 +83,14 @@ export function ActivityFeed() {
             <ControlledSelect
               name="noOfDays"
               control={activityControl}
-              defaultValue="180_days"
+              defaultValue="180"
               options={PERIOD_OPTIONS}
               helperText={activityFormErrors.noOfDays?.message as string}
             />
             <ControlledSelect
               name="activity"
               control={activityControl}
-              defaultValue="all"
+              defaultValue="All"
               options={ACTIVITY_OPTIONS}
               helperText={activityFormErrors.activity?.message as string}
             />
@@ -69,37 +108,47 @@ export function ActivityFeed() {
 
         {/** Activity feed */}
         <div className="col gap-8">
-          {ACTIVITIES.map(
-            ({ time, icon, type, label, iconBackgroundColor, link }, index) => (
-              <div key={index} className="flex flex-col gap-2">
-                <div
-                  className="row items-center gap-2 p-2 rounded-lg bg-blue-50 min-h-16
+          {searchedActivities.map(
+            (
+              { timestamp, icon, type, label, iconBackgroundColor, link },
+              index
+            ) => {
+              const date = new Date(Number(timestamp) * 1000);
+              const relTime = dayjs(date).fromNow(true);
+
+              return (
+                <div key={index} className="flex flex-col gap-2">
+                  <div
+                    className="row items-center gap-2 p-2 rounded-lg bg-blue-50 min-h-16
                 "
-                >
-                  <div className="w-44">
-                    <p className="text-gray-500 text-sm font-medium">{time}</p>
-                  </div>
-                  <div className="row items-center gap-2 flex-wrap">
-                    <div
-                      className="p-1 rounded-full"
-                      style={{ backgroundColor: iconBackgroundColor }}
-                    >
-                      <img src={icon} alt={type} className="w-4 h-4" />
+                  >
+                    <div className="w-44">
+                      <p className="text-gray-500 text-sm font-medium">
+                        {relTime}
+                      </p>
                     </div>
-                    <span className=" text-gray-700 text-base font-semibold min-w-fit">
-                      You <strong className="text-neutral-950">{type}</strong>{" "}
-                      {label}
-                    </span>
-                    {link && (
-                      <Pill
-                        text={link}
-                        containerClassName="bg-blue-100 px-3 rounded-full"
-                      />
-                    )}
+                    <div className="row items-center gap-2 flex-wrap">
+                      <div
+                        className="p-1 rounded-full"
+                        style={{ backgroundColor: iconBackgroundColor }}
+                      >
+                        <img src={icon} alt={type} className="w-4 h-4" />
+                      </div>
+                      <span className=" text-gray-700 text-base font-semibold min-w-fit">
+                        You <strong className="text-neutral-950">{type}</strong>{" "}
+                        {label}
+                      </span>
+                      {link && (
+                        <Pill
+                          text={link}
+                          containerClassName="bg-blue-100 px-3 rounded-full"
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
+              );
+            }
           )}
         </div>
       </div>

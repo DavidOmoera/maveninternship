@@ -397,6 +397,21 @@ export const BILL_TYPES = [
   { id: 1, value: "Passed", label: "Passed" },
 ];
 
+export const BILL_STATUSES = [
+  { id: 1, value: "Filed", label: "Filed" },
+  { id: 2, value: "Enrolled", label: "Enrolled" },
+  { id: 3, value: "Reading-1", label: "Reading-1" },
+  { id: 4, value: "Passed", label: "Passed" },
+  { id: 5, value: "Introduced", label: "Introduced" },
+  { id: 6, value: "Reading-2", label: "Reading-2" },
+  { id: 7, value: "Referred to committee", label: "Referred to committee" },
+  { id: 8, value: "Amendment-failure", label: "Amendment-failure" },
+  { id: 9, value: "Executive-receipt", label: "Executive-receipt" },
+  { id: 10, value: "Amendment-introduction", label: "Amendment-introduction" },
+  { id: 11, value: "Amendment-passage", label: "Amendment-passage" },
+  { id: 12, value: "Amendment-withdrawal", label: "Amendment-withdrawal" },
+];
+
 export const BILL_YEARS = [
   { id: 1, value: "2016", label: "2016" },
   { id: 1, value: "2017", label: "2017" },
@@ -598,6 +613,7 @@ export const TOTAL_VOTERS_COUNT =
 export const ACTIVITIES = [
   {
     time: "20 mins ago",
+    timestamp: "1723494528",
     type: "Removed",
     label: "a bill",
     link: "Secure the Border Act of 2023",
@@ -606,6 +622,7 @@ export const ACTIVITIES = [
   },
   {
     time: "4 hrs ago",
+    timestamp: "1723408128",
     type: "Added",
     label: "a bill",
     link: "Secure the Border Act of 2023",
@@ -614,6 +631,7 @@ export const ACTIVITIES = [
   },
   {
     time: "Yesterday, 5:34 pm",
+    timestamp: "1723276800",
     type: "Edited",
     label: "your Profile",
     link: "",
@@ -622,6 +640,7 @@ export const ACTIVITIES = [
   },
   {
     time: "Yesterday, 2:45 pm",
+    timestamp: "1723190400",
     type: "Removed",
     label: "a Legislature",
     link: "Texas",
@@ -630,6 +649,7 @@ export const ACTIVITIES = [
   },
   {
     time: "22/04/2023, 8:22 am",
+    timestamp: "1723104000",
     type: "Added",
     label: "a Legislature",
     link: "Alaska",
@@ -638,6 +658,7 @@ export const ACTIVITIES = [
   },
   {
     time: "21/04/2023, 8:19 am",
+    timestamp: "1723017600",
     type: "Logged in",
     label: "to your account",
     link: "",
@@ -646,6 +667,7 @@ export const ACTIVITIES = [
   },
   {
     time: "20/04/2023, 7:32 am",
+    timestamp: "1722931200",
     type: "Logged out",
     label: "of your account",
     link: "",
@@ -654,6 +676,7 @@ export const ACTIVITIES = [
   },
   {
     time: "4w ago",
+    timestamp: "1722844800",
     type: "Removed",
     label: "a bill",
     link: "Secure the Border Act of 2023",
@@ -662,6 +685,7 @@ export const ACTIVITIES = [
   },
   {
     time: "5w ago",
+    timestamp: "1722758400",
     type: "Added",
     label: "a bill",
     link: "Secure the Border Act of 2023",
@@ -669,23 +693,8 @@ export const ACTIVITIES = [
     icon: archiveadd,
   },
   {
-    time: "6w ago",
-    type: "Edited",
-    label: "your Profile",
-    link: "",
-    iconBackgroundColor: "#E1F8FD",
-    icon: useredit,
-  },
-  {
-    time: "7w ago",
-    type: "Removed",
-    label: "a Legislature",
-    link: "Texas",
-    iconBackgroundColor: "#FFEAF1",
-    icon: minuscirlce,
-  },
-  {
     time: "2 months ago",
+    timestamp: "1720598400",
     type: "Added",
     label: "a Legislature",
     link: "Alaska",
@@ -694,6 +703,7 @@ export const ACTIVITIES = [
   },
   {
     time: "3 months ago",
+    timestamp: "1720339200",
     type: "Logged in",
     label: "to your account",
     link: "",
@@ -701,11 +711,30 @@ export const ACTIVITIES = [
     icon: login,
   },
   {
+    time: "6w ago",
+    timestamp: "1712649600",
+    type: "Edited",
+    label: "your Profile",
+    link: "",
+    iconBackgroundColor: "#E1F8FD",
+    icon: useredit,
+  },
+  {
     time: "4 months ago",
+    timestamp: "1715760000",
     type: "Logged out",
     label: "of your account",
     link: "",
     iconBackgroundColor: "#FFEAF1",
     icon: logout,
+  },
+  {
+    time: "7w ago",
+    timestamp: "1697529600",
+    type: "Removed",
+    label: "a Legislature",
+    link: "Texas",
+    iconBackgroundColor: "#FFEAF1",
+    icon: minuscirlce,
   },
 ];
