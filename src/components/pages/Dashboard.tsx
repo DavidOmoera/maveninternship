@@ -90,7 +90,6 @@ export const Dashboard: React.FC = () => {
   const [areUpdatesVisible, setAreUpdatesVisible] = useState(false);
   const [selectedStages, setSelectedStages] = useState<string[]>([]);
   const [search, setSearch] = useState("");
-  const handleOpenBillStatusDialog = () => setOpenBillStatusDialog(true);
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -99,11 +98,22 @@ export const Dashboard: React.FC = () => {
     resolver: yupResolver(billSearchSchema),
   });
 
+  const { control: watchedBillsControl, watch: watchWatchedBills } =
+    useForm<TBillSearchForm>({
+      resolver: yupResolver(billSearchSchema),
+    });
+
   const selectedBillStatus = watch("billStatus");
   const selectedBillType = watch("billType");
   const selectedChamber = watch("chamber");
   const selectedYear = watch("year");
   const searchValue = watch("searchValue");
+
+  const selectedWatchedBillStatus = watchWatchedBills("billStatus");
+  const selectedWatchedBillType = watchWatchedBills("billType");
+  const selectedWatchedBillChamber = watchWatchedBills("chamber");
+  const selectedWatchedBillYear = watchWatchedBills("year");
+  const watchedBillSearchValue = watchWatchedBills("searchValue");
 
   const filteredBills = useMemo(() => {
     return watchedBills.filter(
@@ -119,6 +129,31 @@ export const Dashboard: React.FC = () => {
     () =>
       searchObjects(filteredBills, searchValue, Object.keys(watchedBills[0])),
     [filteredBills, searchValue]
+  );
+
+  const filteredWatchedBills = useMemo(() => {
+    return watchedBills.filter(
+      (bill) =>
+        isBillStatus(bill.status, selectedWatchedBillStatus ?? "") &&
+        isBillType(bill.billType, selectedWatchedBillType ?? "") &&
+        isBillChamber(bill.chamber, selectedWatchedBillChamber ?? "") &&
+        isBillYear(bill.year, selectedWatchedBillYear ?? "")
+    );
+  }, [
+    selectedWatchedBillChamber,
+    selectedWatchedBillStatus,
+    selectedWatchedBillType,
+    selectedWatchedBillYear,
+  ]);
+
+  const searchedWatchedBills = useMemo(
+    () =>
+      searchObjects(
+        filteredWatchedBills,
+        watchedBillSearchValue,
+        Object.keys(watchedBills[0])
+      ),
+    [filteredWatchedBills, watchedBillSearchValue]
   );
 
   const updates = [
@@ -277,7 +312,7 @@ export const Dashboard: React.FC = () => {
             </div>
           </section>
 
-          {/* Bills */}
+          {/* Watched Bills */}
           <section className="w-full bg-white p-9 rounded-xl my-6">
             {/** Bills Overview */}
             <div className="row justify-between items-center">
@@ -296,11 +331,11 @@ export const Dashboard: React.FC = () => {
               </button>
             </div>
 
-            {/** Search Bills */}
+            {/** Search Watched Bills */}
             <div className="flex flex-col lg:flex-row w-full gap-3 items-center my-4">
               <ControlledInput
                 required
-                control={control}
+                control={watchedBillsControl}
                 name="searchValue"
                 placeholder="Search by keyword, bill # or legislator name"
                 leftIcon={<SearchIcon />}
@@ -308,7 +343,7 @@ export const Dashboard: React.FC = () => {
               <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
               <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
                 <ControlledSelect
-                  control={control}
+                  control={watchedBillsControl}
                   name="chamber"
                   label="Chamber"
                   defaultValue=""
@@ -318,22 +353,21 @@ export const Dashboard: React.FC = () => {
                   ]}
                 />
                 <ControlledSelect
-                  control={control}
+                  control={watchedBillsControl}
                   name="billType"
                   label="Bill Type"
                   defaultValue=""
                   options={BILL_TYPES}
                 />
                 <ControlledSelect
-                  control={control}
+                  control={watchedBillsControl}
                   name="billStatus"
                   label="Bill Status"
-                  options={[]}
+                  options={BILL_STATUSES}
                   defaultValue=""
-                  onClick={handleOpenBillStatusDialog}
                 />
                 <ControlledSelect
-                  control={control}
+                  control={watchedBillsControl}
                   name="year"
                   label="Year"
                   defaultValue=""
@@ -355,7 +389,7 @@ export const Dashboard: React.FC = () => {
 
             {/** All bills */}
             <div className="row gap-5 flex-wrap mt-8">
-              {searchedBills.map((watchedBill) => {
+              {searchedWatchedBills.map((watchedBill) => {
                 const bill = watchedBill as (typeof watchedBills)[0];
 
                 return (
