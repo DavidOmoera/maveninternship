@@ -105,6 +105,7 @@ export function PageContainer({
               />
               {isModalOpen && <Modal onClose={handleCloseModal} />}
             </Tooltip>
+            {isModalOpen && <Modal onClose={handleCloseModal} />}
             <Tooltip title="Notifications" placement="bottom">
               <img
                 src={notification}

@@ -40,6 +40,26 @@ import { Bill } from "components/organisms/Bill";
 import { PageContainer } from "components/templates/PageContainer";
 import { searchObjects } from "utils/helpers";
 
+function isBillStatus(billStatus: string, selectedBillStatus: string) {
+  return selectedBillStatus ? billStatus === selectedBillStatus : true;
+}
+
+function isBillType(billType: string, selectedBillType: string) {
+  return !selectedBillType
+    ? true
+    : selectedBillType === "All"
+    ? true
+    : billType === selectedBillType;
+}
+
+function isBillChamber(billChamber: string, selectedChamber: string) {
+  return selectedChamber ? billChamber === selectedChamber : true;
+}
+
+function isBillYear(billYear: string, selectedYear: string) {
+  return selectedYear ? billYear === selectedYear : true;
+}
+
 const stages = [
   "Filed",
   "Enrolled",
@@ -84,44 +104,21 @@ export const Dashboard: React.FC = () => {
   const selectedYear = watch("year");
   const searchValue = watch("searchValue");
 
-  const searchedBills: typeof watchedBills = useMemo(
-    () =>
-      searchObjects(watchedBills, searchValue, Object.keys(watchedBills[0])),
-    [searchValue]
-  );
-
   const filteredBills = useMemo(() => {
-    return searchedBills.filter((bill) => {
-      let isFilteredBill = "";
+    return watchedBills.filter(
+      (bill) =>
+        isBillStatus(bill.status, selectedBillStatus ?? "") &&
+        isBillType(bill.billType, selectedBillType ?? "") &&
+        isBillChamber(bill.chamber, selectedChamber ?? "") &&
+        isBillYear(bill.year, selectedYear ?? "")
+    );
+  }, [selectedBillStatus, selectedBillType, selectedChamber, selectedYear]);
 
-      if (selectedBillStatus) {
-        isFilteredBill += "bill.status === selectedBillStatus && ";
-      }
-
-      if (selectedBillType) {
-        isFilteredBill +=
-          selectedBillType === "All"
-            ? "true && "
-            : "bill.billType === selectedBillType && ";
-      }
-
-      if (selectedChamber) {
-        isFilteredBill += "bill.chamber === selectedChamber && ";
-      }
-
-      if (selectedYear) {
-        isFilteredBill += "bill.year === selectedYear && ";
-      }
-
-      return isFilteredBill ? eval(isFilteredBill + "true") : true;
-    });
-  }, [
-    searchedBills,
-    selectedBillStatus,
-    selectedBillType,
-    selectedChamber,
-    selectedYear,
-  ]);
+  const searchedBills = useMemo(
+    () =>
+      searchObjects(filteredBills, searchValue, Object.keys(watchedBills[0])),
+    [filteredBills, searchValue]
+  );
 
   const updates = [
     {
@@ -271,7 +268,7 @@ export const Dashboard: React.FC = () => {
               <div className="row gap-3">
                 <h4 className="font-extrabold">My Watched Bills</h4>
                 <div className="py-1 px-2 rounded-xl border border-primary">
-                  <h6 className="text-primary">{filteredBills.length}</h6>
+                  <h6 className="text-primary">{searchedBills.length}</h6>
                 </div>
               </div>
               <button
@@ -342,13 +339,17 @@ export const Dashboard: React.FC = () => {
 
             {/** All bills */}
             <div className="row gap-5 flex-wrap mt-8">
-              {filteredBills.map((watchedBill) => (
-                <Bill
-                  key={watchedBill.state + watchedBill.description}
-                  onClick={onClickBill}
-                  {...watchedBill}
-                />
-              ))}
+              {searchedBills.map((watchedBill) => {
+                const bill = watchedBill as (typeof watchedBills)[0];
+
+                return (
+                  <Bill
+                    key={watchedBill.state + watchedBill.description}
+                    onClick={onClickBill}
+                    {...bill}
+                  />
+                );
+              })}
             </div>
           </section>
         </div>
