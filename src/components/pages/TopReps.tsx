@@ -114,9 +114,9 @@ const TopReps: React.FC = () => {
             </p>
             <Button
               text={isRepInTopReps(representative) ? "Remove from Top Representatives" : "Add to Top Representatives"}
-              className={`bg-blue-900 text-white py-2 px-4 rounded-lg mt-4 ${
+              className={`py-2 px-4 rounded-lg mt-4 ${
                 isRepInTopReps(representative) ? "bg-red-500" : "bg-blue-900"
-              }`}
+              } text-white`}
               onClick={() => handleAddToTopReps(representative)}
             />
           </div>
