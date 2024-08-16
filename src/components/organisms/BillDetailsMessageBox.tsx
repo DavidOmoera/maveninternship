@@ -4,7 +4,7 @@ import coterieBot from "assets/coterie_bot.svg";
 
 export function BillDetailsMessageBox() {
   return (
-    <div className="px-9 pt-9 pb-32 mt-6 bg-accent800 rounded-xl">
+    <div className="px-9 pt-9 pb-32 mt-6 bg-accent800 rounded-xl w-full">
       <div className="row items-center gap-3 mb-3">
         <div className="w-10 h-10 bg-accent100 rounded-full row items-center justify-center">
           <img
@@ -22,7 +22,7 @@ export function BillDetailsMessageBox() {
           alt="User"
           className="w-10 h-10 rounded-full mr-3"
         />
-        <div className="flex items-center rounded-full p-2 h-12 w-[742px] bg-white gap-3">
+        <div className="flex items-center rounded-full p-2 h-12 basis-2/3 bg-white gap-3">
           <input
             type="text"
             placeholder="Message Coterie"

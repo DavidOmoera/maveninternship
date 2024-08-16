@@ -132,14 +132,13 @@ const DetailsOfBill: React.FC = () => {
     <PageContainer title="H.RES.964" className="col h-full">
       {/* Main Content */}
       <div className="flex-1 bg-gray-100 px-9 flex">
-        <div className="w-full flex gap-4">
+        <div className="w-full flex flex-wrap gap-4">
           {/* Bill Details Section */}
-          <div className="flex-1 p-9 bg-white rounded-xl mb-6 basis-1/3">
+          <div className="flex-1 p-9 bg-white rounded-xl mb-6 min-w-[400px]">
             <h2 className="text-neutral950 font-extrabold pb-6">
               Secure the Border Act of 2023
             </h2>
             <p className="text-sm text-neutral950">May 29, 2023</p>
-
             <div className="row items-center gap-3 flex-wrap mt-2">
               {TAGS.map((tag) => (
                 <div key={tag} className="row gap-1 items-center">
@@ -148,14 +147,15 @@ const DetailsOfBill: React.FC = () => {
                 </div>
               ))}
             </div>
-
             <hr className="bg-neutral500 my-6" />
-
             <div>
               <h6 className="underline mb-3">Details</h6>
-              <div className="col gap-2">
+              <div className="col gap-2 ">
                 {DETAILS.map((detail) => (
-                  <div key={detail.key} className="row justify-between w-full">
+                  <div
+                    key={detail.key}
+                    className="row justify-between w-full flex-wrap"
+                  >
                     <p className="text-sm text-neutral500">{detail.key}</p>
                     <h6
                       className={classNames("text-sm text-neutral950", {
@@ -170,10 +170,7 @@ const DetailsOfBill: React.FC = () => {
                 ))}
               </div>
             </div>
-
-            <hr className="bg-neutral500 my-6" />
-
-            {/** Votes Summary */}
+            <hr className="bg-neutral500 my-6" />* Votes Summary
             <div className="bg-gray-50 p-6 rounded-xl">
               <p className="text-5xl font-extrabold">{TOTAL_VOTERS_COUNT}</p>
               <h6 className="text-sm text-neutral400 mt-1">Votes for bill:</h6>
@@ -181,9 +178,9 @@ const DetailsOfBill: React.FC = () => {
                 {VOTES_SUMMARY.map((vote) => (
                   <div
                     key={vote.key}
-                    className="row w-full justify-between items-center"
+                    className="row w-full justify-between items-center flex-wrap"
                   >
-                    <div className="row gap-2 items-center">
+                    <div className="row gap-2 items-center flex-wrap">
                       <div
                         className="h-3 w-3 rounded-full border-2"
                         style={{ borderColor: vote.iconColor }}
@@ -197,7 +194,7 @@ const DetailsOfBill: React.FC = () => {
 
               <div>
                 <strong>Author:</strong>
-                <div className="flex items-center mt-3 py-2 px-3 bg-white">
+                <div className="flex items-center mt-3 py-2 bg-white">
                   <img
                     src={senatemat}
                     alt="Author"
@@ -213,7 +210,7 @@ const DetailsOfBill: React.FC = () => {
           </div>
 
           {/* Main Tabs */}
-          <div className="flex-1 gap-6 basis-2/3">
+          <div className="flex-1 gap-6 basis-2/3 ">
             <div className="flex-1 p-9 bg-white rounded-xl">
               {/* Navigation Bar */}
               <Tabs
