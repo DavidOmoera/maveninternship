@@ -24,6 +24,7 @@ import done from "assets/done.svg";
 import { Pill } from "components/molecules/Pill";
 
 import {
+  BILL_STATUSES,
   BILL_TYPES,
   BILL_YEARS,
   topRepresentatives,
@@ -206,60 +207,75 @@ export const Dashboard: React.FC = () => {
       <div className="flex-1 bg-gray-100 px-9 flex">
         <div className="flex-1 basis-[74%] pr-4">
           {/* Search and Filter Section */}
-          <div className="p-9 bg-white rounded-xl">
-            <h3 className="text-primary font-extrabold text-xl pb-6">
-              Search for Bills
-            </h3>
-            <div className="flex flex-col lg:flex-row w-full gap-3 items-center">
-              <ControlledInput
-                required
-                control={control}
-                name="searchValue"
-                placeholder="Search by keyword, bill # or legislator name"
-                leftIcon={<SearchIcon />}
-              />
-              <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
-              <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
-                <ControlledSelect
+          <section className="p-9 bg-white rounded-xl">
+            <div>
+              <h3 className="text-primary font-extrabold text-xl pb-6">
+                All Bills
+              </h3>
+              <div className="flex flex-col lg:flex-row w-full gap-3 items-center">
+                <ControlledInput
+                  required
                   control={control}
-                  name="chamber"
-                  label="Chamber"
-                  defaultValue=""
-                  options={[
-                    { id: 1, value: "House", label: "House" },
-                    { id: 2, value: "Senate", label: "Senate" },
-                  ]}
+                  name="searchValue"
+                  placeholder="Search by keyword, bill # or legislator name"
+                  leftIcon={<SearchIcon />}
                 />
-                <ControlledSelect
-                  control={control}
-                  name="billType"
-                  label="Bill Type"
-                  defaultValue=""
-                  options={BILL_TYPES}
-                />
-                <ControlledSelect
-                  control={control}
-                  name="billStatus"
-                  label="Bill Status"
-                  options={[]}
-                  defaultValue=""
-                  onClick={handleOpenBillStatusDialog}
-                />
-                <ControlledSelect
-                  control={control}
-                  name="year"
-                  label="Year"
-                  defaultValue=""
-                  options={BILL_YEARS}
-                />
+                <div className="h-0.5 lg:h-12 w-full lg:w-[1px] bg-neutral200" />
+                <div className="basis-full gap-3 md:gap-1 grid sm:grid-cols-2 w-full lg:flex">
+                  <ControlledSelect
+                    control={control}
+                    name="chamber"
+                    label="Chamber"
+                    defaultValue=""
+                    options={[
+                      { id: 1, value: "House", label: "House" },
+                      { id: 2, value: "Senate", label: "Senate" },
+                    ]}
+                  />
+                  <ControlledSelect
+                    control={control}
+                    name="billType"
+                    label="Bill Type"
+                    defaultValue=""
+                    options={BILL_TYPES}
+                  />
+                  <ControlledSelect
+                    control={control}
+                    name="billStatus"
+                    label="Bill Status"
+                    options={BILL_STATUSES}
+                    defaultValue=""
+                  />
+                  <ControlledSelect
+                    control={control}
+                    name="year"
+                    label="Year"
+                    defaultValue=""
+                    options={BILL_YEARS}
+                  />
+                </div>
               </div>
+              <Button
+                text="Search Bill"
+                className="mt-4"
+                onClick={handleSubmit(onSearchBill)}
+              />
             </div>
-            <Button
-              text="Search Bill"
-              className="mt-4"
-              onClick={handleSubmit(onSearchBill)}
-            />
-          </div>
+            {/** All bills */}
+            <div className="row gap-5 flex-wrap mt-8">
+              {searchedBills.map((watchedBill) => {
+                const bill = watchedBill as (typeof watchedBills)[0];
+
+                return (
+                  <Bill
+                    key={watchedBill.state + watchedBill.description}
+                    onClick={onClickBill}
+                    {...bill}
+                  />
+                );
+              })}
+            </div>
+          </section>
 
           {/* Bills */}
           <section className="w-full bg-white p-9 rounded-xl my-6">
