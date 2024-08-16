@@ -131,10 +131,10 @@ const DetailsOfBill: React.FC = () => {
   return (
     <PageContainer title="H.RES.964" className="col h-full">
       {/* Main Content */}
-      <div className="flex-1 bg-gray-100 px-9 flex">
-        <div className="w-full flex gap-4">
+      <div className="flex-1 px-9">
+        <div className="flex gap-4 ">
           {/* Bill Details Section */}
-          <div className="flex-1 p-9 bg-white rounded-xl mb-6 basis-1/3">
+          <div className="flex-1 p-9 bg-white rounded-xl mb-6 ">
             <h2 className="text-neutral950 font-extrabold pb-6">
               Secure the Border Act of 2023
             </h2>
@@ -153,9 +153,12 @@ const DetailsOfBill: React.FC = () => {
 
             <div>
               <h6 className="underline mb-3">Details</h6>
-              <div className="col gap-2">
+              <div className="col gap-2 ">
                 {DETAILS.map((detail) => (
-                  <div key={detail.key} className="row justify-between w-full">
+                  <div
+                    key={detail.key}
+                    className="row justify-between w-full flex-wrap"
+                  >
                     <p className="text-sm text-neutral500">{detail.key}</p>
                     <h6
                       className={classNames("text-sm text-neutral950", {
@@ -181,9 +184,9 @@ const DetailsOfBill: React.FC = () => {
                 {VOTES_SUMMARY.map((vote) => (
                   <div
                     key={vote.key}
-                    className="row w-full justify-between items-center"
+                    className="row w-full justify-between items-center flex-wrap"
                   >
-                    <div className="row gap-2 items-center">
+                    <div className="row gap-2 items-center flex-wrap">
                       <div
                         className="h-3 w-3 rounded-full border-2"
                         style={{ borderColor: vote.iconColor }}

@@ -22,7 +22,7 @@ export function BillDetailsMessageBox() {
           alt="User"
           className="w-10 h-10 rounded-full mr-3"
         />
-        <div className="flex items-center rounded-full p-2 h-12 w-[742px] bg-white gap-3">
+        <div className="flex items-center rounded-full p-2 h-12 basis-2/3 bg-white gap-3">
           <input
             type="text"
             placeholder="Message Coterie"

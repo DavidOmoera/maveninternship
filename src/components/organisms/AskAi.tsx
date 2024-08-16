@@ -120,7 +120,7 @@ export function ASK_AI() {
           ))}
         </div>
         <div className="w-full mt-4">
-          <div className="flex items-center rounded-full p-2 h-12 w-[742px] bg-[#F5F6FB] gap-3">
+          <div className="flex items-center rounded-full p-2 h-12 max-w-[742px] bg-[#F5F6FB] gap-3">
             <input
               type="text"
               placeholder="Message Coterie"

@@ -40,9 +40,9 @@ function VotingSection({ title, voters, className }: TVotingSectionProps) {
         {voters.map((voter) => (
           <div
             key={voter.name}
-            className="row justify-between items-center p-3 rounded-lg bg-grey"
+            className="row justify-between items-center p-3 rounded-lg bg-grey flex-wrap"
           >
-            <div className="gap-2 row items-center">
+            <div className="gap-2 row items-center ">
               <img src={voter.profilePicture} className="w-8 h-8" />
               <div className="col text-start">
                 <h6 className="text-sm">{voter.name}</h6>
