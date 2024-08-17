@@ -238,10 +238,9 @@ export function SenateReps() {
                       )}
                     </p>
                   </div>
-                  <a
-                    href="#"
+                  <button
                     className="flex items-center text-primary absolute bottom-4 right-4"
-                    style={{ color: "#0C0853" }}
+                    style={{ color: "#0C0853", background: 'none', border: 'none', cursor: 'pointer' }}
                     onClick={() => handleAddToTopReps(rep)}
                   >
                     <img
@@ -264,7 +263,7 @@ export function SenateReps() {
                     >
                       {isRepInTopReps(rep) ? "Remove from Top Representatives" : "Add to Top Representatives"}
                     </span>
-                  </a>
+                  </button>
                 </div>
               ))}
             </div>
@@ -273,5 +272,5 @@ export function SenateReps() {
       </div>
       <Outlet />
     </PageContainer>
-  );
+  ); 
 }
