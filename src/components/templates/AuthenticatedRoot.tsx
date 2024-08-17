@@ -85,7 +85,7 @@ console.log('Has Top Reps:', hasTopReps);
           text: "Representatives",
           icon: Group,
           iconColor: "",
-          link: undefined,
+          link: Routes.Representatives,
           onClick: () => setOpenRepresentatives(!openRepresentatives),
           subItems: [
             ...(hasTopReps ? [{ text: "My Top Reps", link: Routes.TopReps }] : []),
@@ -254,16 +254,16 @@ console.log('Has Top Reps:', hasTopReps);
             </div>
           </div>
 
-        {/* Sidebar Navigation */}
-         <div className="overflow-y-auto">
-         {sideNavItems.map((item) => (
-         <div key={item.title}>
-         <div className="text-neutral400 text-xs font-extrabold uppercase pl-7 pb-2">
-         {item.title}
-        </div>
-         <List>
-        {item.buttons.map((button) => (
-          <div key={button.text}>
+           {/* Sidebar Navigation */}
+           <div className="overflow-y-auto">
+           {sideNavItems.map((item) => (
+           <div key={item.title}>
+           <div className="text-neutral400 text-xs font-extrabold uppercase pl-7 pb-2">
+           {item.title}
+           </div>
+           <List>
+           {item.buttons.map((button) => (
+            <div key={button.text}>
             {button.text === "Representatives" ? (
               <>
                 <ListItem
@@ -385,17 +385,17 @@ console.log('Has Top Reps:', hasTopReps);
         </aside>
       </div>
 
-      <div className="md:basis-[79%]">
+        <div className="md:basis-[79%]">
         <Outlet />
-      </div>
+        </div>
 
-      {/* Add Legislature Modal */}
-      <Dialog
-        open={isLegislatureModalOpen}
-        PaperProps={{ style: { padding: "36px", width: "720px" } }}
-        onClose={onCloseLegislatureModal}
-      >
-        <div className="row justify-between items-start">
+          {/* Add Legislature Modal */}
+          <Dialog
+          open={isLegislatureModalOpen}
+          PaperProps={{ style: { padding: "36px", width: "720px" } }}
+          onClose={onCloseLegislatureModal}
+         >
+         <div className="row justify-between items-start">
           <article className="col gap-3">
             <h2 className="text-neutral950">Add Legislature</h2>
             <p className="text-neutral950 text-sm">
@@ -423,9 +423,7 @@ console.log('Has Top Reps:', hasTopReps);
                     value={state.code}
                     checked={isSelected}
                     onChange={(e) => onSelectState(e, isSelected)}
-                    // style={{
-                    //   color: isSelected ? "#1026C3" : "#D1D1D1",
-                    // }}
+                    
                     sx={{
                       [`&, &.Mui-checked`]: {
                         color: "#1026C3",
