@@ -25,8 +25,9 @@ import { useState } from "react";
 
 import { Representative } from 'types/common.ts';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store/slices/index.ts'; 
+import { RootState } from 'store/slices/index.ts';
 import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice';
+import classNames from "classnames";
 
 const representatives = [
   {
@@ -137,16 +138,16 @@ export function SenateReps() {
   };
 
   const handleAddToTopReps = (rep: Representative) => {
-    const updatedRep: Representative = { ...rep, pageType: 'Senate' }; 
+    const updatedRep: Representative = { ...rep, pageType: 'Senate' };
     if (isRepInTopReps(updatedRep)) {
       dispatch(removeTopRep(updatedRep));
     } else {
       dispatch(addTopRep(updatedRep));
     }
   };
-  
 
-  const isRepInTopReps = (rep: Representative) => 
+
+  const isRepInTopReps = (rep: Representative) =>
     topReps.some(existingRep => existingRep.name === rep.name);
 
   const {
@@ -239,8 +240,13 @@ export function SenateReps() {
                     </p>
                   </div>
                   <button
-                    className="flex items-center text-primary absolute bottom-4 right-4"
-                    style={{ color: "#0C0853", background: 'none', border: 'none', cursor: 'pointer' }}
+                    className={classNames(
+                      "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none",
+                      {
+                        "text-error": isRepInTopReps(rep),
+                        "text-primary": !isRepInTopReps(rep),
+                      }
+                    )}
                     onClick={() => handleAddToTopReps(rep)}
                   >
                     <img
@@ -250,6 +256,9 @@ export function SenateReps() {
                         marginRight: "0.5rem",
                         width: "24px",
                         height: "24px",
+                        filter: isRepInTopReps(rep)
+                          ? "invert(24%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(108%) contrast(112%)"
+                          : "none",
                       }}
                     />
                     <span
@@ -261,9 +270,13 @@ export function SenateReps() {
                         textAlign: "left",
                       }}
                     >
-                      {isRepInTopReps(rep) ? "Remove from Top Representatives" : "Add to Top Representatives"}
+                      {isRepInTopReps(rep)
+                        ? "Remove from Top Representatives"
+                        : "Add to Top Representatives"}
                     </span>
                   </button>
+
+
                 </div>
               ))}
             </div>
@@ -272,5 +285,5 @@ export function SenateReps() {
       </div>
       <Outlet />
     </PageContainer>
-  ); 
+  );
 }

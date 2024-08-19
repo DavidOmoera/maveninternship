@@ -14,7 +14,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { RootState } from 'store/slices/index.ts'; 
+import { RootState } from 'store/slices/index.ts';
 import { Button } from "components/atoms/Button";
 import { STATES } from "constants/common";
 import { Legislature, TState } from "components/atoms/Legislature";
@@ -32,6 +32,7 @@ import { Logout } from "../../assets/Logout";
 import expand from "assets/expand.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import classNames from "classnames";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -61,7 +62,7 @@ export function AuthenticatedRoot() {
   const topRepsState = useSelector((state: RootState) => state.topReps);
   const hasTopReps = topRepsState.topReps.length > 0;
 
-console.log('Has Top Reps:', hasTopReps);
+
 
   const sideNavItems = [
     {
@@ -72,14 +73,14 @@ console.log('Has Top Reps:', hasTopReps);
           icon: Home,
           iconColor: "",
           link: Routes.Dashboard,
-          onClick: () => {},
+          onClick: () => { },
         },
         {
           text: "Bills",
           icon: Gavel,
           iconColor: "",
           link: Routes.Bills,
-          onClick: () => {},
+          onClick: () => { },
         },
         {
           text: "Representatives",
@@ -98,7 +99,7 @@ console.log('Has Top Reps:', hasTopReps);
           icon: Timeline,
           iconColor: "",
           link: Routes.ActivityFeed,
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     },
@@ -110,26 +111,26 @@ console.log('Has Top Reps:', hasTopReps);
           icon: Settings,
           link: Routes.Profile,
           iconColor: "",
-          onClick: () => {},
+          onClick: () => { },
         },
         {
           text: "Help & Support",
           icon: SupportAgent,
           link: Routes.HelpAndSupport,
           iconColor: "",
-          onClick: () => {},
+          onClick: () => { },
         },
         {
           text: "Logout",
           icon: Logout,
           link: Routes.Login,
           iconColor: "#FF2A58",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     },
   ];
-  
+
   function onOpenLegislatureModal() {
     setIsLegislatureModalOpen(true);
   }
@@ -200,9 +201,8 @@ console.log('Has Top Reps:', hasTopReps);
         </button>
 
         <aside
-          className={`${
-            isSidebarOpen ? "block" : "hidden"
-          } md:block fixed md:relative top-0 left-0 h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto min-w-80 no-scrollbar shadow-2xl`}
+          className={`${isSidebarOpen ? "block" : "hidden"
+            } md:block fixed md:relative top-0 left-0 h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto min-w-80 no-scrollbar shadow-2xl`}
         >
           <button
             className="block md:hidden absolute top-4 right-4 p-3 text-primary bg-transparent"
@@ -254,121 +254,115 @@ console.log('Has Top Reps:', hasTopReps);
             </div>
           </div>
 
-           {/* Sidebar Navigation */}
-           <div className="overflow-y-auto">
-           {sideNavItems.map((item) => (
-           <div key={item.title}>
-           <div className="text-neutral400 text-xs font-extrabold uppercase pl-7 pb-2">
-           {item.title}
-           </div>
-           <List>
-           {item.buttons.map((button) => (
-            <div key={button.text}>
-            {button.text === "Representatives" ? (
-              <>
-                <ListItem
-                  className={`group row gap-3 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
-                    activeMenuItem === button.text
-                      ? "bg-accent50 border-r-4 border-accent800"
-                      : ""
-                  }`}
-                  onClick={() => {
-                    onClickMenuItem(button.text, undefined, button.onClick);
-                    setOpenRepresentatives(!openRepresentatives);
-                  }}
-                >
-                  <button.icon
-                    className={`mr-2 ${
-                      activeMenuItem === button.text
-                        ? "text-blue-900"
-                        : "text-neutral600"
-                    }`}
-                    color={
-                      button.iconColor ||
-                      (activeMenuItem === button.text
-                        ? "#172B98"
-                        : "#454545")
-                    }
-                  />
-                  <ListItemText
-                    primary={
-                      <h6
-                        className={`group-hover:text-accent800 ${
-                          activeMenuItem === button.text
-                            ? "text-accent800 font-bold"
-                            : "text-neutral800 font-normal"
-                        }`}
-                      >
-                        {button.text}
-                      </h6>
-                    }
-                  />
-                  <IconButton
-                    edge="end"
-                    aria-label="more"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setOpenRepresentatives(!openRepresentatives);
-                    }}
-                  >
-                    <img
-                      src={expand}
-                      alt="Expand"
-                      className={`transition-transform transform ${
-                        openRepresentatives ? "rotate-0" : "rotate-180"
-                      }`}
-                    />
-                  </IconButton>
-                </ListItem>
-                <Collapse in={openRepresentatives}>
-                  <List component="div" disablePadding>
-                    {button.subItems?.map((subItem) => (
-                      <ListItem
-                        key={subItem.text}
-                        className={`cursor-pointer ${
-                          location.pathname === subItem.link
-                            ? "bg-blue-100"
-                            : ""
-                        }`}
-                        onClick={() => navigate(subItem.link)}
-                        style={{ paddingLeft: "40px" }}
-                      >
-                        <ListItemText primary={subItem.text} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Collapse>
-              </>
-            ) : (
-              <ListItem
-                className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
-                  location.pathname === button.link
-                    ? "bg-accent50 border-r-4 border-accent800"
-                    : ""
-                }`}
-                onClick={() =>
-                  onClickMenuItem(button.text, button.link, button.onClick)
-                }
-              >
-                <button.icon
-                  className={`mr-2 ${
-                    location.pathname === button.link
-                      ? "text-blue-900"
-                      : "text-neutral600"
-                  }`}
-                  color={
-                    button.iconColor ||
-                    (location.pathname === button.link ? "#172B98" : "#454545")
-                  }
-                />
-                <ListItemText
-                  primary={
-                    <h6
-                      className={`group-hover:text-accent800 ${
-                        location.pathname === button.link
-                          ? "text-accent800 font-semibold"
-                          : "text-neutral800 font-medium text-base"
+          {/* Sidebar Navigation */}
+          <div className="overflow-y-auto">
+            {sideNavItems.map((item) => (
+              <div key={item.title}>
+                <div className="text-neutral400 text-xs font-extrabold uppercase pl-7 pb-2">
+                  {item.title}
+                </div>
+                <List>
+                  {item.buttons.map((button) => (
+                    <div key={button.text}>
+                      {button.text === "Representatives" ? (
+                        <>
+                          <ListItem
+                            className={`group row gap-3 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${activeMenuItem === button.text
+                              ? "bg-accent50 border-r-4 border-accent800"
+                              : ""
+                              }`}
+                            onClick={() => {
+                              onClickMenuItem(button.text, undefined, button.onClick);
+                              setOpenRepresentatives(prevState => !prevState);
+                            }}
+                          >
+                            <button.icon
+                              className={`mr-2 ${activeMenuItem === button.text
+                                ? "text-blue-900"
+                                : "text-neutral600"
                                 }`}
+                              color={
+                                button.iconColor ||
+                                (activeMenuItem === button.text
+                                  ? "#172B98"
+                                  : "#454545")
+                              }
+                            />
+                            <ListItemText
+                              primary={
+                                <h6
+                                  className={`group-hover:text-accent800 ${activeMenuItem === button.text
+                                    ? "text-accent800 font-bold"
+                                    : "text-neutral800 font-normal"
+                                    }`}
+                                >
+                                  {button.text}
+                                </h6>
+                              }
+                            />
+                            <IconButton
+                              edge="end"
+                              aria-label="more"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setOpenRepresentatives(!openRepresentatives);
+                              }}
+                            >
+                              <img
+                                src={expand}
+                                alt="Expand"
+                                className={`transition-transform transform ${openRepresentatives ? "rotate-0" : "rotate-180"
+                                  }`}
+                              />
+                            </IconButton>
+                          </ListItem>
+                          <Collapse in={openRepresentatives}>
+                            <List component="div" disablePadding>
+                              {button.subItems?.map((subItem) => (
+                                <ListItem
+                                  key={subItem.text}
+                                  className={classNames(
+                                    "cursor-pointer pl-10",
+                                    {
+                                      "bg-blue-100": location.pathname === subItem.link,
+                                    }
+                                  )}
+                                  onClick={() => navigate(subItem.link)}
+                                >
+                                  <ListItemText primary={subItem.text} />
+                                </ListItem>
+
+                              ))}
+                            </List>
+                          </Collapse>
+                        </>
+                      ) : (
+                        <ListItem
+                          className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${location.pathname === button.link
+                            ? "bg-accent50 border-r-4 border-accent800"
+                            : ""
+                            }`}
+                          onClick={() =>
+                            onClickMenuItem(button.text, button.link, button.onClick)
+                          }
+                        >
+                          <button.icon
+                            className={`mr-2 ${location.pathname === button.link
+                              ? "text-blue-900"
+                              : "text-neutral600"
+                              }`}
+                            color={
+                              button.iconColor ||
+                              (location.pathname === button.link ? "#172B98" : "#454545")
+                            }
+                          />
+                          <ListItemText
+                            primary={
+                              <h6
+                                className={`group-hover:text-accent800 ${location.pathname === button.link
+                                  ? "text-accent800 font-semibold"
+                                  : "text-neutral800 font-medium text-base"
+                                  }`}
                               >
                                 {button.text}
                               </h6>
@@ -385,17 +379,17 @@ console.log('Has Top Reps:', hasTopReps);
         </aside>
       </div>
 
-        <div className="md:basis-[79%]">
+      <div className="md:basis-[79%]">
         <Outlet />
-        </div>
+      </div>
 
-          {/* Add Legislature Modal */}
-          <Dialog
-          open={isLegislatureModalOpen}
-          PaperProps={{ style: { padding: "36px", width: "720px" } }}
-          onClose={onCloseLegislatureModal}
-         >
-         <div className="row justify-between items-start">
+      {/* Add Legislature Modal */}
+      <Dialog
+        open={isLegislatureModalOpen}
+        PaperProps={{ style: { padding: "36px", width: "720px" } }}
+        onClose={onCloseLegislatureModal}
+      >
+        <div className="row justify-between items-start">
           <article className="col gap-3">
             <h2 className="text-neutral950">Add Legislature</h2>
             <p className="text-neutral950 text-sm">
@@ -423,7 +417,7 @@ console.log('Has Top Reps:', hasTopReps);
                     value={state.code}
                     checked={isSelected}
                     onChange={(e) => onSelectState(e, isSelected)}
-                    
+
                     sx={{
                       [`&, &.Mui-checked`]: {
                         color: "#1026C3",
