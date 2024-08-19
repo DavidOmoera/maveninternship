@@ -16,7 +16,7 @@ const topRepsSlice = createSlice({
   reducers: {
     addTopRep(state, action: PayloadAction<Representative>) {
       const rep = action.payload;
-      // Prevent adding duplicate representatives
+      
       if (!state.topReps.find(r => r.name === rep.name && r.district === rep.district)) {
         state.topReps.push(rep);
       }

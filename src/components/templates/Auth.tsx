@@ -7,7 +7,7 @@ export function Auth() {
   function onSocialSignIn() {}
 
   return (
-    <div className="flex h-full">
+    <div className="flex flex-col mt-20 xl:flex-row xl:mt-0 h-full">
       <div className="md:basis-[56%]">
         <Outlet />
       </div>

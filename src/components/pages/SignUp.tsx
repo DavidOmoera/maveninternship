@@ -23,7 +23,7 @@ export function SignUp() {
   }
 
   return (
-    <div className="w-full col justify-center items-center h-full overflow-y-scroll px-4 md:px-0">
+    <div className="w-full col justify-center items-center h-full px-4 md:px-10">
       <div className="w-[464px] col items-center gap-2">
         <h1 className="font-extrabold">Sign Up</h1>
         <span className="flex flex-row gap-2">

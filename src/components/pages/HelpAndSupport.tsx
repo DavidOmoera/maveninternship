@@ -6,33 +6,10 @@ import { PageContainer } from "components/templates/PageContainer";
 import { helpAndSupportSchema } from "constants/schemas";
 import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Envelope } from "assets/Envelope";
-import { Phone } from "assets/Phone";
-import { Social } from "assets/Social";
-import { LinkedIn } from "assets/LinkedIn";
 import { ISSUES_OPTIONS } from "constants/common";
 import { Dialog } from "@mui/material";
 import successCheck from "assets/success_check.svg";
 import { ArrowRight } from "assets/ArrowRight";
-
-const CONTACT_DETAILS = [
-  {
-    Icon: <Envelope color="#FFC700" />,
-    text: "help@coterieai.com",
-  },
-  {
-    Icon: <Phone color="#FFC700" />,
-    text: "09090909090",
-  },
-  {
-    Icon: <Social />,
-    text: "Coterie AI",
-  },
-  {
-    Icon: <LinkedIn color="#FFC700" />,
-    text: "Coterie AI",
-  },
-];
 
 type THelpAndSupportForm = {
   first_name: string;
@@ -76,7 +53,7 @@ export function HelpAndSupport() {
   return (
     <PageContainer title="Help & Support">
       <div className="row justify-between bg-white mx-9 mt-6 rounded-xl p-9 lg:py-10 lg:px-16 xl:py-20 xl:px-32 gap-32">
-        <section className="col md:basis-[52%] md:max-w-[670px]">
+        <section className="col w-[700px]">
           <article className="col gap-1">
             <h1 className="text-black font-bold text-4xl">Get in Touch</h1>
             <p className="text-neutral500 text-lg">
@@ -151,22 +128,6 @@ export function HelpAndSupport() {
             className="mt-6"
           />
         </section>
-        <div className="hidden md:flex md:flex-col md:justify-start md:basis-[37%] max-w-[480px]">
-          <div className="bg-accent800 p-9 rounded-2xl gap-6">
-            <h1 className="font-bold text-4xl text-white">Contact Us Online</h1>
-            <div className="col gap-5 mt-6">
-              {CONTACT_DETAILS.map((contact, index) => (
-                <div
-                  key={contact.text + index}
-                  className="row gap-2 items-center"
-                >
-                  {contact.Icon}
-                  <p className="text-white text-lg">{contact.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
       <Dialog
         open={showFeedbackSuccess}
