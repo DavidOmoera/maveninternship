@@ -330,13 +330,25 @@ export function AuthenticatedRoot() {
                                   key={subItem.text}
                                   className={`cursor-pointer ${
                                     location.pathname === subItem.link
-                                      ? "bg-blue-100"
-                                      : ""
+                                      ? "bg-accent50 border-r-4 border-accent800"
+                                      : "hover:bg-accent50 hover:border-r-4 hover:border-accent800 rounded"
                                   }`}
                                   onClick={() => navigate(subItem.link)}
                                   style={{ paddingLeft: "40px" }}
                                 >
-                                  <ListItemText primary={subItem.text} />
+                                  <ListItemText
+                                    primary={
+                                      <h6
+                                        className={`${
+                                          location.pathname === subItem.link
+                                            ? "text-accent800 font-semibold"
+                                            : "text-neutral800 font-medium text-base"
+                                        } group-hover:text-accent800`}
+                                      >
+                                        {subItem.text}
+                                      </h6>
+                                    }
+                                  />
                                 </ListItem>
                               ))}
                             </List>
@@ -382,7 +394,7 @@ export function AuthenticatedRoot() {
                                 {button.text}
                               </h6>
                             }
-                          />{" "}
+                          />
                         </ListItem>
                       )}
                     </div>
@@ -432,9 +444,9 @@ export function AuthenticatedRoot() {
                     value={state.code}
                     checked={isSelected}
                     onChange={(e) => onSelectState(e, isSelected)}
-                    // style={{
-                    //   color: isSelected ? "#1026C3" : "#D1D1D1",
-                    // }}
+                    style={{
+                      color: isSelected ? "#1026C3" : "#D1D1D1",
+                    }}
                     sx={{
                       [`&, &.Mui-checked`]: {
                         color: "#1026C3",

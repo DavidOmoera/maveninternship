@@ -427,13 +427,12 @@ export function Profile() {
             Change Password
           </h6>
         </section>
-        <section className="col gap-5 p-9 rounded-xl bg-white">
-          <div className="row justify-between w-full flex-wrap">
+        <section className="col gap-4 p-9 rounded-xl bg-white">
+          <div className="row justify-between items-center w-full flex-wrap">
             <h4 className="text-neutral950">Your Plan</h4>
             <Pill text="Member since August 2024" />
           </div>
           <div className="col gap-3">
-            {/* <CoterieBot color={colors.error} /> */}
             <h2 className="text-black">Regulatory AI</h2>
             <span className="row items-center gap-1 flex-wrap">
               <p className="text-neutral500">Next payment:</p>
@@ -443,12 +442,12 @@ export function Profile() {
           <Button
             text="Change Plan"
             onClick={onClickChangePlan}
-            className="my-6 w-[135px]"
+            className="my-8 w-[135px]"
           />
 
           <hr className="bg-neutral100" />
 
-          <div className="row justify-between w-full flex-wrap">
+          <div className="row justify-between w-full flex-wrap mt-8">
             <div className="row gap-2 items-center flex-wrap">
               <img src={mastercard} className="w-8 h-8" />
               <h5 className="">

@@ -13,7 +13,7 @@ export function Login() {
 
   return (
     <div className="w-full flex flex-col justify-center items-center h-full">
-      <div className="w-[464px] flex flex-col items-center gap-2">
+      <div className="w-[464px] flex flex-col items-center gap-2 px-9 lg:px-0">
         <h1 className="font-extrabold">Login</h1>
         <span className="flex flex-row gap-2">
           <p className="text-neutral450">Don't have an account?</p>
