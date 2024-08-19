@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Routes } from "types/routes";
-import sideImage  from "assets/side_image.svg";
+import sideImage from "assets/side_image.svg";
 
 export function UnauthenticatedRoot() {
   const location = useLocation();
@@ -12,9 +12,9 @@ export function UnauthenticatedRoot() {
   }, [location.pathname, navigate]);
 
   return (
-    <main className="md:flex md:flex-row h-full w-full">
+    <main className="md:flex md:flex-row w-full overflow-hidden">
       {/** On small devices, hide side image  */}
-      <aside className="hidden md:flex md:basis-[33.3%] bg-accent500">
+      <aside className="hidden md:flex md:basis-[33.3%] bg-accent500 h-screen">
         <img
           src={sideImage}
           alt="Side decoration"
@@ -23,7 +23,7 @@ export function UnauthenticatedRoot() {
       </aside>
 
       {/** Content */}
-      <div className="md:basis-[66.7%]">
+      <div className="md:basis-[66.7%] md:-mt-8">
         <Outlet />
       </div>
     </main>
