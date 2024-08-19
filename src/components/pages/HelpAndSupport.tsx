@@ -6,33 +6,10 @@ import { PageContainer } from "components/templates/PageContainer";
 import { helpAndSupportSchema } from "constants/schemas";
 import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Envelope } from "assets/Envelope";
-import { Phone } from "assets/Phone";
-import { Social } from "assets/Social";
-import { LinkedIn } from "assets/LinkedIn";
 import { ISSUES_OPTIONS } from "constants/common";
 import { Dialog } from "@mui/material";
 import successCheck from "assets/success_check.svg";
 import { ArrowRight } from "assets/ArrowRight";
-
-const CONTACT_DETAILS = [
-  {
-    Icon: <Envelope color="#FFC700" />,
-    text: "help@coterieai.com",
-  },
-  {
-    Icon: <Phone color="#FFC700" />,
-    text: "09090909090",
-  },
-  {
-    Icon: <Social />,
-    text: "Coterie AI",
-  },
-  {
-    Icon: <LinkedIn color="#FFC700" />,
-    text: "Coterie AI",
-  },
-];
 
 type THelpAndSupportForm = {
   first_name: string;

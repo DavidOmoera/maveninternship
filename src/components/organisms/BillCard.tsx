@@ -3,6 +3,7 @@ import { Pill } from "components/molecules/Pill";
 import { allBills } from "constants/common";
 import BookmarkRemoveOutlinedIcon from "@mui/icons-material/BookmarkRemoveOutlined";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import { Tooltip } from "@mui/material";
 
 type TBillProps = {
   onClick: () => void;
@@ -92,42 +93,48 @@ export function GridCard({
       </div>
 
       <div className="flex justify-between p-3">
-        <div className="flex items-center">
-          <img src={image} alt={name} className="w-12 h-12 rounded-xl" />
-          <div className="ml-3">
-            <h4 className="text-sm font-bold">{name}</h4>
+        <Tooltip title="Author">
+          <div className="flex items-center">
+            <img src={image} alt={name} className="w-12 h-12 rounded-xl" />
+            <div className="ml-3">
+              <h4 className="text-sm font-bold">{name}</h4>
+            </div>
           </div>
-        </div>
+        </Tooltip>
         <div className="flex space-x-2 rounded-b-3xl">
-          <div className="flex items-center">
-            <img src={supporter1} alt="supporter" className="w-6 h-6 " />
-            <img
-              src={supporter2}
-              alt="supporter"
-              className="w-6 h-6 hidden lg:block"
-            />
-            <img
-              src={supporter3}
-              alt="supporter"
-              className="w-6 h-6 hidden lg:block"
-            />
-            <p className=" text-xs font-bold">{count1}</p>
-          </div>
+          <Tooltip title="Co-authors">
+            <div className="flex items-center">
+              <img src={supporter1} alt="supporter" className="w-6 h-6 " />
+              <img
+                src={supporter2}
+                alt="supporter"
+                className="w-6 h-6 hidden lg:block"
+              />
+              <img
+                src={supporter3}
+                alt="supporter"
+                className="w-6 h-6 hidden lg:block"
+              />
+              <p className=" text-xs font-bold">{count1}</p>
+            </div>
+          </Tooltip>
           <span className="bg-gray-200 h-full w-1 border rounded-full"></span>
-          <div className="flex items-center">
-            <img src={supporter4} alt="supporter" className="w-6 h-6 " />
-            <img
-              src={supporter5}
-              alt="supporter"
-              className="w-6 h-6 hidden lg:block"
-            />
-            <img
-              src={supporter6}
-              alt="supporter"
-              className="w-6 h-6 hidden lg:block"
-            />
-            <p className="ml-1 text-xs font-bold">{count2}</p>
-          </div>
+          <Tooltip title="Supporters">
+            <div className="flex items-center">
+              <img src={supporter4} alt="supporter" className="w-6 h-6 " />
+              <img
+                src={supporter5}
+                alt="supporter"
+                className="w-6 h-6 hidden lg:block"
+              />
+              <img
+                src={supporter6}
+                alt="supporter"
+                className="w-6 h-6 hidden lg:block"
+              />
+              <p className="ml-1 text-xs font-bold">{count2}</p>
+            </div>
+          </Tooltip>
         </div>
       </div>
     </div>
