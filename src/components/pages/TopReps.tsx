@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PageContainer } from "components/templates/PageContainer";
-import { Representative } from 'types/common'; 
+import { Representative } from 'types/common';
 import { ControlledInput } from "components/organisms/ControlledInput";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "components/atoms/Button";
@@ -10,8 +10,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { activitySearchSchema } from "constants/schemas";
 import { Pill } from "components/molecules/Pill";
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store/slices/index'; 
-import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice'; 
+import { RootState } from 'store/slices/index';
+import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice';
+import bookmark from "assets/bookmark.svg";
+import classNames from "classnames";
 
 type TActivitySearchForm = Partial<{
   searchValue: string;
@@ -19,6 +21,7 @@ type TActivitySearchForm = Partial<{
 
 const TopReps: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Add useNavigate here
   const { state } = location;
   const representative = state?.representative as Representative;
 
@@ -45,12 +48,16 @@ const TopReps: React.FC = () => {
     );
   };
 
-  const isRepInTopReps = (rep: Representative) => 
+  const isRepInTopReps = (rep: Representative) =>
     topReps.some(existingRep => existingRep.name === rep.name);
 
   const handleAddToTopReps = (rep: Representative) => {
     if (isRepInTopReps(rep)) {
       dispatch(removeTopRep(rep));
+      // Navigate back to the previous page if the list is empty
+      if (topReps.length === 1) {
+        navigate(-1); // Navigate to the previous page
+      }
     } else {
       dispatch(addTopRep(rep));
     }
@@ -112,13 +119,42 @@ const TopReps: React.FC = () => {
             <p className="text-gray-600 mb-4 text-sm sm:mb-10">
               {representative.description}
             </p>
-            <Button
-              text={isRepInTopReps(representative) ? "Remove from Top Representatives" : "Add to Top Representatives"}
-              className={`py-2 px-4 rounded-lg mt-4 ${
-                isRepInTopReps(representative) ? "bg-red-500" : "bg-blue-900"
-              } text-white`}
+            <button
+              className={classNames(
+                "flex items-center py-2 px-4 rounded-lg mt-4 border-none cursor-pointer bg-transparent outline-none",
+                {
+                  "text-error": isRepInTopReps(representative),
+                  "text-primary": !isRepInTopReps(representative),
+                }
+              )}
               onClick={() => handleAddToTopReps(representative)}
-            />
+            >
+              <img
+                src={bookmark}
+                alt="Bookmark Icon"
+                style={{
+                  marginRight: "0.5rem",
+                  width: "24px",
+                  height: "24px",
+                  filter: isRepInTopReps(representative)
+                    ? "invert(24%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(108%) contrast(112%)"
+                    : "none",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "Mulish",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  lineHeight: "17.57px",
+                  textAlign: "left",
+                }}
+              >
+                {isRepInTopReps(representative)
+                  ? "Remove from Top Representatives"
+                  : "Add to Top Representatives"}
+              </span>
+            </button>
           </div>
         )}
 
@@ -172,10 +208,46 @@ const TopReps: React.FC = () => {
                       )}
                     </p>
                   </div>
+                  <button
+                    className={classNames(
+                      "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none",
+                      {
+                        "text-error": isRepInTopReps(rep),
+                        "text-primary": !isRepInTopReps(rep),
+                      }
+                    )}
+                    onClick={() => handleAddToTopReps(rep)}
+                  >
+                    <img
+                      src={bookmark}
+                      alt="Bookmark Icon"
+                      style={{
+                        marginRight: "0.5rem",
+                        width: "24px",
+                        height: "24px",
+                        filter: isRepInTopReps(rep)
+                          ? "invert(24%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(108%) contrast(112%)"
+                          : "none",
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontFamily: "Mulish",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        lineHeight: "17.57px",
+                        textAlign: "left",
+                      }}
+                    >
+                      {isRepInTopReps(rep)
+                        ? "Remove from Top Representatives"
+                        : "Add to Top Representatives"}
+                    </span>
+                  </button>
                 </div>
               ))
             ) : (
-              <p>No top representatives added</p>
+              <p className="text-gray-500">No top representatives added.</p>
             )}
           </div>
         </div>
