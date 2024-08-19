@@ -21,7 +21,7 @@ type TActivitySearchForm = Partial<{
 
 const TopReps: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // Add useNavigate here
+  const navigate = useNavigate(); 
   const { state } = location;
   const representative = state?.representative as Representative;
 
@@ -54,9 +54,9 @@ const TopReps: React.FC = () => {
   const handleAddToTopReps = (rep: Representative) => {
     if (isRepInTopReps(rep)) {
       dispatch(removeTopRep(rep));
-      // Navigate back to the previous page if the list is empty
+    
       if (topReps.length === 1) {
-        navigate(-1); // Navigate to the previous page
+        navigate(-1); 
       }
     } else {
       dispatch(addTopRep(rep));
