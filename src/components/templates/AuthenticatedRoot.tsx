@@ -32,7 +32,6 @@ import { Logout } from "../../assets/Logout";
 import expand from "assets/expand.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import classNames from "classnames";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -332,13 +331,6 @@ export function AuthenticatedRoot() {
                               {button.subItems?.map((subItem) => (
                                 <ListItem
                                   key={subItem.text}
-                                  className={classNames(
-                                    "cursor-pointer pl-10",
-                                    {
-                                      "bg-blue-100":
-                                        location.pathname === subItem.link,
-                                    }
-                                  )}
                                   className={`cursor-pointer ${
                                     location.pathname === subItem.link
                                       ? "bg-accent50 border-r-4 border-accent800"
