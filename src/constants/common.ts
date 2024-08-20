@@ -397,6 +397,21 @@ export const BILL_TYPES = [
   { id: 1, value: "Passed", label: "Passed" },
 ];
 
+export const BILL_STATUSES = [
+  { id: 1, value: "Filed", label: "Filed" },
+  { id: 2, value: "Enrolled", label: "Enrolled" },
+  { id: 3, value: "Reading-1", label: "Reading-1" },
+  { id: 4, value: "Passed", label: "Passed" },
+  { id: 5, value: "Introduced", label: "Introduced" },
+  { id: 6, value: "Reading-2", label: "Reading-2" },
+  { id: 7, value: "Referred to committee", label: "Referred to committee" },
+  { id: 8, value: "Amendment-failure", label: "Amendment-failure" },
+  { id: 9, value: "Executive-receipt", label: "Executive-receipt" },
+  { id: 10, value: "Amendment-introduction", label: "Amendment-introduction" },
+  { id: 11, value: "Amendment-passage", label: "Amendment-passage" },
+  { id: 12, value: "Amendment-withdrawal", label: "Amendment-withdrawal" },
+];
+
 export const BILL_YEARS = [
   { id: 1, value: "2016", label: "2016" },
   { id: 1, value: "2017", label: "2017" },

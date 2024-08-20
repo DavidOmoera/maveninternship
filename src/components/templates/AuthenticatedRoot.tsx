@@ -13,6 +13,8 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "store/slices/index.ts";
 import { Button } from "components/atoms/Button";
 import { STATES } from "constants/common";
 import { Legislature, TState } from "components/atoms/Legislature";
@@ -53,11 +55,13 @@ export function AuthenticatedRoot() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const topRepsState = useSelector((state: RootState) => state.topReps);
+  const hasTopReps = topRepsState.topReps.length > 0;
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
+  
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -101,7 +105,9 @@ export function AuthenticatedRoot() {
           link: Routes.Representatives,
           onClick: () => setOpenRepresentatives(!openRepresentatives),
           subItems: [
-            { text: "My Top Reps", link: Routes.TopReps },
+            ...(hasTopReps
+              ? [{ text: "My Top Reps", link: Routes.TopReps }]
+              : []),
             { text: "House", link: Routes.HouseReps },
             { text: "Senate", link: Routes.SenateReps },
           ],
@@ -342,11 +348,7 @@ export function AuthenticatedRoot() {
                           </ListItem>
                           <Collapse in={openRepresentatives}>
                             <List component="div" disablePadding>
-                              {[
-                                { text: "My Top Reps", link: Routes.TopReps },
-                                { text: "House", link: Routes.HouseReps },
-                                { text: "Senate", link: Routes.SenateReps },
-                              ].map((subItem) => (
+                              {button.subItems?.map((subItem) => (
                                 <ListItem
                                   key={subItem.text}
                                   className={`cursor-pointer ${
@@ -355,7 +357,6 @@ export function AuthenticatedRoot() {
                                       : "hover:bg-accent50 hover:border-r-4 hover:border-accent800 rounded"
                                   }`}
                                   onClick={() => navigate(subItem.link)}
-                                  style={{ paddingLeft: "40px" }}
                                 >
                                   <ListItemText
                                     primary={
