@@ -32,6 +32,7 @@ import { Logout } from "../../assets/Logout";
 import expand from "assets/expand.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useEffect, useRef } from "react";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -50,16 +51,34 @@ export function AuthenticatedRoot() {
   );
   const [openRepresentatives, setOpenRepresentatives] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
+  const topRepsState = useSelector((state: RootState) => state.topReps);
+  const hasTopReps = topRepsState.topReps.length > 0;
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsSidebarOpen(false);
+      }
+    }
 
-  const topRepsState = useSelector((state: RootState) => state.topReps);
-  const hasTopReps = topRepsState.topReps.length > 0;
+    if (isSidebarOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSidebarOpen]);
 
   const sideNavItems = [
     {
@@ -193,13 +212,14 @@ export function AuthenticatedRoot() {
       {/* sidebar icon */}
       <div>
         <button
-          className="absolute block md:hidden mt-8  text-primary bg-transparent top-6 right-10"
+          className="absolute block md:hidden mt-8  text-primary bg-transparent top-[27px] left-10"
           onClick={toggleSidebar}
         >
           <MenuIcon fontSize="large" />
         </button>
 
         <aside
+          ref={sidebarRef}
           className={`${
             isSidebarOpen ? "block" : "hidden"
           } md:block fixed md:relative top-0 left-0 h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto min-w-80 no-scrollbar shadow-2xl`}
