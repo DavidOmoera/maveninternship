@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: webapp
+    labels:
+        app: webapp
+spec:
+    selector:
+        matchLabels:
+            app: webapp
+    replicas: 1
+    strategy:
+        type: RollingUpdate
+        rollingUpdate:
+            maxSurge: 1
+            maxUnavailable: 0
+    template:
+        metadata:
+            labels:
+                app: webapp
+        spec:
+            containers:
+                - name: webapp
+                  image: webapp:1.0.0
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 9020
+                  resources:
+                      limits:
+                          cpu: 256m
+                          memory: 512Mi
+                  livenessProbe:
+                      httpGet:
+                          path: /
+                          port: 9020
+                      initialDelaySeconds: 30
+                  readinessProbe:
+                      httpGet:
+                          path: /
+                          port: 9020
+                      initialDelaySeconds: 30
