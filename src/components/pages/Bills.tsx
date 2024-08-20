@@ -10,6 +10,8 @@ import { allBills, BILL_TYPES, BILL_YEARS } from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import gridIcon from "assets/grid.svg";
 import listIcon from "assets/listView.svg";
+import { useNavigate } from "react-router-dom";
+import { Routes } from "types/routes";
 
 interface TBillSearchForm {
   searchValue: string;
@@ -30,6 +32,7 @@ const pills = [
 
 export const Bills: React.FC = () => {
   const { control, handleSubmit } = useForm<TBillSearchForm>();
+  const navigate = useNavigate();
 
   const [isGridView, setIsGridView] = useState(true);
 
@@ -42,7 +45,7 @@ export const Bills: React.FC = () => {
   };
 
   function onClickBill() {
-    console.log("Remove from watched bills");
+    navigate(Routes.DetailsOfBill);
   }
 
   const toggleView = () => {

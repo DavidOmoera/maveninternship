@@ -27,11 +27,13 @@ const PERIOD_OPTIONS = [
 ];
 
 function isActivityXDaysAgo(noOfDays: string, daysAgo: number) {
-  return Number(noOfDays ?? 0) > daysAgo;
+  return !noOfDays ? true : Number(noOfDays) > daysAgo;
 }
 
 function isActivityType(activityType: string, selectedActivityType: string) {
-  return selectedActivityType === "All"
+  return !selectedActivityType
+    ? true
+    : selectedActivityType === "All"
     ? true
     : activityType === selectedActivityType;
 }
@@ -59,10 +61,10 @@ export function ActivityFeed() {
     return ACTIVITIES.filter((activity) => {
       const now = dayjs();
       const activityDate = new Date(Number(activity.timestamp) * 1000);
-      const daysAgo = now.diff(activityDate, "day");
+      const activityDaysAgo = now.diff(activityDate, "day");
 
       return (
-        isActivityXDaysAgo(noOfDays as string, daysAgo) &&
+        isActivityXDaysAgo(noOfDays as string, activityDaysAgo) &&
         isActivityType(activity.type, selectedActivityType as string)
       );
     });

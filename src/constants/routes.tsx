@@ -14,9 +14,8 @@ import { ActivityFeed } from "components/pages/ActivityFeed";
 import DetailsOfBill from "components/pages/DetailsOfBill";
 import { RepProfile } from "components/pages/RepProfile";
 import { Profile } from "components/pages/Profile";
-
 import { Representatives } from "components/pages/Representatives";
-import { TopReps } from "components/pages/TopReps";
+import  TopReps  from "components/pages/TopReps"; 
 import { HouseReps } from "components/pages/HouseReps";
 import { SenateReps } from "components/pages/SenateReps";
 import { Bills } from "components/pages/Bills";
@@ -79,7 +78,7 @@ const routes = createBrowserRouter([
         element: <Representatives />,
       },
       {
-        path: Routes.TopReps,
+        path: Routes.TopReps, 
         element: <TopReps />,
       },
       {
