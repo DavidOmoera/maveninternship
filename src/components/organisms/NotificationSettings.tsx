@@ -125,7 +125,7 @@ export function NotificationSettings({
           </div>
           <div className="flex justify-end mt-4">
             <button
-              className="text-white bg-red-600"
+              className="text-white bg-accent950"
               onClick={handleSaveChanges}
             >
               Save Changes

@@ -125,10 +125,6 @@ export const Bills: React.FC = () => {
                 onClick={toggleView}
                 alt="toggle view"
               />
-              <Pill
-                text="Filter Result"
-                containerClassName="row items-center rounded px-3 py-2 gap-1 bg-neutral50"
-              />
             </div>
           </div>
 
