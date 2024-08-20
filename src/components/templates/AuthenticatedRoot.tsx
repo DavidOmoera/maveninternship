@@ -206,7 +206,7 @@ export function AuthenticatedRoot() {
       {/* sidebar icon */}
       <div>
         <button
-          className="absolute block md:hidden mt-8  text-primary bg-transparent top-6 right-10"
+          className="absolute block md:hidden mt-8  text-primary bg-transparent top-[27px] left-10"
           onClick={toggleSidebar}
         >
           <MenuIcon fontSize="large" />

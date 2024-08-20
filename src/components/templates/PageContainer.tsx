@@ -68,7 +68,7 @@ export function PageContainer({
     <div {...props}>
       <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
         <div
-          className={classNames("row items-center", {
+          className={classNames("row items-center ml-12 md:ml-0", {
             "gap-3": !isBackButtonHidden,
           })}
         >
@@ -95,7 +95,7 @@ export function PageContainer({
             ) : null}
           </div>
         </div>
-        <div className="row gap-6 mr-14 md:mr-0">
+        <div className="row gap-6">
           <div className="row gap-3 items-center -mr-6 lg:mr-0">
             <Tooltip title="Chat with Bot" placement="bottom">
               <CoterieBot
