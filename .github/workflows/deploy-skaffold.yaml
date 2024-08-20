@@ -1,0 +1,127 @@
+name: Skaffold Build and Deploy
+on:
+    pull_request:
+        types:
+            - closed
+        branches:
+            - dev
+jobs:
+    SET_ENVIRONMENT:
+        runs-on: ubuntu-latest
+        outputs:
+            env_name: ${{ steps.branch_check.outputs.env_name }}
+        steps:
+            - name: Get Branch name
+              id: branch_check
+              run: |
+                  echo "Running on branch ${{ github.ref }}"
+                  if [ "${{ github.ref }}" = "refs/heads/dev" ]; then
+                      echo "::set-output name=env_name::dev"
+                  elif [ "${{ github.ref }}" = "refs/heads/stg" ]; then
+                      echo "::set-output name=env_name::stg"
+                  elif [ "${{ github.ref }}" = "refs/heads/prod" ]; then
+                      echo "::set-output name=env_name::prod"
+                  else
+                      echo "::set-output name=env_name::dev"
+                  fi
+            - name: Check Branch name
+              run: echo "I'm using variable ${{ steps.branch_check.outputs.env_name }}, prev_image_tag ${{ steps.branch_check.outputs.prev_image_tag }}"
+
+    SETUP_BUILD_AND_PUSH_CONTAINER:
+        name: Skaffold Build and Push
+        runs-on: ubuntu-20.04
+        environment: ${{ needs.SET_ENVIRONMENT.outputs.env_name }}
+        needs: [SET_ENVIRONMENT]
+        outputs:
+            env_name: ${{ needs.SET_ENVIRONMENT.outputs.env_name }}
+
+        defaults:
+            run:
+                shell: bash
+                working-directory: ${{ github.workspace }}/
+        steps:
+            # Get latest source code from current branch for build
+            - name: Checkout GitHub Action
+              uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - run: echo Branch - $CURRENT_BRANCH, repo - ${{ github.repository }}
+
+            - name: Log in with Azure
+              uses: azure/login@v2
+              with:
+                  creds: "${{ secrets.AZURE_CREDENTIALS }}"
+
+            - name: Login to Docker  Hub
+              uses: docker/login-action@v3
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            # - name: Login to Azure Container Registry
+            #   run: |
+            #     docker login legisaidev.azurecr.io \
+            #     -u ${{ secrets.ACR_CLIENT_ID }} \
+            #     -p ${{ secrets.ACR_SECRET }}
+
+            - name: Copy Over ENV vars
+              run: |-
+                  echo '${{ secrets.WEBAPP_ENVS }}' >> "${{ github.workspace }}/.env"
+
+            # Setup Skaffold
+            - name: Install Skaffold
+              run: |
+                  curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+                  sudo install skaffold /usr/local/bin/
+                  rm skaffold
+
+            - name: Build docker image
+              run: |-
+                  export COMMIT_SHA=$(git rev-parse --short=7 "$GITHUB_SHA")
+                  skaffold build --default-repo=${{ secrets.REPO }} --tag ${COMMIT_SHA} --push
+
+    PREPARE_AND_COMPILE_MANIFEST:
+        name: Compile And Generate Manifest with Kustomize
+        runs-on: ubuntu-20.04
+        environment: ${{ needs.SET_ENVIRONMENT.outputs.env_name }}
+        needs: [SETUP_BUILD_AND_PUSH_CONTAINER, SET_ENVIRONMENT]
+
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Pull recent changes
+              run: |-
+                  git config user.name mvn-git-actions
+                  git config user.email "108541431+mvn-git-actions@users.noreply.github.com"
+                  git pull
+            # Set up kustomize
+            - name: Set up Kustomize
+              run: |-
+                  curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+                  sudo install kustomize /usr/local/bin/
+                  rm kustomize
+            # Replacing image tag in k8s manifests
+            - name: Update Kubernetes resources
+              run: |-
+                  echo "Current Branch:  ${{ needs.SET_ENVIRONMENT.outputs.env_name }}"
+                  export ENV_NAME=${{ needs.SET_ENVIRONMENT.outputs.env_name }}
+                  pushd ${{ github.workspace }}/deploy/overlays/${ENV_NAME}/
+                  export COMMIT_SHA=$(git rev-parse --short=7 "$GITHUB_SHA")
+                  export MANIFEST_FILE=${{ github.workspace }}/pipeline/${ENV_NAME}/manifest.yaml
+
+                  kustomize edit set image webapp:1.0.0=${{ secrets.REPO }}/webapp:${COMMIT_SHA}
+
+                  kustomize build . > ${MANIFEST_FILE}
+                  popd
+
+            - name: Commit and Push changes
+              run: |
+                  git config user.name mvn-git-actions
+                  git config user.email "108541431+mvn-git-actions@users.noreply.github.com"
+                  git add .
+                  git commit -m "[Automated Commit] updated docker tag"
+                  git push | true
