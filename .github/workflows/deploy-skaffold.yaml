@@ -25,7 +25,7 @@ jobs:
                       echo "::set-output name=env_name::dev"
                   fi
             - name: Check Branch name
-              run: echo "I'm using variable ${{ steps.branch_check.outputs.env_name }}, prev_image_tag ${{ steps.branch_check.outputs.prev_image_tag }}"
+              run: echo "I'm using variable ${{ steps.branch_check.outputs.env_name }}"
 
     SETUP_BUILD_AND_PUSH_CONTAINER:
         name: Skaffold Build and Push
