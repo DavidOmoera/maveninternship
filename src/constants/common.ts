@@ -1,6 +1,3 @@
-import allenAlma from "assets/allen_alma.jpg";
-import allisonSteve from "assets/allison_steve.jpg";
-import anchiaRafael from "assets/anchia_rafael.jpg";
 import login from "assets/login.svg";
 import logout from "assets/logout.svg";
 import minuscirlce from "assets/minus-cirlce.svg";
@@ -27,6 +24,16 @@ import voter16 from "assets/voter_16.png";
 import voter17 from "assets/voter_17.png";
 import voter18 from "assets/voter_18.png";
 import senator from "assets/sen-adams.svg";
+import jasmineCrockett from "assets/jasmine_crockett.webp";
+import tonyGonzales from "assets/tony_gonzales.jpg";
+import danCrenshaw from "assets/dan_crenshaw.webp";
+import envelope from "assets/envelope.svg";
+import twitter from "assets/twitter.svg";
+import youtube from "assets/youtube.svg";
+import instagram from "assets/instagram.svg";
+import facebook from "assets/facebook.svg";
+import democrat from "assets/democrat.webp";
+import republican from "assets/republican.svg";
 
 export enum colors {
   primary = "#0C0853",
@@ -134,22 +141,25 @@ export const STATES = [
 
 export const topRepresentatives = [
   {
+    id: 0,
     title: "Most Votes",
-    representative: "Allen, Alma A.",
-    district: "District 131",
-    image: allenAlma,
+    representative: "Jasmine Crockett",
+    district: "TX-30",
+    image: jasmineCrockett,
   },
   {
+    id: 2,
     title: "Most Votes of the Week",
-    representative: "Allison, Steve",
-    district: "District 121",
-    image: allisonSteve,
+    representative: "Dan Crenshaw",
+    district: "2nd district",
+    image: danCrenshaw,
   },
   {
+    id: 1,
     title: "Least Votes",
-    representative: "Anchía, Rafael",
-    district: "District 103",
-    image: anchiaRafael,
+    representative: "Tony Gonzales",
+    district: "23rd district",
+    image: tonyGonzales,
   },
 ];
 
@@ -736,5 +746,122 @@ export const ACTIVITIES = [
     link: "Texas",
     iconBackgroundColor: "#FFEAF1",
     icon: minuscirlce,
+  },
+];
+
+export const REPRESENTATIVES = [
+  {
+    image: jasmineCrockett,
+    name: "Congresswoman Jasmine Crockett",
+    district: "TX-30, Texas",
+    socials: [
+      { icon: envelope, handle: "JasmineCrockett@uscongress.com" },
+      { icon: twitter, handle: "@RepJasmine" },
+      { icon: youtube, handle: "Congresswoman Jasmine Crockett" },
+      { icon: instagram, handle: "jasmineforus" },
+      { icon: facebook, handle: "Congresswoman Jasmine Crockett" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Female" },
+      { title: "Date of Birth", description: "March 29 1981" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "TX-30, Texas" },
+      {
+        title: "District Address",
+        description: "1825 Market Center Blvd.Suite 440 Dallas, TX  75207",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(214) 922-8885" },
+      {
+        title: "Capitol Address",
+        description: "1616 Longworth House Office Building 15 Independence Ave",
+      },
+      { title: "Capitol Phone", description: "(202) 225-8885" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
+    wiki: "https://en.wikipedia.org/wiki/Jasmine_Crockett",
+    party: {
+      name: "Democratic Party",
+      logo: democrat,
+    },
+    biography:
+      "Congresswoman Jasmine Crockett has purposefully made every decision with one goal in mind: protecting the civil liberties of those in underrepresented communities. As a public defender, civil rights attorney, State Representative, and United States Congresswoman, Jasmine Crockett dedicates her life to public service, with the goal of serving justice and ensuring equality for all.\n\n In the midst of political turmoil, economic distress, and racial inequality, Congresswoman Crockett laced up her shoes to march for justice and run for the Texas House of Representatives. The sole Black freshman and youngest Black lawmaker in Texas during the 87th Legislative Session, Congresswoman Crockett navigated what has been marked as the most conservative session in Texas history. Despite the uphill climb, Congresswoman Crockett filed more bills than any other freshman, assembled a wide coalition to pass landmark criminal justice reforms in the House, and brought more accessibility and accountability to her office than before. She was a founding member of both the Texas Progressive Caucus as well as the Texas Caucus on Climate, Energy, and the Environment. As State Representative, she fought for economic opportunity as a member of the Business & Industry Committee, and advocated for reform on the Criminal Jurisprudence Committee. Congresswoman Crockett was one of the lead architects of the 2021 Texas House Quorum Break, which brought attention to the draconian and restrictive voting measures being proposed in the legislature.\n\n Her passion for justice and the protection of peoples' rights led her to pursue a career as a public defender, and civil rights and criminal defense attorney. She focused on defending our most vulnerable among us from exploitation in the criminal justice system. As she began her career in the Bowie County Public Defender's Office, Congresswoman Crockett worked tirelessly to keep children safe and out of jail. Her time there serves as a reminder that criminal justice is an intersectional issue.\n\n Following her service in the Texas Legislature, Congresswoman Crockett accepted the call, and won the election for retiring Chairwoman Eddie Bernice Johnson's congressional seat in Texas' 30th District. Following her election, she hit the ground running and won a seat at the Leadership table as Freshman Leadership Representative, a position she will use to advocate for all Texans. As Freshman Leadership Representative, she is one of a few Black women ever elected to Democratic House Leadership. In Congress, Congresswoman Crockett hopes to continue to build on the legacy of Chairwoman Johnson, and will fight to expand access to healthcare, voting rights, economic opportunity, and dignity for all. She will fight to protect Medicare, Social Security, and expand critical social safety net programs. She will continue to be a tireless advocate for civil liberties, immigrant rights, and economic equity for women and the diverse communities across the State of Texas.\n\n Congresswoman Crockett earned her B.A. in Business Administration from Rhodes College and her J.D. from the University of Houston. She is licensed to practice law in Texas, Arkansas, and Federal Courts. Crockett is the past Bowie County Democratic Party Chair, held various leadership positions within the legal community, is a former board member of the Dallas County Metrocare Services, and is a proud member of Delta Sigma Theta Sorority, Incorporated.\n\n As a Congresswoman for all Texans, she's looking forward to continuing our fight and ushering in the next generation of servant leadership in the halls of Congress and Washington, D.C.",
+  },
+  {
+    image: tonyGonzales,
+    name: "Congressman Tony Gonzales",
+    district: "23rd district, Texas",
+    socials: [
+      { icon: twitter, handle: "@RepTonyGonzales" },
+      { icon: youtube, handle: "Tony Gonzales" },
+      { icon: instagram, handle: "reptonygonzales" },
+      { icon: facebook, handle: "Congressman Tony Gonzales" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "October 10 1980" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "23rd district, Texas" },
+      {
+        title: "District Address",
+        description: "4372 N. Loop 1604 W, Suite 205, San Antonio, TX 78249",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(210) 806-9920" },
+      {
+        title: "Capitol Address",
+        description:
+          "2244 Rayburn House Office Building, Washington, D.C. 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-4511" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
+    wiki: "https://en.wikipedia.org/wiki/Tony_Gonzales",
+    party: {
+      name: "Republican Party",
+      logo: republican,
+    },
+    biography:
+      "Congressman Tony Gonzales is a dedicated patriot with twenty years of military experience. Abandoned by his father at the age of two months, Tony knew he had to work hard to get ahead in life. At the age of 18, he dropped out of high school with one credit left to join the military and provide a path to success for himself and his family.\n\nAs a career cryptologist in the United States Navy, he rose to the highest enlisted rank of Master Chief Petty Officer for his support of combat operations in Iraq and Afghanistan. With multiple deployments to the Middle East and Asia, Tony has firsthand experience about the security challenges that face our country and the international community at large.\n\nHarnessing his military background, Tony also served on Capitol Hill as a Department of Defense Legislative Fellow for U.S. Senator Marco Rubio. In his time there, he contributed to the defense, foreign policy, and intelligence portfolios. In 2018, Tony was selected as a National Security Fellow at the Foundation for Defense of Democracies (FDD).\n\nTony worked hard to get ahead in life. He understands the value that a good education can provide. Although he had to postpone high school when he joined the Navy, he later earned his high school diploma and continued to pursue higher education. He holds a Master’s degree in International Relations from American Public University and is a Ph.D. candidate in International Development at the University of Southern Mississippi. He also holds a graduate certificate in Legislative Studies from Georgetown University, and served as an Assistant Professor at the University of Maryland system, where he taught political science with an emphasis on counterterrorism.\n\nCongressman Gonzales is married to his wife Angel and they have six wonderful children.",
+  },
+  {
+    image: danCrenshaw,
+    name: "Dan Crenshaw",
+    district: "2nd district, Texas",
+    socials: [
+      { icon: twitter, handle: "@RepDanCrenshaw" },
+      { icon: youtube, handle: "Rep. Dan Crenshaw" },
+      { icon: instagram, handle: "officialcrenshawstaff" },
+      { icon: facebook, handle: "Congressman Dan Crenshaw" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "March 14 1984" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "2nd district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
+    wiki: "https://en.wikipedia.org/wiki/Dan_Crenshaw",
+    party: {
+      name: "Republican Party",
+      logo: republican,
+    },
+    biography:
+      "Originally from the Houston area, Rep. Dan Crenshaw is a proud 6th generation Texan. From an early age, Dan knew that he wanted to serve his country with the most elite fighting force in history: the U.S. Navy SEALs. His father’s career in the Texas oil and gas industry moved his family all over the world, including Ecuador and Colombia, where he attended high school. As a result, Dan is fluent in Spanish.  In 2006, Dan graduated from Tufts University, where he earned his Naval officer commission through Navy ROTC. Following graduation, he immediately reported to SEAL training in Coronado, CA, where he met his future wife, Tara. After graduating SEAL training, Dan deployed to Fallujah, Iraq to join SEAL Team Three, his first of five deployments overseas.\n\nOn Dan’s third deployment in 2012, his life changed forever. After six months of combat operations, he was hit by an IED blast during a mission in Helmand province, Afghanistan. He was evacuated and awoke from his medically induced coma learning that his right eye had been destroyed in the blast and his left eye was badly damaged. Dan was completely blind and the doctors did not believe he would ever see again. Tara stood by him every day and night, keeping faith and praying he would see again. After several difficult surgeries and months of fighting a tough diagnosis, Dan eventually regained sight in his left eye, a miracle according to the head surgeon. Dan refused to quit and went on to deploy twice more, first back to the Middle East in 2014 and then South Korea in 2016.\n\nDan was medically retired in September of 2016 as a Lieutenant Commander after serving ten years in the SEAL Teams. He left service with two Bronze Stars (one with Valor), the Purple Heart, and the Navy Commendation Medal with Valor, among others. Soon after, Dan completed his Master’s in Public Administration at the Harvard Kennedy School of Government. Dan then returned to Houston, where his community was hit by Hurricane Harvey. The storm brought devastation the region had never seen. He spent his time volunteering in areas of Katy, helping his neighbors recover from the damage. He saw first-hand the unthinkable losses that Texas suffered, but he also saw Texan grit and resilience. This inspired him to do more for his community.  Dan and Tara decided that the best way to serve the people of Texas would be in elected office.\n\nIn November 2018, Dan was elected to represent the people of Texas’s Second Congressional District. In Congress, he serves on the House Energy and Commerce Committee, which has the broadest jurisdiction of any legislative committee in Congress. On this Committee, Dan serves on the Subcommittee on Health, as well as the Subcommittee on Environment, Manufacturing, & Critical Materials, and the Subcommittee on Oversight and Investigations. Dan also serves on the House Permanent Select Committee on Intelligence. On this Committee, he serves on the Central Intelligence Agency Subcommittee and National Intelligence Enterprise Subcommittee.\n\nDan believes in service before self and understands that there is no higher calling than service to the American people. Although he can no longer fight on the battlefield, the integrity, leadership, vision, and tenacity he learned in the SEAL teams are present every day in his fight for common sense solutions in Congress.",
   },
 ];
