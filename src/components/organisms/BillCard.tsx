@@ -145,7 +145,6 @@ export function ListCard({
   title,
   state,
   status,
-  // relativeTime,
   onClick,
   name,
   image,
