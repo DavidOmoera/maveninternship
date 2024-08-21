@@ -49,8 +49,8 @@ function isBillType(billType: string, selectedBillType: string) {
   return !selectedBillType
     ? true
     : selectedBillType === "All"
-      ? true
-      : billType === selectedBillType;
+    ? true
+    : billType === selectedBillType;
 }
 
 function isBillChamber(billChamber: string, selectedChamber: string) {
@@ -464,7 +464,11 @@ export const Dashboard: React.FC = () => {
               <h4 className="font-extrabold pb-6">My Top Representatives</h4>
               <div className="col gap-4">
                 {topRepresentatives.map((representative) => (
-                  <div className="gap-3 cursor-pointer" key={representative.title} onClick={onClickRepresentative}>
+                  <div
+                    className="gap-3 cursor-pointer"
+                    key={representative.title}
+                    onClick={onClickRepresentative}
+                  >
                     <h6 className="text-primary font-bold text-[14px] pb-4">
                       {representative.title}
                     </h6>
@@ -472,7 +476,7 @@ export const Dashboard: React.FC = () => {
                       <div className="row items-center gap-3">
                         <img
                           src={representative.image}
-                          className="w-12 h-12 object-cover"
+                          className="w-12 h-12 rounded-md object-cover"
                         />
                         <article className="col gap-[2px] max-w-[121px]">
                           <h6 className="font-extrabold text-black line-clamp-1">
