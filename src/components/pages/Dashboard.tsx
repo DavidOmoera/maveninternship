@@ -218,8 +218,8 @@ export const Dashboard: React.FC = () => {
     navigate(Routes.Representatives);
   }
 
-  function onClickRepresentative() {
-    navigate(Routes.RepProfile);
+  function onClickRepresentative(id: number) {
+    navigate(Routes.RepProfile + `/${id}`);
   }
 
   function toggleUpdatesSection() {
@@ -467,7 +467,7 @@ export const Dashboard: React.FC = () => {
                   <div
                     className="gap-3 cursor-pointer"
                     key={representative.title}
-                    onClick={onClickRepresentative}
+                    onClick={() => onClickRepresentative(representative.id)}
                   >
                     <h6 className="text-primary font-bold text-[14px] pb-4">
                       {representative.title}

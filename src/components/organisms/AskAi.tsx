@@ -1,4 +1,4 @@
-import profilePicture from "assets/profile_picture.webp";
+import profilePicture from "assets/jasmine_crockett.webp";
 import coterieBot from "assets/coterie_bot.svg";
 import sendIcon from "assets/send_icon.svg";
 import XAndShare from "assets/X_and_share.svg";
