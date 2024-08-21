@@ -128,10 +128,6 @@ export const Bills: React.FC = () => {
                 onClick={toggleView}
                 alt="toggle view"
               />
-              <Pill
-                text="Filter Result"
-                containerClassName="row items-center rounded px-3 py-2 gap-1 bg-neutral50"
-              />
             </div>
           </div>
 
@@ -150,16 +146,15 @@ export const Bills: React.FC = () => {
 
           {/* ListView Title */}
           {!isGridView && (
-            <div className="hidden lg:grid grid-cols-12 gap-2 p-4 bg-gray-100 rounded-lg shadow-md mt-8 text-sm font-bold">
+            <div className="hidden xl:grid grid-cols-12 gap-6 p-4 bg-gray-100 rounded-lg shadow-md mt-8 text-xs font-bold">
               <p className="col-span-2">Bill Name</p>
-              <p className="col-span-1">Author</p>
+              <p className="col-span-2">Author</p>
               <p className="col-span-2">Co-Authors</p>
-              <p className="col-span-2">State</p>
               <p className="col-span-1">State</p>
               <p className="col-span-1">Bill Status</p>
               <p className="col-span-1">Supported by</p>
               <p className="col-span-1">Date Created</p>
-              <p className="col-span-1">Watched Bills</p>
+              <p className="col-span-2">Watched Bills</p>
             </div>
           )}
 

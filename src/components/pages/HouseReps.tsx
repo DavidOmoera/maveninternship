@@ -23,10 +23,10 @@ import rep12 from "assets/rep12.png";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
-import { Representative } from 'types/common.ts';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store/slices/index.ts';
-import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice';
+import { Representative } from "types/common.ts";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "store/slices/index.ts";
+import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 
 const representatives = [
@@ -138,7 +138,7 @@ export function HouseReps() {
   };
 
   const handleAddToTopReps = (rep: Representative) => {
-    const updatedRep: Representative = { ...rep, pageType: 'House' };
+    const updatedRep: Representative = { ...rep, pageType: "House" };
     if (isRepInTopReps(updatedRep)) {
       dispatch(removeTopRep(updatedRep));
     } else {
@@ -146,9 +146,8 @@ export function HouseReps() {
     }
   };
 
-
   const isRepInTopReps = (rep: Representative) =>
-    topReps.some(existingRep => existingRep.name === rep.name);
+    topReps.some((existingRep) => existingRep.name === rep.name);
 
   const {
     control,
@@ -216,14 +215,14 @@ export function HouseReps() {
                             containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />
-                          <span style={{ color: "#1026C3" }}>
+                          <span className="text-xs text-blue-700 md:text-base">
                             • District {rep.district}, Texas
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    <p className="text-gray-600 mb-4 text-sm sm:mb-10">
+                    <p className="text-gray-600 mb-10 text-sm">
                       {expandedIndexes.includes(index)
                         ? rep.description
                         : `${rep.description.slice(0, 200)}`}
@@ -241,10 +240,10 @@ export function HouseReps() {
                   </div>
                   <button
                     className={classNames(
-                      "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none",
+                      "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none focus:outline-none text-xs lg:text-lg",
                       {
-                        "text-error": isRepInTopReps(rep),  
-                        "text-primary": !isRepInTopReps(rep),  
+                        "text-error": isRepInTopReps(rep),
+                        "text-primary": !isRepInTopReps(rep),
                       }
                     )}
                     onClick={() => handleAddToTopReps(rep)}
@@ -258,7 +257,7 @@ export function HouseReps() {
                         height: "24px",
                         filter: isRepInTopReps(rep)
                           ? "invert(24%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(108%) contrast(112%)"
-                          : "none", 
+                          : "none",
                       }}
                     />
                     <span
@@ -275,7 +274,6 @@ export function HouseReps() {
                         : "Add to Top Representatives"}
                     </span>
                   </button>
-
                 </div>
               ))}
             </div>

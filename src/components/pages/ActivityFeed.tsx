@@ -77,11 +77,11 @@ export function ActivityFeed() {
   );
 
   return (
-    <PageContainer title="Activity Feed" className="w-full bg-gray-100">
+    <PageContainer title="Activity Feed" className="w-full bg-gray-100 ">
       <div className="p-9 mb-9 mx-9 mt-6 bg-white rounded-xl">
         {/** Input fields */}
-        <div className="row justify-between mb-9">
-          <div className="flex gap-3 w-96">
+        <div className="row justify-between mb-9 flex-wrap gap-3">
+          <div className="flex gap-3 w-full lg:w-fit">
             <ControlledSelect
               name="noOfDays"
               control={activityControl}
@@ -103,7 +103,7 @@ export function ActivityFeed() {
             control={activityControl}
             leftIcon={<SearchIcon />}
             backgroundColor={colors.neutral50}
-            containerClasses="w-52 bg-neutral50"
+            containerClasses="w-full bg-neutral50 lg:w-52"
             helperText={activityFormErrors.searchValue?.message as string}
           />
         </div>
@@ -121,25 +121,29 @@ export function ActivityFeed() {
               return (
                 <div key={index} className="flex flex-col gap-2">
                   <div
-                    className="row items-center gap-2 p-2 rounded-lg bg-blue-50 min-h-16
+                    className="row items-start lg:items-center p-2 rounded-lg bg-blue-50 min-h-16
                 "
                   >
-                    <div className="w-44">
+                    <div className="w-24 lg:w-1/6">
                       <p className="text-gray-500 text-sm font-medium">
                         {relTime}
                       </p>
                     </div>
-                    <div className="row items-center gap-2 flex-wrap">
-                      <div
-                        className="p-1 rounded-full"
-                        style={{ backgroundColor: iconBackgroundColor }}
-                      >
-                        <img src={icon} alt={type} className="w-4 h-4" />
+                    <div className="row items-center gap-2 flex-wrap w-full md:w-5/6 mr-0 lg:mr-14">
+                      <div className="row">
+                        <div
+                          className="p-1 rounded-full"
+                          style={{ backgroundColor: iconBackgroundColor }}
+                        >
+                          <img src={icon} alt={type} className="w-4 h-4" />
+                        </div>
+                        <span className=" text-gray-700 text-base font-semibold w-64 lg:w-fit">
+                          You{" "}
+                          <strong className="text-neutral-950">{type}</strong>{" "}
+                          {label}
+                        </span>
                       </div>
-                      <span className=" text-gray-700 text-base font-semibold min-w-fit">
-                        You <strong className="text-neutral-950">{type}</strong>{" "}
-                        {label}
-                      </span>
+
                       {link && (
                         <Pill
                           text={link}

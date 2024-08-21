@@ -14,7 +14,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { RootState } from 'store/slices/index.ts';
+import { RootState } from "store/slices/index.ts";
 import { Button } from "components/atoms/Button";
 import { STATES } from "constants/common";
 import { Legislature, TState } from "components/atoms/Legislature";
@@ -32,7 +32,7 @@ import { Logout } from "../../assets/Logout";
 import expand from "assets/expand.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import classNames from "classnames";
+import { useEffect, useRef } from "react";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -51,18 +51,34 @@ export function AuthenticatedRoot() {
   );
   const [openRepresentatives, setOpenRepresentatives] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
+  const topRepsState = useSelector((state: RootState) => state.topReps);
+  const hasTopReps = topRepsState.topReps.length > 0;
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsSidebarOpen(false);
+      }
+    }
 
-  const topRepsState = useSelector((state: RootState) => state.topReps);
-  const hasTopReps = topRepsState.topReps.length > 0;
+    if (isSidebarOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
 
-
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSidebarOpen]);
 
   const sideNavItems = [
     {
@@ -73,14 +89,14 @@ export function AuthenticatedRoot() {
           icon: Home,
           iconColor: "",
           link: Routes.Dashboard,
-          onClick: () => { },
+          onClick: () => {},
         },
         {
           text: "Bills",
           icon: Gavel,
           iconColor: "",
           link: Routes.Bills,
-          onClick: () => { },
+          onClick: () => {},
         },
         {
           text: "Representatives",
@@ -89,7 +105,9 @@ export function AuthenticatedRoot() {
           link: Routes.Representatives,
           onClick: () => setOpenRepresentatives(!openRepresentatives),
           subItems: [
-            ...(hasTopReps ? [{ text: "My Top Reps", link: Routes.TopReps }] : []),
+            ...(hasTopReps
+              ? [{ text: "My Top Reps", link: Routes.TopReps }]
+              : []),
             { text: "House", link: Routes.HouseReps },
             { text: "Senate", link: Routes.SenateReps },
           ],
@@ -99,7 +117,7 @@ export function AuthenticatedRoot() {
           icon: Timeline,
           iconColor: "",
           link: Routes.ActivityFeed,
-          onClick: () => { },
+          onClick: () => {},
         },
       ],
     },
@@ -111,21 +129,21 @@ export function AuthenticatedRoot() {
           icon: Settings,
           link: Routes.Profile,
           iconColor: "",
-          onClick: () => { },
+          onClick: () => {},
         },
         {
           text: "Help & Support",
           icon: SupportAgent,
           link: Routes.HelpAndSupport,
           iconColor: "",
-          onClick: () => { },
+          onClick: () => {},
         },
         {
           text: "Logout",
           icon: Logout,
           link: Routes.Login,
           iconColor: "#FF2A58",
-          onClick: () => { },
+          onClick: () => {},
         },
       ],
     },
@@ -194,15 +212,17 @@ export function AuthenticatedRoot() {
       {/* sidebar icon */}
       <div>
         <button
-          className="absolute block md:hidden mt-8  text-primary bg-transparent top-6 right-10"
+          className="absolute block md:hidden mt-8  text-primary bg-transparent top-[27px] left-10"
           onClick={toggleSidebar}
         >
           <MenuIcon fontSize="large" />
         </button>
 
         <aside
-          className={`${isSidebarOpen ? "block" : "hidden"
-            } md:block fixed md:relative top-0 left-0 h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto min-w-80 no-scrollbar shadow-2xl`}
+          ref={sidebarRef}
+          className={`${
+            isSidebarOpen ? "block" : "hidden"
+          } md:block fixed md:relative top-0 left-0 h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto min-w-80 no-scrollbar shadow-2xl`}
         >
           <button
             className="block md:hidden absolute top-4 right-4 p-3 text-primary bg-transparent"
@@ -267,20 +287,26 @@ export function AuthenticatedRoot() {
                       {button.text === "Representatives" ? (
                         <>
                           <ListItem
-                            className={`group row gap-3 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${activeMenuItem === button.text
-                              ? "bg-accent50 border-r-4 border-accent800"
-                              : ""
-                              }`}
+                            className={`group row gap-3 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
+                              activeMenuItem === button.text
+                                ? "bg-accent50 border-r-4 border-accent800"
+                                : ""
+                            }`}
                             onClick={() => {
-                              onClickMenuItem(button.text, undefined, button.onClick);
-                              setOpenRepresentatives(prevState => !prevState);
+                              onClickMenuItem(
+                                button.text,
+                                undefined,
+                                button.onClick
+                              );
+                              setOpenRepresentatives(!openRepresentatives);
                             }}
                           >
                             <button.icon
-                              className={`mr-2 ${activeMenuItem === button.text
-                                ? "text-blue-900"
-                                : "text-neutral600"
-                                }`}
+                              className={`mr-2 ${
+                                activeMenuItem === button.text
+                                  ? "text-blue-900"
+                                  : "text-neutral600"
+                              }`}
                               color={
                                 button.iconColor ||
                                 (activeMenuItem === button.text
@@ -291,10 +317,11 @@ export function AuthenticatedRoot() {
                             <ListItemText
                               primary={
                                 <h6
-                                  className={`group-hover:text-accent800 ${activeMenuItem === button.text
-                                    ? "text-accent800 font-bold"
-                                    : "text-neutral800 font-normal"
-                                    }`}
+                                  className={`group-hover:text-accent800 ${
+                                    activeMenuItem === button.text
+                                      ? "text-accent800 font-bold"
+                                      : "text-neutral800 font-normal"
+                                  }`}
                                 >
                                   {button.text}
                                 </h6>
@@ -311,8 +338,11 @@ export function AuthenticatedRoot() {
                               <img
                                 src={expand}
                                 alt="Expand"
-                                className={`transition-transform transform ${openRepresentatives ? "rotate-0" : "rotate-180"
-                                  }`}
+                                className={`transition-transform transform ${
+                                  openRepresentatives
+                                    ? "rotate-0"
+                                    : "rotate-180"
+                                }`}
                               />
                             </IconButton>
                           </ListItem>
@@ -321,13 +351,6 @@ export function AuthenticatedRoot() {
                               {button.subItems?.map((subItem) => (
                                 <ListItem
                                   key={subItem.text}
-                                  className={classNames(
-                                    "cursor-pointer pl-10",
-                                    {
-                                      "bg-blue-100": location.pathname === subItem.link,
-                                    }
-                                  )}
-
                                   className={`cursor-pointer ${
                                     location.pathname === subItem.link
                                       ? "bg-accent50 border-r-4 border-accent800"
@@ -349,38 +372,46 @@ export function AuthenticatedRoot() {
                                     }
                                   />
                                 </ListItem>
-
                               ))}
                             </List>
                           </Collapse>
                         </>
                       ) : (
                         <ListItem
-                          className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${location.pathname === button.link
-                            ? "bg-accent50 border-r-4 border-accent800"
-                            : ""
-                            }`}
+                          className={`group row gap-4 items-center rounded-md py-4 px-6 hover:bg-accent50 hover:border-r-4 hover:border-accent800 cursor-pointer ${
+                            location.pathname === button.link
+                              ? "bg-accent50 border-r-4 border-accent800"
+                              : ""
+                          }`}
                           onClick={() =>
-                            onClickMenuItem(button.text, button.link, button.onClick)
+                            onClickMenuItem(
+                              button.text,
+                              button.link,
+                              button.onClick
+                            )
                           }
                         >
                           <button.icon
-                            className={`mr-2 ${location.pathname === button.link
-                              ? "text-blue-900"
-                              : "text-neutral600"
-                              }`}
+                            className={`mr-2 ${
+                              location.pathname === button.link
+                                ? "text-blue-900"
+                                : "text-neutral600"
+                            }`}
                             color={
                               button.iconColor ||
-                              (location.pathname === button.link ? "#172B98" : "#454545")
+                              (location.pathname === button.link
+                                ? "#172B98"
+                                : "#454545")
                             }
                           />
                           <ListItemText
                             primary={
                               <h6
-                                className={`group-hover:text-accent800 ${location.pathname === button.link
-                                  ? "text-accent800 font-semibold"
-                                  : "text-neutral800 font-medium text-base"
-                                  }`}
+                                className={`group-hover:text-accent800 ${
+                                  location.pathname === button.link
+                                    ? "text-accent800 font-semibold"
+                                    : "text-neutral800 font-medium text-base"
+                                }`}
                               >
                                 {button.text}
                               </h6>
@@ -435,13 +466,9 @@ export function AuthenticatedRoot() {
                     value={state.code}
                     checked={isSelected}
                     onChange={(e) => onSelectState(e, isSelected)}
-
-
-
                     style={{
                       color: isSelected ? "#1026C3" : "#D1D1D1",
                     }}
-
                     sx={{
                       [`&, &.Mui-checked`]: {
                         color: "#1026C3",

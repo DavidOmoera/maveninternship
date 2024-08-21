@@ -125,6 +125,11 @@ export function Profile() {
   const userData = useAppSelector(userDataSelector);
   const organizationData = useAppSelector(organizationDataSelector);
   const navigate = useNavigate();
+  const [selectedProfilePicture, setSelectedProfilePicture] =
+    useState<string>(profilePicture);
+  const [selectedOrgLogo, setSelectedOrgLogo] = useState<string>(orgLogo);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const orgUploadInputRef = useRef<HTMLInputElement | null>(null);
 
   const orgDetails = useMemo(
     () => [
@@ -188,9 +193,6 @@ export function Profile() {
     ]
   );
 
-  const [selectedProfilePicture, setSelectedProfilePicture] =
-    useState<string>(profilePicture);
-
   const {
     control: feedbackControl,
     handleSubmit: handleFeedbackFormSubmit,
@@ -246,9 +248,11 @@ export function Profile() {
   });
 
   function onClickChangePhoto() {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current?.click();
+  }
+
+  function onClickOrgLogo() {
+    orgUploadInputRef.current?.click();
   }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -257,6 +261,17 @@ export function Profile() {
       const reader = new FileReader();
       reader.onload = (e) => {
         setSelectedProfilePicture(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function handleUploadOrgLogo(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setSelectedOrgLogo(e.target?.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -369,8 +384,6 @@ export function Profile() {
     if (isManagePaymentMethodFormValid) setShowManagePaymentMethodForm(false);
   };
 
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   return (
     <PageContainer title="My Profile">
       <div className="col xl:grid grid-cols-2 gap-6 mx-9">
@@ -476,21 +489,21 @@ export function Profile() {
             </div>
           </div>
           <div className="row items-center gap-4 my-5 flex-wrap">
-            <img src={orgLogo} className="w-20 h-20" />
+            <img src={selectedOrgLogo} className="w-20 h-20 object-cover" />
             <div className="col items-start gap-2">
               <h6 className="text-neutral950">Organization Logo</h6>
               <Pill
                 text="Change Photo"
                 containerClassName="row items-center rounded-[2.37rem] px-3 py-2 gap-1 bg-neutral50 cursor-pointer"
                 rightIcon={<img src={photo} className="w-3 h-3" />}
-                onClick={onClickChangePhoto}
+                onClick={onClickOrgLogo}
               />
               <input
                 type="file"
-                ref={fileInputRef}
+                ref={orgUploadInputRef}
                 style={{ display: "none" }}
                 accept="image/*"
-                onChange={handleFileChange}
+                onChange={handleUploadOrgLogo}
               />
             </div>
           </div>

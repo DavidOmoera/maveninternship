@@ -474,7 +474,10 @@ export const Dashboard: React.FC = () => {
                     </h6>
                     <div className="rounded-xl bg-neutral50 p-3 row justify-between items-center">
                       <div className="row items-center gap-3">
-                        <img src={representative.image} className="w-12 h-12" />
+                        <img
+                          src={representative.image}
+                          className="w-12 h-12 rounded-md object-cover"
+                        />
                         <article className="col gap-[2px] max-w-[121px]">
                           <h6 className="font-extrabold text-black line-clamp-1">
                             {representative.representative}
@@ -484,7 +487,6 @@ export const Dashboard: React.FC = () => {
                           </p>
                         </article>
                       </div>
-
                       <div className="gap-[2px] row items-center">
                         <p className="text-neutral500">View</p>
                         <NavigateNextOutlinedIcon />
