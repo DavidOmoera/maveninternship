@@ -5,6 +5,8 @@ on:
             - closed
         branches:
             - dev
+    workflow_dispatch:
+        
 jobs:
     SET_ENVIRONMENT:
         runs-on: ubuntu-latest
