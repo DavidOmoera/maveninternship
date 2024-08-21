@@ -1,0 +1,17 @@
+apiVersion: skaffold/v3alpha1
+kind: Config
+metadata:
+    name: skaffold-deployment
+build:
+    tagPolicy:
+        gitCommit: {}
+    artifacts:
+        - image: webapp
+          context: .
+          docker:
+              dockerfile: Dockerfile
+          sync:
+              infer:
+                  - "**/*"
+          platforms:
+              - "linux/amd64"
