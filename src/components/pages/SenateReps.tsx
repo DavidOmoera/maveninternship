@@ -23,10 +23,10 @@ import sen12 from "assets/sen12.png";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
-import { Representative } from 'types/common.ts';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store/slices/index.ts';
-import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice';
+import { Representative } from "types/common.ts";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "store/slices/index.ts";
+import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 
 const representatives = [
@@ -138,7 +138,7 @@ export function SenateReps() {
   };
 
   const handleAddToTopReps = (rep: Representative) => {
-    const updatedRep: Representative = { ...rep, pageType: 'Senate' };
+    const updatedRep: Representative = { ...rep, pageType: "Senate" };
     if (isRepInTopReps(updatedRep)) {
       dispatch(removeTopRep(updatedRep));
     } else {
@@ -146,9 +146,8 @@ export function SenateReps() {
     }
   };
 
-
   const isRepInTopReps = (rep: Representative) =>
-    topReps.some(existingRep => existingRep.name === rep.name);
+    topReps.some((existingRep) => existingRep.name === rep.name);
 
   const {
     control,
@@ -177,6 +176,7 @@ export function SenateReps() {
                 leftIcon={<SearchIcon />}
                 error={!!errors.searchValue}
                 helperText={(errors.searchValue?.message as string) ?? ""}
+                className=""
               />
               <Button
                 text="Search Representatives"
@@ -210,20 +210,20 @@ export function SenateReps() {
                       />
                       <div>
                         <h4 className="text-lg font-bold">{rep.name}</h4>
-                        <div className="flex items-center">
+                        <div className="flex items-center text-nowrap">
                           <Pill
                             text="Senator"
                             containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />
-                          <span style={{ color: "#1026C3" }}>
+                          <span className="text-sm text-blue-700 lg:text-base">
                             • District {rep.district}, Texas
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    <p className="text-gray-600 mb-4 text-sm sm:mb-10">
+                    <p className="text-gray-600 mb-10 text-sm">
                       {expandedIndexes.includes(index)
                         ? rep.description
                         : `${rep.description.slice(0, 200)}`}
@@ -241,7 +241,7 @@ export function SenateReps() {
                   </div>
                   <button
                     className={classNames(
-                      "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none",
+                      "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none focus:outline-none text-xs lg:text-lg",
                       {
                         "text-error": isRepInTopReps(rep),
                         "text-primary": !isRepInTopReps(rep),
@@ -275,8 +275,6 @@ export function SenateReps() {
                         : "Add to Top Representatives"}
                     </span>
                   </button>
-
-
                 </div>
               ))}
             </div>

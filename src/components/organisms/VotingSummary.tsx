@@ -24,23 +24,35 @@ export function VotingSummary() {
         <hr className="bg-neutral-50 w-full my-4" />
 
         <div className="col gap-2">
-          <div className="row gap-3 items-center">
-            <h4>Voted Yes</h4>
-            <div className="row justify-end items-center px-3 py-2 gap-1 rounded-3xl w-52 bg-success">
-              <h5 className="text-white">{YES_VOTERS.length} votes</h5>
-              <TickCircle color={colors.white} />
+          <div className="row items-center flex-wrap">
+            <h4 className="w-28">Voted Yes</h4>
+            <div className="w-full lg:w-64">
+              <div className="row justify-end items-center px-3 py-2 gap-1 rounded-3xl w-full lg:w-64 bg-success">
+                <h5 className="text-white text-sm lg:text-base">
+                  {YES_VOTERS.length} votes
+                </h5>
+                <TickCircle color={colors.white} />
+              </div>
             </div>
           </div>
-          <div className="row gap-3 items-center">
-            <h4>Voted No</h4>
-            <div className="row justify-end px-3 py-2 rounded-3xl w-28 bg-error">
-              <h5 className="text-white">{NO_VOTERS.length} votes</h5>
+          <div className="row items-center flex-wrap">
+            <h4 className="w-28">Voted No</h4>
+            <div className="w-2/3 lg:w-64">
+              <div className="row justify-end px-3 py-2 rounded-3xl wit-full lg:w-44 bg-error">
+                <h5 className="text-white text-sm lg:text-base">
+                  {NO_VOTERS.length} votes
+                </h5>
+              </div>
             </div>
           </div>
-          <div className="row gap-3 items-center">
-            <h4>Abstained</h4>
-            <div className="row justify-end px-3 py-2 rounded-3xl w-22 bg-warning">
-              <h5 className="text-white">{ABSTAINED_VOTERS.length} votes</h5>
+          <div className="row items-center flex-wrap">
+            <h4 className="w-28">Abstained</h4>
+            <div className="w-fit lg:w-64">
+              <div className="row justify-end px-3 py-2 rounded-3xl w-fit bg-warning">
+                <h5 className="text-white text-sm lg:text-base">
+                  {ABSTAINED_VOTERS.length} votes
+                </h5>
+              </div>
             </div>
           </div>
         </div>
