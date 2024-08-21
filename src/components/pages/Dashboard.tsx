@@ -215,7 +215,7 @@ export const Dashboard: React.FC = () => {
   }
 
   function goToRepresentatives() {
-    navigate(Routes.Representatives);
+    navigate(Routes.HouseReps);
   }
 
   function onClickRepresentative(id: number) {
