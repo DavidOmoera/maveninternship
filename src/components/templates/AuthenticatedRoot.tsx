@@ -51,7 +51,7 @@ export function AuthenticatedRoot() {
   );
   const [openRepresentatives, setOpenRepresentatives] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const sidebarRef = useRef(null);
+  const sidebarRef = useRef<HTMLElement>(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,10 +61,10 @@ export function AuthenticatedRoot() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-  
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      if (!sidebarRef.current?.contains(event.target as HTMLElement)) {
         setIsSidebarOpen(false);
       }
     }
