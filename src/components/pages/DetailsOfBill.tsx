@@ -147,7 +147,9 @@ const DetailsOfBill: React.FC = () => {
                 </div>
               ))}
             </div>
+
             <hr className="bg-neutral500 my-6" />
+
             <div>
               <h6 className="underline mb-3">Details</h6>
               <div className="col gap-2 ">
@@ -170,7 +172,10 @@ const DetailsOfBill: React.FC = () => {
                 ))}
               </div>
             </div>
-            <hr className="bg-neutral500 my-6" />* Votes Summary
+
+            <hr className="bg-neutral500 my-6" />
+
+            {/** Votes Summary */}
             <div className="bg-gray-50 p-6 rounded-xl">
               <p className="text-5xl font-extrabold">{TOTAL_VOTERS_COUNT}</p>
               <h6 className="text-sm text-neutral400 mt-1">Votes for bill:</h6>
