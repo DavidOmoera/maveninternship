@@ -77,12 +77,12 @@ export function PageContainer({
               width={24}
               height={24}
               color={colors.neutral950}
-              className="rotate-180 cursor-pointer"
+              className="hidden rotate-180 cursor-pointer md:flex"
               onClick={onClickBack}
             />
           ) : null}
           <div className="row gap-2">
-            <h1 className="text-xl text-neutral950 font-extrabold lg:text-4xl">
+            <h1 className="text-lg text-neutral950 font-extrabold md:text-2xl lg:text-4xl">
               {title}
             </h1>
             {previousPageTitle ? (
@@ -96,11 +96,11 @@ export function PageContainer({
           </div>
         </div>
         <div className="row gap-6">
-          <div className="row gap-3 items-center -mr-6 lg:mr-0">
+          <div className="row gap-3 items-center -mr-7 lg:mr-0 pr-2 lg:pr-0">
             <Tooltip title="Chat with Bot" placement="bottom">
               <div>
                 <CoterieBot
-                  className="w-6 -mr-2 cursor-pointer lg:w-6 lg:mr-2"
+                  className="w-4 -mr-2 cursor-pointer lg:w-6 lg:mr-2"
                   color="blue"
                   onClick={handleOpenModal}
                 />
@@ -126,7 +126,9 @@ export function PageContainer({
               className="w-8 h-8 object-cover rounded md:w-12 md:h-12"
             />
             <article className="col gap-1">
-              <h6 className="text-neutral950 font-bold">Seth Rogan</h6>
+              <h6 className="text-neutral950 font-bold text-sm lg:text-base">
+                Seth Rogan
+              </h6>
               <p>
                 <span className="text-neutral600 text-sm font-medium">
                   Coterie

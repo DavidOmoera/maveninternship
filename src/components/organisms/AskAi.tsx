@@ -25,7 +25,7 @@ export function ASK_AI() {
 
   return (
     <div className="w-full">
-      <div className="bg-white rounded-lg flex flex-col relative w-full">
+      <div className="rounded-lg flex flex-col relative w-full">
         {/** Chat Header */}
         <div className="w-full row justify-between items-center mb-9">
           <div className="row items-center gap-4">
