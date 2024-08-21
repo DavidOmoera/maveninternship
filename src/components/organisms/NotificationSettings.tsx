@@ -4,6 +4,7 @@ import {
   FormControlLabel,
   Radio,
   Checkbox,
+  SelectChangeEvent,
 } from "@mui/material";
 import { useState } from "react";
 import X from "assets/X.svg";
@@ -39,7 +40,7 @@ export function NotificationSettings({
   };
 
   const handleNotificationFrequencyChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: SelectChangeEvent<string>
   ) => {
     setNotificationFrequency(event.target.value);
   };
