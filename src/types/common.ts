@@ -42,7 +42,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type RootState = ReturnType<typeof store.getState>;
 
-const senators: Representative[] = [
+export const senators: Representative[] = [
   {
     image: sen1,
     name: "Sen. Bryan Hughes",
@@ -129,7 +129,7 @@ const senators: Representative[] = [
   },
 ];
 
-const representatives: Representative[] = [
+export const representatives: Representative[] = [
   {
     image: rep1,
     name: "Rep. Allen, Alma A.",
