@@ -63,7 +63,7 @@ jobs:
 
             - name: Login to Azure Container Registry
               run: |
-                docker login ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
+                docker login ${{ secrets.CONTAINER_REGISTRY }} \
                 -u ${{ secrets.AZURE_CREDENTIALS.clientId }} \
                 -p ${{ secrets.AZURE_CREDENTIALS.clientSecret }}
 
