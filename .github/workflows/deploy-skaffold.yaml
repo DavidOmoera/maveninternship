@@ -81,7 +81,7 @@ jobs:
             - name: Build docker image
               run: |-
                   export COMMIT_SHA=$(git rev-parse --short=7 "$GITHUB_SHA")
-                  skaffold build --default-repo=${{ secrets.CONTAINER_REGISTRY }}/webapp --tag ${COMMIT_SHA} --push
+                  skaffold build --default-repo=${{ secrets.CONTAINER_REGISTRY }} --tag ${COMMIT_SHA} --push
 
     PREPARE_AND_COMPILE_MANIFEST:
         name: Compile And Generate Manifest with Kustomize
