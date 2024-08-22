@@ -3,3 +3,7 @@ kind: Kustomization
 namespace: webapp-ns
 resources:
 - ../../base
+images:
+- name: webapp:1.0.0
+  newName: legisaiacrdev.azurecr.io/webapp
+  newTag: a0a9647
