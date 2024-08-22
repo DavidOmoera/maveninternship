@@ -1,4 +1,4 @@
-import store from "store";
+import { store } from "store";
 import sen1 from "assets/sen1.png";
 import sen2 from "assets/sen2.png";
 import sen3 from "assets/sen3.png";
@@ -29,9 +29,8 @@ export type Representative = {
   name: string;
   district: number;
   description: string;
-  pageType?: 'House' | 'Senate'; 
+  pageType?: "House" | "Senate";
 };
-
 
 export type TSVGProps = Partial<{
   color: string;

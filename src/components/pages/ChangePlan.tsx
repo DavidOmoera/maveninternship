@@ -5,6 +5,9 @@ import { PageContainer } from "components/templates/PageContainer";
 import { useState } from "react";
 import xIcon from "assets/X.svg";
 import { colors } from "constants/common";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { userDataSelector } from "store/slices/auth/selectors";
+import { updateUserData } from "store/slices/auth";
 
 const PLANS = [
   {
@@ -27,7 +30,8 @@ const PLANS = [
   },
 ];
 export function ChangePlan() {
-  const [selectedPlan, setSelectedPlan] = useState<string>("Regulatory AI");
+  const userData = useAppSelector(userDataSelector);
+  const dispatch = useAppDispatch();
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
     useState<boolean>(false);
   const [newPlan, setNewPlan] = useState<string>();
@@ -43,7 +47,7 @@ export function ChangePlan() {
 
   function onConfirmPlanCancellation() {
     if (newPlan) {
-      setSelectedPlan(newPlan);
+      dispatch(updateUserData({ plan: newPlan }));
     }
     setIsConfirmationModalOpen(false);
   }
@@ -68,7 +72,7 @@ export function ChangePlan() {
             title={plan.title}
             description={plan.description}
             price={plan.price}
-            isCurrentPlan={plan.title === selectedPlan}
+            isCurrentPlan={plan.title === userData?.plan}
             onCancelPlan={onCancelPlan}
             onSelectPlan={onSelectPlan}
           />

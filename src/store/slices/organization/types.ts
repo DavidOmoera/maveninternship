@@ -9,6 +9,7 @@ export type TOrganization = {
     address: string;
     zipCode: string;
   };
+  logo: string;
 };
 
 export type TOrganizationState = Partial<{
