@@ -68,7 +68,7 @@ export function PageContainer({
     <div {...props}>
       <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
         <div
-          className={classNames("row items-center ml-12 md:ml-0", {
+          className={classNames("row items-center ml-8 md:ml-0", {
             "gap-3": !isBackButtonHidden,
           })}
         >
@@ -82,7 +82,7 @@ export function PageContainer({
             />
           ) : null}
           <div className="row gap-2">
-            <h1 className="text-lg text-neutral950 font-extrabold md:text-2xl lg:text-4xl">
+            <h1 className="text-base text-neutral950 font-extrabold md:text-2xl lg:text-4xl">
               {title}
             </h1>
             {previousPageTitle ? (
