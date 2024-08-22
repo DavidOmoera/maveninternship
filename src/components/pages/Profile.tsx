@@ -125,9 +125,6 @@ export function Profile() {
   const userData = useAppSelector(userDataSelector);
   const organizationData = useAppSelector(organizationDataSelector);
   const navigate = useNavigate();
-  const [selectedProfilePicture, setSelectedProfilePicture] =
-    useState<string>(profilePicture);
-  const [selectedOrgLogo, setSelectedOrgLogo] = useState<string>(orgLogo);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const orgUploadInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -260,7 +257,9 @@ export function Profile() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setSelectedProfilePicture(e.target?.result as string);
+        dispatch(
+          updateUserData({ profilePicture: e.target?.result as string })
+        );
       };
       reader.readAsDataURL(file);
     }
@@ -271,7 +270,7 @@ export function Profile() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        setSelectedOrgLogo(e.target?.result as string);
+        dispatch(updateOrganizationData({ logo: e.target?.result as string }));
       };
       reader.readAsDataURL(file);
     }
@@ -391,7 +390,7 @@ export function Profile() {
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4 flex-wrap">
             <img
-              src={selectedProfilePicture}
+              src={userData?.profilePicture ?? profilePicture}
               className="w-20 h-20 object-cover rounded"
             />
             <div className="col items-start gap-2 cursor-pointer">
@@ -446,7 +445,7 @@ export function Profile() {
             <Pill text="Member since August 2024" />
           </div>
           <div className="col gap-3">
-            <h2 className="text-black">Regulatory AI</h2>
+            <h2 className="text-black">{userData?.plan ?? "Regulatory AI"}</h2>
             <span className="row items-center gap-1 flex-wrap">
               <p className="text-neutral500">Next payment:</p>
               <h6 className="text-neutral500">24 August, 2025</h6>
@@ -489,7 +488,10 @@ export function Profile() {
             </div>
           </div>
           <div className="row items-center gap-4 my-5 flex-wrap">
-            <img src={selectedOrgLogo} className="w-20 h-20 object-cover" />
+            <img
+              src={organizationData?.logo ?? orgLogo}
+              className="w-20 h-20 object-cover"
+            />
             <div className="col items-start gap-2">
               <h6 className="text-neutral950">Organization Logo</h6>
               <Pill
