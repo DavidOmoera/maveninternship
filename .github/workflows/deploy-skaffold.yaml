@@ -63,8 +63,8 @@ jobs:
 
             - name: Login to Azure Container Registry
               run: |
-                echo ${{ secrets.AZURE_CREDENTIALS.clientSecret }} | docker login ${{ secrets.CONTAINER_REGISTRY }} \
-                -u ${{ secrets.AZURE_CREDENTIALS.clientId }} \
+                echo ${{ secrets.ACR_PASSWORD }} | docker login ${{ secrets.CONTAINER_REGISTRY }} \
+                -u ${{ secrets.ACR_USER }} \
                 --password-stdin
 
             - name: Copy Over ENV vars
