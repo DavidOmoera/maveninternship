@@ -43,7 +43,6 @@ export function GridCard({
     <div
       key={state}
       className="w-full lg:max-w-[474px] h-auto cursor-pointer mb-6 mt-10 rounded-xl bg-gray-100 shadow-4xl relative"
-      onClick={onClick}
       style={{ boxShadow: "1px 1px 10px 0px #7979791A" }}
     >
       <div className="row justify-between items-center px-3 bg-white">
@@ -52,11 +51,13 @@ export function GridCard({
       </div>
 
       <div className="px-4 bg-white pb-1">
-        <h4 className="line-clamp-2 py-2 font-bold text-xl">{title}</h4>
+        <h4 className="line-clamp-2 py-2 font-bold text-xl" onClick={onClick}>
+          {title}
+        </h4>
         <h6 className="text-blue-600 text-sm font-semibold mb-2 -mt-1">
           {status}
         </h6>
-        <p className="text-sm text-neutral500 ">
+        <p className="text-sm text-neutral500 " onClick={onClick}>
           {isExpanded ? description : `${description.slice(0, 200)}`}
           {description.length > 200 && (
             <span
@@ -167,11 +168,13 @@ export function ListCard({
   return (
     <div
       className="w-full mb-6 mt-2 p-4 rounded-xl bg-gray-100 shadow-lg grid gap-6 items-center sm:flex sm:flex-col xl:grid xl:grid-cols-12"
-      onClick={onClick}
       style={{ boxShadow: "1px 1px 10px 0px #7979791A" }}
     >
       {/* Bill Name */}
-      <div className="col-span-2 text-lg lg:text-xs  font-bold truncate">
+      <div
+        className="col-span-2 text-lg lg:text-xs  font-bold truncate cursor-pointer"
+        onClick={onClick}
+      >
         {title}
       </div>
 
