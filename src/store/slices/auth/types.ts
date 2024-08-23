@@ -3,6 +3,8 @@ export type TUserProfile = {
   lastName: string;
   phone: string;
   email: string;
+  profilePicture: string;
+  plan: string;
 };
 
 export type TAuthState = Partial<{
