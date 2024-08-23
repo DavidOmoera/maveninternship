@@ -4,7 +4,9 @@ import download from "assets/download.svg";
 
 const billTitle = "Secure the Border Act of 2023";
 
-export function AboutBill() {
+type TAboutBillProps = { showBillSummary: () => void };
+
+export function AboutBill({ showBillSummary }: TAboutBillProps) {
   function onClickDownload() {
     const downloadButton = document.getElementById("download-bill");
     const billText = `
@@ -59,7 +61,11 @@ export function AboutBill() {
             Read Coterie AI's Summary instead.
           </p>
         </div>
-        <Button rightIcon={<ArrowRight />} text="View Summary" />
+        <Button
+          rightIcon={<ArrowRight />}
+          text="View Summary"
+          onClick={showBillSummary}
+        />
       </div>
     </div>
   );

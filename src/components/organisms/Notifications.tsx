@@ -9,7 +9,7 @@ interface NotificationItems {
   status: string;
   time: string;
 }
- 
+
 const notifications: NotificationItems[] = [
   {
     title: "Secure the Border Act of 2023 has commenced to Level 1",
@@ -65,7 +65,7 @@ export function Notifications({
 }: TNotificationsProps) {
   return (
     <Dialog open={open} onClose={onClose}>
-      <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg">
+      <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg overflow-scroll no-scrollbar">
         <div className="row justify-end">
           <Pill
             text="Close"

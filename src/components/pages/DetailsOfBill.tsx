@@ -128,6 +128,10 @@ const DetailsOfBill: React.FC = () => {
     },
   ];
 
+  function showBillSummary() {
+    setActiveTab(BILL_TAB.SUMMARY);
+  }
+
   return (
     <PageContainer title="H.RES.964" className="col h-full">
       {/* Main Content */}
@@ -227,7 +231,7 @@ const DetailsOfBill: React.FC = () => {
 
               {activeTab === BILL_TAB.ABOUT ? (
                 <Suspense fallback={null}>
-                  <AboutBill />
+                  <AboutBill showBillSummary={showBillSummary} />
                 </Suspense>
               ) : null}
               {activeTab === BILL_TAB.ASK_AI ? (
