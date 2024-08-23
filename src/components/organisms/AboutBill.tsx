@@ -33,7 +33,7 @@ export function AboutBill({ showBillSummary }: TAboutBillProps) {
   }
 
   return (
-    <>
+    <div className="p-2">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-bold">Introduction</h3>
         <a
@@ -54,7 +54,7 @@ export function AboutBill({ showBillSummary }: TAboutBillProps) {
         tristique orci at hendrerit. Sed erat elit, egestas a nisl vel, gravida
         vehicula magna.
       </p>
-      <div className="mt-9 p-6 bg-neutral50 rounded-lg flex justify-between items-center">
+      <div className="mt-9 p-6 bg-neutral50 rounded-lg flex justify-between items-center flex-wrap gap-4">
         <div>
           <h5 className="font-bold">Skip the Jargon!</h5>
           <p className="text-neutral500 text-sm">
@@ -67,6 +67,6 @@ export function AboutBill({ showBillSummary }: TAboutBillProps) {
           onClick={showBillSummary}
         />
       </div>
-    </>
+    </div>
   );
 }

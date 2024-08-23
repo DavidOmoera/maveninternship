@@ -417,7 +417,9 @@ export function Profile() {
                 onClick={onClickEditProfile}
               >
                 <img src={pencil} className="w-3 h-3" />
-                <p className="text-primary font-medium">Edit Details</p>
+                <p className="text-primary font-medium text-sm md:text-base">
+                  Edit Details
+                </p>
               </div>
             </div>
             <div className="col gap-2">
@@ -427,7 +429,7 @@ export function Profile() {
                   key={contact.text}
                 >
                   <img src={contact.icon} className="w-4 h-4" />
-                  <p>{contact.text}</p>
+                  <p className="text-sm md:text-base">{contact.text}</p>
                 </div>
               ))}
             </div>
@@ -439,10 +441,14 @@ export function Profile() {
             Change Password
           </h6>
         </section>
+
         <section className="col gap-4 p-9 rounded-xl bg-white">
           <div className="row justify-between items-center w-full flex-wrap">
             <h4 className="text-neutral950">Your Plan</h4>
-            <Pill text="Member since August 2024" />
+            <Pill
+              textClass="text-sm md:text-base"
+              text="Member since August 2024"
+            />
           </div>
           <div className="col gap-3">
             <h2 className="text-black">{userData?.plan ?? "Regulatory AI"}</h2>
@@ -484,7 +490,9 @@ export function Profile() {
               onClick={onClickEditOrgDetails}
             >
               <img src={pencil} className="w-3 h-3" />
-              <p className="text-primary font-medium">Edit Details</p>
+              <p className="text-primary font-medium text-sm md:text-base">
+                Edit Details
+              </p>
             </div>
           </div>
           <div className="row items-center gap-4 my-5 flex-wrap">
@@ -522,7 +530,9 @@ export function Profile() {
                 onClick={onClickEditOrgContact}
               >
                 <img src={pencil} className="w-3 h-3" />
-                <p className="text-primary font-medium">Edit Details</p>
+                <p className="text-primary font-medium text-sm md:text-base">
+                  Edit Details
+                </p>
               </div>
             </div>
             <div className="grid grid-cols-1 mt-5 gap-5 xl:grid-cols-2">

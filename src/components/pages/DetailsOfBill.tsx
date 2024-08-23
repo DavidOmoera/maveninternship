@@ -135,10 +135,10 @@ const DetailsOfBill: React.FC = () => {
   return (
     <PageContainer title="H.RES.964" className="col h-full">
       {/* Main Content */}
-      <div className="flex-1 bg-gray-100 px-9 flex">
+      <div className="flex-1 bg-gray-100 px-9">
         <div className="w-full flex flex-wrap gap-4">
           {/* Bill Details Section */}
-          <div className="flex-1 p-9 bg-white rounded-xl mb-6 min-w-[400px]">
+          <div className="flex-1 p-6 bg-white rounded-xl mb-6 min-w-[320px]">
             <h2 className="text-neutral950 font-extrabold pb-6">
               Secure the Border Act of 2023
             </h2>
@@ -220,7 +220,7 @@ const DetailsOfBill: React.FC = () => {
 
           {/* Main Tabs */}
           <div className="flex-1 gap-6 basis-2/3 ">
-            <div className="flex-1 p-9 bg-white rounded-xl">
+            <div className="flex-1 py-9 px-5 lg:px-9 bg-white rounded-xl">
               {/* Navigation Bar */}
               <Tabs
                 tabs={BILL_TABS}
