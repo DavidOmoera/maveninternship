@@ -1379,7 +1379,7 @@ Representative Bernal was elected to the Texas House of Representatives in Febru
 Diego is the proud father of Xan Rosa Bernal.`,
   },
   {
-    name: "Rep. Salman, Bhojani",
+    name: "Rep. Salman Bhojani",
     district: "92nd district, Texas",
     image: rep10,
     socials: [{ "icon": twitter, "handle": "@RepSalmanBhojani" },
@@ -1417,7 +1417,7 @@ Rep. Bhojani serves on the House Committee on Criminal Jurisprudence and the Hou
 Rep. Bhojani is proud to call Texas home. He lives in Euless with his wife, Nima, and his children, Aarish and Raisha. He enjoys traveling, running, hiking, playing ping pong, and spending time with his family.`,
   },
   {
-    name: "Rep. Greg, Bonnen",
+    name: "Rep. Greg Bonnen",
     district: "24th district, Texas",
     image: rep11,
     socials: [{ "icon": twitter, "handle": "@RepGregBonnen" },
@@ -1459,7 +1459,7 @@ Dr. Bonnen grew up in Angleton and graduated cum laude from Texas A&M University
 Representative Bonnen and his wife Kim live in Friendswood and have two daughters, Lindsay and Janae.`,
   },
   {
-    name: "Rep. Rhetta Andrews, Bowers ",
+    name: "Rep. Rhetta Andrews Bowers ",
     district: "83rd district, Texas",
     image: rep12,
     socials: [{ "icon": twitter, "handle": "@RepRhettaBowers" },
