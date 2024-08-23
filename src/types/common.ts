@@ -133,84 +133,84 @@ export const senators: Representative[] = [
 export const representatives: Representative[] = [
   {
     image: rep1,
-    name: "Rep. Alma A., Allen",
+    name: "Rep. Alma A. Allen",
     district: 131,
     description: "Prior to being elected to the Texas House of Representatives, State Representative Dr. Alma A. Allen was elected to, and served on, the State Board of Education for over 10 years.",
     id: 3
   },
   {
     image: rep2,
-    name: "Rep. Steve, Allison",
+    name: "Rep. Steve Allison",
     district: 121,
     description: "State Representative Steve Allison represents House District 121, succeeding former Speaker of the House Joe Straus. District 121 covers parts of north central and northeast San Antonio, as well as the cities of Alamo Heights, Olmos Park, and Terrell Hills.",
     id: 4
   },
   {
     image: rep3,
-    name: "Rep. Rafael, Anchía",
+    name: "Rep. Rafael Anchía",
     district: 103,
     description: "State Representative Rafael Anchía is currently serving his tenth term in the Texas Legislature and represents a western corridor of Dallas County, which includes the cities of Dallas, Carrollton, Farmers Branch, and Irving. Rep. Anchía currently serves on the House Committees on State Affairs and Energy Resources.",
     id: 5
   },
   {
     image: rep4,
-    name: "Rep. Charles Doc, Anderson",
+    name: "Rep. Charles Doc Anderson",
     district: 56,
     description: "Chairman, Texas Legislative Rural Caucus Vice-Chairman, Texas House Aerospace Caucus Vice-Chairman, House Committee on Energy House Committee on Agriculture and Livestock",
     id: 6
   },
   {
     image: rep5,
-    name: "Rep. Trent, Ashby",
+    name: "Rep. Trent Ashby",
     district: 9,
     description: "Representative Trent Ashby was sworn into the Texas House of Representatives in January 2013. His district is comprised of Angelina, Houston, Polk, San Augustine, Trinity, and Tyler Counties. He currently serves as Chair of the House Committee on Culture, Recreation & Tourism.",
     id: 7
   },
   {
     image: rep6,
-    name: "Rep. Ernest, Bailes",
+    name: "Rep. Ernest Bailes",
     district: 18,
     description: "Elected in 2016, State Representative Ernest Bailes represents House District 18. Bailes, a lifelong rancher and agriculturalist, was raised on his family’s dairy and beef cattle operation in East Texas. He grew up in Shepherd and earned his B.S. from Texas A&M University in 2004.",
     id: 8
   },
   {
     image: rep7,
-    name: "Rep. Cecil, Bell Jr.",
+    name: "Rep. Cecil Bell Jr.",
     district: 3,
     description: "Representative Cecil Bell, Jr. is a sixth generation Texan whose family has been in the State of Texas since 1852. The oldest of three siblings, he was born in Rosenberg but was raised all across Texas. A 2009 Ernst & Young Entrepreneur of the Year Finalist for the Southwest Region.",
     id: 9
   },
   {
     image: rep8,
-    name: "Rep. Keith, Bell",
+    name: "Rep. Keith Bell",
     district: 4,
     description: "A lifelong Texan, State Representative Keith Bell resides in Forney, Texas. Before being elected to represent House District 4 in November 2018, Keith served as a trustee on the Forney ISD School Board for 20 years, elected as president for 17 of those years.",
     id: 10
   },
   {
     image: rep9,
-    name: "Rep. Diego M., Bernal",
+    name: "Rep. Diego M. Bernal",
     district: 123,
     description: "Diego Bernal proudly represents the 123rd District in the Texas House of Representatives. A life-long San Antonian and the son of a Vietnam War Veteran, Diego grew up watching his mother and father make sacrifices to provide opportunities for their children.",
     id: 11
   },
   {
     image: rep10,
-    name: "Rep. Salman, Bhojani",
+    name: "Rep. Salman Bhojani",
     district: 92,
     description: "Salman Bhojani is a husband, father, small business owner, attorney, and councilmember. He was elected to the Texas House of Representatives in November 2022 to represent House District 92. In 2018, he was elected to the Euless City Council, becoming the first Muslim-American elected in North Texas.",
     id: 12
   },
   {
     image: rep11,
-    name: "Rep. Greg, Bonnen",
+    name: "Rep. Greg Bonnen",
     district: 24,
     description: "State Representative Greg Bonnen, MD is serving his fourth term in the Texas House of Representatives and currently represents the 24th district which encompasses the cities of Galveston, League City, Santa Fe, and Tiki Island.",
     id: 13
   },
   {
     image: rep12,
-    name: "Rep. Rhetta Andrews, Bowers ",
+    name: "Rep. Rhetta Andrews Bowers ",
     district: 83,
     description: "State Representative Dustin Burrows proudly serves the people of House District 83 in West Texas. A fourth generation West Texan, Dustin was born and raised in Lubbock and attended Lubbock public schools. He received his BA from Rhodes College and his JD from Texas Tech School of Law.",
     id: 14
