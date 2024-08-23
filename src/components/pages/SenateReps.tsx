@@ -88,7 +88,7 @@ export function SenateReps() {
                 helperText={(errors.searchValue?.message as string) ?? ""}
               />
               <Button
-                text="Search Representatives"
+                text="Search Senators"
                 className="bg-blue-900 text-white py-2 px-4 rounded-lg"
                 onClick={handleSubmit(onSearchBill)}
               />

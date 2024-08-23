@@ -184,7 +184,13 @@ export const topRepresentatives = [
     district: "23rd district",
     image: tonyGonzales,
   },
+];
+
+
+  export const repProfileRepresentatives = [
   {
+
+    
     id: 3,
     title: "Rep. Alma A., Allen",
     representative: "Rep. Alma A., Allen",
