@@ -2,7 +2,7 @@ import { Pill } from "components/molecules/Pill";
 import { Bill } from "components/organisms/Bill";
 import { PageContainer } from "components/templates/PageContainer";
 import { colors, REPRESENTATIVES, watchedBills } from "constants/common";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Routes } from "types/routes";
 import filter from "assets/filter.svg";
 import { ArrowRight } from "assets/ArrowRight";
@@ -21,6 +21,9 @@ function BioData({ title, description }: TBioDataProps) {
 export function RepProfile() {
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
+  const location = useLocation();
+
+
   const {
     name,
     image,
@@ -31,6 +34,10 @@ export function RepProfile() {
     district,
     party,
   } = REPRESENTATIVES[Number(params.id)] ?? {};
+
+
+  const pageType = location.state?.pageType || "House";
+
   function onClickBill() {
     navigate(Routes.DetailsOfBill);
   }
@@ -49,10 +56,15 @@ export function RepProfile() {
               <img
                 src={image}
                 className="w-36 h-36 object-cover rounded mb-4"
+                alt={`${name}'s profile`}
               />
               <h2 className="font-extrabold text-black mb-1">{name}</h2>
               <div className="row items-center gap-2">
-                <Pill text="Representative" />
+                <Pill
+                  text={pageType === "House" ? "Representative" : "Senator"}
+                  containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
+                  textClass="text-[#1026C3] text-sm"
+                />
                 <div className="bg-accent800 rounded-full h-2 w-2" />
                 <p className="text-accent800">{district}</p>
               </div>
@@ -69,7 +81,7 @@ export function RepProfile() {
             <div>
               <Pill
                 text={party.name}
-                icon={<img src={party.logo} className="w-8 h-8" />}
+                icon={<img src={party.logo} className="w-8 h-8" alt={`${party.name} logo`} />}
                 containerClassName="row items-center rounded-[2.37rem] px-3 py-2 gap-1 bg-neutral50"
               />
             </div>
@@ -82,7 +94,7 @@ export function RepProfile() {
             <div className="row gap-6 flex-wrap">
               {socials.map((social) => (
                 <div key={social.handle} className="row items-center gap-2">
-                  <img src={social.icon} />
+                  <img src={social.icon} alt={`${social.handle} icon`} />
                   <p className="text-neutral500">{social.handle}</p>
                 </div>
               ))}
@@ -110,7 +122,7 @@ export function RepProfile() {
           <div className="row justify-between items-center w-full">
             <h3>Sponsored Bills</h3>
             <Pill
-              icon={<img src={filter} className="mr-2" />}
+              icon={<img src={filter} className="mr-2" alt="Filter icon" />}
               text="Filter Result"
               containerClassName="row items-center rounded px-3 py-2 gap-1 bg-neutral50"
             />

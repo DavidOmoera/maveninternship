@@ -7,8 +7,8 @@ import bookmark from "assets/bookmark.svg";
 import { PageContainer } from "components/templates/PageContainer";
 import { Button } from "components/atoms/Button";
 import { Pill } from "components/molecules/Pill";
-
-
+import { useNavigate } from "react-router-dom";
+import { Routes } from "types/routes.ts";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import { representatives } from "types/common.ts";
@@ -17,7 +17,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
-
 
 type TActivitySearchForm = Partial<{
   activity: string;
@@ -28,6 +27,7 @@ type TActivitySearchForm = Partial<{
 export function HouseReps() {
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
 
   const handleToggleExpand = (index: number) => {
@@ -51,6 +51,11 @@ export function HouseReps() {
 
   const isRepInTopReps = (rep: Representative) =>
     topReps.some((existingRep) => existingRep.name === rep.name);
+
+  const onClickRepresentative = (id: number, pageType: string) => {
+    navigate(Routes.RepProfile + `/${id}`, { state: { pageType } });
+  };
+
 
   const {
     control,
@@ -94,6 +99,8 @@ export function HouseReps() {
                 <div
                   key={index}
                   className="row flex-wrap p-6 rounded-xl shadow relative max-w-[460px]"
+                  onClick={() => onClickRepresentative(rep.id, "House")}
+                  style={{ cursor: "pointer" }}
                 >
                   <div>
                     <div className="flex items-center mb-4">
@@ -132,7 +139,10 @@ export function HouseReps() {
                       {rep.description.length > 200 && (
                         <span
                           className="text-blue-500 cursor-pointer"
-                          onClick={() => handleToggleExpand(index)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleExpand(index);
+                          }}
                         >
                           {expandedIndexes.includes(index)
                             ? "..show less"
@@ -149,7 +159,10 @@ export function HouseReps() {
                         "text-primary": !isRepInTopReps(rep),
                       }
                     )}
-                    onClick={() => handleAddToTopReps(rep)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToTopReps(rep);
+                    }}
                   >
                     <img
                       src={bookmark}

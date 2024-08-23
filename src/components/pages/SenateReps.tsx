@@ -7,11 +7,11 @@ import bookmark from "assets/bookmark.svg";
 import { PageContainer } from "components/templates/PageContainer";
 import { Button } from "components/atoms/Button";
 import { Pill } from "components/molecules/Pill";
-
 import { senators } from "types/common.ts";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { Routes } from "types/routes.ts";
 import { Representative } from "types/common.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index.ts";
@@ -29,6 +29,7 @@ type TActivitySearchForm = Partial<{
 export function SenateReps() {
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
 
   const handleToggleExpand = (index: number) => {
@@ -52,6 +53,11 @@ export function SenateReps() {
 
   const isRepInTopReps = (rep: Representative) =>
     topReps.some((existingRep) => existingRep.name === rep.name);
+
+  const onClickRepresentative = (id: number, pageType: string) => {
+    navigate(Routes.RepProfile + `/${id}`, { state: { pageType } });
+  };
+
 
   const {
     control,
@@ -80,10 +86,9 @@ export function SenateReps() {
                 leftIcon={<SearchIcon />}
                 error={!!errors.searchValue}
                 helperText={(errors.searchValue?.message as string) ?? ""}
-                className=""
               />
               <Button
-                text="Search Senators"
+                text="Search Representatives"
                 className="bg-blue-900 text-white py-2 px-4 rounded-lg"
                 onClick={handleSubmit(onSearchBill)}
               />
@@ -96,6 +101,8 @@ export function SenateReps() {
                 <div
                   key={index}
                   className="row flex-wrap p-6 rounded-xl shadow relative max-w-[460px]"
+                  onClick={() => onClickRepresentative(rep.id, "Senate")}
+                  style={{ cursor: "pointer" }}
                 >
                   <div>
                     <div className="flex items-center mb-4">
@@ -114,13 +121,13 @@ export function SenateReps() {
                       />
                       <div>
                         <h4 className="text-lg font-bold">{rep.name}</h4>
-                        <div className="flex items-center text-nowrap">
+                        <div className="flex items-center">
                           <Pill
                             text="Senator"
                             containerClassName="rounded-full bg-[#e7f1ff] px-4 py-1"
                             textClass="text-[#1026C3] text-sm"
                           />
-                          <span className="text-sm text-blue-700 lg:text-base">
+                          <span className="text-xs text-blue-700 md:text-base">
                             • District {rep.district}, Texas
                           </span>
                         </div>
@@ -134,7 +141,10 @@ export function SenateReps() {
                       {rep.description.length > 200 && (
                         <span
                           className="text-blue-500 cursor-pointer"
-                          onClick={() => handleToggleExpand(index)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleExpand(index);
+                          }}
                         >
                           {expandedIndexes.includes(index)
                             ? "..show less"
@@ -151,7 +161,10 @@ export function SenateReps() {
                         "text-primary": !isRepInTopReps(rep),
                       }
                     )}
-                    onClick={() => handleAddToTopReps(rep)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToTopReps(rep);
+                    }}
                   >
                     <img
                       src={bookmark}
