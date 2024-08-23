@@ -979,7 +979,7 @@ export const REPRESENTATIVES = [
   },
   {
 
-    name: "Rep. Allen, Alma A.",
+    name: "Rep. Allen Alma A.",
     district: "131st district, Texas",
     image: rep1,
     socials: [{ "icon": twitter, "handle": "@RepAlmaAllen" },
@@ -1022,7 +1022,7 @@ export const REPRESENTATIVES = [
   },
   {
 
-    name: "Rep. Steve, Allison",
+    name: "Rep. Steve Allison",
     district: "121st district, Texas",
     image: rep2,
     socials: [{ "icon": twitter, "handle": "@RepSteveAllison" },
@@ -1068,7 +1068,7 @@ Representative Allison is a graduate of Texas Christian University and the Unive
 Steve and his wife, Peggy, met their freshman year at TCU and have been married for 53 years. They have two sons, Brian and Todd; six grandchildren, Taylor, Scott, Corbin, Emma, Maggie, and George; and a golden retriever, Duffy, who is a valued campaigner and goes everywhere with them. Peggy and Steve are longstanding members of St. Mark’s Episcopal Church, where both have taught children’s Sunday school and Steve has served on the Vestry.`,
   },
   {
-    name: "Rep. Rafael, Anchía",
+    name: "Rep. Rafael Anchía",
     district: "103rd district, Texas",
     image: rep3,
     socials: [{ "icon": twitter, "handle": "@RepRafaelAnchia" },
@@ -1133,7 +1133,7 @@ Additional Professional Recognitions:
 • American Marshall Memorial Fellow, 2001`,
   },
   {
-    name: "Rep. Charles Doc, Anderson",
+    name: "Rep. Charles Doc Anderson",
     district: "56th district, Texas",
     image: rep4,
     socials: [{ "icon": twitter, "handle": "@RepCharlesAnderson" },
@@ -1183,7 +1183,7 @@ Additional Professional Recognitions:
     Anderson’s career in the Texas Senate is characterized by his commitment to conservative principles, effective governance, and a sincere desire to serve the people of Texas. His extensive experience and dedication continue to make him a respected and influential leader in the Texas Legislature.`,
   },
   {
-    name: "Rep. Trent, Ashby",
+    name: "Rep. Trent Ashby",
     district: "9th district, Texas",
     image: rep5,
     socials: [{ "icon": twitter, "handle": "@RepTrentAshby" },
@@ -1219,7 +1219,7 @@ Born and raised on a dairy farm and diversified livestock operation in Rusk Coun
 Today, Trent is Senior Vice President for VeraBank. He and his wife, Nickie, live in Lufkin with their two sons - Garin and Grant. Prior to being elected to the Legislature, Ashby served as President of the Lufkin ISD Board of Trustees. Both he and Nickie are very active in their community, as well as their church, Harmony Hill Baptist Church.`,
   },
   {
-    name: "Rep. Ernest, Bailes",
+    name: "Rep. Ernest Bailes",
     district: "18th district, Texas",
     image: rep6,
     socials: [{ "icon": twitter, "handle": "@RepErnestBailes" },
@@ -1253,7 +1253,7 @@ Today, Trent is Senior Vice President for VeraBank. He and his wife, Nickie, liv
 Ernest and his wife Courtney have been married for 17 years and have two sons, Cinco and Rigby, who attend Coldspring-Oakhurst CISD, where Courtney is a schoolteacher. Ernest is active in the community and serves on various boards, including the San Jacinto County Fair Association, San Jacinto County Farm Bureau, and the SISD Technology Advisory Committee. The Bailes family are active members of the First Baptist Church in Evergreen, Texas.`,
   },
   {
-    name: "Rep. Cecil, Bell Jr.",
+    name: "Rep. Cecil Bell Jr.",
     district: "3rd district, Texas",
     image: rep7,
     socials: [{ "icon": twitter, "handle": "@RepCecilBellJr" },
@@ -1293,7 +1293,7 @@ This is Rep. Bell's fifth Session in the Texas Legislature. He currently serves 
 Cecil met his high school sweetheart and now-wife, Jo Ann, at the 1979 National Meeting of the Beta Club Honor Society. The Bells moved to Magnolia in 1993. He and Jo Ann have two boys: Cecil “Trey” Bell, III, and Charlie Bell. The Bell family attends the Magnolia Church of Christ, where Cecil served many years as a Deacon.`,
   },
   {
-    name: "Rep. Keith, Bell",
+    name: "Rep. Keith Bell",
     district: "4th district, Texas",
     image: rep8,
     socials: [{ "icon": twitter, "handle": "@RepKeithBell" },
@@ -1333,7 +1333,7 @@ Representative Bell applies his conservative values, successful business skills,
 Representative Bell represents House District 4, encompassing Kaufman and Eastern Henderson counties.`,
   },
   {
-    name: "Rep. Diego M., Bernal",
+    name: "Rep. Diego M. Bernal",
     district: "123rd district, Texas",
     image: rep9,
     socials: [{ "icon": twitter, "handle": "@RepDiegoBernal" },
