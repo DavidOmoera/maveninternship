@@ -14,6 +14,7 @@ import { RootState } from 'store/slices/index';
 import { addTopRep, removeTopRep } from 'store/slices/topRepsSlice';
 import bookmark from "assets/bookmark.svg";
 import classNames from "classnames";
+import { Routes } from "types/routes.ts";
 
 type TActivitySearchForm = Partial<{
   searchValue: string;
@@ -21,10 +22,10 @@ type TActivitySearchForm = Partial<{
 
 const TopReps: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { state } = location;
   const representative = state?.representative as Representative;
-
+  const pageType = (state?.pageType as "House" | "Senate") || "House";
   const dispatch = useDispatch();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
 
@@ -54,13 +55,17 @@ const TopReps: React.FC = () => {
   const handleAddToTopReps = (rep: Representative) => {
     if (isRepInTopReps(rep)) {
       dispatch(removeTopRep(rep));
-    
+
       if (topReps.length === 1) {
-        navigate(-1); 
+        navigate(-1);
       }
     } else {
-      dispatch(addTopRep(rep));
+      dispatch(addTopRep({ ...rep, pageType }));
     }
+  };
+
+  const onClickRepresentative = (id: number, type: "House" | "Senate") => {
+    navigate(`${Routes.RepProfile}/${id}`, { state: { pageType: type } });
   };
 
   return (
@@ -98,7 +103,6 @@ const TopReps: React.FC = () => {
                   height: "64px",
                   borderRadius: "12px",
                   objectFit: "cover",
-                  opacity: 1,
                 }}
                 className="mr-4"
               />
@@ -147,7 +151,6 @@ const TopReps: React.FC = () => {
                   fontSize: "14px",
                   fontWeight: "600",
                   lineHeight: "17.57px",
-                  textAlign: "left",
                 }}
               >
                 {isRepInTopReps(representative)
@@ -163,7 +166,12 @@ const TopReps: React.FC = () => {
           <div className="flex flex-wrap gap-5 mt-8">
             {topReps.length > 0 ? (
               topReps.map((rep: Representative, index: number) => (
-                <div key={index} className="flex flex-col p-6 rounded-xl shadow relative max-w-[460px]">
+                <div
+                  key={index}
+                  className="flex flex-col p-6 rounded-xl shadow relative max-w-[460px]"
+                  onClick={() => onClickRepresentative(rep.id, rep.pageType as "House" | "Senate")}
+                  style={{ cursor: "pointer" }}
+                >
                   <div>
                     <div className="flex items-center mb-4">
                       <img
@@ -174,7 +182,6 @@ const TopReps: React.FC = () => {
                           height: "64px",
                           borderRadius: "12px",
                           objectFit: "cover",
-                          opacity: 1,
                         }}
                         className="mr-4"
                       />
@@ -216,7 +223,10 @@ const TopReps: React.FC = () => {
                         "text-primary": !isRepInTopReps(rep),
                       }
                     )}
-                    onClick={() => handleAddToTopReps(rep)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToTopReps(rep);
+                    }}
                   >
                     <img
                       src={bookmark}
@@ -236,7 +246,6 @@ const TopReps: React.FC = () => {
                         fontSize: "14px",
                         fontWeight: "600",
                         lineHeight: "17.57px",
-                        textAlign: "left",
                       }}
                     >
                       {isRepInTopReps(rep)
