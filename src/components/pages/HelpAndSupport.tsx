@@ -52,7 +52,7 @@ export function HelpAndSupport() {
 
   return (
     <PageContainer title="Help & Support">
-      <div className="row justify-between bg-white mx-9 mt-6 rounded-xl p-9 lg:py-10 lg:px-16 xl:py-20 xl:px-32 gap-32">
+      <div className="row justify-between bg-white mx-9 md:mx-9 mt-6 rounded-xl p-9 lg:py-10 lg:px-16 xl:py-20 xl:px-32 gap-32 md:max-w-[780px] lg:max-w-full">
         <section className="col w-full xl:w-[700px]">
           <article className="col gap-1">
             <h1 className="text-black font-bold text-4xl">Get in Touch</h1>
