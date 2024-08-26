@@ -107,6 +107,13 @@ export type TBill = {
   id: string;
 };
 
+export type TUpdateUserRequestBody = {
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+};
+
 type TBillStatus = "Introduced" | "Enrolled" | "Passed";
 type TBillChamber = "House" | "Senate";
 

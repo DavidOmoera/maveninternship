@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TAuthState } from "./types";
+import { getUserData } from "./thunks";
 
 const initialState: TAuthState = {
   accessToken: "",
@@ -16,6 +17,11 @@ const authSlice = createSlice({
       state.userData = { ...state.userData, ...action.payload };
     },
     clearUserData: () => ({ ...initialState }),
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getUserData.fulfilled, (state, action) => {
+      state.userData = action.payload;
+    });
   },
 });
 

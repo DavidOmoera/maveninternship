@@ -1,15 +1,8 @@
-export type TUserProfile = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  profilePicture: string;
-  plan: string;
-};
+import { TUserData } from "types/common";
 
 export type TAuthState = Partial<{
   accessToken: string;
-  userData: TUserProfile;
+  userData: TUserData & Partial<{ phone: string }>; // remove extra type when backend adds it
   userDataError: string;
   userDataLoading: boolean;
 }>;
