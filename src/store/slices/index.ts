@@ -1,16 +1,25 @@
-import { combineReducers } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+
 
 import authSlice from './auth';
 import organizationSlice from './organization';
-import topRepsSlice from './topRepsSlice'; 
+import topRepsSlice from './topRepsSlice';
+import watchedBillsReducer from 'store/slices/watchedBillsSlice.ts';
+
 
 export const rootReducer = combineReducers({
   auth: authSlice,
   organization: organizationSlice,
   topReps: topRepsSlice,
+  watchedBills: watchedBillsReducer,
 });
 
 
-export type RootState = ReturnType<typeof rootReducer>; 
+const store = configureStore({
+  reducer: rootReducer,
+});
 
-export default rootReducer;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export default store;
