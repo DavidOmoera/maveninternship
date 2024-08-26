@@ -116,7 +116,7 @@ export function RepProfile() {
 
           <div className="grid grid-cols-4 gap-6 w-full">
             {bioData.map((data) => (
-              <BioData key={data.description} {...data} />
+              <BioData key={data.description + data.title} {...data} />
             ))}
           </div>
         </section>
@@ -136,7 +136,11 @@ export function RepProfile() {
 
           <div className="overflow-y-scroll">
             {watchedBills.map((bill) => (
-              <Bill key={bill.description} onClick={onClickBill} {...bill} />
+              <Bill
+                key={bill.description + bill.year}
+                onClick={onClickBill}
+                {...bill}
+              />
             ))}
           </div>
         </section>
