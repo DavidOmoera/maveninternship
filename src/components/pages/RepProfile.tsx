@@ -23,7 +23,6 @@ export function RepProfile() {
   const params = useParams<{ id: string }>();
   const location = useLocation();
 
-
   const {
     name,
     image,
@@ -34,7 +33,6 @@ export function RepProfile() {
     district,
     party,
   } = REPRESENTATIVES[Number(params.id)] ?? {};
-
 
   const pageType = location.state?.pageType || "House";
 
@@ -50,7 +48,7 @@ export function RepProfile() {
     <PageContainer title="Profile">
       <div className="row bg-gray-100 px-9 gap-6">
         {/** Profile */}
-        <section className="col basis-[65%] p-9 max-h-screen overflow-y-scroll bg-white">
+        <section className="col basis-[65%] p-9 overflow-y-scroll bg-white">
           <div className="row justify-between">
             <div className="col">
               <img
@@ -81,7 +79,13 @@ export function RepProfile() {
             <div>
               <Pill
                 text={party.name}
-                icon={<img src={party.logo} className="w-8 h-8" alt={`${party.name} logo`} />}
+                icon={
+                  <img
+                    src={party.logo}
+                    className="w-8 h-8"
+                    alt={`${party.name} logo`}
+                  />
+                }
                 containerClassName="row items-center rounded-[2.37rem] px-3 py-2 gap-1 bg-neutral50"
               />
             </div>
@@ -118,7 +122,7 @@ export function RepProfile() {
         </section>
 
         {/** Bills */}
-        <section className="col basis-[35%] p-9 max-h-screen bg-white">
+        <section className="col basis-[35%] p-9 bg-white">
           <div className="row justify-between items-center w-full">
             <h3>Sponsored Bills</h3>
             <Pill
