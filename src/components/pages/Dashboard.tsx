@@ -29,6 +29,7 @@ import {
   BILL_YEARS,
   topRepresentatives,
   watchedBills,
+
 } from "constants/common";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -40,6 +41,9 @@ import { Routes } from "types/routes";
 import { Bill } from "components/organisms/Bill";
 import { PageContainer } from "components/templates/PageContainer";
 import { searchObjects } from "utils/helpers";
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/slices/index.ts';
+import { BillCard } from 'components/organisms/BillCard.tsx';
 
 function isBillStatus(billStatus: string, selectedBillStatus: string) {
   return selectedBillStatus ? billStatus === selectedBillStatus : true;
@@ -49,8 +53,8 @@ function isBillType(billType: string, selectedBillType: string) {
   return !selectedBillType
     ? true
     : selectedBillType === "All"
-    ? true
-    : billType === selectedBillType;
+      ? true
+      : billType === selectedBillType;
 }
 
 function isBillChamber(billChamber: string, selectedChamber: string) {
@@ -93,6 +97,11 @@ export const Dashboard: React.FC = () => {
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const allBills = useSelector((state: RootState) => state.watchedBills.watchedBills);
+  const handleBillClick = () => {
+    navigate('/dashboard/bill');
+  };
+
 
   const { control, handleSubmit, watch } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
@@ -388,21 +397,21 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** All bills */}
-            <div className="row gap-5 flex-wrap mt-8">
-              {searchedWatchedBills.map((watchedBill) => {
-                const bill = watchedBill as (typeof watchedBills)[0];
-
-                return (
-                  <Bill
-                    key={watchedBill.state + watchedBill.description}
-                    onClick={onClickBill}
+            <div className="row gap-5 flex-wrap mt-8" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+              {allBills.map((bill) => (
+                <div key={bill.id} style={{ flex: '0 1 calc(50% - 50px)' }}>
+                  <BillCard
+                    onClick={handleBillClick}
+                    isListView={false}
                     {...bill}
                   />
-                );
-              })}
+                </div>
+              ))}
             </div>
           </section>
         </div>
+        );
+
 
         {/* Updates and Representatives Section */}
         {areUpdatesVisible ? (

@@ -187,10 +187,10 @@ export const topRepresentatives = [
 ];
 
 
-  export const repProfileRepresentatives = [
+export const repProfileRepresentatives = [
   {
 
-    
+
     id: 3,
     title: "Rep. Alma A., Allen",
     representative: "Rep. Alma A., Allen",
@@ -347,6 +347,7 @@ export const watchedBills = [
 
 export const allBills = [
   {
+    id: "1",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -363,8 +364,12 @@ export const allBills = [
     supporter6: voter6,
     count1: "+23",
     count2: "+51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
   {
+    id: "2",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -381,8 +386,12 @@ export const allBills = [
     supporter6: voter12,
     count1: "+23",
     count2: "+51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
   {
+    id: "3",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -399,8 +408,12 @@ export const allBills = [
     supporter6: voter18,
     count1: "+23",
     count2: "+51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
   {
+    id: "4",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -417,8 +430,12 @@ export const allBills = [
     supporter6: voter12,
     count1: "+23",
     count2: "+51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
   {
+    id: "5",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -435,8 +452,12 @@ export const allBills = [
     supporter6: voter12,
     count1: "+23",
     count2: "+51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
   {
+    id: "6",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -453,8 +474,12 @@ export const allBills = [
     supporter6: voter12,
     count1: "+23",
     count2: "+51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
   {
+    id: "7",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -471,8 +496,12 @@ export const allBills = [
     supporter6: voter12,
     count1: "+23",
     count2: "+51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
   {
+    id: "8",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -489,8 +518,12 @@ export const allBills = [
     supporter6: voter12,
     count1: "23",
     count2: "51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
   {
+    id: "9",
     state: "Texas",
     relativeTime: "2w ago",
     title: "Secure the Border Act of 2023",
@@ -507,6 +540,9 @@ export const allBills = [
     supporter6: voter12,
     count1: "+23",
     count2: "+51",
+    billType: "Type A",
+    chamber: "Senate",
+    year: 2023,
   },
 ];
 
