@@ -248,7 +248,7 @@ export const Dashboard: React.FC = () => {
   return (
     <PageContainer title="Dashboard">
       {/* Main Content */}
-      <div className="flex-1 bg-gray-100 px-9 flex">
+      <div className="flex-1 bg-gray-100 px-9 flex pr-5 md:pr-9">
         <div className="flex-1 basis-[74%] pr-4">
           {/* Search and Filter Section */}
           <section className="p-9 bg-white rounded-xl">

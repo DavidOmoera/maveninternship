@@ -385,7 +385,7 @@ export function Profile() {
 
   return (
     <PageContainer title="My Profile">
-      <div className="col xl:grid grid-cols-2 gap-6 mx-9">
+      <div className="col xl:grid grid-cols-2 gap-6 mx-9 md:max-w-[680px] lg:max-w-full">
         <section className="col gap-5 p-9 rounded-xl bg-white">
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4 flex-wrap">
