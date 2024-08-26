@@ -21,6 +21,24 @@ export const Modal: React.FC<ModalProps> = ({ onClose }) => {
   );
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -35,6 +53,7 @@ export const Modal: React.FC<ModalProps> = ({ onClose }) => {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
   const handleSendMessage = () => {
     if (inputValue.trim()) {
       setMessages([...messages, { user: true, text: inputValue }]);
@@ -59,8 +78,11 @@ export const Modal: React.FC<ModalProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
-      <div className="max-h-[90vh] w-[50vw] bg-blue-950 p-8 rounded-xl relative shadow-lg overflow-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+      <div
+        ref={modalRef}
+        className="max-h-[90vh] w-[50vw] bg-blue-950 p-8 rounded-xl relative shadow-lg overflow-auto"
+      >
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-lg text-white bg-transparent hover:border-none hover:text-red-700 "

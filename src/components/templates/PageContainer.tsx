@@ -11,6 +11,8 @@ import { NotificationSettings } from "components/organisms/NotificationSettings"
 import { CoterieBot } from "assets/CoterieBot";
 import { Modal } from "components/molecules/ChatModal";
 import { Tooltip } from "@mui/material";
+import { userDataSelector } from "store/slices/auth/selectors";
+import { useAppSelector } from "utils/helpers";
 
 type TPageContainerProps = {
   title: string;
@@ -27,6 +29,7 @@ export function PageContainer({
 }: TPageContainerProps) {
   const location = useLocation();
   const navigate = useNavigate();
+  const userData = useAppSelector(userDataSelector);
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
 
   // Chat with Bot modal
@@ -68,7 +71,7 @@ export function PageContainer({
     <div {...props}>
       <div className="bg-white rounded-xl px-9 py-6 mb-4 mx-9 mt-9 flex items-center justify-between">
         <div
-          className={classNames("row items-center ml-12 md:ml-0", {
+          className={classNames("row items-center ml-8 md:ml-0", {
             "gap-3": !isBackButtonHidden,
           })}
         >
@@ -82,7 +85,7 @@ export function PageContainer({
             />
           ) : null}
           <div className="row gap-2">
-            <h1 className="text-lg text-neutral950 font-extrabold md:text-2xl lg:text-4xl">
+            <h1 className="text-base text-neutral950 font-extrabold md:text-2xl lg:text-4xl">
               {title}
             </h1>
             {previousPageTitle ? (
@@ -121,20 +124,17 @@ export function PageContainer({
             onClick={goToProfile}
           >
             <img
-              src={profilePicture}
+              src={userData?.profilePicture ?? profilePicture}
               alt="Profile"
               className="w-8 h-8 object-cover rounded md:w-12 md:h-12"
             />
             <article className="col gap-1">
               <h6 className="text-neutral950 font-bold text-sm lg:text-base">
-                Seth Rogan
+                {userData?.firstName ?? "Seth"} {userData?.lastName ?? "Rogan"}
               </h6>
               <p>
-                <span className="text-neutral600 text-sm font-medium">
-                  Coterie
-                </span>
                 <span className="text-primary text-sm font-extrabold pl-1">
-                  Pro
+                  {userData?.plan ?? "Pro"}
                 </span>
               </p>
             </article>
