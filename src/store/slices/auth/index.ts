@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { TAuthState } from "./types";
 
 const initialState: TAuthState = {
+  accessToken: "",
   userData: undefined,
   userDataError: undefined,
   userDataLoading: false,

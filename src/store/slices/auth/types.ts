@@ -8,6 +8,7 @@ export type TUserProfile = {
 };
 
 export type TAuthState = Partial<{
+  accessToken: string;
   userData: TUserProfile;
   userDataError: string;
   userDataLoading: boolean;
