@@ -11,12 +11,12 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes.ts";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
-import { representatives } from "types/common.ts";
 import { Representative } from "types/common.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
+import { representatives } from "constants/common";
 
 type TActivitySearchForm = Partial<{
   activity: string;
@@ -55,7 +55,6 @@ export function HouseReps() {
   const onClickRepresentative = (id: number, pageType: string) => {
     navigate(Routes.RepProfile + `/${id}`, { state: { pageType } });
   };
-
 
   const {
     control,
