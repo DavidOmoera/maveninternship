@@ -1,8 +1,9 @@
 export const endpoints = {
   activity: {
-    getActivity: (userId: string): string => `/activity_logs/${userId}`,
     postActivity: (): string => `/activity_logs`,
+    getActivity: (): string => `/activity_logs/`,
   },
+
   admin: {
     makeAdmin: (): string => `admin/make_admin`,
     getAllUsers: (): string => `admin/get_all_users`,

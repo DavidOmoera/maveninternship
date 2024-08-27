@@ -156,21 +156,22 @@ export type TAdmin = {
   is_verified: boolean;
 };
 
-export type TActivityLogs = {
+export type TPostActivityLogs = {
   activity_type: string;
   description: string;
   user_id: number;
 };
 
-export type TActivityLogsResponse = {
+export type TGetActivityLogsParams = Partial<{
+  skip: number;
+  limit: number;
+  userId: string;
+}>;
+
+export type TGetActivityLogs = {
   activity_type: string;
   description: string;
   user_id: number;
   id: number;
   timestamp: Date | string;
 };
-
-export type TActivityLogsResponseParams = Partial<{
-  skip: number;
-  limit: number;
-}>;
