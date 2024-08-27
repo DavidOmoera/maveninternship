@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { store } from "store";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -9,7 +8,7 @@ export const client: AxiosInstance = axios.create({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 client.interceptors.request.use((config: any) => {
-  const token = store.getState().auth.accessToken;
+  const token = localStorage.getItem("accessToken");
 
   if (token) {
     config.headers = {
