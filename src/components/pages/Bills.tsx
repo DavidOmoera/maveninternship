@@ -54,7 +54,7 @@ export const Bills: React.FC = () => {
 
   return (
     <PageContainer title="Bills">
-      <div className="p-9 bg-white rounded-xl mx-8">
+      <div className="p-9 bg-white rounded-xl mx-9">
         <h3 className="text-primary font-normal text-2xl pb-2">
           Search for:&nbsp;
           <span className="text-blue-700 font-extrabold">
