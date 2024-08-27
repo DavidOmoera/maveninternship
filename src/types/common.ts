@@ -136,42 +136,17 @@ export type TSearchBillsParams = Partial<
 
 export type TGetBillsResponse = TBill[];
 
-export type TAdmin = {
-  account_class: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: string;
-  subscription_plan: string;
-  stripe_subscription_id: string;
-  subscription_start_date: Date | string;
-  subscription_end_date: Date | string;
-  card_number: number;
-  registration_method: string;
-  industry_affiliation: string;
-  industry_size: string;
-  avatar: string;
-  id: number;
-  is_active: boolean;
-  is_verified: boolean;
-};
-
-export type TPostActivityLogs = {
+export type TActivityLogs = {
   activity_type: string;
   description: string;
   user_id: number;
 };
-
-export type TGetActivityLogsParams = Partial<{
-  skip: number;
-  limit: number;
-  userId: string;
-}>;
 
 export type TGetActivityLogs = {
-  activity_type: string;
-  description: string;
-  user_id: number;
   id: number;
   timestamp: Date | string;
 };
+
+export type TGetActivityLogsParams = Partial<{
+  userId: string;
+}>;

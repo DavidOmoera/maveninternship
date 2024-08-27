@@ -2,16 +2,17 @@ import { AxiosResponse } from "axios";
 import { client } from "./client";
 import { endpoints } from "./endpoints";
 import {
-  TPostActivityLogs,
+  TActivityLogs,
   TGetActivityLogsParams,
+  TGetBillsParams,
   TGetActivityLogs,
 } from "types/common";
 
 export const postActivityLogRequest = (): Promise<
-  AxiosResponse<TPostActivityLogs>
+  AxiosResponse<TActivityLogs & TGetActivityLogs>
 > => client.get(endpoints.activity.postActivity());
 
 export const getActivityLogRequest = (
-  params: TGetActivityLogsParams
+  params: TGetActivityLogsParams & TGetBillsParams
 ): Promise<AxiosResponse<TGetActivityLogs>> =>
   client.get(endpoints.activity.getActivity(), { params });
