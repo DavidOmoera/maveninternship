@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-// import authSlice from "./auth";
+import authSlice from "./auth";
 import organizationSlice from "./organization";
 import topRepsSlice from "./topRepsSlice";
 import watchedBillsReducer from "store/slices/watchedBillsSlice.ts";
 
 export const rootReducer = combineReducers({
-  // auth: authSlice,
+  auth: authSlice,
   organization: organizationSlice,
   topReps: topRepsSlice,
   watchedBills: watchedBillsReducer,
