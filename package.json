@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@types/chart.js": "^2.9.41",
     "@types/react-chartjs-2": "^2.5.7",
+    "axios": "^1.7.5",
     "chart.js": "^4.4.3",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",

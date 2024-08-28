@@ -29,7 +29,6 @@ import {
   BILL_YEARS,
   topRepresentatives,
   watchedBills,
-
 } from "constants/common";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -41,9 +40,9 @@ import { Routes } from "types/routes";
 import { Bill } from "components/organisms/Bill";
 import { PageContainer } from "components/templates/PageContainer";
 import { searchObjects } from "utils/helpers";
-import { useSelector } from 'react-redux';
-import { RootState } from 'store/slices/index.ts';
-import { BillCard } from 'components/organisms/BillCard.tsx';
+import { useSelector } from "react-redux";
+import { RootState } from "store/slices/index.ts";
+import { BillCard } from "components/organisms/BillCard.tsx";
 
 function isBillStatus(billStatus: string, selectedBillStatus: string) {
   return selectedBillStatus ? billStatus === selectedBillStatus : true;
@@ -53,8 +52,8 @@ function isBillType(billType: string, selectedBillType: string) {
   return !selectedBillType
     ? true
     : selectedBillType === "All"
-      ? true
-      : billType === selectedBillType;
+    ? true
+    : billType === selectedBillType;
 }
 
 function isBillChamber(billChamber: string, selectedChamber: string) {
@@ -97,32 +96,26 @@ export const Dashboard: React.FC = () => {
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const allBills = useSelector((state: RootState) => state.watchedBills.watchedBills);
+  const allBills = useSelector(
+    (state: RootState) => state.watchedBills.watchedBills
+  );
   const handleBillClick = () => {
-    navigate('/dashboard/bill');
+    navigate("/dashboard/bill");
   };
-
 
   const { control, handleSubmit, watch } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
   });
 
-  const { control: watchedBillsControl, watch: watchWatchedBills } =
-    useForm<TBillSearchForm>({
-      resolver: yupResolver(billSearchSchema),
-    });
+  const { control: watchedBillsControl } = useForm<TBillSearchForm>({
+    resolver: yupResolver(billSearchSchema),
+  });
 
   const selectedBillStatus = watch("billStatus");
   const selectedBillType = watch("billType");
   const selectedChamber = watch("chamber");
   const selectedYear = watch("year");
   const searchValue = watch("searchValue");
-
-  const selectedWatchedBillStatus = watchWatchedBills("billStatus");
-  const selectedWatchedBillType = watchWatchedBills("billType");
-  const selectedWatchedBillChamber = watchWatchedBills("chamber");
-  const selectedWatchedBillYear = watchWatchedBills("year");
-  const watchedBillSearchValue = watchWatchedBills("searchValue");
 
   const filteredBills = useMemo(() => {
     return watchedBills.filter(
@@ -138,31 +131,6 @@ export const Dashboard: React.FC = () => {
     () =>
       searchObjects(filteredBills, searchValue, Object.keys(watchedBills[0])),
     [filteredBills, searchValue]
-  );
-
-  const filteredWatchedBills = useMemo(() => {
-    return watchedBills.filter(
-      (bill) =>
-        isBillStatus(bill.status, selectedWatchedBillStatus ?? "") &&
-        isBillType(bill.billType, selectedWatchedBillType ?? "") &&
-        isBillChamber(bill.chamber, selectedWatchedBillChamber ?? "") &&
-        isBillYear(bill.year, selectedWatchedBillYear ?? "")
-    );
-  }, [
-    selectedWatchedBillChamber,
-    selectedWatchedBillStatus,
-    selectedWatchedBillType,
-    selectedWatchedBillYear,
-  ]);
-
-  const searchedWatchedBills = useMemo(
-    () =>
-      searchObjects(
-        filteredWatchedBills,
-        watchedBillSearchValue,
-        Object.keys(watchedBills[0])
-      ),
-    [filteredWatchedBills, watchedBillSearchValue]
   );
 
   const updates = [
@@ -397,9 +365,12 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** All bills */}
-            <div className="row gap-5 flex-wrap mt-8" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+            <div
+              className="row gap-5 flex-wrap mt-8"
+              style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
+            >
               {allBills.map((bill) => (
-                <div key={bill.id} style={{ flex: '0 1 calc(50% - 50px)' }}>
+                <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
                   <BillCard
                     onClick={handleBillClick}
                     isListView={false}
@@ -410,9 +381,6 @@ export const Dashboard: React.FC = () => {
             </div>
           </section>
         </div>
-        );
-
-
         {/* Updates and Representatives Section */}
         {areUpdatesVisible ? (
           <div className="hidden md:flex flex-col gap-4 basis-[26%] bg-white p-9">
