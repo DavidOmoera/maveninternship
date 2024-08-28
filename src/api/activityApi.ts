@@ -5,14 +5,13 @@ import {
   TActivityLogs,
   TGetActivityLogsParams,
   TGetBillsParams,
-  TGetActivityLogs,
 } from "types/common";
 
 export const postActivityLogRequest = (): Promise<
-  AxiosResponse<TActivityLogs & TGetActivityLogs>
+  AxiosResponse<TActivityLogs>
 > => client.get(endpoints.activity.postActivity());
 
 export const getActivityLogRequest = (
   params: TGetActivityLogsParams & TGetBillsParams
-): Promise<AxiosResponse<TGetActivityLogs & TGetActivityLogs>> =>
+): Promise<AxiosResponse<TActivityLogs>> =>
   client.get(endpoints.activity.getActivity(), { params });

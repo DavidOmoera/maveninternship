@@ -9,17 +9,17 @@ import { PageContainer } from "components/templates/PageContainer";
 import { Pill } from "components/molecules/Pill";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { searchObjects } from "utils/helpers";
+import { getActivityLogRequest } from "../../api/activityApi";
 import {
-  postActivityLogRequest,
-  getActivityLogRequest,
-} from "../../api/activityApi";
-import {
+  AppDispatch,
+  RootState,
   TActivityLogs,
   TGetActivityLogsParams,
-  TGetBillsParams,
 } from "types/common";
+import { useDispatch, useSelector } from "react-redux";
+import { getActivityLogs } from "store/slices/activity/thunks";
 
 dayjs.extend(relativeTime);
 
@@ -55,6 +55,7 @@ type TActivitySearchForm = Partial<{
 }>;
 
 export function ActivityFeed() {
+  const dispatch = useDispatch<AppDispatch>();
   const {
     control: activityControl,
     formState: { errors: activityFormErrors },
@@ -63,39 +64,23 @@ export function ActivityFeed() {
     resolver: yupResolver(activitySearchSchema),
   });
 
-  const [activities, setActivities] = useState<TActivityLogs[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const { activities, loading, error } = useSelector(
+    (state: RootState) => state.activity
+  );
 
   const selectedActivityType = watch("activity");
   const searchValue = watch("searchValue");
   const noOfDays = watch("noOfDays");
 
   useEffect(() => {
-    const fetchActivities = () => {
-      setLoading(true);
-      setError(null);
-      const params: TGetActivityLogsParams & TGetBillsParams = {
+    dispatch(
+      getActivityLogs({
         user_id: 0,
         skip: 0,
         limit: 100,
-      };
-
-      getActivityLogRequest(params)
-        .then((response) => {
-          const data = response.data as TActivityLogs[]; // Cast response.data to TActivityLogs[]
-          setActivities(data);
-        })
-        .catch(() => {
-          setError("Failed to load activities");
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    };
-
-    fetchActivities();
-  }, [noOfDays, selectedActivityType]);
+      } as TGetActivityLogsParams)
+    );
+  }, [dispatch]);
 
   const filteredActivities = useMemo(() => {
     return ACTIVITIES.filter((activity) => {

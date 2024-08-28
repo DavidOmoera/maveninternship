@@ -136,11 +136,13 @@ export type TSearchBillsParams = Partial<
 
 export type TGetBillsResponse = TBill[];
 
-export type TActivityLogs = {
-  activity_type: string;
-  description: string;
-  user_id: number;
-};
+export type TActivityLogs = Partial<
+  TGetActivityLogs & {
+    activity_type: string;
+    description: string;
+    user_id: number;
+  }
+>;
 
 export type TGetActivityLogs = Partial<{
   id: number;
