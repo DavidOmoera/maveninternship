@@ -7,7 +7,6 @@ import bookmark from "assets/bookmark.svg";
 import { PageContainer } from "components/templates/PageContainer";
 import { Button } from "components/atoms/Button";
 import { Pill } from "components/molecules/Pill";
-import { senators } from "types/common.ts";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
-
-
+import { senators } from "constants/common";
 
 type TActivitySearchForm = Partial<{
   activity: string;
@@ -58,7 +56,6 @@ export function SenateReps() {
     navigate(Routes.RepProfile + `/${id}`, { state: { pageType } });
   };
 
-
   const {
     control,
     handleSubmit,
@@ -74,7 +71,7 @@ export function SenateReps() {
 
   return (
     <PageContainer title="Senate" className="w-full bg-gray-100">
-      <div className="p-9 mb-9 mx-9 mt-6 bg-white rounded-xl">
+      <div className="p-9 mb-9 mx-9 bg-white rounded-xl">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-4 bg-white rounded-xl p-4">
             <div className="flex items-center gap-3">

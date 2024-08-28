@@ -257,9 +257,7 @@ export function Profile() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        dispatch(
-          updateUserData({ profilePicture: e.target?.result as string })
-        );
+        dispatch(updateUserData({ avatar: e.target?.result as string }));
       };
       reader.readAsDataURL(file);
     }
@@ -366,8 +364,8 @@ export function Profile() {
     if (isEditProfileFormValid) {
       dispatch(
         updateUserData({
-          firstName: first_name,
-          lastName: last_name,
+          first_name,
+          last_name,
           phone: phone_number,
           email: email_address,
         })
@@ -385,12 +383,12 @@ export function Profile() {
 
   return (
     <PageContainer title="My Profile">
-      <div className="col xl:grid grid-cols-2 gap-6 mx-9 md:max-w-[680px] lg:max-w-full">
+      <div className="col xl:grid grid-cols-2 gap-4 mx-9 md:max-w-[680px] lg:max-w-full">
         <section className="col gap-5 p-9 rounded-xl bg-white">
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4 flex-wrap">
             <img
-              src={userData?.profilePicture ?? profilePicture}
+              src={userData?.avatar ?? profilePicture}
               className="w-20 h-20 object-cover rounded"
             />
             <div className="col items-start gap-2 cursor-pointer">
@@ -408,8 +406,8 @@ export function Profile() {
           <div className="col p-6 gap-4 items-start bg-neutral50">
             <div className="row justify-between w-full flex-wrap">
               <h2 className="text-neutral950">
-                {`${userData?.firstName ?? "Seth"} ${
-                  userData?.lastName ?? "Rogan"
+                {`${userData?.first_name ?? "Seth"} ${
+                  userData?.last_name ?? "Rogan"
                 }`}
               </h2>
               <div
@@ -451,7 +449,9 @@ export function Profile() {
             />
           </div>
           <div className="col gap-3">
-            <h2 className="text-black">{userData?.plan ?? "Regulatory AI"}</h2>
+            <h2 className="text-black">
+              {userData?.subscription_plan ?? "Regulatory AI"}
+            </h2>
             <span className="row items-center gap-1 flex-wrap">
               <p className="text-neutral500">Next payment:</p>
               <h6 className="text-neutral500">24 August, 2025</h6>
@@ -818,7 +818,7 @@ export function Profile() {
               control={EditProfileControl}
               placeholder="First Name"
               label="First Name"
-              defaultValue={userData?.firstName}
+              defaultValue={userData?.first_name}
               type="text"
               required
               error={!!EditProfileErrors?.first_name}
@@ -831,7 +831,7 @@ export function Profile() {
               control={EditProfileControl}
               placeholder="Last Name"
               label="Last Name"
-              defaultValue={userData?.lastName}
+              defaultValue={userData?.last_name}
               type="text"
               required
               error={!!EditProfileErrors?.last_name}

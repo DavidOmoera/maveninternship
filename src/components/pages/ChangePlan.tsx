@@ -47,7 +47,7 @@ export function ChangePlan() {
 
   function onConfirmPlanCancellation() {
     if (newPlan) {
-      dispatch(updateUserData({ plan: newPlan }));
+      dispatch(updateUserData({ subscription_plan: newPlan }));
     }
     setIsConfirmationModalOpen(false);
   }
@@ -72,7 +72,7 @@ export function ChangePlan() {
             title={plan.title}
             description={plan.description}
             price={plan.price}
-            isCurrentPlan={plan.title === userData?.plan}
+            isCurrentPlan={plan.title === userData?.subscription_plan}
             onCancelPlan={onCancelPlan}
             onSelectPlan={onSelectPlan}
           />

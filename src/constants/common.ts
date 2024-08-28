@@ -58,6 +58,8 @@ import rep9 from "assets/rep9.png";
 import rep10 from "assets/rep10.png";
 import rep11 from "assets/rep11.png";
 import rep12 from "assets/rep12.png";
+import { Representative } from "types/common";
+
 export enum colors {
   primary = "#0C0853",
   error = "#FF2A58",
@@ -186,11 +188,8 @@ export const topRepresentatives = [
   },
 ];
 
-
 export const repProfileRepresentatives = [
   {
-
-
     id: 3,
     title: "Rep. Alma A., Allen",
     representative: "Rep. Alma A., Allen",
@@ -1014,31 +1013,34 @@ export const REPRESENTATIVES = [
       "Originally from the Houston area, Rep. Dan Crenshaw is a proud 6th generation Texan. From an early age, Dan knew that he wanted to serve his country with the most elite fighting force in history: the U.S. Navy SEALs. His father’s career in the Texas oil and gas industry moved his family all over the world, including Ecuador and Colombia, where he attended high school. As a result, Dan is fluent in Spanish.  In 2006, Dan graduated from Tufts University, where he earned his Naval officer commission through Navy ROTC. Following graduation, he immediately reported to SEAL training in Coronado, CA, where he met his future wife, Tara. After graduating SEAL training, Dan deployed to Fallujah, Iraq to join SEAL Team Three, his first of five deployments overseas.\n\nOn Dan’s third deployment in 2012, his life changed forever. After six months of combat operations, he was hit by an IED blast during a mission in Helmand province, Afghanistan. He was evacuated and awoke from his medically induced coma learning that his right eye had been destroyed in the blast and his left eye was badly damaged. Dan was completely blind and the doctors did not believe he would ever see again. Tara stood by him every day and night, keeping faith and praying he would see again. After several difficult surgeries and months of fighting a tough diagnosis, Dan eventually regained sight in his left eye, a miracle according to the head surgeon. Dan refused to quit and went on to deploy twice more, first back to the Middle East in 2014 and then South Korea in 2016.\n\nDan was medically retired in September of 2016 as a Lieutenant Commander after serving ten years in the SEAL Teams. He left service with two Bronze Stars (one with Valor), the Purple Heart, and the Navy Commendation Medal with Valor, among others. Soon after, Dan completed his Master’s in Public Administration at the Harvard Kennedy School of Government. Dan then returned to Houston, where his community was hit by Hurricane Harvey. The storm brought devastation the region had never seen. He spent his time volunteering in areas of Katy, helping his neighbors recover from the damage. He saw first-hand the unthinkable losses that Texas suffered, but he also saw Texan grit and resilience. This inspired him to do more for his community.  Dan and Tara decided that the best way to serve the people of Texas would be in elected office.\n\nIn November 2018, Dan was elected to represent the people of Texas’s Second Congressional District. In Congress, he serves on the House Energy and Commerce Committee, which has the broadest jurisdiction of any legislative committee in Congress. On this Committee, Dan serves on the Subcommittee on Health, as well as the Subcommittee on Environment, Manufacturing, & Critical Materials, and the Subcommittee on Oversight and Investigations. Dan also serves on the House Permanent Select Committee on Intelligence. On this Committee, he serves on the Central Intelligence Agency Subcommittee and National Intelligence Enterprise Subcommittee.\n\nDan believes in service before self and understands that there is no higher calling than service to the American people. Although he can no longer fight on the battlefield, the integrity, leadership, vision, and tenacity he learned in the SEAL teams are present every day in his fight for common sense solutions in Congress.",
   },
   {
-
     name: "Rep. Allen Alma A.",
     district: "131st district, Texas",
     image: rep1,
-    socials: [{ "icon": twitter, "handle": "@RepAlmaAllen" },
-    { "icon": youtube, "handle": "Rep. Alma Allen" },
-    { "icon": instagram, "handle": "repalmaallen" },
-    { "icon": facebook, "handle": "Congresswoman Alma Allen" },],
-    bioData: [{ title: "Gender", description: "Female" },
-    { title: "Date of Birth", description: "April 7, 1939" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "131st district, Texas" },
-    {
-      title: "District Address",
-      description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(713) 860-1330" },
-    {
-      title: "Capitol Address",
-      description: "248 Cannon HOB, Washington, DC 20515",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepAlmaAllen" },
+      { icon: youtube, handle: "Rep. Alma Allen" },
+      { icon: instagram, handle: "repalmaallen" },
+      { icon: facebook, handle: "Congresswoman Alma Allen" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Female" },
+      { title: "Date of Birth", description: "April 7, 1939" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "131st district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Alma_A._Allen",
     party: {
       name: "Democratic Party",
@@ -1054,34 +1056,37 @@ export const REPRESENTATIVES = [
 
   Rep. Allen was elected to the Texas House of Representatives on November 2, 2004, and re-elected in November 2006, November 2008, and November 2010.
 
-  Rep. Allen and her husband, Lawrence A. Allen, Sr., are the proud parents of two children and grandparents to five grandchildren`
+  Rep. Allen and her husband, Lawrence A. Allen, Sr., are the proud parents of two children and grandparents to five grandchildren`,
   },
   {
-
     name: "Rep. Steve Allison",
     district: "121st district, Texas",
     image: rep2,
-    socials: [{ "icon": twitter, "handle": "@RepSteveAllison" },
-    { "icon": youtube, "handle": "Rep. Steve Allison" },
-    { "icon": instagram, "handle": "repsteveallison" },
-    { "icon": facebook, "handle": "Congressman Steve Allison" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: "December 5, 1953" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "121st district, Texas" },
-    {
-      title: "District Address",
-      description: "1635 NE Loop 410 Suite 506 San Antonio, Texas 78209",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(512) 463-0686" },
-    {
-      title: "Capitol Address",
-      description: "Room E2.322 P.O. Box 2910 Austin, TX 78768",
-    },
-    { title: "Capitol Phone", description: "(512) 463-0686" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepSteveAllison" },
+      { icon: youtube, handle: "Rep. Steve Allison" },
+      { icon: instagram, handle: "repsteveallison" },
+      { icon: facebook, handle: "Congressman Steve Allison" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "December 5, 1953" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "121st district, Texas" },
+      {
+        title: "District Address",
+        description: "1635 NE Loop 410 Suite 506 San Antonio, Texas 78209",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(512) 463-0686" },
+      {
+        title: "Capitol Address",
+        description: "Room E2.322 P.O. Box 2910 Austin, TX 78768",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0686" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Steve_Allison",
     party: {
       name: "Republican Party",
@@ -1107,27 +1112,31 @@ Steve and his wife, Peggy, met their freshman year at TCU and have been married 
     name: "Rep. Rafael Anchía",
     district: "103rd district, Texas",
     image: rep3,
-    socials: [{ "icon": twitter, "handle": "@RepRafaelAnchia" },
-    { "icon": youtube, "handle": "Rep. Rafael Anchia" },
-    { "icon": instagram, "handle": "reprafaelanchia" },
-    { "icon": facebook, "handle": "Congressman Rafael Anchia" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: "September 26, 1968" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "103rd district, Texas" },
-    {
-      title: "District Address",
-      description: "1111 West Mockingbird Lane Suite 1010 Dallas, TX 75247",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(214) 943-6081" },
-    {
-      title: "Capitol Address",
-      description: "Room 1N.5 P.O. Box 2910 Austin, TX 78768",
-    },
-    { title: "Capitol Phone", description: "(512) 463-0746" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepRafaelAnchia" },
+      { icon: youtube, handle: "Rep. Rafael Anchia" },
+      { icon: instagram, handle: "reprafaelanchia" },
+      { icon: facebook, handle: "Congressman Rafael Anchia" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "September 26, 1968" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "103rd district, Texas" },
+      {
+        title: "District Address",
+        description: "1111 West Mockingbird Lane Suite 1010 Dallas, TX 75247",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(214) 943-6081" },
+      {
+        title: "Capitol Address",
+        description: "Room 1N.5 P.O. Box 2910 Austin, TX 78768",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0746" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Rafael_Anch%C3%ADa",
     party: {
       name: "Democratic Party",
@@ -1172,27 +1181,31 @@ Additional Professional Recognitions:
     name: "Rep. Charles Doc Anderson",
     district: "56th district, Texas",
     image: rep4,
-    socials: [{ "icon": twitter, "handle": "@RepCharlesAnderson" },
-    { "icon": youtube, "handle": "Rep. Charles Anderson" },
-    { "icon": instagram, "handle": "repcharlesanderson" },
-    { "icon": facebook, "handle": "Congressman Charles Anderson" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: "June 29, 1945" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "56th district, Texas" },
-    {
-      title: "District Address",
-      description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(713) 860-1330" },
-    {
-      title: "Capitol Address",
-      description: "248 Cannon HOB, Washington, DC 20515",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepCharlesAnderson" },
+      { icon: youtube, handle: "Rep. Charles Anderson" },
+      { icon: instagram, handle: "repcharlesanderson" },
+      { icon: facebook, handle: "Congressman Charles Anderson" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "June 29, 1945" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "56th district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Charles_Anderson_(Texas_politician)",
     party: {
       name: "Republican Party",
@@ -1222,27 +1235,31 @@ Additional Professional Recognitions:
     name: "Rep. Trent Ashby",
     district: "9th district, Texas",
     image: rep5,
-    socials: [{ "icon": twitter, "handle": "@RepTrentAshby" },
-    { "icon": youtube, "handle": "Rep. Trent Ashby" },
-    { "icon": instagram, "handle": "reptrentashby" },
-    { "icon": facebook, "handle": "Congressman Trent Ashby" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: " March 13, 1972" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "9th district, Texas" },
-    {
-      title: "District Address",
-      description: "2915 Atkinson Dr.Lufkin, TX 75901",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(936) 634-2762" },
-    {
-      title: "Capitol Address",
-      description: "Room E2.806 P.O. Box 2910 Austin, TX 78768",
-    },
-    { title: "Capitol Phone", description: "(512) 463-0508" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepTrentAshby" },
+      { icon: youtube, handle: "Rep. Trent Ashby" },
+      { icon: instagram, handle: "reptrentashby" },
+      { icon: facebook, handle: "Congressman Trent Ashby" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: " March 13, 1972" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "9th district, Texas" },
+      {
+        title: "District Address",
+        description: "2915 Atkinson Dr.Lufkin, TX 75901",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(936) 634-2762" },
+      {
+        title: "Capitol Address",
+        description: "Room E2.806 P.O. Box 2910 Austin, TX 78768",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0508" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Trent_Ashby",
     party: {
       name: "Republican Party",
@@ -1258,27 +1275,31 @@ Today, Trent is Senior Vice President for VeraBank. He and his wife, Nickie, liv
     name: "Rep. Ernest Bailes",
     district: "18th district, Texas",
     image: rep6,
-    socials: [{ "icon": twitter, "handle": "@RepErnestBailes" },
-    { "icon": youtube, "handle": "Rep. Ernest Bailes" },
-    { "icon": instagram, "handle": "repernestbailes" },
-    { "icon": facebook, "handle": "Congressman Ernest Bailes" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: "April 23, 1982" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "18th district, Texas" },
-    {
-      title: "District Address",
-      description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(713) 860-1330" },
-    {
-      title: "Capitol Address",
-      description: "248 Cannon HOB, Washington, DC 20515",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepErnestBailes" },
+      { icon: youtube, handle: "Rep. Ernest Bailes" },
+      { icon: instagram, handle: "repernestbailes" },
+      { icon: facebook, handle: "Congressman Ernest Bailes" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "April 23, 1982" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "18th district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Ernest_Bailes",
     party: {
       name: "Republican Party",
@@ -1292,27 +1313,31 @@ Ernest and his wife Courtney have been married for 17 years and have two sons, C
     name: "Rep. Cecil Bell Jr.",
     district: "3rd district, Texas",
     image: rep7,
-    socials: [{ "icon": twitter, "handle": "@RepCecilBellJr" },
-    { "icon": youtube, "handle": "Rep. Cecil Bell Jr." },
-    { "icon": instagram, "handle": "repcecilbelljr" },
-    { "icon": facebook, "handle": "Congressman Cecil Bell Jr." },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: "May 17, 1962" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "3rd district, Texas" },
-    {
-      title: "District Address",
-      description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(713) 860-1330" },
-    {
-      title: "Capitol Address",
-      description: "248 Cannon HOB, Washington, DC 20515",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepCecilBellJr" },
+      { icon: youtube, handle: "Rep. Cecil Bell Jr." },
+      { icon: instagram, handle: "repcecilbelljr" },
+      { icon: facebook, handle: "Congressman Cecil Bell Jr." },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "May 17, 1962" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "3rd district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Cecil_Bell_Jr.",
     party: {
       name: "Republican Party",
@@ -1332,27 +1357,31 @@ Cecil met his high school sweetheart and now-wife, Jo Ann, at the 1979 National 
     name: "Rep. Keith Bell",
     district: "4th district, Texas",
     image: rep8,
-    socials: [{ "icon": twitter, "handle": "@RepKeithBell" },
-    { "icon": youtube, "handle": "Rep. Keith Bell" },
-    { "icon": instagram, "handle": "repkeithbell" },
-    { "icon": facebook, "handle": "Congressman Keith Bell" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: "March 4, 1959" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "4th district, Texas" },
-    {
-      title: "District Address",
-      description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(713) 860-1330" },
-    {
-      title: "Capitol Address",
-      description: "248 Cannon HOB, Washington, DC 20515",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepKeithBell" },
+      { icon: youtube, handle: "Rep. Keith Bell" },
+      { icon: instagram, handle: "repkeithbell" },
+      { icon: facebook, handle: "Congressman Keith Bell" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "March 4, 1959" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "4th district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Keith_Bell_(Texas_politician)",
     party: {
       name: "Republican Party",
@@ -1372,27 +1401,31 @@ Representative Bell represents House District 4, encompassing Kaufman and Easter
     name: "Rep. Diego M. Bernal",
     district: "123rd district, Texas",
     image: rep9,
-    socials: [{ "icon": twitter, "handle": "@RepDiegoBernal" },
-    { "icon": youtube, "handle": "Rep. Diego Bernal" },
-    { "icon": instagram, "handle": "repdiego.bernal" },
-    { "icon": facebook, "handle": "Congressman Diego Bernal" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: "June 22, 1974" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "123rd district, Texas" },
-    {
-      title: "District Address",
-      description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(713) 860-1330" },
-    {
-      title: "Capitol Address",
-      description: "248 Cannon HOB, Washington, DC 20515",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepDiegoBernal" },
+      { icon: youtube, handle: "Rep. Diego Bernal" },
+      { icon: instagram, handle: "repdiego.bernal" },
+      { icon: facebook, handle: "Congressman Diego Bernal" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "June 22, 1974" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "123rd district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Diego_Bernal",
     party: {
       name: "Democratic Party",
@@ -1418,27 +1451,31 @@ Diego is the proud father of Xan Rosa Bernal.`,
     name: "Rep. Salman Bhojani",
     district: "92nd district, Texas",
     image: rep10,
-    socials: [{ "icon": twitter, "handle": "@RepSalmanBhojani" },
-    { "icon": youtube, "handle": "Rep. Salman Bhojani" },
-    { "icon": instagram, "handle": "repsalmanbhojani" },
-    { "icon": facebook, "handle": "Congressman Salman Bhojani" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: " April 18, 1980" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "92nd district, Texas" },
-    {
-      title: "District Address",
-      description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(713) 860-1330" },
-    {
-      title: "Capitol Address",
-      description: "248 Cannon HOB, Washington, DC 20515",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepSalmanBhojani" },
+      { icon: youtube, handle: "Rep. Salman Bhojani" },
+      { icon: instagram, handle: "repsalmanbhojani" },
+      { icon: facebook, handle: "Congressman Salman Bhojani" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: " April 18, 1980" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "92nd district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Salman_Bhojani",
     party: {
       name: "Democratic Party",
@@ -1456,27 +1493,31 @@ Rep. Bhojani is proud to call Texas home. He lives in Euless with his wife, Nima
     name: "Rep. Greg Bonnen",
     district: "24th district, Texas",
     image: rep11,
-    socials: [{ "icon": twitter, "handle": "@RepGregBonnen" },
-    { "icon": youtube, "handle": "Rep. Greg Bonnen" },
-    { "icon": instagram, "handle": "repgregbonnen" },
-    { "icon": facebook, "handle": "Congressman Greg Bonnen" },],
-    bioData: [{ title: "Gender", description: "Male" },
-    { title: "Date of Birth", description: "June 20, 1966" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "24th district, Texas" },
-    {
-      title: "District Address",
-      description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(713) 860-1330" },
-    {
-      title: "Capitol Address",
-      description: "248 Cannon HOB, Washington, DC 20515",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepGregBonnen" },
+      { icon: youtube, handle: "Rep. Greg Bonnen" },
+      { icon: instagram, handle: "repgregbonnen" },
+      { icon: facebook, handle: "Congressman Greg Bonnen" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "June 20, 1966" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "24th district, Texas" },
+      {
+        title: "District Address",
+        description: "1849 Kingwood Dr., Suite #100, Kingwood, TX 77339",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(713) 860-1330" },
+      {
+        title: "Capitol Address",
+        description: "248 Cannon HOB, Washington, DC 20515",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Greg_Bonnen",
     party: {
       name: "Republican Party",
@@ -1498,27 +1539,32 @@ Representative Bonnen and his wife Kim live in Friendswood and have two daughter
     name: "Rep. Rhetta Andrews Bowers ",
     district: "83rd district, Texas",
     image: rep12,
-    socials: [{ "icon": twitter, "handle": "@RepRhettaBowers" },
-    { "icon": youtube, "handle": "Rep. Rhetta Andrews Bowers" },
-    { "icon": instagram, "handle": "reprhettabowers" },
-    { "icon": facebook, "handle": "Congresswoman Rhetta Andrews Bowers" },],
-    bioData: [{ title: "Gender", description: "Female" },
-    { title: "Date of Birth", description: "November 12, 1963" },
-    { title: "Date of Death", description: "N/A" },
-    { title: "Current District", description: "83rd district, Texas" },
-    {
-      title: "District Address",
-      description: "3200 Broadway Blvd. Suite 275 Garland, Texas 75043",
-    },
-    { title: "District Voice", description: "-" },
-    { title: "District Phone", description: "(972) 272-6237" },
-    {
-      title: "Capitol Address",
-      description: "Room E2.906 P.O. Box 2910 Austin, TX 78768 (512) 463-0464",
-    },
-    { title: "Capitol Phone", description: "(202) 225-6565" },
-    { title: "Capitol Voice", description: "-" },
-    { title: "Status", description: "-" },],
+    socials: [
+      { icon: twitter, handle: "@RepRhettaBowers" },
+      { icon: youtube, handle: "Rep. Rhetta Andrews Bowers" },
+      { icon: instagram, handle: "reprhettabowers" },
+      { icon: facebook, handle: "Congresswoman Rhetta Andrews Bowers" },
+    ],
+    bioData: [
+      { title: "Gender", description: "Female" },
+      { title: "Date of Birth", description: "November 12, 1963" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Current District", description: "83rd district, Texas" },
+      {
+        title: "District Address",
+        description: "3200 Broadway Blvd. Suite 275 Garland, Texas 75043",
+      },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "(972) 272-6237" },
+      {
+        title: "Capitol Address",
+        description:
+          "Room E2.906 P.O. Box 2910 Austin, TX 78768 (512) 463-0464",
+      },
+      { title: "Capitol Phone", description: "(202) 225-6565" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "-" },
+    ],
     wiki: "https://en.wikipedia.org/wiki/Rhetta_Andrews_Bowers",
     party: {
       name: "Democratic Party",
@@ -1547,30 +1593,33 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
     name: "Sen. Bryan Hughes",
     district: " 1st District, Texas",
     socials: [
-      { "icon": envelope, "handle": "bryan.hughes@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenBryanHughes" },
-      { "icon": youtube, "handle": "Bryan Hughes" },
-      { "icon": instagram, "handle": "bryanhughes" },
-      { "icon": facebook, "handle": "Bryan Hughes" }
+      { icon: envelope, handle: "bryan.hughes@senate.texas.gov" },
+      { icon: twitter, handle: "@SenBryanHughes" },
+      { icon: youtube, handle: "Bryan Hughes" },
+      { icon: instagram, handle: "bryanhughes" },
+      { icon: facebook, handle: "Bryan Hughes" },
     ],
     bioData: [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "November 4, 1973" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": " 1st District, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0101" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "November 4, 1973" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: " 1st District, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0101" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
     wiki: "https://en.wikipedia.org/wiki/Bryan_Hughes",
     party: {
       name: "Republican Party",
-      logo: republican
+      logo: republican,
     },
     biography: `Bryan Hughes is serving his third term in the Texas Senate, representing the 19 counties of Senate District One in Northeast Texas.
 
@@ -1580,75 +1629,81 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
 
     Senator Hughes promotes individual opportunity and personal liberty so that everyone can experience the American Dream.
 
-    Senator Hughes serves as Chairman of the Senate Committee on State Affairs and the Senate Committee on Jurisprudence and as a member of the Finance, Health & Human Services, Natural Resources & Economic Development, and Nominations Committees.`
+    Senator Hughes serves as Chairman of the Senate Committee on State Affairs and the Senate Committee on Jurisprudence and as a member of the Finance, Health & Human Services, Natural Resources & Economic Development, and Nominations Committees.`,
   },
   {
     image: sen2,
     name: "Sen. Bob Hall",
     district: " 2nd District, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "bob.hall@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenBobHall" },
-      { "icon": youtube, "handle": "Bob Hall" },
-      { "icon": instagram, "handle": "bobhall" },
-      { "icon": facebook, "handle": "Bob Hall" }
+    socials: [
+      { icon: envelope, handle: "bob.hall@senate.texas.gov" },
+      { icon: twitter, handle: "@SenBobHall" },
+      { icon: youtube, handle: "Bob Hall" },
+      { icon: instagram, handle: "bobhall" },
+      { icon: facebook, handle: "Bob Hall" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "December 3, 1945" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": " 2nd District, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0102" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "December 3, 1945" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: " 2nd District, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0102" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Bob_Hall_(Texas_politician)",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Bob_Hall_(Texas_politician)",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": `Currently in the 88th Legislature, Texas Senator Bob Hall is the Chairman of the vital Senate Committee on Administration and an influential voting member on the Senate Committee of Finance, Health and Human Services, Local Government, and Veteran Affairs. He has earned the reputation of being open-minded and willing to discuss ideas but absolutely unwavering in holding to his core conservative principles and Judeo-Christian values. He is a man who believes in the Declaration of Independence and follows the Constitution. He is pro-life, pro-gun, pro-liberty, pro-property rights, pro-Judeo-Christian conservative values, a staunch proponent of the free market, fiscally responsible, and pro-limited government. Senator Hall was instrumental in making Texas a 2nd Amendment Sanctuary State, as well as protecting religious organizations and churches from government shutdowns.
+    biography: `Currently in the 88th Legislature, Texas Senator Bob Hall is the Chairman of the vital Senate Committee on Administration and an influential voting member on the Senate Committee of Finance, Health and Human Services, Local Government, and Veteran Affairs. He has earned the reputation of being open-minded and willing to discuss ideas but absolutely unwavering in holding to his core conservative principles and Judeo-Christian values. He is a man who believes in the Declaration of Independence and follows the Constitution. He is pro-life, pro-gun, pro-liberty, pro-property rights, pro-Judeo-Christian conservative values, a staunch proponent of the free market, fiscally responsible, and pro-limited government. Senator Hall was instrumental in making Texas a 2nd Amendment Sanctuary State, as well as protecting religious organizations and churches from government shutdowns.
 
   After the Air Force, he worked in the aerospace industry as a systems engineer and business development manager. In 1982, he left the corporate world and began working as an independent proposal consultant to aerospace and defense corporations. Then in 1984, he formed his own company, Professional Proposal Management, Inc.
 
-  A compelling sense of duty, shaped by his military service, business experience, and love for this country, drives him to leave behind the legacy of a patriotic servant for his children and grandchildren. Envisioning their futures compelled him to become actively involved in the state's political process and strongly believes it is time to stand in the gap for our children, our liberties, and our future.`
+  A compelling sense of duty, shaped by his military service, business experience, and love for this country, drives him to leave behind the legacy of a patriotic servant for his children and grandchildren. Envisioning their futures compelled him to become actively involved in the state's political process and strongly believes it is time to stand in the gap for our children, our liberties, and our future.`,
   },
   {
-    "image": sen3,
-    "name": "Sen. Robert Nichols",
-    "district": "3rd District, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "robert.nichols@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenRobertNichols" },
-      { "icon": youtube, "handle": "Robert Nichols" },
-      { "icon": instagram, "handle": "robertnichols" },
-      { "icon": facebook, "handle": "Robert Nichols" }
+    image: sen3,
+    name: "Sen. Robert Nichols",
+    district: "3rd District, Texas",
+    socials: [
+      { icon: envelope, handle: "robert.nichols@senate.texas.gov" },
+      { icon: twitter, handle: "@SenRobertNichols" },
+      { icon: youtube, handle: "Robert Nichols" },
+      { icon: instagram, handle: "robertnichols" },
+      { icon: facebook, handle: "Robert Nichols" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "April 27, 1947" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "3rd District, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0103" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "April 27, 1947" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "3rd District, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0103" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Robert_Nichols",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Robert_Nichols",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": `First elected to the Texas Senate in 2007, Robert Nichols represents 18 counties including the greater part of East and Southeast Texas.
+    biography: `First elected to the Texas Senate in 2007, Robert Nichols represents 18 counties including the greater part of East and Southeast Texas.
 
   In the Texas Senate, Nichols currently serves as Chairman of the Senate Transportation Committee. Senator Nichols also serves on the Business and Commerce, Finance, Local Government, and Select Redistricting Committees. He is a member of the Legislative Audit Committee, and a former Vice-Chair of the Sunset Advisory Commission.
 
@@ -1658,39 +1713,42 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
 
   Nichols is a businessman from Jacksonville, Texas. In his hometown, he served on city council, was elected mayor, built four successful manufacturing facilities, earned 32 U.S. patents and 128 foreign patents, as well as creating more than 900 jobs for East Texas families.
 
-  Working his way through college by selling fireworks and ironing clothes for other students, Nichols earned a bachelor's degree from Lamar University in 1968. He married his high school sweetheart, Donna, and they are the proud parents of three children: Brittney, Joshua, and Collynn'rae. He is a member of the First Methodist Church in Jacksonville.`
+  Working his way through college by selling fireworks and ironing clothes for other students, Nichols earned a bachelor's degree from Lamar University in 1968. He married his high school sweetheart, Donna, and they are the proud parents of three children: Brittney, Joshua, and Collynn'rae. He is a member of the First Methodist Church in Jacksonville.`,
   },
   {
-    "image": sen4,
-    "name": "Sen. Brandon Creighton",
-    "district": "4th District, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "brandon.creighton@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenBrandon" },
-      { "icon": youtube, "handle": "Brandon Creighton" },
-      { "icon": instagram, "handle": "brandoncreighton" },
-      { "icon": facebook, "handle": "Brandon Creighton" }
+    image: sen4,
+    name: "Sen. Brandon Creighton",
+    district: "4th District, Texas",
+    socials: [
+      { icon: envelope, handle: "brandon.creighton@senate.texas.gov" },
+      { icon: twitter, handle: "@SenBrandon" },
+      { icon: youtube, handle: "Brandon Creighton" },
+      { icon: instagram, handle: "brandoncreighton" },
+      { icon: facebook, handle: "Brandon Creighton" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "October 14, 1974" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": " 4th District, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0104" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "October 14, 1974" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: " 4th District, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0104" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Brandon_Creighton",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Brandon_Creighton",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": `On August 26, 2014, Senator Brandon Creighton was sworn in to the Texas State Senate to represent the citizens of District 4, which encompasses parts of Montgomery, Harris, Chambers, Jefferson, and Galveston Counties.
+    biography: `On August 26, 2014, Senator Brandon Creighton was sworn in to the Texas State Senate to represent the citizens of District 4, which encompasses parts of Montgomery, Harris, Chambers, Jefferson, and Galveston Counties.
 
   During his tenure as Senator, he has taken the lead on key issues that matter to Texas job creators including franchise and property tax relief, water and transportation infrastructure, and border security.
 
@@ -1698,77 +1756,83 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
 
   Throughout his legislative career, his priorities have distinguished him as a genuine defender of conservative values. He has relentlessly hammered excessive taxation, pursued “loser pays” tort reform, passed drug testing for unemployment benefits, stood up for Texas’ 10th Amendment rights, and effectively blocked Obamacare's Medicaid expansion.
 
-  Brandon is an eighth-generation Montgomery County resident, where he resides with his family. He is a graduate of the University of Texas and holds his Doctor of Jurisprudence from Oklahoma City University School of Law. In his spare time, he enjoys Texas history, sports, hunting, and fishing.`
+  Brandon is an eighth-generation Montgomery County resident, where he resides with his family. He is a graduate of the University of Texas and holds his Doctor of Jurisprudence from Oklahoma City University School of Law. In his spare time, he enjoys Texas history, sports, hunting, and fishing.`,
   },
   {
-    "image": sen5,
-    "name": "Sen. Charles Schwertner",
-    "district": "5th District, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "charles.schwertner@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenCharles" },
-      { "icon": youtube, "handle": "Charles Schwertner" },
-      { "icon": instagram, "handle": "charlesschwertner" },
-      { "icon": facebook, "handle": "Charles Schwertner" }
+    image: sen5,
+    name: "Sen. Charles Schwertner",
+    district: "5th District, Texas",
+    socials: [
+      { icon: envelope, handle: "charles.schwertner@senate.texas.gov" },
+      { icon: twitter, handle: "@SenCharles" },
+      { icon: youtube, handle: "Charles Schwertner" },
+      { icon: instagram, handle: "charlesschwertner" },
+      { icon: facebook, handle: "Charles Schwertner" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "August 18, 1974" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "5th District, Texa" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0105" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "August 18, 1974" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "5th District, Texa" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0105" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Charles_Schwertner",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Charles_Schwertner",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": `Senator Charles Schwertner, MD is a sixth-generation Texan and lifelong conservative Republican. Since 2013, Dr. Schwertner has represented Senate District 5, an eleven-county region of central and east Texas that includes Bastrop, Brazos, Freestone, Leon, Limestone, Madison, Milam, Robertson, San Jacinto, Walker, and Williamson counties.
+    biography: `Senator Charles Schwertner, MD is a sixth-generation Texan and lifelong conservative Republican. Since 2013, Dr. Schwertner has represented Senate District 5, an eleven-county region of central and east Texas that includes Bastrop, Brazos, Freestone, Leon, Limestone, Madison, Milam, Robertson, San Jacinto, Walker, and Williamson counties.
 
   As Chairman of the powerful Senate Committee on Business and Commerce and the Sunset Advisory Commission, Schwertner oversees a number of critical policy areas for the state of Texas, including electric utilities, insurance, banking, technology, and telecommunications. Schwertner also serves as a member of the Senate Committees on Finance, State Affairs, and on the Legislative Budget Board.
 
   Throughout his time in the Texas Legislature, Schwertner has led the way on a number of important policy initiatives including authoring one of the strongest Constitutional Carry laws in the nation, reforming the state’s electrical grid, expanding access to mental health services, improving the state foster care system, strengthening landowner rights, cutting taxes for small businesses, protecting seniors from abuse, and fighting to lower tuition at public universities.
 
-  Schwertner and his wife Belinda (an obstetrician/gynecologist and Juris Doctor) reside in Georgetown. They have three adult sons: Carson, Zachary, and Matthew.`
+  Schwertner and his wife Belinda (an obstetrician/gynecologist and Juris Doctor) reside in Georgetown. They have three adult sons: Carson, Zachary, and Matthew.`,
   },
   {
-    "image": sen6,
-    "name": "Sen. Carol Alvarado",
-    "district": " 6th District, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "carol.alvarado@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenCarolAlvarado" },
-      { "icon": youtube, "handle": "Carol Alvarado" },
-      { "icon": instagram, "handle": "carolalvarado" },
-      { "icon": facebook, "handle": "Carol Alvarado" }
+    image: sen6,
+    name: "Sen. Carol Alvarado",
+    district: " 6th District, Texas",
+    socials: [
+      { icon: envelope, handle: "carol.alvarado@senate.texas.gov" },
+      { icon: twitter, handle: "@SenCarolAlvarado" },
+      { icon: youtube, handle: "Carol Alvarado" },
+      { icon: instagram, handle: "carolalvarado" },
+      { icon: facebook, handle: "Carol Alvarado" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Female" },
-      { "title": "Date of Birth", "description": " January 11, 1972" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "6th District, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0106" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Female" },
+      { title: "Date of Birth", description: " January 11, 1972" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "6th District, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0106" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Carol_Alvarado",
-    "party": {
-      "name": "Democratic Party",
-      "logo": democrat
+    wiki: "https://en.wikipedia.org/wiki/Carol_Alvarado",
+    party: {
+      name: "Democratic Party",
+      logo: democrat,
     },
-    "biography": `Senator Carol Alvarado is proud to serve Texas Senate District 6 in Harris County and was first elected in a 2018 Special Election.
+    biography: `Senator Carol Alvarado is proud to serve Texas Senate District 6 in Harris County and was first elected in a 2018 Special Election.
 
   In 2008, she was elected to the Texas House of Representatives and served five terms representing District 145. She served as the Chair of the Urban Affairs Committee and Co-Chair of the Select Committee on Transparency in State Agency Operations.
 
@@ -1780,39 +1844,42 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
 
   As a member of the Houston City Council from 2002-2008, Carol led the effort to make restaurants smoke free, stopped the shipping of more hazardous chemicals through our neighborhoods, and had air quality monitors installed in neighborhoods near chemical plants.
 
-  Carol is a native Houstonian and longtime resident of Houston's East End. She holds a Master of Business Administration and a Bachelor of Arts degree in Political Science from the University of Houston and is a member of St. Alphonsus Catholic Church.`
+  Carol is a native Houstonian and longtime resident of Houston's East End. She holds a Master of Business Administration and a Bachelor of Arts degree in Political Science from the University of Houston and is a member of St. Alphonsus Catholic Church.`,
   },
   {
-    "image": sen7,
-    "name": "Sen. Paul Bettencourt",
-    "district": "7th Distict, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "paul.bettencourt@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenPaulBettencourt" },
-      { "icon": youtube, "handle": "Paul Bettencourt" },
-      { "icon": instagram, "handle": "paulbettencourt" },
-      { "icon": facebook, "handle": "Paul Bettencourt" }
+    image: sen7,
+    name: "Sen. Paul Bettencourt",
+    district: "7th Distict, Texas",
+    socials: [
+      { icon: envelope, handle: "paul.bettencourt@senate.texas.gov" },
+      { icon: twitter, handle: "@SenPaulBettencourt" },
+      { icon: youtube, handle: "Paul Bettencourt" },
+      { icon: instagram, handle: "paulbettencourt" },
+      { icon: facebook, handle: "Paul Bettencourt" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "December 14, 1964" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "7th Distict, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0107" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "December 14, 1964" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "7th Distict, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0107" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Paul_Bettencourt",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Paul_Bettencourt",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": `First elected to the Senate in 2014, Senator Paul Bettencourt represents Senate District 7, which encompasses most of West Harris County. He previously served 10 years, from 1998 - 2008, as the Harris County Tax Assessor-Collector, where he introduced “Smart Government” at the Harris County Tax Office and developed a customer service-driven organization. His team created the first major county online property tax payment system and the first county tax office website with online vehicle registration in Texas. (His motto was “Get on-line, not in-line.”) He was well-known as the “Tax Man” for his outspoken efforts to cut property taxes.
+    biography: `First elected to the Senate in 2014, Senator Paul Bettencourt represents Senate District 7, which encompasses most of West Harris County. He previously served 10 years, from 1998 - 2008, as the Harris County Tax Assessor-Collector, where he introduced “Smart Government” at the Harris County Tax Office and developed a customer service-driven organization. His team created the first major county online property tax payment system and the first county tax office website with online vehicle registration in Texas. (His motto was “Get on-line, not in-line.”) He was well-known as the “Tax Man” for his outspoken efforts to cut property taxes.
 
   In the most recent Legislative Session, Senator Bettencourt successfully passed Senate Bill 2, the Texas Property Tax Reform and Transparency Act of 2019, by a vote of 21-9 to bring meaningful property tax reform and relief to all Texas taxpayers. This was the first major property tax reform legislation in almost 40 years, and the culmination of two decades of advocacy. He also continued his work on adult stem cell therapies in Texas by sponsoring HB 3148, building upon previous legislative sessions to get government out of the way, allowing new therapies to flourish and give terminally and chronically ill patients hope for a better quality of life. His work during the 86th Session earned him the distinction of "Senate MVP" by Capitol Inside, "Bull of the Brazos" by Texas Monthly, the Legislative Legacy Award by Texas Public Policy Foundation and he was given the "Citizen's Choice Award" by Empower Texans.
 
@@ -1824,39 +1891,42 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
 
   A Bachelor of Science graduate of Texas A&M University in Industrial Distribution, Senator Bettencourt is the President and CEO of a tax consulting company in Houston that has grown to forty employees. He is also a radio and television personality. The Senator and his wife Susan are active members of Saint John Vianney Catholic Church, where Paul is a fourth degree Knight of Columbus.
 
-  Senate District 7 is located in Harris County and includes Bunker Hill Village, Hedwig Village, parts of Houston, Hunters Creek Village, Jersey Village, Piney Point Village, Spring, and Tomball.`
+  Senate District 7 is located in Harris County and includes Bunker Hill Village, Hedwig Village, parts of Houston, Hunters Creek Village, Jersey Village, Piney Point Village, Spring, and Tomball.`,
   },
   {
-    "image": sen8,
-    "name": "Sen. Angela Paxton",
-    "district": "8th District, Texas ",
-    "socials": [
-      { "icon": envelope, "handle": "angela.paxton@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenAngelaPaxton" },
-      { "icon": youtube, "handle": "Angela Paxton" },
-      { "icon": instagram, "handle": "angelapaxton" },
-      { "icon": facebook, "handle": "Angela Paxton" }
+    image: sen8,
+    name: "Sen. Angela Paxton",
+    district: "8th District, Texas ",
+    socials: [
+      { icon: envelope, handle: "angela.paxton@senate.texas.gov" },
+      { icon: twitter, handle: "@SenAngelaPaxton" },
+      { icon: youtube, handle: "Angela Paxton" },
+      { icon: instagram, handle: "angelapaxton" },
+      { icon: facebook, handle: "Angela Paxton" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Female" },
-      { "title": "Date of Birth", "description": "November 6, 1974" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "8th District, Texas " },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0108" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Female" },
+      { title: "Date of Birth", description: "November 6, 1974" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "8th District, Texas " },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0108" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Angela_Paxton",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Angela_Paxton",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": ` Angela Paxton was elected to the Texas Senate in November of 2018 and represents fast-growing Senate District 8, a district that is home to professional sports headquarters, dozens of Fortune 1000 companies, countless entrepreneurs and small businesses, top-rated public schools, and is joined by rural communities to the east that feature Texas charm and recreation. A secondary math teacher and school counselor for more than 20 years, she is the first educator elected to the Texas Senate in over two decades. Senator Paxton describes her job in three words: Listen. Learn. Lead.
+    biography: ` Angela Paxton was elected to the Texas Senate in November of 2018 and represents fast-growing Senate District 8, a district that is home to professional sports headquarters, dozens of Fortune 1000 companies, countless entrepreneurs and small businesses, top-rated public schools, and is joined by rural communities to the east that feature Texas charm and recreation. A secondary math teacher and school counselor for more than 20 years, she is the first educator elected to the Texas Senate in over two decades. Senator Paxton describes her job in three words: Listen. Learn. Lead.
 
   Senator Paxton is an adopted child and the first person in her family to graduate from college. She earned an undergraduate degree in Mathematical Science from Baylor University and a Master of Science in Education from the University of Houston-Clear Lake.
 
@@ -1864,39 +1934,42 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
 
   Senator Paxton currently serves as the Vice Chair of the State Affairs Committee and as a member of the Senate committees for Finance, Education, Local Government, and Nominations. She is also the Chair of the Senate Republican Caucus, where she works with the other Republican Senators to advance our conservative priorities.
 
-  Senator Paxton and her husband, Texas Attorney General Ken Paxton, met as students at Baylor University and have been married since 1986. They have four grown children and three grandchildren, and are members of Prestonwood Baptist Church in Plano.`
+  Senator Paxton and her husband, Texas Attorney General Ken Paxton, met as students at Baylor University and have been married since 1986. They have four grown children and three grandchildren, and are members of Prestonwood Baptist Church in Plano.`,
   },
   {
-    "image": sen9,
-    "name": "Sen. Kelly Hancock",
-    "district": "9th District, Texas ",
-    "socials": [
-      { "icon": envelope, "handle": "kelly.hancock@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenKellyHancock" },
-      { "icon": youtube, "handle": "Kelly Hancock" },
-      { "icon": instagram, "handle": "kellyhancock" },
-      { "icon": facebook, "handle": "Kelly Hancock" }
+    image: sen9,
+    name: "Sen. Kelly Hancock",
+    district: "9th District, Texas ",
+    socials: [
+      { icon: envelope, handle: "kelly.hancock@senate.texas.gov" },
+      { icon: twitter, handle: "@SenKellyHancock" },
+      { icon: youtube, handle: "Kelly Hancock" },
+      { icon: instagram, handle: "kellyhancock" },
+      { icon: facebook, handle: "Kelly Hancock" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "August 5, 1969" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "9th District, Texas " },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0109" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "August 5, 1969" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "9th District, Texas " },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0109" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Kelly_Hancock",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Kelly_Hancock",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": ` First elected to the Texas Senate in 2012, Kelly Hancock represents Senate District 9 in Tarrant County. He previously served in the Texas House of Representatives and remains an advocate for core conservative values of limited government and lower taxes.
+    biography: ` First elected to the Texas Senate in 2012, Kelly Hancock represents Senate District 9 in Tarrant County. He previously served in the Texas House of Representatives and remains an advocate for core conservative values of limited government and lower taxes.
 
   Throughout his legislative career, Senator Hancock has worked diligently to keep government out of the way of Texas' job-creators and plan ahead for the growth associated with our state’s thriving economy. He has also passed model legislation to protect consumers from surprise medical bills and give Texas the most conservative state spending cap in the nation.
 
@@ -1904,39 +1977,42 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
 
   A graduate of Baylor University, Senator Hancock possesses an extensive business background and runs his family-founded distribution company. His commitment to public service began shortly after the birth of his first child. As a parent dedicated to a strong education system, Senator Hancock spent the next 13 years serving on his local school board.
 
-  He and his wife, Robin, have been married 37 years and have three children: Chloe (Greg), Skylar (Aaron), and Harrison (Parker). They proudly welcomed their first grandchild in 2018 and are now proud grandparents to six tiny Texans!`
+  He and his wife, Robin, have been married 37 years and have three children: Chloe (Greg), Skylar (Aaron), and Harrison (Parker). They proudly welcomed their first grandchild in 2018 and are now proud grandparents to six tiny Texans!`,
   },
   {
-    "image": sen10,
-    "name": "Sen. Phil King",
-    "district": " 10th District, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "phil.king@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenPhilKing" },
-      { "icon": youtube, "handle": "Phil King" },
-      { "icon": instagram, "handle": "philking" },
-      { "icon": facebook, "handle": "Phil King" }
+    image: sen10,
+    name: "Sen. Phil King",
+    district: " 10th District, Texas",
+    socials: [
+      { icon: envelope, handle: "phil.king@senate.texas.gov" },
+      { icon: twitter, handle: "@SenPhilKing" },
+      { icon: youtube, handle: "Phil King" },
+      { icon: instagram, handle: "philking" },
+      { icon: facebook, handle: "Phil King" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "August 12, 1966" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "10th District, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0104" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "August 12, 1966" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "10th District, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0104" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Phil_King_(Texas_politician)",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Phil_King_(Texas_politician)",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": ` Senator King proudly serves the citizens of Senate District 10, a sprawling district with a mixture of urban, suburban, and rural interests across eight counties.
+    biography: ` Senator King proudly serves the citizens of Senate District 10, a sprawling district with a mixture of urban, suburban, and rural interests across eight counties.
 
   He previously served as State Representative and Parker County Justice of the Peace.
 
@@ -1944,75 +2020,81 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
 
   Phil was a police officer in Fort Worth for 15 years, a reserve officer for 26 years, and continues to serve in the Texas State Guard. A practicing attorney and small business owner, King resides in Weatherford where he and his family have been longtime members of Trinity Bible Church. Phil and his wife Terry are the proud parents of six children and seventeen grandchildren.
 
-  Phil earned his B.A. and M.B.A. from Dallas Baptist University and a law degree from Texas A&M University School of Law (formerly known as Texas Wesleyan University School of Law).`
+  Phil earned his B.A. and M.B.A. from Dallas Baptist University and a law degree from Texas A&M University School of Law (formerly known as Texas Wesleyan University School of Law).`,
   },
   {
-    "image": sen11,
-    "name": "Sen. Mayes Middleton",
-    "district": " 11th District, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "mayes.middleton@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenMayesMiddleton" },
-      { "icon": youtube, "handle": "Mayes Middleton" },
-      { "icon": instagram, "handle": "mayesmiddleton" },
-      { "icon": facebook, "handle": "Mayes Middleton" }
+    image: sen11,
+    name: "Sen. Mayes Middleton",
+    district: " 11th District, Texas",
+    socials: [
+      { icon: envelope, handle: "mayes.middleton@senate.texas.gov" },
+      { icon: twitter, handle: "@SenMayesMiddleton" },
+      { icon: youtube, handle: "Mayes Middleton" },
+      { icon: instagram, handle: "mayesmiddleton" },
+      { icon: facebook, handle: "Mayes Middleton" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "December 1, 1981" },
-      { "title": "Date of Death", "description": "N/A" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "11th District, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0108" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "December 1, 1981" },
+      { title: "Date of Death", description: "N/A" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "11th District, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0108" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Mayes_Middleton",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Mayes_Middleton",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": ` Mayes Middleton is President of Middleton Oil Company, an independent oil and gas company. He also runs ranching, cattle, and farming operations. Mayes and his wife, Macy, have four children: Connor, Christian, Matthew, and Martha Ann. Mayes and Macy support numerous local community organizations and faith-based charities throughout the Galveston-Houston region.
+    biography: ` Mayes Middleton is President of Middleton Oil Company, an independent oil and gas company. He also runs ranching, cattle, and farming operations. Mayes and his wife, Macy, have four children: Connor, Christian, Matthew, and Martha Ann. Mayes and Macy support numerous local community organizations and faith-based charities throughout the Galveston-Houston region.
 
   Prior to serving in the Texas Senate, Mayes served two terms in the Texas House of Representatives, representing Chambers and Galveston Counties. During his last term in the Texas House, Mayes served as Chairman of the Texas House Freedom Caucus.
 
-  Now in the Texas Senate, Mayes represents Senate District 11, encompassing portions of Brazoria, Galveston, and Harris Counties. Throughout his time in both the House and Senate, Mayes has consistently ranked among the top most conservative members of the Legislature. Senator Middleton currently serves as the Vice Chairman of the Subcommittee on Higher Education and as a member on the Senate Committees on Administration, Business & Commerce, Education, Jurisprudence, and State Affairs.`
+  Now in the Texas Senate, Mayes represents Senate District 11, encompassing portions of Brazoria, Galveston, and Harris Counties. Throughout his time in both the House and Senate, Mayes has consistently ranked among the top most conservative members of the Legislature. Senator Middleton currently serves as the Vice Chairman of the Subcommittee on Higher Education and as a member on the Senate Committees on Administration, Business & Commerce, Education, Jurisprudence, and State Affairs.`,
   },
   {
-    "image": sen12,
-    "name": "Sen. Tan Parker",
-    "district": " 12th District, Texas",
-    "socials": [
-      { "icon": envelope, "handle": "tan.parker@senate.texas.gov" },
-      { "icon": twitter, "handle": "@SenTanParker" },
-      { "icon": youtube, "handle": "Tan Parker" },
-      { "icon": instagram, "handle": "tanparker" },
-      { "icon": facebook, "handle": "Tan Parker" }
+    image: sen12,
+    name: "Sen. Tan Parker",
+    district: " 12th District, Texas",
+    socials: [
+      { icon: envelope, handle: "tan.parker@senate.texas.gov" },
+      { icon: twitter, handle: "@SenTanParker" },
+      { icon: youtube, handle: "Tan Parker" },
+      { icon: instagram, handle: "tanparker" },
+      { icon: facebook, handle: "Tan Parker" },
     ],
-    "bioData": [
-      { "title": "Gender", "description": "Male" },
-      { "title": "Date of Birth", "description": "N/A" },
-      { "title": "Date of Death", "description": "September 29, 1976" },
-      { "title": "Chamber", "description": "Upper" },
-      { "title": "Current District", "description": "12th District, Texas" },
-      { "title": "District Address", "description": "N/A" },
-      { "title": "District Voice", "description": "-" },
-      { "title": "District Phone", "description": "N/A" },
-      { "title": "Capitol Address", "description": "P.O. Box 12068 Austin, TX 78711" },
-      { "title": "Capitol Phone", "description": "(512) 463-0109" },
-      { "title": "Capitol Voice", "description": "-" },
-      { "title": "Status", "description": "Active" }
+    bioData: [
+      { title: "Gender", description: "Male" },
+      { title: "Date of Birth", description: "N/A" },
+      { title: "Date of Death", description: "September 29, 1976" },
+      { title: "Chamber", description: "Upper" },
+      { title: "Current District", description: "12th District, Texas" },
+      { title: "District Address", description: "N/A" },
+      { title: "District Voice", description: "-" },
+      { title: "District Phone", description: "N/A" },
+      {
+        title: "Capitol Address",
+        description: "P.O. Box 12068 Austin, TX 78711",
+      },
+      { title: "Capitol Phone", description: "(512) 463-0109" },
+      { title: "Capitol Voice", description: "-" },
+      { title: "Status", description: "Active" },
     ],
-    "wiki": "https://en.wikipedia.org/wiki/Tan_Parker",
-    "party": {
-      "name": "Republican Party",
-      "logo": republican
+    wiki: "https://en.wikipedia.org/wiki/Tan_Parker",
+    party: {
+      name: "Republican Party",
+      logo: republican,
     },
-    "biography": ` Tan Parker is a businessman who grew up in North Texas, working in his family’s restaurants while volunteering in his community. He married his college sweetheart, Beth, and they moved to Flower Mound, where they raised their daughters, Lauren and Ashley. While family comes first, Tan considers working for the betterment of Texas the highest honor of his professional life.
+    biography: ` Tan Parker is a businessman who grew up in North Texas, working in his family’s restaurants while volunteering in his community. He married his college sweetheart, Beth, and they moved to Flower Mound, where they raised their daughters, Lauren and Ashley. While family comes first, Tan considers working for the betterment of Texas the highest honor of his professional life.
 
   Previously serving in the Texas House, Tan held leading committee roles on policy matters vital to our state. His leadership was instrumental in the unanimous election by his colleagues as chair of the House Republican Caucus during the 84th and 85th legislative sessions.
 
@@ -2021,5 +2103,205 @@ Though she is a proud native Houstonian, Representative Bowers has resided in Ro
   Tan graduated from the University of Dallas and earned a Master’s degree from the London School of Economics before building a distinguished private sector career in technology and private equity. He also created the book, *Making Government Work*.
 
   The bedrock of his service is exemplified through passionate advocacy for community and fighting for common-sense, conservative policies that strengthen Texas’ prosperity.`,
-  }
+  },
 ];
+
+export const senators: Representative[] = [
+  {
+    image: sen1,
+    name: "Sen. Bryan Hughes",
+    district: 1,
+    description:
+      "Bryan Hughes is serving his third term in the Texas Senate, representing the 19 counties of Senate District One in Northeast Texas. Born and raised in East Texas, Bryan attended Tyler Junior College and the University of Texas at Tyler, receiving his B.B.A. in economics, cum laude.",
+    id: 15,
+  },
+  {
+    image: sen2,
+    name: "Sen. Bob Hall",
+    district: 2,
+    description:
+      "Currently in the 88th Legislature, Texas Senator Bob Hall, is the Chairman of the vital Senate Committee on Administration and an influential voting member on the Senate Committee of Finance, Health and Human Services, Local Government, and Veteran Affairs.",
+    id: 16,
+  },
+  {
+    image: sen3,
+    name: "Sen. Robert Nichols",
+    district: 3,
+    description:
+      "First elected to the Texas Senate in 2007, Robert Nichols represents 18 counties including the greater part of East and Southeast Texas. In the Texas Senate, Nichols currently serves as Chairman of the Senate Transportation Committee.",
+    id: 17,
+  },
+  {
+    image: sen4,
+    name: "Sen. Brandon Creighton",
+    district: 4,
+    description:
+      "On August 26, 2014, Senator Brandon Creighton was sworn in to the Texas State Senate to represent the citizens of District 4, which encompasses parts of Montgomery, Harris, Chambers, Jefferson and Galveston Counties.",
+    id: 18,
+  },
+  {
+    image: sen5,
+    name: "Sen. Charles Schwertner",
+    district: 5,
+    description:
+      "Senator Charles Schwertner, MD is a sixth-generation Texan and lifelong conservative Republican. Since 2013, Dr. Schwertner has represented Senate District 5, an eleven-county region of central and east Texas that includes Bastrop, Brazos, Freestone, Leon, and Williamson counties.",
+    id: 19,
+  },
+  {
+    image: sen6,
+    name: "Sen. Carol Alvarado",
+    district: 6,
+    description:
+      "Senator Carol Alvarado is proud to serve Texas Senate District 6 in Harris County and was first elected in a 2018 Special Election. In 2008, she was elected to the Texas House of Representatives and served five terms representing District 145.",
+    id: 20,
+  },
+  {
+    image: sen7,
+    name: "Sen. Paul Bettencourt",
+    district: 7,
+    description:
+      "First elected to the Senate in 2014, Senator Paul Bettencourt represents Senate District 7, which encompasses most of West Harris County. He previously served 10 years, from 1998 - 2008, as the Harris County Tax Assessor-Collector.",
+    id: 21,
+  },
+  {
+    image: sen8,
+    name: "Sen. Angela Paxton",
+    district: 8,
+    description:
+      "Angela Paxton was elected to the Texas Senate in November of 2018 and represents fast-growing Senate District 8, a district that is home to professional sports headquarters, dozens of Fortune 1000 companies, countless entrepreneurs and small businesses.",
+    id: 22,
+  },
+  {
+    image: sen9,
+    name: "Sen. Kelly Hancock",
+    district: 9,
+    description:
+      "First elected to the Texas Senate in 2012, Kelly Hancock represents Senate District 9 in Tarrant County. He previously served in the Texas House of Representatives and remains an advocate for core conservative values of limited government and lower taxes.",
+    id: 23,
+  },
+  {
+    image: sen10,
+    name: "Sen. Phil King",
+    district: 10,
+    description:
+      "Senator King proudly serves the citizens of SD 10, a sprawling district with a mixture of urban, suburban, and rural interests across eight counties. He previously served as State Representative and Parker County Justice of the Peace.",
+    id: 24,
+  },
+  {
+    image: sen11,
+    name: "Sen. Mayes Middleton",
+    district: 11,
+    description:
+      "Mayes Middleton is President of Middleton Oil Company, an independent oil and gas company. He also runs ranching, cattle, and farming operations. Mayes and his wife, Macy, have four children: Connor, Christian, Matthew, and Martha Ann.",
+    id: 25,
+  },
+  {
+    image: sen12,
+    name: "Sen. Tan Parker",
+    district: 12,
+    description:
+      "Tan Parker is a businessman, who grew up in North Texas working in his family’s restaurants while volunteering in his community. He married his college sweetheart, Beth, and they moved to Flower Mound, raising their daughters, Lauren and Ashley.",
+    id: 26,
+  },
+];
+
+export const representatives: Representative[] = [
+  {
+    image: rep1,
+    name: "Rep. Alma A. Allen",
+    district: 131,
+    description:
+      "Prior to being elected to the Texas House of Representatives, State Representative Dr. Alma A. Allen was elected to, and served on, the State Board of Education for over 10 years.",
+    id: 3,
+  },
+  {
+    image: rep2,
+    name: "Rep. Steve Allison",
+    district: 121,
+    description:
+      "State Representative Steve Allison represents House District 121, succeeding former Speaker of the House Joe Straus. District 121 covers parts of north central and northeast San Antonio, as well as the cities of Alamo Heights, Olmos Park, and Terrell Hills.",
+    id: 4,
+  },
+  {
+    image: rep3,
+    name: "Rep. Rafael Anchía",
+    district: 103,
+    description:
+      "State Representative Rafael Anchía is currently serving his tenth term in the Texas Legislature and represents a western corridor of Dallas County, which includes the cities of Dallas, Carrollton, Farmers Branch, and Irving. Rep. Anchía currently serves on the House Committees on State Affairs and Energy Resources.",
+    id: 5,
+  },
+  {
+    image: rep4,
+    name: "Rep. Charles Doc Anderson",
+    district: 56,
+    description:
+      "Chairman, Texas Legislative Rural Caucus Vice-Chairman, Texas House Aerospace Caucus Vice-Chairman, House Committee on Energy House Committee on Agriculture and Livestock",
+    id: 6,
+  },
+  {
+    image: rep5,
+    name: "Rep. Trent Ashby",
+    district: 9,
+    description:
+      "Representative Trent Ashby was sworn into the Texas House of Representatives in January 2013. His district is comprised of Angelina, Houston, Polk, San Augustine, Trinity, and Tyler Counties. He currently serves as Chair of the House Committee on Culture, Recreation & Tourism.",
+    id: 7,
+  },
+  {
+    image: rep6,
+    name: "Rep. Ernest Bailes",
+    district: 18,
+    description:
+      "Elected in 2016, State Representative Ernest Bailes represents House District 18. Bailes, a lifelong rancher and agriculturalist, was raised on his family’s dairy and beef cattle operation in East Texas. He grew up in Shepherd and earned his B.S. from Texas A&M University in 2004.",
+    id: 8,
+  },
+  {
+    image: rep7,
+    name: "Rep. Cecil Bell Jr.",
+    district: 3,
+    description:
+      "Representative Cecil Bell, Jr. is a sixth generation Texan whose family has been in the State of Texas since 1852. The oldest of three siblings, he was born in Rosenberg but was raised all across Texas. A 2009 Ernst & Young Entrepreneur of the Year Finalist for the Southwest Region.",
+    id: 9,
+  },
+  {
+    image: rep8,
+    name: "Rep. Keith Bell",
+    district: 4,
+    description:
+      "A lifelong Texan, State Representative Keith Bell resides in Forney, Texas. Before being elected to represent House District 4 in November 2018, Keith served as a trustee on the Forney ISD School Board for 20 years, elected as president for 17 of those years.",
+    id: 10,
+  },
+  {
+    image: rep9,
+    name: "Rep. Diego M. Bernal",
+    district: 123,
+    description:
+      "Diego Bernal proudly represents the 123rd District in the Texas House of Representatives. A life-long San Antonian and the son of a Vietnam War Veteran, Diego grew up watching his mother and father make sacrifices to provide opportunities for their children.",
+    id: 11,
+  },
+  {
+    image: rep10,
+    name: "Rep. Salman Bhojani",
+    district: 92,
+    description:
+      "Salman Bhojani is a husband, father, small business owner, attorney, and councilmember. He was elected to the Texas House of Representatives in November 2022 to represent House District 92. In 2018, he was elected to the Euless City Council, becoming the first Muslim-American elected in North Texas.",
+    id: 12,
+  },
+  {
+    image: rep11,
+    name: "Rep. Greg Bonnen",
+    district: 24,
+    description:
+      "State Representative Greg Bonnen, MD is serving his fourth term in the Texas House of Representatives and currently represents the 24th district which encompasses the cities of Galveston, League City, Santa Fe, and Tiki Island.",
+    id: 13,
+  },
+  {
+    image: rep12,
+    name: "Rep. Rhetta Andrews Bowers ",
+    district: 83,
+    description:
+      "State Representative Dustin Burrows proudly serves the people of House District 83 in West Texas. A fourth generation West Texan, Dustin was born and raised in Lubbock and attended Lubbock public schools. He received his BA from Rhodes College and his JD from Texas Tech School of Law.",
+    id: 14,
+  },
+];
+
+export const allRepresentatives = [...senators, ...representatives];

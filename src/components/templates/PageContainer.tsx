@@ -124,17 +124,18 @@ export function PageContainer({
             onClick={goToProfile}
           >
             <img
-              src={userData?.profilePicture ?? profilePicture}
+              src={userData?.avatar ?? profilePicture}
               alt="Profile"
               className="w-8 h-8 object-cover rounded md:w-12 md:h-12"
             />
             <article className="col gap-1">
               <h6 className="text-neutral950 font-bold text-sm lg:text-base">
-                {userData?.firstName ?? "Seth"} {userData?.lastName ?? "Rogan"}
+                {userData?.first_name ?? "Seth"}{" "}
+                {userData?.last_name ?? "Rogan"}
               </h6>
               <p>
                 <span className="text-primary text-sm font-extrabold pl-1">
-                  {userData?.plan ?? "Pro"}
+                  {userData?.subscription_plan ?? "Pro"}
                 </span>
               </p>
             </article>
