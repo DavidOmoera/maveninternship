@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ActivityState } from "./types";
+import { ActivityState } from "types/common";
 import { getActivityLogs } from "./thunks";
 
 const initialState: ActivityState = {
@@ -23,6 +23,10 @@ const activitySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getActivityLogs.pending, (state) => {
       state.activitiesLoading = true;
+      state.activitiesError = null;
+    });
+    builder.addCase(getActivityLogs.fulfilled, (state) => {
+      state.activitiesLoading = false;
       state.activitiesError = null;
     });
     builder.addCase(getActivityLogs.rejected, (state, action) => {

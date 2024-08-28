@@ -144,6 +144,12 @@ export type TActivityLogs = Partial<{
   timestamp: Date | string;
 }>;
 
+export type ActivityState = Partial<{
+  activities: TActivityLogs[];
+  activitiesLoading: boolean;
+  activitiesError: string | null;
+}>;
+
 export type TGetActivityLogsParams = {
   user_id: number;
 };
