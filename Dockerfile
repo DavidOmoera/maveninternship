@@ -1,7 +1,7 @@
 ######################################################################
 # NPM Insaller Container Responsible Package and Lib Install
 ######################################################################
-FROM node:lts-alpine3.19 as deps
+FROM node:lts-alpine3.19 AS deps
 
 RUN apk add --no-cache libc6-compat python3 py3-pip && rm -rf /var/cache/apk/*
 RUN mkdir /app
@@ -15,7 +15,7 @@ RUN npm install
 ######################################################################
 # Builder Container, Responsible for Compiling App
 ######################################################################
-FROM node:lts-alpine3.19 as builder
+FROM node:lts-alpine3.19 AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . /app
@@ -27,14 +27,11 @@ RUN npm run build
 #######################################################################
 ## Runner Container Responsible for Runnning and Serving App
 #######################################################################
-FROM node:lts-alpine3.19 as runner
+FROM node:lts-alpine3.19 AS runner
 WORKDIR /web
 
 COPY --from=builder /app/build ./
 
-# Doing this to make static folder relative path work on gke ingress
-RUN mkdir -p /web/app
-RUN cp -r /web/static /web/app/static
 
 RUN npm install -g serve
 
