@@ -112,7 +112,7 @@ export const Bills: React.FC = () => {
           onClick={handleSubmit(onSearchBill)}
         />
       </div>
-      <div className="p-9 bg-white rounded-xl mt-3 mx-8">
+      <div className="p-9 bg-white rounded-xl mt-3 mx-9">
         <div className="flex flex-col space-y-4">
           {/* Search results */}
           <div className="row justify-between my-9">

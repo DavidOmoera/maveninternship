@@ -78,7 +78,7 @@ export function ActivityFeed() {
 
   return (
     <PageContainer title="Activity Feed" className="w-full bg-gray-100 ">
-      <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
+      <div className="p-4 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
         {/** Input fields */}
         <div className="row justify-between mb-9 flex-wrap gap-3">
           <div className="flex gap-3 w-full lg:w-fit">

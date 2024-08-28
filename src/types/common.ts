@@ -148,5 +148,35 @@ export type TGetActivityLogs = {
 };
 
 export type TGetActivityLogsParams = Partial<{
-  userId: string;
+  userId: number;
+}>;
+
+export type TUserParams = Partial<{
+  user_id: number;
+  email: string;
+}>;
+
+export type TSearchUsersParams = Partial<
+  TGetBillsParams &
+    TUserParams & {
+      account_class: string;
+      subscription_plan: string;
+    }
+>;
+
+export type TOrganizationParams = Partial<{
+  org_id: number;
+  email: string;
+}>;
+
+export type TRoleParams = {
+  role: string;
+};
+
+export type TUserDetailsParams = Partial<{
+  account_type: string;
+  exp_date: string;
+  subscription_start_date: string;
+  subscription_id: string;
+  subscription: string;
 }>;
