@@ -14,17 +14,17 @@ import {
 export const MakeAdminRequest = (
   params: TUserParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.makeAdmin(), { params });
+  client.post(endpoints.admin.makeAdmin(), { params });
 
 export const GetAllUsersRequest = (
   params: TGetBillsParams
 ): Promise<AxiosResponse<TUserData>> =>
-  client.get(endpoints.admin.getAllUsers(), { params });
+  client.post(endpoints.admin.getAllUsers(), { params });
 
 export const GetAllOrganizationsRequest = (
   params: TGetBillsParams
 ): Promise<AxiosResponse<TUserData>> =>
-  client.get(endpoints.admin.getAllOrganizations(), { params });
+  client.post(endpoints.admin.getAllOrganizations(), { params });
 
 export const SearchUsersRequest = (
   params: TSearchUsersParams
@@ -39,54 +39,54 @@ export const SearchOrganizationsRequest = (
 export const DeleteUserRequest = (
   params: TUserParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.deleteUser(), { params });
+  client.delete(endpoints.admin.deleteUser(), { params });
 
 export const DeleteOrganizationRequest = (
   params: TOrganizationParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.deleteOrganization(), { params });
+  client.delete(endpoints.admin.deleteOrganization(), { params });
 
 export const SuspendUserRequest = (
   params: TUserParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.suspendUser(), { params });
+  client.post(endpoints.admin.suspendUser(), { params });
 
 export const suspendOrganizationRequest = (
   params: TOrganizationParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.suspendOrganization(), { params });
+  client.post(endpoints.admin.suspendOrganization(), { params });
 
 export const UnSuspendUserRequest = (
   params: TUserParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.unsuspendUser(), { params });
+  client.post(endpoints.admin.unsuspendUser(), { params });
 
 export const UnsuspendOrganizationRequest = (
   params: TOrganizationParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.unsuspendOrganization(), { params });
+  client.post(endpoints.admin.unsuspendOrganization(), { params });
 
 export const UpdateUserRoleRequest = (
   params: TUserParams & TRoleParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.updateUserRole(), { params });
+  client.post(endpoints.admin.updateUserRole(), { params });
 
 export const UpdateUserDetailsRequest = (
   params: TUserDetailsParams & TUserParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.updateUserDetails(), { params });
+  client.post(endpoints.admin.updateUserDetails(), { params });
 
 export const UpdateOrganizationRequest = (
   params: TUserDetailsParams & TOrganizationParams
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.deleteUser(), { params });
+  client.post(endpoints.admin.deleteUser(), { params });
 
 export const BanEmailRequest = (
   email: string
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.banEmail(), { params: { email } });
+  client.post(endpoints.admin.banEmail(), { params: { email } });
 
 export const DeleteBannedEmailRequest = (
   email: string
 ): Promise<AxiosResponse<string>> =>
-  client.get(endpoints.admin.deleteBannedEmail(), { params: { email } });
+  client.delete(endpoints.admin.deleteBannedEmail(), { params: { email } });

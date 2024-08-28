@@ -14,5 +14,5 @@ export const postActivityLogRequest = (): Promise<
 
 export const getActivityLogRequest = (
   params: TGetActivityLogsParams & TGetBillsParams
-): Promise<AxiosResponse<TGetActivityLogs>> =>
+): Promise<AxiosResponse<TGetActivityLogs & TGetActivityLogs>> =>
   client.get(endpoints.activity.getActivity(), { params });

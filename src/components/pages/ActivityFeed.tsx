@@ -9,8 +9,18 @@ import { PageContainer } from "components/templates/PageContainer";
 import { Pill } from "components/molecules/Pill";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { searchObjects } from "utils/helpers";
+import {
+  postActivityLogRequest,
+  getActivityLogRequest,
+} from "../../api/activityApi";
+import {
+  TActivityLogs,
+  TGetActivityLogsParams,
+  TGetBillsParams,
+} from "types/common";
+
 dayjs.extend(relativeTime);
 
 const ACTIVITY_OPTIONS = [
@@ -53,9 +63,39 @@ export function ActivityFeed() {
     resolver: yupResolver(activitySearchSchema),
   });
 
+  const [activities, setActivities] = useState<TActivityLogs[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
   const selectedActivityType = watch("activity");
   const searchValue = watch("searchValue");
   const noOfDays = watch("noOfDays");
+
+  useEffect(() => {
+    const fetchActivities = () => {
+      setLoading(true);
+      setError(null);
+      const params: TGetActivityLogsParams & TGetBillsParams = {
+        user_id: 0,
+        skip: 0,
+        limit: 100,
+      };
+
+      getActivityLogRequest(params)
+        .then((response) => {
+          const data = response.data as TActivityLogs[]; // Cast response.data to TActivityLogs[]
+          setActivities(data);
+        })
+        .catch(() => {
+          setError("Failed to load activities");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    };
+
+    fetchActivities();
+  }, [noOfDays, selectedActivityType]);
 
   const filteredActivities = useMemo(() => {
     return ACTIVITIES.filter((activity) => {
@@ -107,6 +147,9 @@ export function ActivityFeed() {
             helperText={activityFormErrors.searchValue?.message as string}
           />
         </div>
+
+        {loading && <p>Loading activities...</p>}
+        {error && <p className="text-red-500">{error}</p>}
 
         {/** Activity feed */}
         <div className="col gap-8">

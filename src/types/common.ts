@@ -142,14 +142,14 @@ export type TActivityLogs = {
   user_id: number;
 };
 
-export type TGetActivityLogs = {
+export type TGetActivityLogs = Partial<{
   id: number;
   timestamp: Date | string;
-};
-
-export type TGetActivityLogsParams = Partial<{
-  userId: number;
 }>;
+
+export type TGetActivityLogsParams = {
+  user_id: number;
+};
 
 export type TUserParams = Partial<{
   user_id: number;
