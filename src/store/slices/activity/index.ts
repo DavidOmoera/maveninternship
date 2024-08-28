@@ -1,20 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TActivityState } from "./types";
+import { ActivityState } from "./types";
 import { getActivityLogs } from "./thunks";
 
-const initialState: TActivityState = {
+const initialState: ActivityState = {
   activities: [],
   activitiesLoading: false,
-  activitiesError: undefined,
+  activitiesError: null,
 };
 
 const activitySlice = createSlice({
   name: "activity",
-  initialState: initialState,
+  initialState,
   reducers: {
     setActivity: (
       state,
-      action: PayloadAction<TActivityState["activities"]>
+      action: PayloadAction<ActivityState["activities"]>
     ) => {
       state.activities = action.payload;
     },
@@ -23,11 +23,7 @@ const activitySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getActivityLogs.pending, (state) => {
       state.activitiesLoading = true;
-      state.activitiesError = undefined;
-    });
-    builder.addCase(getActivityLogs.fulfilled, (state, action) => {
-      state.activitiesLoading = false;
-      state.activities = action.payload;
+      state.activitiesError = null;
     });
     builder.addCase(getActivityLogs.rejected, (state, action) => {
       state.activitiesLoading = false;

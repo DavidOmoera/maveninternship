@@ -9,18 +9,8 @@ import { PageContainer } from "components/templates/PageContainer";
 import { Pill } from "components/molecules/Pill";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { searchObjects } from "utils/helpers";
-import { getActivityLogRequest } from "../../api/activityApi";
-import {
-  AppDispatch,
-  RootState,
-  TActivityLogs,
-  TGetActivityLogsParams,
-} from "types/common";
-import { useDispatch, useSelector } from "react-redux";
-import { getActivityLogs } from "store/slices/activity/thunks";
-
 dayjs.extend(relativeTime);
 
 const ACTIVITY_OPTIONS = [
@@ -55,7 +45,6 @@ type TActivitySearchForm = Partial<{
 }>;
 
 export function ActivityFeed() {
-  const dispatch = useDispatch<AppDispatch>();
   const {
     control: activityControl,
     formState: { errors: activityFormErrors },
@@ -64,23 +53,9 @@ export function ActivityFeed() {
     resolver: yupResolver(activitySearchSchema),
   });
 
-  const { activities, loading, error } = useSelector(
-    (state: RootState) => state.activity
-  );
-
   const selectedActivityType = watch("activity");
   const searchValue = watch("searchValue");
   const noOfDays = watch("noOfDays");
-
-  useEffect(() => {
-    dispatch(
-      getActivityLogs({
-        user_id: 0,
-        skip: 0,
-        limit: 100,
-      } as TGetActivityLogsParams)
-    );
-  }, [dispatch]);
 
   const filteredActivities = useMemo(() => {
     return ACTIVITIES.filter((activity) => {
@@ -103,7 +78,7 @@ export function ActivityFeed() {
 
   return (
     <PageContainer title="Activity Feed" className="w-full bg-gray-100 ">
-      <div className="p-4 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
+      <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
         {/** Input fields */}
         <div className="row justify-between mb-9 flex-wrap gap-3">
           <div className="flex gap-3 w-full lg:w-fit">
@@ -132,9 +107,6 @@ export function ActivityFeed() {
             helperText={activityFormErrors.searchValue?.message as string}
           />
         </div>
-
-        {loading && <p>Loading activities...</p>}
-        {error && <p className="text-red-500">{error}</p>}
 
         {/** Activity feed */}
         <div className="col gap-8">

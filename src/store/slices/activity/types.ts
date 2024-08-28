@@ -1,7 +1,7 @@
 import { TActivityLogs } from "types/common";
 
-export type TActivityState = Partial<{
+export type ActivityState = Partial<{
   activities: TActivityLogs[];
   activitiesLoading: boolean;
-  activitiesError: string;
+  activitiesError: string | null;
 }>;
