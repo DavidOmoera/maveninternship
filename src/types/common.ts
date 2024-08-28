@@ -136,17 +136,50 @@ export type TSearchBillsParams = Partial<
 
 export type TGetBillsResponse = TBill[];
 
-export type TActivityLogs = {
+export type TActivityLogs = Partial<{
   activity_type: string;
   description: string;
   user_id: number;
-};
-
-export type TGetActivityLogs = {
   id: number;
   timestamp: Date | string;
+}>;
+
+export type ActivityState = Partial<{
+  activities: TActivityLogs[];
+  activitiesLoading: boolean;
+  activitiesError: string | null;
+}>;
+
+export type TGetActivityLogsParams = {
+  user_id: number;
 };
 
-export type TGetActivityLogsParams = Partial<{
-  userId: string;
+export type TUserParams = Partial<{
+  user_id: number;
+  email: string;
+}>;
+
+export type TSearchUsersParams = Partial<
+  TGetBillsParams &
+    TUserParams & {
+      account_class: string;
+      subscription_plan: string;
+    }
+>;
+
+export type TOrganizationParams = Partial<{
+  org_id: number;
+  email: string;
+}>;
+
+export type TRoleParams = {
+  role: string;
+};
+
+export type TUserDetailsParams = Partial<{
+  account_type: string;
+  exp_date: string;
+  subscription_start_date: string;
+  subscription_id: string;
+  subscription: string;
 }>;

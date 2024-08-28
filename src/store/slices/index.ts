@@ -4,9 +4,11 @@ import authSlice from "./auth";
 import organizationSlice from "./organization";
 import topRepsSlice from "./topRepsSlice";
 import watchedBillsReducer from "store/slices/watchedBillsSlice.ts";
+import activitySlice from "./activity";
 
 export const rootReducer = combineReducers({
   auth: authSlice,
+  activity: activitySlice,
   organization: organizationSlice,
   topReps: topRepsSlice,
   watchedBills: watchedBillsReducer,
