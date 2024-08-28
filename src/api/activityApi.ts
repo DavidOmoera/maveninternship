@@ -9,7 +9,7 @@ import {
 
 export const postActivityLogRequest = (): Promise<
   AxiosResponse<TActivityLogs>
-> => client.get(endpoints.activity.postActivity());
+> => client.post(endpoints.activity.postActivity());
 
 export const getActivityLogRequest = (
   params: TGetActivityLogsParams & TGetBillsParams
