@@ -8,6 +8,7 @@ import {
   TSignUpResponse,
   TUpdateUserRequestBody,
   TUserData,
+  TVerifyEmailRequestBody,
 } from "types/common";
 
 export const getUserDataRequest = (): Promise<AxiosResponse<TUserData>> =>
@@ -26,6 +27,11 @@ export const loginRequest = (
       "Content-Type": "application/x-www-form-urlencoded;",
     },
   });
+
+export const verifyEmailRequest = (
+  body: TVerifyEmailRequestBody
+): Promise<AxiosResponse<string>> =>
+  client.post(endpoints.auth.verifyEmail(), body);
 
 export const updateUserRequest = (
   body: TUpdateUserRequestBody

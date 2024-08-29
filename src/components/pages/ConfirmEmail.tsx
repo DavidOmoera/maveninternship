@@ -1,9 +1,25 @@
 import { Button } from "components/atoms/Button";
-import email from "assets/email-logo.svg"
-
+import email from "assets/email-logo.svg";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Routes } from "types/routes";
+import { useEffect } from "react";
+import { verifyEmailRequest } from "api/authApi";
 
 export function ConfirmEmail() {
-  function ConfirmEmail() {}
+  const location = useLocation();
+  const { email: emailAddress, code } = location.state ?? {};
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Verify user's email as soon as they load this page
+    verifyEmailRequest({ email: emailAddress, code })
+      .then(() => {})
+      .catch();
+  }, [code, emailAddress]);
+
+  function ConfirmEmail() {
+    navigate(Routes.Login, { state: { email: location.state?.email ?? "" } });
+  }
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
