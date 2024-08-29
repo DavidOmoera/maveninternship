@@ -8,10 +8,11 @@ import { TAccountClass } from "types/common";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUpSchema } from "constants/schemas";
-import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { handleError, useAppDispatch, useAppSelector } from "utils/helpers";
 import { signUp } from "store/slices/auth/thunks";
 import { signingUpSelector } from "store/slices/auth/selectors";
 import { ControlledInput } from "components/organisms/ControlledInput";
+import { AuthToastMessages } from "constants/toastMessages";
 
 type TSignUpForm = {
   first_name: string;
@@ -53,13 +54,21 @@ export function SignUp() {
           subscription_plan: "free",
           registration_method: "form",
           account_type: "demo",
+
+          // dummy data to make sign up for demo account work
+          stripe_subscription_id: "something",
+          subscription_start_date: new Date().toJSON(),
+          subscription_end_date: new Date().toJSON(),
+          card_number: 0,
+          avatar: "something",
         })
       )
         .unwrap()
         .then(() => {
-          navigate(Routes.ConfirmEmail, {
-            state: { email: formData.email },
-          });
+          navigate(Routes.ConfirmEmail);
+        })
+        .catch((e) => {
+          handleError(e, AuthToastMessages.SIGNUP_FAILURE);
         });
     }
   };
