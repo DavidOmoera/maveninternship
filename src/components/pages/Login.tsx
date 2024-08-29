@@ -1,15 +1,44 @@
 import { Button } from "components/atoms/Button";
-import TextField from "@mui/material/TextField";
 import { Routes } from "types/routes";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signInSchema } from "constants/schemas";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { ControlledInput } from "components/organisms/ControlledInput";
+import { loginRequest } from "api/authApi";
+
+type TSignInForm = {
+  email: string;
+  password: string;
+};
 
 export function Login() {
+  const location = useLocation();
+  const signedUpEmail = location.state?.email as string;
   const navigate = useNavigate(); // Initialize useNavigate
 
-  function handleLogin() {
-    // Navigate to the dashboard page when login is successful
-    navigate(Routes.Dashboard);
-  }
+  const {
+    control,
+    formState: { errors, isDirty, isSubmitting, isValid },
+    handleSubmit,
+  } = useForm<TSignInForm>({
+    resolver: yupResolver(signInSchema),
+  });
+
+  const handleLogin: SubmitHandler<TSignInForm> = (formData: TSignInForm) => {
+    const { email: username, password } = formData ?? {};
+    if (isValid) {
+      loginRequest({ username, password }).then((res) => {
+        const accessToken = res.data.access_token;
+
+        if (accessToken) {
+          localStorage.setItem("accessToken", accessToken);
+          // Navigate to the dashboard page when login is successful
+          navigate(Routes.Dashboard);
+        }
+      });
+    }
+  };
 
   return (
     <div className="w-full flex flex-col justify-center items-center h-full">
@@ -22,17 +51,25 @@ export function Login() {
           </a>
         </span>
         <div className="flex flex-col gap-4 mt-8 mb-6 w-full">
-          <TextField
-            fullWidth
+          <ControlledInput
+            control={control}
+            required
+            name="email"
             label="Email Address"
-            type="email"
-            variant="outlined"
+            placeholder="Email Address"
+            error={!!errors?.email}
+            defaultValue={signedUpEmail ?? ""}
+            helperText={(errors?.email?.message as string) ?? ""}
           />
-          <TextField
-            fullWidth
+          <ControlledInput
+            control={control}
+            required
+            name="password"
             label="Password"
             type="password"
-            variant="outlined"
+            placeholder="Password"
+            error={!!errors?.password}
+            helperText={(errors?.password?.message as string) ?? ""}
           />
           <div className="flex flex-row justify-end">
             <a href={Routes.ResetPassword}>
@@ -42,8 +79,9 @@ export function Login() {
         </div>
         <Button
           text="Log In"
+          disabled={!isDirty || isSubmitting}
           className="w-full flex flex-col justify-center items-center"
-          onClick={handleLogin}
+          onClick={handleSubmit(handleLogin)}
         />
       </div>
     </div>

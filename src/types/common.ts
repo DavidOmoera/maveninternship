@@ -48,24 +48,28 @@ export type TUserData = {
   is_verified: boolean;
 };
 
+type TAccountType = "demo" | "premium";
+export type TAccountClass = "personal" | "corporate";
+type TRole = "user" | "admin";
+
 export type TSignUpRequestBody = {
-  account_class: string;
+  account_class: TAccountClass;
   first_name: string;
   last_name: string;
   email: string;
-  role: string;
+  role: TRole;
   subscription_plan: string;
-  stripe_subscription_id: string;
-  subscription_start_date: Date | string;
-  subscription_end_date: Date | string;
-  card_number: number;
+  stripe_subscription_id?: string;
+  subscription_start_date?: Date | string;
+  subscription_end_date?: Date | string;
+  card_number?: number;
   registration_method: string;
-  industry_affiliation: string;
-  industry_size: string;
-  avatar: string;
+  industry_affiliation?: string;
+  industry_size?: string;
+  avatar?: string;
   password: string;
   confirm_password: string;
-  account_type: string;
+  account_type: TAccountType;
 };
 
 export type TSignUpResponse = {
@@ -185,9 +189,30 @@ export type TUserDetailsParams = Partial<{
 export type TUpdateOrgParams = Partial<TUserDetailsParams & TRoleParams>;
 export type TUpdateUserParams = Partial<TUserDetailsParams & TUserParams>;
 
-export interface AdminState {
+export type AdminState = {
   users: TUserData[];
   organizations: TUserData[];
   loading: boolean;
   error: string | undefined;
 }
+
+export type TLoginRequestBody = {
+  username: string;
+  password: string;
+} & Partial<{
+  grant_type: string;
+  scope: string;
+  client_id: string;
+  client_secret: string;
+}>;
+
+export type TLoginResponse = {
+  access_token: string;
+  token_type: string;
+};
+
+export type TVerifyEmailRequestBody = {
+  email: string;
+  code: string;
+};
+
