@@ -187,3 +187,18 @@ export type TUserDetailsParams = Partial<{
   subscription_id: string;
   subscription: string;
 }>;
+
+export type TLoginRequestBody = {
+  username: string;
+  password: string;
+} & Partial<{
+  grant_type: string;
+  scope: string;
+  client_id: string;
+  client_secret: string;
+}>;
+
+export type TLoginResponse = {
+  access_token: string;
+  token_type: string;
+};

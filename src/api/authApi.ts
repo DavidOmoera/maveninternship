@@ -2,6 +2,8 @@ import { AxiosResponse } from "axios";
 import { client } from "./client";
 import { endpoints } from "./endpoints";
 import {
+  TLoginRequestBody,
+  TLoginResponse,
   TSignUpRequestBody,
   TSignUpResponse,
   TUpdateUserRequestBody,
@@ -15,6 +17,15 @@ export const signUpRequest = (
   body: TSignUpRequestBody
 ): Promise<AxiosResponse<TSignUpResponse>> =>
   client.post(endpoints.auth.register(), body);
+
+export const loginRequest = (
+  body: TLoginRequestBody
+): Promise<AxiosResponse<TLoginResponse>> =>
+  client.post(endpoints.auth.login(), body, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;",
+    },
+  });
 
 export const updateUserRequest = (
   body: TUpdateUserRequestBody
