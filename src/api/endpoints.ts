@@ -68,4 +68,7 @@ export const endpoints = {
     updateNotificationSettings: (userId: string): string =>
       `/notifications/notification-settings/${userId}`,
   },
+  subscription: {
+    getPlans: (): string => `/subscription_plans`,
+  },
 };
