@@ -4,11 +4,12 @@ import { endpoints } from "./endpoints";
 import {
   TUserData,
   TUserParams,
+  TUpdateUserParams,
   TGetBillsParams,
   TSearchUsersParams,
   TOrganizationParams,
+  TUpdateOrgParams,
   TRoleParams,
-  TUserDetailsParams,
 } from "types/common";
 
 export const makeAdminRequest = (
@@ -67,17 +68,17 @@ export const unsuspendOrganizationRequest = (
   client.post(endpoints.admin.unsuspendOrganization(), { params });
 
 export const updateUserRoleRequest = (
-  params: TUserParams & TRoleParams
+  params: TRoleParams
 ): Promise<AxiosResponse<string>> =>
   client.post(endpoints.admin.updateUserRole(), { params });
 
 export const updateUserDetailsRequest = (
-  params: TUserDetailsParams & TUserParams
+  params: TUpdateUserParams
 ): Promise<AxiosResponse<string>> =>
   client.post(endpoints.admin.updateUserDetails(), { params });
 
 export const updateOrganizationRequest = (
-  params: TUserDetailsParams & TOrganizationParams
+  params: TUpdateOrgParams
 ): Promise<AxiosResponse<string>> =>
   client.post(endpoints.admin.deleteUser(), { params });
 

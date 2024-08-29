@@ -150,10 +150,6 @@ export type ActivityState = Partial<{
   activitiesError: string | null;
 }>;
 
-export type TGetActivityLogsParams = {
-  user_id: number;
-};
-
 export type TUserParams = Partial<{
   user_id: number;
   email: string;
@@ -172,9 +168,11 @@ export type TOrganizationParams = Partial<{
   email: string;
 }>;
 
-export type TRoleParams = {
-  role: string;
-};
+export type TRoleParams = Partial<
+  TUserDetailsParams & {
+    role: string;
+  }
+>;
 
 export type TUserDetailsParams = Partial<{
   account_type: string;
@@ -183,3 +181,13 @@ export type TUserDetailsParams = Partial<{
   subscription_id: string;
   subscription: string;
 }>;
+
+export type TUpdateOrgParams = Partial<TUserDetailsParams & TRoleParams>;
+export type TUpdateUserParams = Partial<TUserDetailsParams & TUserParams>;
+
+export interface AdminState {
+  users: TUserData[];
+  organizations: TUserData[];
+  loading: boolean;
+  error: string | null;
+}
