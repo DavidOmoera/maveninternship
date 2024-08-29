@@ -19,22 +19,22 @@ export const makeAdminRequest = (
 
 export const getAllUsersRequest = (
   params: TGetBillsParams
-): Promise<AxiosResponse<TUserData>> =>
+): Promise<AxiosResponse<TUserData[]>> =>
   client.post(endpoints.admin.getAllUsers(), { params });
 
 export const getAllOrganizationsRequest = (
   params: TGetBillsParams
-): Promise<AxiosResponse<TUserData>> =>
+): Promise<AxiosResponse<TUserData[]>> =>
   client.post(endpoints.admin.getAllOrganizations(), { params });
 
 export const searchUsersRequest = (
   params: TSearchUsersParams
-): Promise<AxiosResponse<TUserData>> =>
+): Promise<AxiosResponse<TUserData[]>> =>
   client.get(endpoints.admin.searchUsers(), { params });
 
 export const searchOrganizationsRequest = (
   params: TSearchUsersParams
-): Promise<AxiosResponse<TUserData>> =>
+): Promise<AxiosResponse<TUserData[]>> =>
   client.get(endpoints.admin.searchOrganization(), { params });
 
 export const deleteUserRequest = (

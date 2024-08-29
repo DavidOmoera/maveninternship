@@ -189,5 +189,5 @@ export interface AdminState {
   users: TUserData[];
   organizations: TUserData[];
   loading: boolean;
-  error: string | null;
+  error: string | undefined;
 }
