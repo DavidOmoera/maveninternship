@@ -4,11 +4,12 @@ import { endpoints } from "./endpoints";
 import {
   TUserData,
   TUserParams,
+  TUpdateUserParams,
   TGetBillsParams,
   TSearchUsersParams,
   TOrganizationParams,
+  TUpdateOrgParams,
   TRoleParams,
-  TUserDetailsParams,
 } from "types/common";
 
 export const makeAdminRequest = (
@@ -18,22 +19,22 @@ export const makeAdminRequest = (
 
 export const getAllUsersRequest = (
   params: TGetBillsParams
-): Promise<AxiosResponse<TUserData>> =>
+): Promise<AxiosResponse<TUserData[]>> =>
   client.post(endpoints.admin.getAllUsers(), { params });
 
 export const getAllOrganizationsRequest = (
   params: TGetBillsParams
-): Promise<AxiosResponse<TUserData>> =>
+): Promise<AxiosResponse<TUserData[]>> =>
   client.post(endpoints.admin.getAllOrganizations(), { params });
 
 export const searchUsersRequest = (
   params: TSearchUsersParams
-): Promise<AxiosResponse<TUserData>> =>
+): Promise<AxiosResponse<TUserData[]>> =>
   client.get(endpoints.admin.searchUsers(), { params });
 
 export const searchOrganizationsRequest = (
   params: TSearchUsersParams
-): Promise<AxiosResponse<TUserData>> =>
+): Promise<AxiosResponse<TUserData[]>> =>
   client.get(endpoints.admin.searchOrganization(), { params });
 
 export const deleteUserRequest = (
@@ -67,17 +68,17 @@ export const unsuspendOrganizationRequest = (
   client.post(endpoints.admin.unsuspendOrganization(), { params });
 
 export const updateUserRoleRequest = (
-  params: TUserParams & TRoleParams
+  params: TRoleParams
 ): Promise<AxiosResponse<string>> =>
   client.post(endpoints.admin.updateUserRole(), { params });
 
 export const updateUserDetailsRequest = (
-  params: TUserDetailsParams & TUserParams
+  params: TUpdateUserParams
 ): Promise<AxiosResponse<string>> =>
   client.post(endpoints.admin.updateUserDetails(), { params });
 
 export const updateOrganizationRequest = (
-  params: TUserDetailsParams & TOrganizationParams
+  params: TUpdateOrgParams
 ): Promise<AxiosResponse<string>> =>
   client.post(endpoints.admin.deleteUser(), { params });
 
