@@ -206,3 +206,32 @@ export const helpAndSupportSchema = yup.object().shape({
   issue: yup.string().trim(),
   message: yup.string().trim().required("Please enter your message"),
 });
+
+export const signUpSchema = yup.object().shape({
+  first_name: yup.string().trim().required("Please enter your first name"),
+  last_name: yup.string().trim().required("Please enter your last name"),
+  email: yup
+    .string()
+    .trim()
+    .email("Please enter a valid email address")
+    .required("Please enter your email address"),
+  password: yup
+    .string()
+    .trim()
+    .min(6, "Password must be at least 6 characters long")
+    .required("Please enter a password"),
+  confirm_password: yup
+    .string()
+    .trim()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Please confirm your password"),
+});
+
+export const signInSchema = yup.object().shape({
+  email: yup
+    .string()
+    .trim()
+    .email("Please enter a valid email address")
+    .required("Please enter your email address"),
+  password: yup.string().trim().required("Please enter a password"),
+});
