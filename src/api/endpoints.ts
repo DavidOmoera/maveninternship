@@ -47,4 +47,7 @@ export const endpoints = {
     updateNotificationSettings: (userId: string): string =>
       `/notifications/notification-settings/${userId}`,
   },
+  legislativesessions: {
+    getSessions: (): string => `/legislativesessions`,
+  },
 };
