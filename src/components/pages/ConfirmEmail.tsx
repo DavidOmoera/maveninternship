@@ -1,24 +1,34 @@
 import { Button } from "components/atoms/Button";
 import email from "assets/email-logo.svg";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Routes } from "types/routes";
 import { useEffect } from "react";
 import { verifyEmailRequest } from "api/authApi";
+import { handleError, showSuccessToast } from "utils/helpers";
+import { AuthToastMessages } from "constants/toastMessages";
 
 export function ConfirmEmail() {
-  const location = useLocation();
-  const { email: emailAddress, code } = location.state ?? {};
+  const params = useParams();
+  const { email: emailAddress, code } = params ?? {};
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Verify user's email as soon as they load this page
-    verifyEmailRequest({ email: emailAddress, code })
-      .then(() => {})
-      .catch();
+    if (emailAddress && code) {
+      verifyEmailRequest({
+        email: emailAddress,
+        code: code,
+      })
+        .then(() => {
+          showSuccessToast(AuthToastMessages.VERIFY_EMAIL_SUCCESS);
+        })
+        .catch((e) => {
+          handleError(e, AuthToastMessages.VERIFY_EMAIL_FAILURE);
+        });
+    }
   }, [code, emailAddress]);
 
-  function ConfirmEmail() {
-    navigate(Routes.Login, { state: { email: location.state?.email ?? "" } });
+  function onClickLogin() {
+    navigate(Routes.Login, { state: { email: emailAddress ?? "" } });
   }
 
   return (
@@ -41,7 +51,7 @@ export function ConfirmEmail() {
         <Button
           text="Go to live Demo"
           className="text-white bg-blue-900 mt-4"
-          onClick={ConfirmEmail}
+          onClick={onClickLogin}
         />
       </div>
     </div>
