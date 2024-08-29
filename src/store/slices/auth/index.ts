@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TAuthState } from "./types";
-import { getUserData } from "./thunks";
+import { getUserData, signUp } from "./thunks";
 
 const initialState: TAuthState = {
   accessToken: "",
   userData: undefined,
   userDataError: undefined,
   userDataLoading: false,
+  isSigningUp: false,
 };
 
 const authSlice = createSlice({
@@ -19,9 +20,20 @@ const authSlice = createSlice({
     clearUserData: () => ({ ...initialState }),
   },
   extraReducers: (builder) => {
-    builder.addCase(getUserData.fulfilled, (state, action) => {
-      state.userData = action.payload;
-    });
+    builder
+      .addCase(getUserData.fulfilled, (state, action) => {
+        state.userData = action.payload;
+      })
+      .addCase(signUp.pending, (state) => {
+        state.isSigningUp = true;
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.isSigningUp = false;
+        if (action.payload?.user) state.userData = action.payload.user;
+      })
+      .addCase(signUp.rejected, (state) => {
+        state.isSigningUp = false;
+      });
   },
 });
 

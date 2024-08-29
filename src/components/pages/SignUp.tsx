@@ -1,17 +1,79 @@
-import TextField from "@mui/material/TextField";
 import { Button } from "components/atoms/Button";
 import { Routes } from "types/routes";
 import Checkbox from "@mui/material/Checkbox";
 import Radio from "@mui/joy/Radio";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { TAccountClass } from "types/common";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signUpSchema } from "constants/schemas";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { signUp } from "store/slices/auth/thunks";
+import { signingUpSelector } from "store/slices/auth/selectors";
+import { ControlledInput } from "components/organisms/ControlledInput";
 
-type TAccountType = "personal" | "company";
+type TSignUpForm = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+};
+
 export function SignUp() {
-  const [accountType, setAccountType] = useState<TAccountType>("personal");
-  function onSignUp() {}
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isSigningUp = useAppSelector(signingUpSelector);
+  const [accountType, setAccountType] = useState<TAccountClass>("personal");
+  const [hasAgreedTerms, setHasAgreedTerms] = useState<boolean>(false);
+
+  const {
+    control,
+    formState: { errors, isDirty, isSubmitting, isValid },
+    handleSubmit,
+  } = useForm<TSignUpForm>({
+    resolver: yupResolver(signUpSchema),
+  });
+
+  const isSignUpDisabled = useMemo(
+    () => !isDirty || isSubmitting || isSigningUp || !hasAgreedTerms,
+    [hasAgreedTerms, isDirty, isSigningUp, isSubmitting]
+  );
+
+  const onCreateDemoAccount: SubmitHandler<TSignUpForm> = (
+    formData: TSignUpForm
+  ) => {
+    if (isValid) {
+      dispatch(
+        signUp({
+          ...formData,
+          account_class: accountType,
+          role: "user",
+          subscription_plan: "free",
+          registration_method: "form",
+          account_type: "demo",
+        })
+      )
+        .unwrap()
+        .then(() => {
+          navigate(Routes.ConfirmEmail, {
+            state: { email: formData.email },
+          });
+        });
+    }
+  };
+
+  function toggleTermsAcceptance() {
+    setHasAgreedTerms((prevState) => !prevState);
+  }
+
+  function onCreatePremiumAccount() {
+    navigate(Routes.AccountSetup);
+  }
 
   function onSelectAccountType(event: React.ChangeEvent<HTMLInputElement>) {
-    setAccountType(event.target.value as TAccountType);
+    setAccountType(event.target.value as TAccountClass);
   }
 
   function selectPersonalAccountType() {
@@ -19,7 +81,7 @@ export function SignUp() {
   }
 
   function selectCompanyAccountType() {
-    setAccountType("company");
+    setAccountType("corporate");
   }
 
   return (
@@ -52,12 +114,12 @@ export function SignUp() {
             <div className="gap-1 row items-center">
               <Radio
                 value="company"
-                checked={accountType === "company"}
+                checked={accountType === "corporate"}
                 onChange={onSelectAccountType}
               />
               <p
                 onClick={selectCompanyAccountType}
-                className={accountType !== "company" ? "text-neutral450" : ""}
+                className={accountType !== "corporate" ? "text-neutral450" : ""}
               >
                 Company
               </p>
@@ -66,40 +128,61 @@ export function SignUp() {
         </div>
         <div className="col gap-4 mt-4 mb-3 w-full">
           <div className="flex flex-row gap-3">
-            <TextField
-              fullWidth
+            <ControlledInput
+              control={control}
+              required
+              name="first_name"
               label="First Name"
-              type="text"
-              variant="outlined"
+              placeholder="First Name"
+              error={!!errors?.first_name}
+              helperText={(errors?.first_name?.message as string) ?? ""}
             />
-            <TextField
-              fullWidth
+            <ControlledInput
+              control={control}
+              required
+              name="last_name"
               label="Last Name"
-              type="text"
-              variant="outlined"
+              placeholder="Last Name"
+              error={!!errors?.last_name}
+              helperText={(errors?.last_name?.message as string) ?? ""}
             />
           </div>
-          <TextField
-            fullWidth
+          <ControlledInput
+            control={control}
+            required
+            name="email"
             label="Email Address"
-            type="email"
-            variant="outlined"
+            placeholder="Email Address"
+            error={!!errors?.email}
+            helperText={(errors?.email?.message as string) ?? ""}
           />
-          <TextField
-            fullWidth
+          <ControlledInput
+            control={control}
+            required
+            name="password"
             label="Create Password"
             type="password"
-            variant="outlined"
+            placeholder="Create Password"
+            error={!!errors?.password}
+            helperText={(errors?.password?.message as string) ?? ""}
           />
-          <TextField
-            fullWidth
+          <ControlledInput
+            control={control}
+            required
+            name="confirm_password"
             label="Confirm Password"
             type="password"
-            variant="outlined"
+            placeholder="Confirm Password"
+            error={!!errors?.confirm_password}
+            helperText={(errors?.confirm_password?.message as string) ?? ""}
           />
         </div>
         <div className="w-full flex flex-row items-center mb-4 gap-1">
-          <Checkbox sx={{ padding: 0 }} />
+          <Checkbox
+            sx={{ padding: 0 }}
+            checked={hasAgreedTerms}
+            onClick={toggleTermsAcceptance}
+          />
           <span className="flex flex-row gap-2">
             <p className="text-neutral450">I agree with the</p>
             <a href="#">
@@ -114,13 +197,15 @@ export function SignUp() {
 
         <Button
           text="Create Demo Account"
+          disabled={isSignUpDisabled}
           className="w-full col justify-center items-center"
-          onClick={onSignUp}
+          onClick={handleSubmit(onCreateDemoAccount)}
         />
         <Button
           text="Create Premium Account"
+          disabled={isSignUpDisabled}
           className="w-full col justify-center items-center mt-2"
-          onClick={onSignUp}
+          onClick={onCreatePremiumAccount}
         />
       </div>
     </div>
