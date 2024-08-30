@@ -33,6 +33,7 @@ import expand from "assets/expand.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useEffect, useRef } from "react";
+import { getAccessToken } from "utils/helpers";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -207,7 +208,7 @@ export function AuthenticatedRoot() {
     });
   }
 
-  const token = sessionStorage.getItem("accessToken");
+  const token = getAccessToken();
 
   // Logout if browser no longer has token
   if (!token) {

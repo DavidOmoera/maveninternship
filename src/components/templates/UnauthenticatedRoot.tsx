@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { Routes } from "types/routes";
 import sideImage from "assets/side_image.svg";
+import { getAccessToken } from "utils/helpers";
 
 export function UnauthenticatedRoot() {
-  const token = sessionStorage.getItem("accessToken");
+  const token = getAccessToken();
 
   // Log in if browser has token
   if (token) {
