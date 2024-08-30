@@ -128,6 +128,9 @@ export function Profile() {
   const [showManagePaymentMethodForm, setShowManagePaymentMethodForm] =
     useState(false);
   const [avatar, setAvatar] = useState<string>(userData?.avatar as string);
+  const [organizationLogo, setOrganizationLogo] = useState<string>(
+    organizationData?.logo as string
+  );
 
   const orgDetails = useMemo(
     () => [
@@ -501,8 +504,11 @@ export function Profile() {
           </div>
           <div className="row items-center gap-4 my-5 flex-wrap">
             <img
-              src={organizationData?.logo ?? orgLogo}
+              src={organizationLogo}
               className="w-20 h-20 object-cover"
+              onError={() => {
+                setOrganizationLogo(orgLogo);
+              }}
             />
             <div className="col items-start gap-2">
               <h6 className="text-neutral950">Organization Logo</h6>
