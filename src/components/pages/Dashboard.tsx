@@ -381,7 +381,6 @@ export const Dashboard: React.FC = () => {
             </div>
           </section>
         </div>
-        );
         {/* Updates and Representatives Section */}
         {areUpdatesVisible ? (
           <div className="hidden md:flex flex-col gap-4 basis-[26%] bg-white p-9">

@@ -86,7 +86,7 @@ export function SenateReps() {
 
   return (
     <PageContainer title="Senate" className="w-full bg-gray-100">
-      <div className="p-9 mb-9 mx-9 mt-6 bg-white rounded-xl">
+      <div className="p-9 mb-9 mx-9 bg-white rounded-xl">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-4 bg-white rounded-xl p-4">
             <div className="flex items-center gap-3">

@@ -1,10 +1,31 @@
 export const endpoints = {
   activity: {
-    getActivity: (userId: string): string => `/activity_logs/${userId}`,
     postActivity: (): string => `/activity_logs`,
+    getActivity: (user_id: number) => `/activity_logs/${user_id}`,
   },
+
+  admin: {
+    makeAdmin: (): string => `admin/make_admin`,
+    getAllUsers: (): string => `admin/get_all_users`,
+    getAllOrganizations: (): string => `admin/get_all_organizations`,
+    searchUsers: (): string => `/admin/search_users`,
+    searchOrganization: (): string => `/admin/search_organization`,
+    deleteUser: (): string => `/admin/delete_user`,
+    deleteOrganization: (): string => `/admin/delete_organization`,
+    suspendUser: (): string => `/admin/suspend_user`,
+    suspendOrganization: (): string => `/admin/suspend_organization`,
+    unsuspendUser: (): string => `/admin/unsuspend_user`,
+    unsuspendOrganization: (): string => `/admin/unsuspend_organization`,
+    updateUserRole: (): string => `/admin/update_user_role`,
+    updateUserDetails: (): string => `/admin/update_user_details`,
+    updateOrganizationDetail: (): string =>
+      `/admin/update_organization_details`,
+    banEmail: (): string => `/admin/ban_email`,
+    deleteBannedEmail: (): string => `/admin/delete_banned_email`,
+  },
+
   auth: {
-    register: (): string => `/register`,
+    register: (): string => `/register/`,
     verifyEmail: (): string => `/verify-email`,
     resendVerificationEmail: (): string => `/resend-verification`,
     login: (): string => `/token`,
@@ -47,10 +68,15 @@ export const endpoints = {
     updateNotificationSettings: (userId: string): string =>
       `/notifications/notification-settings/${userId}`,
   },
+
   legislativesessions: {
     getSessions: (): string => `/legislativesessions`,
   },
   jurisdictions: {
     getAll: () => `/jurisdictions`,
+
+  subscription: {
+    getPlans: (): string => `/subscription_plans`,
+
   },
 };

@@ -1,4 +1,9 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  isAxiosError,
+} from "axios";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -23,13 +28,16 @@ client.interceptors.request.use((config: any) => {
   return config;
 });
 
-client.interceptors.response.use((response: AxiosResponse) => {
-  return response;
-});
+client.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  function (error: Error | AxiosError) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
 
-client.interceptors.response.use(null, async (error) => {
-  if (error.response?.status === 401) {
-    // refresh token
+    if (isAxiosError(error) && error.response?.status === 401) {
+      // refresh token
+    }
+
+    return Promise.reject(error);
   }
-  return Promise.reject(error);
-});
+);

@@ -1,9 +1,35 @@
 import { Button } from "components/atoms/Button";
-import email from "assets/email-logo.svg"
-
+import email from "assets/email-logo.svg";
+import { useNavigate, useParams } from "react-router-dom";
+import { Routes } from "types/routes";
+import { useEffect } from "react";
+import { verifyEmailRequest } from "api/authApi";
+import { handleError, showSuccessToast } from "utils/helpers";
+import { AuthToastMessages } from "constants/toastMessages";
 
 export function ConfirmEmail() {
-  function ConfirmEmail() {}
+  const params = useParams();
+  const { email: emailAddress, code } = params ?? {};
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (emailAddress && code) {
+      verifyEmailRequest({
+        email: emailAddress,
+        code: code,
+      })
+        .then(() => {
+          showSuccessToast(AuthToastMessages.VERIFY_EMAIL_SUCCESS);
+        })
+        .catch((e) => {
+          handleError(e, AuthToastMessages.VERIFY_EMAIL_FAILURE);
+        });
+    }
+  }, [code, emailAddress]);
+
+  function onClickLogin() {
+    navigate(Routes.Login, { state: { email: emailAddress ?? "" } });
+  }
 
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
@@ -25,7 +51,7 @@ export function ConfirmEmail() {
         <Button
           text="Go to live Demo"
           className="text-white bg-blue-900 mt-4"
-          onClick={ConfirmEmail}
+          onClick={onClickLogin}
         />
       </div>
     </div>
