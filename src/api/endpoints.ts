@@ -1,7 +1,7 @@
 export const endpoints = {
   activity: {
     postActivity: (): string => `/activity_logs`,
-    getActivity: (user_id: string): string => `/activity_logs/${user_id}`,
+    getActivity: (user_id: number) => `/activity_logs/${user_id}`,
   },
 
   admin: {
@@ -25,7 +25,7 @@ export const endpoints = {
   },
 
   auth: {
-    register: (): string => `/register`,
+    register: (): string => `/register/`,
     verifyEmail: (): string => `/verify-email`,
     resendVerificationEmail: (): string => `/resend-verification`,
     login: (): string => `/token`,
@@ -67,5 +67,8 @@ export const endpoints = {
       `/notifications/${notificationId}`,
     updateNotificationSettings: (userId: string): string =>
       `/notifications/notification-settings/${userId}`,
+  },
+  subscription: {
+    getPlans: (): string => `/subscription_plans`,
   },
 };

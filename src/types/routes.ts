@@ -3,7 +3,7 @@ export enum Routes {
   Home = "/",
   SignUp = "/sign-up",
   Login = "/login",
-  ConfirmEmail = "/confirm-email",
+  ConfirmEmail = "/email-confirmation-page",
   AccountSetup = "/account-setup",
   ResetPassword = "/reset-password",
 
@@ -19,7 +19,7 @@ export enum Routes {
   Representatives = "/dashboard/representatives",
 
   // Representatives Sub-sections
-  TopReps = "/dashboard/representatives/top",  
+  TopReps = "/dashboard/representatives/top",
   HouseReps = "/dashboard/representatives/house",
   SenateReps = "/dashboard/representatives/senate",
   Bills = "/dashboard/bills",
