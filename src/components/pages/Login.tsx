@@ -1,11 +1,13 @@
 import { Button } from "components/atoms/Button";
 import { Routes } from "types/routes";
-import { useLocation, useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useLocation, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signInSchema } from "constants/schemas";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import { loginRequest } from "api/authApi";
+import { handleError } from "utils/helpers";
+import { AuthToastMessages } from "constants/toastMessages";
 
 type TSignInForm = {
   email: string;
@@ -28,15 +30,19 @@ export function Login() {
   const handleLogin: SubmitHandler<TSignInForm> = (formData: TSignInForm) => {
     const { email: username, password } = formData ?? {};
     if (isValid) {
-      loginRequest({ username, password }).then((res) => {
-        const accessToken = res.data.access_token;
+      loginRequest({ username, password })
+        .then((res) => {
+          const accessToken = res.data.access_token;
 
-        if (accessToken) {
-          localStorage.setItem("accessToken", accessToken);
-          // Navigate to the dashboard page when login is successful
-          navigate(Routes.Dashboard);
-        }
-      });
+          if (accessToken) {
+            localStorage.setItem("accessToken", accessToken);
+            // Navigate to the dashboard page when login is successful
+            navigate(Routes.Dashboard);
+          }
+        })
+        .catch((e) => {
+          handleError(e, AuthToastMessages.LOGIN_FAILURE);
+        });
     }
   };
 
