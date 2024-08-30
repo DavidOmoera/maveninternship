@@ -26,7 +26,7 @@ export const endpoints = {
 
   auth: {
     register: (): string => `/register/`,
-    verifyEmail: (): string => `/verify-email`,
+    verifyEmail: (): string => `/verify-email/`,
     resendVerificationEmail: (): string => `/resend-verification`,
     login: (): string => `/token`,
     updateUserProfile: (): string => `/update_user_info`,
