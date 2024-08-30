@@ -8,17 +8,19 @@ import { PageContainer } from "components/templates/PageContainer";
 import { Button } from "components/atoms/Button";
 import { Pill } from "components/molecules/Pill";
 import { useNavigate } from "react-router-dom";
-import { Routes } from "types/routes.ts";
+import { Routes } from "types/routes";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
-import { Representative } from "types/common.ts";
+import { Representative } from "types/common";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "store/slices/index.ts";
+import { RootState } from "store/slices/index";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 import { representatives } from "constants/common";
-import { legislativesessionsApi } from "api/index.ts";
+import { legislativeSessionsApi } from "api/index";
 import { TGetLegislativeSessionsResponse } from "api/legislativesessionsApi";
+import { handleApiError } from "utils/helpers";
+import { AxiosError } from "axios";
 
 type TActivitySearchForm = Partial<{
   activity: string;
@@ -73,16 +75,17 @@ export function HouseReps() {
     console.log(data);
     setLoading(true);
     try {
-      const response = await legislativesessionsApi.getLegislativeSessionsRequest({
+      const response = await legislativeSessionsApi.getLegislativeSessionsRequest({
         jurisdiction: data.searchValue || "default_jurisdiction",
       });
       setLegislativeSessions(response.data);
     } catch (error) {
-      console.error("Error fetching legislative sessions:", error);
+      handleApiError(error as AxiosError);
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <PageContainer title="House" className="w-full bg-gray-100">

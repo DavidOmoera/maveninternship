@@ -69,7 +69,8 @@ export const endpoints = {
       `/notifications/notification-settings/${userId}`,
   },
 
-  legislativesessions: {
+  legislativeSessions: {
+
     getSessions: (): string => `/legislativesessions`,
   },
   jurisdictions: {
@@ -79,4 +80,5 @@ export const endpoints = {
     getPlans: (): string => `/subscription_plans`,
 
   },
+  }
 };

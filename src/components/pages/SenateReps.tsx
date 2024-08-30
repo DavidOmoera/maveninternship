@@ -17,8 +17,10 @@ import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 import { senators } from "constants/common";
-import { legislativesessionsApi } from "api/index.ts";
+import { legislativeSessionsApi } from "api/index.ts";
 import { TGetLegislativeSessionsResponse } from "api/legislativesessionsApi";
+import { handleApiError } from "utils/helpers";
+import { AxiosError } from "axios";
 
 type TActivitySearchForm = Partial<{
   activity: string;
@@ -73,16 +75,17 @@ export function SenateReps() {
     console.log(data);
     setLoading(true);
     try {
-      const response = await legislativesessionsApi.getLegislativeSessionsRequest({
+      const response = await legislativeSessionsApi.getLegislativeSessionsRequest({
         jurisdiction: data.searchValue || "default_jurisdiction",
       });
       setLegislativeSessions(response.data);
     } catch (error) {
-      console.error("Error fetching legislative sessions:", error);
+      handleApiError(error as AxiosError);
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <PageContainer title="Senate" className="w-full bg-gray-100">
