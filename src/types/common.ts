@@ -77,38 +77,23 @@ export type TSignUpResponse = {
   user: TUserData;
 };
 
-export type TBill = {
-  created_at: Date | string;
-  updated_at: Date | string;
-  extras: Record<string, string>;
-  identifier: string;
+export type TBillContributor = {
+  name: string;
+  image: string;
+  entity_type: string;
   title: string;
-  classification: string[];
-  subject: string[];
-  first_action_date: string;
-  latest_action_date: string;
-  latest_action_description: string;
-  latest_passage_date: string;
-  latest_action_category: string[];
-  latest_action_category_date: string;
-  citations: string[];
-  opencivicdata_organization: {
-    name: string;
-    classification: string;
-    opencivicdata_jurisdiction: {
-      name: string;
-      classification: string;
-    };
-  };
-  opencivicdata_legislativesession: {
-    identifier: string;
-    name: string;
-    classification: string;
-    start_date: Date | string;
-    end_date: Date | string;
-    active: boolean;
-  };
+  primary: boolean;
+  classification: string;
+};
+
+export type TBill = {
   id: string;
+  title: string;
+  state: string;
+  status: string;
+  latest_action_date: Date | string;
+  summary: string;
+  contributors: TBillContributor[];
 };
 
 export type TUpdateUserRequestBody = {
@@ -122,8 +107,8 @@ type TBillStatus = "Introduced" | "Enrolled" | "Passed";
 type TBillChamber = "House" | "Senate";
 
 export type TGetBillsParams = Partial<{
-  skip: number;
-  limit: number;
+  page: number;
+  size: number;
 }>;
 
 export type TSearchBillsParams = Partial<
@@ -138,7 +123,13 @@ export type TSearchBillsParams = Partial<
   }
 >;
 
-export type TGetBillsResponse = TBill[];
+export type TGetBillsResponse = {
+  items: TBill[];
+  total: number;
+  page: number;
+  size: number;
+  pages: number;
+};
 
 export type TActivityLogs = Partial<{
   activity_type: string;
@@ -194,7 +185,7 @@ export type AdminState = {
   organizations: TUserData[];
   loading: boolean;
   error: string | undefined;
-}
+};
 
 export type TLoginRequestBody = {
   username: string;
@@ -215,4 +206,3 @@ export type TVerifyEmailRequestBody = {
   email: string;
   code: string;
 };
-
