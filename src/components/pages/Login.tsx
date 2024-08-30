@@ -35,7 +35,7 @@ export function Login() {
           const accessToken = res.data.access_token;
 
           if (accessToken) {
-            localStorage.setItem("accessToken", accessToken);
+            sessionStorage.setItem("accessToken", accessToken);
             // Navigate to the dashboard page when login is successful
             navigate(Routes.Dashboard);
           }

@@ -13,7 +13,7 @@ export const client: AxiosInstance = axios.create({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 client.interceptors.request.use((config: any) => {
-  const token = localStorage.getItem("accessToken");
+  const token = sessionStorage.getItem("accessToken");
 
   if (token) {
     config.headers = {
