@@ -1,6 +1,6 @@
 import { Logo } from "components/atoms/Logo";
 import { useState } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { Routes } from "types/routes";
 import {
   Typography,
@@ -205,6 +205,13 @@ export function AuthenticatedRoot() {
 
       return isChecked ? filteredStates : filteredStates.concat(selectedState);
     });
+  }
+
+  const token = sessionStorage.getItem("accessToken");
+
+  // Logout if browser no longer has token
+  if (!token) {
+    return <Navigate to={Routes.Login} replace />;
   }
 
   return (
