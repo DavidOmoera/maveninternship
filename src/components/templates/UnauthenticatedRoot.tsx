@@ -1,15 +1,14 @@
-import { useEffect } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { Routes } from "types/routes";
 import sideImage from "assets/side_image.svg";
 
 export function UnauthenticatedRoot() {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const token = sessionStorage.getItem("accessToken");
 
-  useEffect(() => {
-    if (location.pathname === Routes.Home) navigate(Routes.Login);
-  }, [location.pathname, navigate]);
+  // Log in if browser has token
+  if (token) {
+    return <Navigate to={Routes.Dashboard} replace />;
+  }
 
   return (
     <main className="md:flex md:flex-row w-full overflow-hidden">
