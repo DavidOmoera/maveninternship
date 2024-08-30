@@ -17,7 +17,7 @@ import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 import { representatives } from "constants/common";
-import { legislativesessionsApi } from "api/index.ts"; 
+import { legislativesessionsApi } from "api/index.ts";
 import { TGetLegislativeSessionsResponse } from "api/legislativesessionsApi";
 
 type TActivitySearchForm = Partial<{
@@ -29,8 +29,8 @@ type TActivitySearchForm = Partial<{
 export function HouseReps() {
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
   const [legislativeSessions, setLegislativeSessions] =
-    useState<TGetLegislativeSessionsResponse | null>(null); 
-  const [loading, setLoading] = useState(false); 
+    useState<TGetLegislativeSessionsResponse | null>(null);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
@@ -71,12 +71,12 @@ export function HouseReps() {
 
   const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data) => {
     console.log(data);
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       const response = await legislativesessionsApi.getLegislativeSessionsRequest({
-        jurisdiction: data.searchValue || "default_jurisdiction", 
+        jurisdiction: data.searchValue || "default_jurisdiction",
       });
-      setLegislativeSessions(response.data); // Set the response data to state
+      setLegislativeSessions(response.data);
     } catch (error) {
       console.error("Error fetching legislative sessions:", error);
     } finally {

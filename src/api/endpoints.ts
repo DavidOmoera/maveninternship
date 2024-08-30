@@ -51,6 +51,6 @@ export const endpoints = {
     getSessions: (): string => `/legislativesessions`,
   },
   jurisdictions: {
-    getAll: () => `/jurisdictions`, // This is the endpoint we need to call
+    getAll: () => `/jurisdictions`,
   },
 };
