@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   List,
   ListItem,
@@ -24,11 +24,11 @@ import done from "assets/done.svg";
 import { Pill } from "components/molecules/Pill";
 
 import {
+  allBills,
   BILL_STATUSES,
   BILL_TYPES,
   BILL_YEARS,
   topRepresentatives,
-  watchedBills,
 } from "constants/common";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,32 +37,11 @@ import { ControlledInput } from "components/organisms/ControlledInput";
 import { ControlledSelect } from "components/organisms/ControlledSelect";
 import CustomTextField from "components/molecules/CustomTextField";
 import { Routes } from "types/routes";
-import { Bill } from "components/organisms/Bill";
 import { PageContainer } from "components/templates/PageContainer";
-import { searchObjects } from "utils/helpers";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { BillCard } from "components/organisms/BillCard.tsx";
-
-function isBillStatus(billStatus: string, selectedBillStatus: string) {
-  return selectedBillStatus ? billStatus === selectedBillStatus : true;
-}
-
-function isBillType(billType: string, selectedBillType: string) {
-  return !selectedBillType
-    ? true
-    : selectedBillType === "All"
-    ? true
-    : billType === selectedBillType;
-}
-
-function isBillChamber(billChamber: string, selectedChamber: string) {
-  return selectedChamber ? billChamber === selectedChamber : true;
-}
-
-function isBillYear(billYear: string, selectedYear: string) {
-  return selectedYear ? billYear === selectedYear : true;
-}
+import { getBillsRequest } from "api/billsApi";
 
 const stages = [
   "Filed",
@@ -96,42 +75,18 @@ export const Dashboard: React.FC = () => {
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const allBills = useSelector(
+  const watchedBills = useSelector(
     (state: RootState) => state.watchedBills.watchedBills
   );
-  const handleBillClick = () => {
-    navigate("/dashboard/bill");
-  };
+  const bills = allBills.slice(0, 4);
 
-  const { control, handleSubmit, watch } = useForm<TBillSearchForm>({
+  const { control, handleSubmit } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
   });
 
   const { control: watchedBillsControl } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
   });
-
-  const selectedBillStatus = watch("billStatus");
-  const selectedBillType = watch("billType");
-  const selectedChamber = watch("chamber");
-  const selectedYear = watch("year");
-  const searchValue = watch("searchValue");
-
-  const filteredBills = useMemo(() => {
-    return watchedBills.filter(
-      (bill) =>
-        isBillStatus(bill.status, selectedBillStatus ?? "") &&
-        isBillType(bill.billType, selectedBillType ?? "") &&
-        isBillChamber(bill.chamber, selectedChamber ?? "") &&
-        isBillYear(bill.year, selectedYear ?? "")
-    );
-  }, [selectedBillStatus, selectedBillType, selectedChamber, selectedYear]);
-
-  const searchedBills = useMemo(
-    () =>
-      searchObjects(filteredBills, searchValue, Object.keys(watchedBills[0])),
-    [filteredBills, searchValue]
-  );
 
   const updates = [
     {
@@ -213,6 +168,10 @@ export const Dashboard: React.FC = () => {
     if (location.pathname) window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  useEffect(() => {
+    getBillsRequest().then();
+  }, []);
+
   return (
     <PageContainer title="Dashboard">
       {/* Main Content */}
@@ -275,17 +234,15 @@ export const Dashboard: React.FC = () => {
             </div>
             {/** All bills */}
             <div className="row gap-5 flex-wrap mt-8">
-              {searchedBills.map((watchedBill) => {
-                const bill = watchedBill as (typeof watchedBills)[0];
-
-                return (
-                  <Bill
-                    key={watchedBill.state + watchedBill.description}
+              {bills.map((bill) => (
+                <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
+                  <BillCard
                     onClick={onClickBill}
+                    isListView={false}
                     {...bill}
                   />
-                );
-              })}
+                </div>
+              ))}
             </div>
           </section>
 
@@ -296,7 +253,7 @@ export const Dashboard: React.FC = () => {
               <div className="row gap-3">
                 <h4 className="font-extrabold">My Watched Bills</h4>
                 <div className="py-1 px-2 rounded-xl border border-primary">
-                  <h6 className="text-primary">{searchedBills.length}</h6>
+                  <h6 className="text-primary">{watchedBills.length}</h6>
                 </div>
               </div>
               <button
@@ -369,10 +326,10 @@ export const Dashboard: React.FC = () => {
               className="row gap-5 flex-wrap mt-8"
               style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
             >
-              {allBills.map((bill) => (
+              {watchedBills.map((bill) => (
                 <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
                   <BillCard
-                    onClick={handleBillClick}
+                    onClick={onClickBill}
                     isListView={false}
                     {...bill}
                   />
