@@ -20,7 +20,7 @@ client.interceptors.request.use((config: any) => {
       ...config.headers,
       ...(token
         ? {
-            Authorization: `Bearer ${JSON.parse(token)}`,
+            Authorization: `Bearer ${token}`,
           }
         : {}),
     };
