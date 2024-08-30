@@ -7,16 +7,18 @@ import bookmark from "assets/bookmark.svg";
 import { PageContainer } from "components/templates/PageContainer";
 import { Button } from "components/atoms/Button";
 import { Pill } from "components/molecules/Pill";
-import { Outlet } from "react-router-dom";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes.ts";
+import { Outlet } from "react-router-dom";
+import { useState } from "react";
 import { Representative } from "types/common.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 import { senators } from "constants/common";
+import { legislativesessionsApi } from "api/index.ts"; 
+import { TGetLegislativeSessionsResponse } from "api/legislativesessionsApi";
 
 type TActivitySearchForm = Partial<{
   activity: string;
@@ -26,6 +28,9 @@ type TActivitySearchForm = Partial<{
 
 export function SenateReps() {
   const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
+  const [legislativeSessions, setLegislativeSessions] =
+    useState<TGetLegislativeSessionsResponse | null>(null); 
+  const [loading, setLoading] = useState(false); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
@@ -64,9 +69,19 @@ export function SenateReps() {
     resolver: yupResolver(activitySearchSchema),
   });
 
-  const onSearchBill: SubmitHandler<TActivitySearchForm> = (data) => {
-    // Implement search functionality here
+  const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data) => {
     console.log(data);
+    setLoading(true); 
+    try {
+      const response = await legislativesessionsApi.getLegislativeSessionsRequest({
+        jurisdiction: data.searchValue || "default_jurisdiction", 
+      });
+      setLegislativeSessions(response.data); 
+    } catch (error) {
+      console.error("Error fetching legislative sessions:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -88,10 +103,36 @@ export function SenateReps() {
                 text="Search Senators"
                 className="bg-blue-900 text-white py-2 px-4 rounded-lg"
                 onClick={handleSubmit(onSearchBill)}
+                disabled={loading}
               />
             </div>
           </div>
 
+          {/* Display legislative sessions  */}
+          {legislativeSessions && (
+            <div className="bg-white rounded-xl p-4 mt-4">
+              <h2 className="text-lg font-bold mb-4">Legislative Sessions</h2>
+              {legislativeSessions.map((session) => (
+                <div key={session.id} className="p-4 border rounded mb-2">
+                  <h3 className="text-md font-semibold">{session.name}</h3>
+                  <p>{session.classification}</p>
+                  <p>
+                    {session.start_date} - {session.end_date}
+                  </p>
+                  <p>Status: {session.active ? "Active" : "Inactive"}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Display loading state */}
+          {loading && (
+            <div className="flex justify-center mt-4">
+              <span>Loading...</span>
+            </div>
+          )}
+
+          {/* Display representatives */}
           <div className="bg-white rounded-xl p-4">
             <div className="row gap-5 flex-wrap mt-8">
               {senators.map((rep, index) => (
