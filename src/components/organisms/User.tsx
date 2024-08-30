@@ -4,6 +4,17 @@ import React from "react";
 
 type TUserProps = { 
     id: number;
+    email: string;
+    userRegistration: boolean;
+    receipt: boolean;
+    verification: boolean;
+    token: number;
+    googleID: string;
+    outlookID: string;
+    sessionActivity: boolean;
+    password: string;
+    stripe: number;
+    organizationRegistration: boolean;
   };
 
 export function User({

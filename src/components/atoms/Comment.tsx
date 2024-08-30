@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactDOM } from "react-dom/client";
 
 type TCommentVariant = "primary" | "secondary";
 
@@ -29,5 +30,11 @@ export function Comment({
         </article>
       </input>
     );
+  }
+
+  function createFeedback(type: Comment){
+    fetch('https://demo.coterie.ai/api/feedback/?skip=0&limit=100')
+      .then((response => response.json()))
+      .then((data) => Comment(data))
   }
   
