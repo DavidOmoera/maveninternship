@@ -208,7 +208,7 @@ export function AuthenticatedRoot() {
   }
 
   return (
-    <main className="bg-neutral25 row relative">
+    <main className="bg-neutral25 row relative w-full">
       {/* sidebar icon */}
       <div>
         <button
@@ -428,7 +428,7 @@ export function AuthenticatedRoot() {
         </aside>
       </div>
 
-      <div className="md:basis-[79%]">
+      <div>
         <Outlet />
       </div>
 
@@ -494,3 +494,4 @@ export function AuthenticatedRoot() {
     </main>
   );
 }
+``;
