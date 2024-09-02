@@ -14,6 +14,7 @@ import { searchObjects } from "utils/helpers";
 dayjs.extend(relativeTime);
 import { getActivityLogs } from "store/slices/activity/thunks";
 import {
+  activityError,
   activityLoading,
   // getActivitySelector,
 } from "store/slices/activity/selectors";
@@ -55,6 +56,7 @@ export function ActivityFeed() {
 
   // const activities = useAppSelector(getActivitySelector);
   const isLoading = useAppSelector(activityLoading);
+  const error = useAppSelector(activityError);
 
   useEffect(() => {
     dispatch(getActivityLogs({ user_id: 1, skip: 0, limit: 10 }));
@@ -94,6 +96,11 @@ export function ActivityFeed() {
   return (
     <PageContainer title="Activity Feed" className="w-full bg-gray-100 ">
       {isLoading && <div>Loading activities...</div>}
+      {error && (
+        <div className="text-red-500">
+          Failed to load activities. Please try again.
+        </div>
+      )}
 
       <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
         {/** Input fields */}
