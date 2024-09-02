@@ -1,6 +1,6 @@
 import { Logo } from "components/atoms/Logo";
 import { useState } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { Routes } from "types/routes";
 import {
   Typography,
@@ -33,6 +33,7 @@ import expand from "assets/expand.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useEffect, useRef } from "react";
+import { getAccessToken } from "utils/helpers";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -205,6 +206,13 @@ export function AuthenticatedRoot() {
 
       return isChecked ? filteredStates : filteredStates.concat(selectedState);
     });
+  }
+
+  const token = getAccessToken();
+
+  // Logout if browser no longer has token
+  if (!token) {
+    return <Navigate to={Routes.Login} replace />;
   }
 
   return (

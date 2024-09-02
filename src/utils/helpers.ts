@@ -49,8 +49,20 @@ export function handleError(
   if (isAxiosError(e)) {
     const errorResponse = e?.response?.data;
     const error = errorResponse?.detail; // Get error from backend
-    errorMessage = typeof error === "string" ? error : "";
+
+    if (typeof error === "string") errorMessage = error; // Show error message
+    if (Array.isArray(error)) errorMessage = error[0]?.msg; // Show validation error
   }
 
   showErrorToast(errorMessage || defaultErrorMessage || "An error occured.");
+}
+
+export const getAccessToken = () => sessionStorage.getItem("accessToken");
+
+export function setAccessToken(value: string) {
+  sessionStorage.setItem("accessToken", value);
+}
+
+export function removeAccessToken() {
+  if (getAccessToken()) sessionStorage.removeItem("accessToken");
 }

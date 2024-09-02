@@ -3,8 +3,8 @@ import { Pill } from "components/molecules/Pill";
 import BookmarkRemoveOutlinedIcon from "@mui/icons-material/BookmarkRemoveOutlined";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import { Tooltip } from "@mui/material";
-import { useDispatch, useSelector } from 'react-redux';
-import { addBill, removeBill } from 'store/slices/watchedBillsSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { addBill, removeBill } from "store/slices/watchedBillsSlice";
 import { RootState } from "store/slices/index.ts";
 import { allBills } from "constants/common";
 
@@ -39,13 +39,15 @@ export function GridCard({
   year,
 }: TBillProps) {
   const dispatch = useDispatch();
-  const allBills = useSelector((state: RootState) => state.watchedBills.watchedBills);
+  const allBills = useSelector(
+    (state: RootState) => state.watchedBills.watchedBills
+  );
   const [isWatched, setIsWatched] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     // Check if this bill is in the watchedBills list
-    setIsWatched(allBills.some(bill => bill.id === id));
+    setIsWatched(allBills.some((bill) => bill.id === id));
   }, [allBills, id]);
 
   const handleToggleWatch = (e: React.MouseEvent) => {
@@ -90,7 +92,7 @@ export function GridCard({
       className="w-full lg:max-w-[474px] h-auto cursor-pointer mb-6 mt-10 rounded-xl bg-gray-100 shadow-4xl relative"
       style={{ boxShadow: "1px 1px 10px 0px #7979791A" }}
     >
-      <div className="row justify-between items-center px-3 bg-white">
+      <div className="row justify-between items-center pt-3 px-3 bg-white">
         <Pill text={state} textClass="font-semibold text-blue-600 text-sm" />
         <p className="text-neutral500 text-xs">{relativeTime}</p>
       </div>
@@ -126,10 +128,13 @@ export function GridCard({
             )}
             <button
               onClick={handleToggleWatch}
-              className={`text-sm py-2 px-1 font-semibold ${isWatched ? "text-red-600" : "text-blue-600"
-                } bg-transparent focus:outline-none focus:ring-0 hover:border-none`}
+              className={`text-sm py-2 px-1 font-semibold ${
+                isWatched ? "text-red-600" : "text-blue-600"
+              } bg-transparent focus:outline-none focus:ring-0 hover:border-none`}
             >
-              {isWatched ? "Remove from watched bills" : "Add to my watched bills"}
+              {isWatched
+                ? "Remove from watched bills"
+                : "Add to my watched bills"}
             </button>
           </div>
         </div>
@@ -148,8 +153,20 @@ export function GridCard({
           <Tooltip title="Co-authors">
             <div className="flex items-center">
               <img src={supporter1} alt="supporter" className="w-6 h-6" />
-              {supporter2 && <img src={supporter2} alt="supporter" className="w-6 h-6 hidden lg:block" />}
-              {supporter3 && <img src={supporter3} alt="supporter" className="w-6 h-6 hidden lg:block" />}
+              {supporter2 && (
+                <img
+                  src={supporter2}
+                  alt="supporter"
+                  className="w-6 h-6 hidden lg:block"
+                />
+              )}
+              {supporter3 && (
+                <img
+                  src={supporter3}
+                  alt="supporter"
+                  className="w-6 h-6 hidden lg:block"
+                />
+              )}
               <p className="text-xs font-bold">{count1}</p>
             </div>
           </Tooltip>
@@ -157,8 +174,20 @@ export function GridCard({
           <Tooltip title="Supporters">
             <div className="flex items-center">
               <img src={supporter4} alt="supporter" className="w-6 h-6" />
-              {supporter5 && <img src={supporter5} alt="supporter" className="w-6 h-6 hidden lg:block" />}
-              {supporter6 && <img src={supporter6} alt="supporter" className="w-6 h-6 hidden lg:block" />}
+              {supporter5 && (
+                <img
+                  src={supporter5}
+                  alt="supporter"
+                  className="w-6 h-6 hidden lg:block"
+                />
+              )}
+              {supporter6 && (
+                <img
+                  src={supporter6}
+                  alt="supporter"
+                  className="w-6 h-6 hidden lg:block"
+                />
+              )}
               <p className="ml-1 text-xs font-bold">{count2}</p>
             </div>
           </Tooltip>
@@ -191,11 +220,13 @@ export function ListCard({
   year,
 }: TBillProps) {
   const dispatch = useDispatch();
-  const allBills = useSelector((state: RootState) => state.watchedBills.watchedBills);
+  const allBills = useSelector(
+    (state: RootState) => state.watchedBills.watchedBills
+  );
   const [isWatched, setIsWatched] = useState(false);
 
   useEffect(() => {
-    setIsWatched(allBills.some(bill => bill.id === id));
+    setIsWatched(allBills.some((bill) => bill.id === id));
   }, [allBills, id]);
 
   const handleToggleWatch = (e: React.MouseEvent) => {
@@ -255,20 +286,45 @@ export function ListCard({
       <div className="flex flex-col items-start gap-2 xl:col-span-4 xl:pl-2">
         <div className="flex items-center gap-2">
           <img src={supporter1} alt="supporter" className="w-6 h-6" />
-          {supporter2 && <img src={supporter2} alt="supporter" className="w-6 h-6 hidden lg:block" />}
-          {supporter3 && <img src={supporter3} alt="supporter" className="w-6 h-6 hidden lg:block" />}
+          {supporter2 && (
+            <img
+              src={supporter2}
+              alt="supporter"
+              className="w-6 h-6 hidden lg:block"
+            />
+          )}
+          {supporter3 && (
+            <img
+              src={supporter3}
+              alt="supporter"
+              className="w-6 h-6 hidden lg:block"
+            />
+          )}
           <p className="text-xs font-bold">{count1}</p>
         </div>
         <div className="flex items-center gap-2">
           <img src={supporter4} alt="supporter" className="w-6 h-6" />
-          {supporter5 && <img src={supporter5} alt="supporter" className="w-6 h-6 hidden lg:block" />}
-          {supporter6 && <img src={supporter6} alt="supporter" className="w-6 h-6 hidden lg:block" />}
+          {supporter5 && (
+            <img
+              src={supporter5}
+              alt="supporter"
+              className="w-6 h-6 hidden lg:block"
+            />
+          )}
+          {supporter6 && (
+            <img
+              src={supporter6}
+              alt="supporter"
+              className="w-6 h-6 hidden lg:block"
+            />
+          )}
           <p className="ml-1 text-xs font-bold">{count2}</p>
         </div>
         <button
           onClick={handleToggleWatch}
-          className={`text-sm py-2 px-1 font-semibold ${isWatched ? "text-red-600" : "text-blue-600"
-            } bg-transparent focus:outline-none focus:ring-0`}
+          className={`text-sm py-2 px-1 font-semibold ${
+            isWatched ? "text-red-600" : "text-blue-600"
+          } bg-transparent focus:outline-none focus:ring-0`}
         >
           {isWatched ? "Remove from watched bills" : "Add to my watched bills"}
         </button>
@@ -276,8 +332,6 @@ export function ListCard({
     </div>
   );
 }
-
-
 
 export function BillCard(props: TBillProps) {
   return props.isListView ? <ListCard {...props} /> : <GridCard {...props} />;
