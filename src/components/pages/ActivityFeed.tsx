@@ -9,15 +9,9 @@ import { PageContainer } from "components/templates/PageContainer";
 import { Pill } from "components/molecules/Pill";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { searchObjects } from "utils/helpers";
 dayjs.extend(relativeTime);
-import { getActivityLogs } from "store/slices/activity/thunks";
-import {
-  activityLoading,
-  // getActivitySelector,
-} from "store/slices/activity/selectors";
-import { useAppDispatch, useAppSelector } from "utils/helpers";
 
 const ACTIVITY_OPTIONS = [
   { id: 1, label: "All Activity", value: "All" },
@@ -51,15 +45,6 @@ type TActivitySearchForm = Partial<{
 }>;
 
 export function ActivityFeed() {
-  const dispatch = useAppDispatch();
-
-  // const activities = useAppSelector(getActivitySelector);
-  const isLoading = useAppSelector(activityLoading);
-
-  useEffect(() => {
-    dispatch(getActivityLogs({ user_id: 1, skip: 0, limit: 10 }));
-  }, [dispatch]);
-
   const {
     control: activityControl,
     formState: { errors: activityFormErrors },
@@ -93,8 +78,6 @@ export function ActivityFeed() {
 
   return (
     <PageContainer title="Activity Feed" className="w-full bg-gray-100 ">
-      {isLoading && <div>Loading activities...</div>}
-
       <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
         {/** Input fields */}
         <div className="row justify-between mb-9 flex-wrap gap-3">
