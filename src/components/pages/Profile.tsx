@@ -383,8 +383,8 @@ export function Profile() {
 
   return (
     <PageContainer title="My Profile">
-      <div className="col xl:grid grid-cols-2 gap-4 mx-9 md:max-w-[680px] lg:max-w-full">
-        <section className="col gap-5 p-9 rounded-xl bg-white">
+      <div className=" rounded-xl mx-9 xl:grid grid-cols-2 gap-4">
+        <section className="col gap-5 p-9 rounded-xl bg-white md:mb-4">
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4 flex-wrap">
             <img
@@ -440,7 +440,7 @@ export function Profile() {
           </h6>
         </section>
 
-        <section className="col gap-4 p-9 rounded-xl bg-white">
+        <section className="col gap-4 p-9 rounded-xl bg-white md:mb-4">
           <div className="row justify-between items-center w-full flex-wrap">
             <h4 className="text-neutral950">Your Plan</h4>
             <Pill
@@ -482,7 +482,7 @@ export function Profile() {
             </div>
           </div>
         </section>
-        <section className="p-9 rounded-xl bg-white">
+        <section className="p-9 rounded-xl bg-white md:mb-4">
           <div className="row justify-between flex-wrap">
             <h4 className="text-neutral950">Organization Details</h4>
             <div
@@ -542,7 +542,7 @@ export function Profile() {
             </div>
           </div>
         </section>
-        <section className="p-9 rounded-xl bg-white">
+        <section className="p-9 rounded-xl bg-white md:mb-4">
           <h4 className="text-neutral950">Organization Details</h4>
 
           <hr className="bg-neutral100 mt-3" />
@@ -919,7 +919,7 @@ export function Profile() {
                   (ManagePaymentMethodErrors?.expiry_date?.message as string) ??
                   ""
                 }
-                className="w-1/2" // Adjust width as needed
+                className="w-1/2"
               />
               <ControlledInput
                 name="cvv"
@@ -932,7 +932,7 @@ export function Profile() {
                 helperText={
                   (ManagePaymentMethodErrors?.cvv?.message as string) ?? ""
                 }
-                className="w-1/2" // Adjust width as needed
+                className="w-1/2"
               />
             </div>
             <ControlledInput
