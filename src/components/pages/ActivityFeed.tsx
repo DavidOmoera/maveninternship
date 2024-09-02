@@ -9,7 +9,7 @@ import { PageContainer } from "components/templates/PageContainer";
 import { Pill } from "components/molecules/Pill";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { searchObjects } from "utils/helpers";
 dayjs.extend(relativeTime);
 import { getActivityLogs } from "store/slices/activity/thunks";

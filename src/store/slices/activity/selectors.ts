@@ -6,3 +6,4 @@ export const activityLoading = (state: RootState) =>
   state.activity.activitiesLoading;
 export const activityError = (state: RootState) =>
   state.activity.activitiesError;
+
