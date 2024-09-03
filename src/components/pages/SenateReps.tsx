@@ -11,14 +11,16 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes.ts";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
-import { Representative } from "types/common.ts";
+import {
+  Representative,
+  TGetLegislativeSessionsResponse,
+} from "types/common.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 import { senators } from "constants/common";
 import { legislativeSessionsApi } from "api/index.ts";
-import { TGetLegislativeSessionsResponse } from "api/legislativesessionsApi";
 import { handleApiError } from "utils/helpers";
 import { AxiosError } from "axios";
 
@@ -72,12 +74,12 @@ export function SenateReps() {
   });
 
   const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data) => {
-    
     setLoading(true);
     try {
-      const response = await legislativeSessionsApi.getLegislativeSessionsRequest({
-        jurisdiction: data.searchValue || "default_jurisdiction",
-      });
+      const response =
+        await legislativeSessionsApi.getLegislativeSessionsRequest({
+          jurisdiction: data.searchValue || "default_jurisdiction",
+        });
       setLegislativeSessions(response.data);
     } catch (error) {
       handleApiError(error as AxiosError);
@@ -85,7 +87,6 @@ export function SenateReps() {
       setLoading(false);
     }
   };
-
 
   return (
     <PageContainer title="Senate" className="w-full bg-gray-100">
