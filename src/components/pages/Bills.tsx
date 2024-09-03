@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/atoms/Button";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -6,12 +6,16 @@ import { ControlledSelect } from "components/organisms/ControlledSelect";
 import { PageContainer } from "components/templates/PageContainer";
 import SearchIcon from "@mui/icons-material/Search";
 import { Pill } from "components/molecules/Pill";
-import { allBills, BILL_TYPES, BILL_YEARS } from "constants/common";
+import { BILL_TYPES, BILL_YEARS } from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import gridIcon from "assets/grid.svg";
 import listIcon from "assets/listView.svg";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { billsSelector } from "store/slices/bill/selectors";
+import { getBills } from "store/slices/bill/thunks";
+import dayjs from "dayjs";
 
 interface TBillSearchForm {
   searchValue: string;
@@ -34,6 +38,8 @@ const isSearching = false;
 const searchResultsCount = 205;
 
 export const Bills: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { bills } = useAppSelector(billsSelector);
   const { control, handleSubmit } = useForm<TBillSearchForm>();
   const navigate = useNavigate();
 
@@ -54,6 +60,10 @@ export const Bills: React.FC = () => {
   const toggleView = () => {
     setIsGridView(!isGridView);
   };
+
+  useEffect(() => {
+    dispatch(getBills({ page: 1, size: 50 }));
+  }, [dispatch]);
 
   return (
     <PageContainer title="Bills">
@@ -187,14 +197,47 @@ export const Bills: React.FC = () => {
 
           {/* BillCard */}
           <div className={`${isGridView ? "row gap-5 flex-wrap mt-8" : "col"}`}>
-            {allBills.map((allBill) => (
-              <BillCard
-                key={allBill.state + allBill.description}
-                onClick={onClickBill}
-                isListView={!isGridView}
-                {...allBill}
-              />
-            ))}
+            {bills.map((bill) => {
+              const lastActionDate = bill.latest_action_date as string;
+
+              // First part of the date is year
+              const year =
+                lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
+              const author = bill.contributors[0] ?? {};
+              const coAuthorImages = bill.contributors.map(
+                (contributor) => contributor.image
+              );
+              const coAuthorsCount = bill.contributors.length - 1;
+              const supportersCount = 0;
+              const relativeTime = dayjs(bill.latest_action_date).fromNow();
+
+              return (
+                <BillCard
+                  key={bill.id}
+                  id={bill.id}
+                  onClick={onClickBill}
+                  isListView={!isGridView}
+                  title={bill.title}
+                  description={bill.summary}
+                  billType="All"
+                  chamber="House"
+                  year={Number(year)}
+                  relativeTime={relativeTime}
+                  name={author.name}
+                  image={author.image}
+                  coAuthor1={coAuthorImages[1]}
+                  coAuthor2={coAuthorImages[2]}
+                  coAuthor3={coAuthorImages[3]}
+                  count1={coAuthorsCount > 0 ? `+${coAuthorsCount}` : ""}
+                  count2={supportersCount > 0 ? `+${supportersCount}` : ""}
+                  state={bill.state}
+                  status={bill.status}
+                  supporter1=""
+                  supporter2=""
+                  supporter3=""
+                />
+              );
+            })}
           </div>
         </div>
       </div>
