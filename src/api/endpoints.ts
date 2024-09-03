@@ -33,7 +33,7 @@ export const endpoints = {
     getUserData: (): string => `/users/me`, // For current user
     loginWithGoogle: (): string => `/google-login`,
     loginWithOutlook: (): string => `/outlook-login`,
-    logout: (): string => `/logout`,
+    logout: (): string => `/logout/`,
     initiatePasswordReset: (): string => `/password-reset-request`,
     resetPassword: (): string => `/password-reset`,
 

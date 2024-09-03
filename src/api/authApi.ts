@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { client } from "./client";
 import { endpoints } from "./endpoints";
 import {
+  TDefaultResponse,
   TLoginRequestBody,
   TLoginResponse,
   TSignUpRequestBody,
@@ -39,3 +40,6 @@ export const updateUserRequest = (
   client.put(endpoints.auth.updateUserProfile(), body, {
     params: { email: body.email },
   });
+
+export const logoutRequest = (): Promise<AxiosResponse<TDefaultResponse>> =>
+  client.post(endpoints.auth.logout());
