@@ -136,8 +136,7 @@ export function PageContainer({
             />
             <article className="col gap-1">
               <h6 className="text-neutral950 font-bold text-sm lg:text-base">
-                {userData?.first_name ?? "Seth"}{" "}
-                {userData?.last_name ?? "Rogan"}
+                {userData?.first_name ?? ""} {userData?.last_name ?? ""}
               </h6>
               <p>
                 <span className="text-primary text-sm font-extrabold pl-1">

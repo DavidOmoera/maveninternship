@@ -28,6 +28,12 @@ export type ThunkAPI = {
   };
 };
 
+export type TbillState = {
+  bills: TBill[];
+  totalBillsCount: number;
+  isLoadingBills: boolean;
+};
+
 export type TUserData = {
   account_class: string;
   first_name: string;
@@ -208,6 +214,7 @@ export type TVerifyEmailRequestBody = {
 };
 
 
+
 export type TLegislativeSessionsParams = {
   jurisdiction: string;
   skip?: number;
@@ -244,4 +251,15 @@ export type  TJurisdiction = {
 export type TGetJurisdictionsResponse = TJurisdiction[];
 
 
+
+=======
+export type TDefaultResponse = { msg: string };
+
+export enum BrowserStorageKeys {
+  AccessToken = "accessToken",
+}
+
+export type BrowserStorageOptions = {
+  session: boolean;
+};
 

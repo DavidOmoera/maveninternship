@@ -65,6 +65,7 @@ export function handleError(
 }
 
 
+
 // Handle API errors and provide appropriate feedback
 type ApiErrorResponse = {
   detail?: string;
@@ -120,4 +121,6 @@ export function setAccessToken(value: string) {
 export function removeAccessToken() {
   if (getAccessToken()) sessionStorage.removeItem("accessToken");
 }
+
+
 
