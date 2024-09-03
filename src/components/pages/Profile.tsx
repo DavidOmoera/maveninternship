@@ -158,8 +158,8 @@ export function Profile() {
 
   const contactDetails = useMemo(
     () => [
-      { icon: envelope, text: userData?.email ?? "sethrogan@gmail.com" },
-      { icon: phone, text: userData?.phone ?? "872-314-8974" },
+      { icon: envelope, text: userData?.email ?? "" },
+      ...(userData?.phone ? [{ icon: phone, text: userData?.phone }] : []),
     ],
     [userData?.email, userData?.phone]
   );
@@ -413,9 +413,7 @@ export function Profile() {
           <div className="col p-6 gap-4 items-start bg-neutral50">
             <div className="row justify-between w-full flex-wrap">
               <h2 className="text-neutral950">
-                {`${userData?.first_name ?? "Seth"} ${
-                  userData?.last_name ?? "Rogan"
-                }`}
+                {`${userData?.first_name ?? ""} ${userData?.last_name ?? ""}`}
               </h2>
               <div
                 className="row gap-1 items-center cursor-pointer "

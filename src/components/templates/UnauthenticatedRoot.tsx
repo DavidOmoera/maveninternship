@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { Routes } from "types/routes";
 import sideImage from "assets/side_image.svg";
-import { getAccessToken } from "utils/helpers";
+import BrowserStorageService from "utils/browserStorage";
+import { BrowserStorageKeys } from "types/common";
 
 export function UnauthenticatedRoot() {
-  const token = getAccessToken();
+  const token = BrowserStorageService.get(BrowserStorageKeys.AccessToken);
 
-  // Log in if browser has token
   if (token) {
     return <Navigate to={Routes.Dashboard} replace />;
   }

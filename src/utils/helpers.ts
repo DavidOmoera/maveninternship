@@ -56,13 +56,3 @@ export function handleError(
 
   showErrorToast(errorMessage || defaultErrorMessage || "An error occured.");
 }
-
-export const getAccessToken = () => sessionStorage.getItem("accessToken");
-
-export function setAccessToken(value: string) {
-  sessionStorage.setItem("accessToken", value);
-}
-
-export function removeAccessToken() {
-  if (getAccessToken()) sessionStorage.removeItem("accessToken");
-}
