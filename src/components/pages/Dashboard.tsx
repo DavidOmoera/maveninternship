@@ -44,6 +44,7 @@ import { useAppDispatch, useAppSelector } from "utils/helpers";
 import { billsSelector } from "store/slices/bill/selectors";
 import { getBills } from "store/slices/bill/thunks";
 import dayjs from "dayjs";
+import classNames from "classnames";
 
 const stages = [
   "Filed",
@@ -69,6 +70,9 @@ type TBillSearchForm = {
   year: string;
 }>;
 
+const isSearching = false;
+const searchResultsCount = 205;
+
 export const Dashboard: React.FC = () => {
   const [openBillStatusDialog, setOpenBillStatusDialog] = useState(false);
   const [areUpdatesVisible, setAreUpdatesVisible] = useState(false);
@@ -82,8 +86,6 @@ export const Dashboard: React.FC = () => {
   const watchedBills = useSelector(
     (state: RootState) => state.watchedBills.watchedBills
   );
-
-  console.log("bills", bills);
 
   const { control, handleSubmit } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
@@ -185,9 +187,25 @@ export const Dashboard: React.FC = () => {
           {/* Search and Filter Section */}
           <section className="p-9 bg-white rounded-xl">
             <div>
-              <h3 className="text-primary font-extrabold text-xl pb-6">
-                All Bills
-              </h3>
+              {isSearching ? (
+                <>
+                  <h3 className="text-primary font-normal text-2xl pb-2">
+                    Search for:&nbsp;
+                    <span className="text-blue-700 font-extrabold">
+                      Secure Border Act
+                    </span>
+                  </h3>
+                  <p className="pb-6 font-normal">
+                    in <span className="font-bold">Texas</span> &{" "}
+                    <span className="font-bold">Colorado</span>
+                  </p>
+                </>
+              ) : (
+                <h3 className="text-primary font-extrabold text-xl pb-6">
+                  All Bills
+                </h3>
+              )}
+
               <div className="flex flex-col lg:flex-row w-full gap-3 items-center">
                 <ControlledInput
                   required
@@ -237,8 +255,19 @@ export const Dashboard: React.FC = () => {
                 onClick={handleSubmit(onSearchBill)}
               />
             </div>
+
+            {isSearching && (
+              <div className="lg:flex gap-2 block mt-8">
+                <h4 className="text-neutral950">{searchResultsCount}</h4>
+                <span className="text-neutral950 text-xl">Results found</span>
+              </div>
+            )}
             {/** All bills */}
-            <div className="row gap-5 flex-wrap mt-8">
+            <div
+              className={classNames("row gap-5 flex-wrap", {
+                "mt-8": !isSearching,
+              })}
+            >
               {bills.map((bill) => {
                 const lastActionDate = bill.latest_action_date as string;
 

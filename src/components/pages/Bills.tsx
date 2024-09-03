@@ -30,6 +30,9 @@ const pills = [
   { firstText: "Immigration", secondText: "(3)" },
 ];
 
+const isSearching = false;
+const searchResultsCount = 205;
+
 export const Bills: React.FC = () => {
   const { control, handleSubmit } = useForm<TBillSearchForm>();
   const navigate = useNavigate();
@@ -55,16 +58,24 @@ export const Bills: React.FC = () => {
   return (
     <PageContainer title="Bills">
       <div className="p-9 bg-white rounded-xl mx-9">
-        <h3 className="text-primary font-normal text-2xl pb-2">
-          Search for:&nbsp;
-          <span className="text-blue-700 font-extrabold">
-            Secure Border Act
-          </span>
-        </h3>
-        <p className="pb-6 font-normal">
-          in <span className="font-bold">Texas</span> &{" "}
-          <span className="font-bold">Colorado</span>
-        </p>
+        {isSearching ? (
+          <>
+            <h3 className="text-primary font-normal text-2xl pb-2">
+              Search for:&nbsp;
+              <span className="text-blue-700 font-extrabold">
+                Secure Border Act
+              </span>
+            </h3>
+            <p className="pb-6 font-normal">
+              in <span className="font-bold">Texas</span> &{" "}
+              <span className="font-bold">Colorado</span>
+            </p>
+          </>
+        ) : (
+          <h3 className="text-primary font-extrabold text-xl pb-6">
+            All Bills
+          </h3>
+        )}
         <div className="flex flex-col lg:flex-row item-center w-full gap-3">
           <ControlledInput
             required
@@ -116,10 +127,24 @@ export const Bills: React.FC = () => {
         <div className="flex flex-col space-y-4">
           {/* Search results */}
           <div className="row justify-between my-9">
-            <div className="lg:flex gap-2 block">
-              <h4 className="text-neutral950">205</h4>
-              <span className="text-neutral950 text-xl">Results found</span>
-            </div>
+            {isSearching ? (
+              <div className="lg:flex gap-2 block">
+                <h4 className="text-neutral950">{searchResultsCount}</h4>
+                <span className="text-neutral950 text-xl">Results found</span>
+              </div>
+            ) : (
+              <div className="row gap-2 flex-wrap">
+                {pills.map((pill) => (
+                  <Pill
+                    key={pill.secondText}
+                    text={pill.firstText}
+                    secondText={pill.secondText}
+                    textClass="text-blue-600 font-semibold"
+                    secondTextClass="text-blue-600 font-bold"
+                  />
+                ))}
+              </div>
+            )}
 
             <div className="row items-center gap-6">
               <img
@@ -132,17 +157,19 @@ export const Bills: React.FC = () => {
           </div>
 
           {/** Pills */}
-          <div className="row gap-2 flex-wrap">
-            {pills.map((pill) => (
-              <Pill
-                key={pill.secondText}
-                text={pill.firstText}
-                secondText={pill.secondText}
-                textClass="text-blue-600 font-semibold"
-                secondTextClass="text-blue-600 font-bold"
-              />
-            ))}
-          </div>
+          {isSearching && (
+            <div className="row gap-2 flex-wrap">
+              {pills.map((pill) => (
+                <Pill
+                  key={pill.secondText}
+                  text={pill.firstText}
+                  secondText={pill.secondText}
+                  textClass="text-blue-600 font-semibold"
+                  secondTextClass="text-blue-600 font-bold"
+                />
+              ))}
+            </div>
+          )}
 
           {/* ListView Title */}
           {!isGridView && (
