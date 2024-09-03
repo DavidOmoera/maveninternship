@@ -43,6 +43,7 @@ import { useAppDispatch } from "utils/helpers";
 import { clearUserData } from "store/slices/auth";
 import BrowserStorageService from "utils/browserStorage";
 import { BrowserStorageKeys } from "types/common";
+import { getUserData } from "store/slices/auth/thunks";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -90,6 +91,10 @@ export function AuthenticatedRoot() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSidebarOpen]);
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
 
   function logUserOut() {
     BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
