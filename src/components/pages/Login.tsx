@@ -6,8 +6,10 @@ import { signInSchema } from "constants/schemas";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import { loginRequest } from "api/authApi";
-import { handleError, setAccessToken } from "utils/helpers";
+import { handleError } from "utils/helpers";
 import { AuthToastMessages } from "constants/toastMessages";
+import BrowserStorageService from "utils/browserStorage";
+import { BrowserStorageKeys } from "types/common";
 
 type TSignInForm = {
   email: string;
@@ -35,7 +37,10 @@ export function Login() {
           const accessToken = res.data.access_token;
 
           if (accessToken) {
-            setAccessToken(accessToken);
+            BrowserStorageService.set(
+              BrowserStorageKeys.AccessToken,
+              accessToken
+            );
             // Navigate to the dashboard page when login is successful
             navigate(Routes.Dashboard);
           }

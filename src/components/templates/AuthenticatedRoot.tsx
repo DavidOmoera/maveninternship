@@ -33,7 +33,8 @@ import expand from "assets/expand.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useEffect, useRef } from "react";
-import { getAccessToken } from "utils/helpers";
+import BrowserStorageService from "utils/browserStorage";
+import { BrowserStorageKeys } from "types/common";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
@@ -80,6 +81,10 @@ export function AuthenticatedRoot() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSidebarOpen]);
+
+  function logUserOut() {
+    BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
+  }
 
   const sideNavItems = [
     {
@@ -144,7 +149,7 @@ export function AuthenticatedRoot() {
           icon: Logout,
           link: Routes.Login,
           iconColor: "#FF2A58",
-          onClick: () => {},
+          onClick: logUserOut,
         },
       ],
     },
@@ -208,9 +213,8 @@ export function AuthenticatedRoot() {
     });
   }
 
-  const token = getAccessToken();
+  const token = BrowserStorageService.get(BrowserStorageKeys.AccessToken);
 
-  // Logout if browser no longer has token
   if (!token) {
     return <Navigate to={Routes.Login} replace />;
   }
