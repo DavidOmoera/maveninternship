@@ -463,7 +463,7 @@ export function AuthenticatedRoot() {
         </aside>
       </div>
 
-      <div className="md:basis-[79%]">
+      <div>
         <Outlet />
       </div>
 
