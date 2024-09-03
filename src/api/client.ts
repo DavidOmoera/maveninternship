@@ -4,6 +4,7 @@ import axios, {
   AxiosResponse,
   isAxiosError,
 } from "axios";
+import { getAccessToken } from "utils/helpers";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -13,14 +14,14 @@ export const client: AxiosInstance = axios.create({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 client.interceptors.request.use((config: any) => {
-  const token = localStorage.getItem("accessToken");
+  const token = getAccessToken();
 
   if (token) {
     config.headers = {
       ...config.headers,
       ...(token
         ? {
-            Authorization: `Bearer ${JSON.parse(token)}`,
+            Authorization: `Bearer ${token}`,
           }
         : {}),
     };

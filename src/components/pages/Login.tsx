@@ -6,7 +6,7 @@ import { signInSchema } from "constants/schemas";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import { loginRequest } from "api/authApi";
-import { handleError } from "utils/helpers";
+import { handleError, setAccessToken } from "utils/helpers";
 import { AuthToastMessages } from "constants/toastMessages";
 
 type TSignInForm = {
@@ -35,7 +35,7 @@ export function Login() {
           const accessToken = res.data.access_token;
 
           if (accessToken) {
-            localStorage.setItem("accessToken", accessToken);
+            setAccessToken(accessToken);
             // Navigate to the dashboard page when login is successful
             navigate(Routes.Dashboard);
           }

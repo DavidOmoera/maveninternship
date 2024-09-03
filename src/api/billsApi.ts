@@ -12,7 +12,7 @@ export const getBillRequest = (billId: string): Promise<AxiosResponse<TBill>> =>
   client.get(endpoints.bills.getBill(billId));
 
 export const getBillsRequest = (
-  params: TGetBillsParams
+  params?: TGetBillsParams
 ): Promise<AxiosResponse<TGetBillsResponse>> =>
   client.get(endpoints.bills.getBills(), { params });
 

@@ -1,5 +1,5 @@
 import { PageContainer } from "components/templates/PageContainer";
-import profilePicture from "assets/rep18.svg";
+import profilePicture from "assets/profile_picture.jpg";
 import photo from "assets/photo.svg";
 import envelope from "assets/envelope2.svg";
 import phone from "assets/phone.svg";
@@ -110,6 +110,12 @@ type TManagePaymentMethodForm = {
 };
 
 export function Profile() {
+  const dispatch = useAppDispatch();
+  const userData = useAppSelector(userDataSelector);
+  const organizationData = useAppSelector(organizationDataSelector);
+  const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const orgUploadInputRef = useRef<HTMLInputElement | null>(null);
   const [showFeedbackSuccess, setFeedbackSuccess] = useState<boolean>(false);
   const [showOrganizationDetailsForm, setShowOrganizationDetailsForm] =
     useState<boolean>(false);
@@ -121,12 +127,10 @@ export function Profile() {
     useState<boolean>(false);
   const [showManagePaymentMethodForm, setShowManagePaymentMethodForm] =
     useState(false);
-  const dispatch = useAppDispatch();
-  const userData = useAppSelector(userDataSelector);
-  const organizationData = useAppSelector(organizationDataSelector);
-  const navigate = useNavigate();
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const orgUploadInputRef = useRef<HTMLInputElement | null>(null);
+  const [avatar, setAvatar] = useState<string>(userData?.avatar as string);
+  const [organizationLogo, setOrganizationLogo] = useState<string>(
+    organizationData?.logo as string
+  );
 
   const orgDetails = useMemo(
     () => [
@@ -383,13 +387,16 @@ export function Profile() {
 
   return (
     <PageContainer title="My Profile">
-      <div className="col xl:grid grid-cols-2 gap-4 mx-9 md:max-w-[680px] lg:max-w-full">
-        <section className="col gap-5 p-9 rounded-xl bg-white">
+      <div className=" rounded-xl mx-9 xl:grid grid-cols-2 gap-4">
+        <section className="col gap-5 p-9 rounded-xl bg-white md:mb-4">
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4 flex-wrap">
             <img
-              src={userData?.avatar ?? profilePicture}
+              src={avatar}
               className="w-20 h-20 object-cover rounded"
+              onError={() => {
+                setAvatar(profilePicture);
+              }}
             />
             <div className="col items-start gap-2 cursor-pointer">
               <h6 className="text-neutral950">Profile Photo</h6>
@@ -440,7 +447,7 @@ export function Profile() {
           </h6>
         </section>
 
-        <section className="col gap-4 p-9 rounded-xl bg-white">
+        <section className="col gap-4 p-9 rounded-xl bg-white md:mb-4">
           <div className="row justify-between items-center w-full flex-wrap">
             <h4 className="text-neutral950">Your Plan</h4>
             <Pill
@@ -482,7 +489,7 @@ export function Profile() {
             </div>
           </div>
         </section>
-        <section className="p-9 rounded-xl bg-white">
+        <section className="p-9 rounded-xl bg-white md:mb-4">
           <div className="row justify-between flex-wrap">
             <h4 className="text-neutral950">Organization Details</h4>
             <div
@@ -497,8 +504,11 @@ export function Profile() {
           </div>
           <div className="row items-center gap-4 my-5 flex-wrap">
             <img
-              src={organizationData?.logo ?? orgLogo}
+              src={organizationLogo}
               className="w-20 h-20 object-cover"
+              onError={() => {
+                setOrganizationLogo(orgLogo);
+              }}
             />
             <div className="col items-start gap-2">
               <h6 className="text-neutral950">Organization Logo</h6>
@@ -542,7 +552,7 @@ export function Profile() {
             </div>
           </div>
         </section>
-        <section className="p-9 rounded-xl bg-white">
+        <section className="p-9 rounded-xl bg-white md:mb-4">
           <h4 className="text-neutral950">Organization Details</h4>
 
           <hr className="bg-neutral100 mt-3" />
@@ -919,7 +929,7 @@ export function Profile() {
                   (ManagePaymentMethodErrors?.expiry_date?.message as string) ??
                   ""
                 }
-                className="w-1/2" // Adjust width as needed
+                className="w-1/2"
               />
               <ControlledInput
                 name="cvv"
@@ -932,7 +942,7 @@ export function Profile() {
                 helperText={
                   (ManagePaymentMethodErrors?.cvv?.message as string) ?? ""
                 }
-                className="w-1/2" // Adjust width as needed
+                className="w-1/2"
               />
             </div>
             <ControlledInput
