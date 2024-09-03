@@ -37,6 +37,7 @@ client.interceptors.response.use(
 
     if (isAxiosError(error) && error.response?.status === 401) {
       // refresh token
+      window.location.href = `${window.location.origin}${Routes.Login}`;
     }
 
     return Promise.reject(error);
