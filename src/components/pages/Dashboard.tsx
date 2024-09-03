@@ -24,7 +24,6 @@ import done from "assets/done.svg";
 import { Pill } from "components/molecules/Pill";
 
 import {
-  allBills,
   BILL_STATUSES,
   BILL_TYPES,
   BILL_YEARS,
@@ -41,7 +40,10 @@ import { PageContainer } from "components/templates/PageContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { BillCard } from "components/organisms/BillCard.tsx";
-import { getBillsRequest } from "api/billsApi";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { billsSelector } from "store/slices/bill/selectors";
+import { getBills } from "store/slices/bill/thunks";
+import dayjs from "dayjs";
 
 const stages = [
   "Filed",
@@ -74,11 +76,14 @@ export const Dashboard: React.FC = () => {
   const [search, setSearch] = useState("");
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const location = useLocation();
+  const { bills } = useAppSelector(billsSelector);
   const watchedBills = useSelector(
     (state: RootState) => state.watchedBills.watchedBills
   );
-  const bills = allBills.slice(0, 4);
+
+  console.log("bills", bills);
 
   const { control, handleSubmit } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
@@ -169,8 +174,8 @@ export const Dashboard: React.FC = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    getBillsRequest().then();
-  }, []);
+    dispatch(getBills({ page: 1, size: 6 }));
+  }, [dispatch]);
 
   return (
     <PageContainer title="Dashboard">
@@ -234,15 +239,48 @@ export const Dashboard: React.FC = () => {
             </div>
             {/** All bills */}
             <div className="row gap-5 flex-wrap mt-8">
-              {bills.map((bill) => (
-                <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
-                  <BillCard
-                    onClick={onClickBill}
-                    isListView={false}
-                    {...bill}
-                  />
-                </div>
-              ))}
+              {bills.map((bill) => {
+                const lastActionDate = bill.latest_action_date as string;
+
+                // First part of the date is year
+                const year =
+                  lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
+                const author = bill.contributors[0];
+                const coAuthorImages = bill.contributors.map(
+                  (contributor) => contributor.image
+                );
+                const coAuthorsCount = bill.contributors.length - 1;
+                const supportersCount = 0;
+                const relativeTime = dayjs(bill.latest_action_date).fromNow();
+
+                return (
+                  <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
+                    <BillCard
+                      id={bill.id}
+                      onClick={onClickBill}
+                      isListView={false}
+                      title={bill.title}
+                      description={bill.summary}
+                      billType="All"
+                      chamber="House"
+                      year={Number(year)}
+                      relativeTime={relativeTime}
+                      name={author.name}
+                      image={author.image}
+                      coAuthor1={coAuthorImages[1]}
+                      coAuthor2={coAuthorImages[2]}
+                      coAuthor3={coAuthorImages[3]}
+                      count1={coAuthorsCount > 0 ? `+${coAuthorsCount}` : ""}
+                      count2={supportersCount > 0 ? `+${supportersCount}` : ""}
+                      state={bill.state}
+                      status={bill.status}
+                      supporter1=""
+                      supporter2=""
+                      supporter3=""
+                    />
+                  </div>
+                );
+              })}
             </div>
           </section>
 

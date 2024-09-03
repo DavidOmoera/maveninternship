@@ -28,6 +28,12 @@ export type ThunkAPI = {
   };
 };
 
+export type TbillState = {
+  bills: TBill[];
+  totalBillsCount: number;
+  isLoadingBills: boolean;
+};
+
 export type TUserData = {
   account_class: string;
   first_name: string;
@@ -205,4 +211,14 @@ export type TLoginResponse = {
 export type TVerifyEmailRequestBody = {
   email: string;
   code: string;
+};
+
+export type TDefaultResponse = { msg: string };
+
+export enum BrowserStorageKeys {
+  AccessToken = "accessToken",
+}
+
+export type BrowserStorageOptions = {
+  session: boolean;
 };
