@@ -369,6 +369,12 @@ export const Dashboard: React.FC = () => {
                   <BillCard
                     onClick={onClickBill}
                     isListView={false}
+                    coAuthor1={bill.coAuthor1 as string}
+                    coAuthor2={bill.coAuthor2 as string}
+                    coAuthor3={bill.coAuthor3 as string}
+                    supporter1={bill.supporter1 as string}
+                    supporter2={bill.supporter2 as string}
+                    supporter3={bill.supporter3 as string}
                     {...bill}
                   />
                 </div>
