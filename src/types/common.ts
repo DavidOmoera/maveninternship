@@ -216,3 +216,12 @@ export type TVerifyEmailRequestBody = {
   code: string;
 };
 
+export type THelpAndSupportForm = {
+  first_name: string;
+  last_name: string;
+  company_name?: string;
+  email_address: string;
+  issue?: string;
+  message: string;
+};
+
