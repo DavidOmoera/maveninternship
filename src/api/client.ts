@@ -40,7 +40,7 @@ client.interceptors.response.use(
     if (
       isAxiosError(error) &&
       error.response?.status === 401 &&
-      !error.response.data
+      window.location.pathname !== Routes.Login
     ) {
       // refresh token
       BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
