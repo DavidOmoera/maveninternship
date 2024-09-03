@@ -70,15 +70,13 @@ export const endpoints = {
   },
 
   legislativeSessions: {
-
     getSessions: (): string => `/legislativesessions`,
   },
   jurisdictions: {
     getAll: () => `/jurisdictions`,
+  },
 
   subscription: {
     getPlans: (): string => `/subscription_plans`,
-
   },
-  }
 };

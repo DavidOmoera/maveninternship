@@ -5,8 +5,6 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import toast, { ToastOptions } from "react-hot-toast";
 import { AxiosError, isAxiosError } from "axios";
 
-
-
 // Capitalize the first letter of a string
 export const capitalizeFirstLetter = (text: string): string => {
   return text[0].toUpperCase() + text.slice(1);
@@ -33,7 +31,6 @@ export function searchObjects(
     )
   );
 }
-
 
 export function showSuccessToast(message: string, options?: ToastOptions) {
   toast.success(message, options);
@@ -63,8 +60,6 @@ export function handleError(
 
   showErrorToast(errorMessage || defaultErrorMessage || "An error occured.");
 }
-
-
 
 // Handle API errors and provide appropriate feedback
 type ApiErrorResponse = {
@@ -110,17 +105,3 @@ export const handleApiError = (error: AxiosError): never => {
   // throw  error to match the 'never' return type
   throw error;
 };
-
-=======
-export const getAccessToken = () => sessionStorage.getItem("accessToken");
-
-export function setAccessToken(value: string) {
-  sessionStorage.setItem("accessToken", value);
-}
-
-export function removeAccessToken() {
-  if (getAccessToken()) sessionStorage.removeItem("accessToken");
-}
-
-
-
