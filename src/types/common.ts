@@ -213,6 +213,46 @@ export type TVerifyEmailRequestBody = {
   code: string;
 };
 
+
+
+export type TLegislativeSessionsParams = {
+  jurisdiction: string;
+  skip?: number;
+  limit?: number;
+};
+
+export type TLegislativeSession = {
+  identifier: string;
+  name: string;
+  classification: string;
+  start_date: string;
+  end_date: string;
+  active: boolean;
+  id: string;
+};
+
+// Define the response type as an array of legislative sessions
+export type TGetLegislativeSessionsResponse = TLegislativeSession[];
+
+
+export type  TJurisdiction = {
+  name: string;
+  classification: string;
+  created_at: string;
+  updated_at: string;
+  extras: Record<string, string>;
+  url: string;
+  division_id: string;
+  latest_bill_update: string;
+  latest_people_update: string;
+}
+
+// Define the response type as an array of jurisdictions
+export type TGetJurisdictionsResponse = TJurisdiction[];
+
+
+
+=======
 export type TDefaultResponse = { msg: string };
 
 export enum BrowserStorageKeys {
@@ -222,3 +262,4 @@ export enum BrowserStorageKeys {
 export type BrowserStorageOptions = {
   session: boolean;
 };
+

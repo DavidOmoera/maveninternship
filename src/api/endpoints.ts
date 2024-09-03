@@ -68,7 +68,17 @@ export const endpoints = {
     updateNotificationSettings: (userId: string): string =>
       `/notifications/notification-settings/${userId}`,
   },
+
+  legislativeSessions: {
+
+    getSessions: (): string => `/legislativesessions`,
+  },
+  jurisdictions: {
+    getAll: () => `/jurisdictions`,
+
   subscription: {
     getPlans: (): string => `/subscription_plans`,
+
   },
+  }
 };
