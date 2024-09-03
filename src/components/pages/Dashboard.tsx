@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   List,
   ListItem,
@@ -28,7 +28,6 @@ import {
   BILL_TYPES,
   BILL_YEARS,
   topRepresentatives,
-  watchedBills,
 } from "constants/common";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,32 +36,14 @@ import { ControlledInput } from "components/organisms/ControlledInput";
 import { ControlledSelect } from "components/organisms/ControlledSelect";
 import CustomTextField from "components/molecules/CustomTextField";
 import { Routes } from "types/routes";
-import { Bill } from "components/organisms/Bill";
 import { PageContainer } from "components/templates/PageContainer";
-import { searchObjects } from "utils/helpers";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { BillCard } from "components/organisms/BillCard.tsx";
-
-function isBillStatus(billStatus: string, selectedBillStatus: string) {
-  return selectedBillStatus ? billStatus === selectedBillStatus : true;
-}
-
-function isBillType(billType: string, selectedBillType: string) {
-  return !selectedBillType
-    ? true
-    : selectedBillType === "All"
-    ? true
-    : billType === selectedBillType;
-}
-
-function isBillChamber(billChamber: string, selectedChamber: string) {
-  return selectedChamber ? billChamber === selectedChamber : true;
-}
-
-function isBillYear(billYear: string, selectedYear: string) {
-  return selectedYear ? billYear === selectedYear : true;
-}
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { billsSelector } from "store/slices/bill/selectors";
+import { getBills } from "store/slices/bill/thunks";
+import dayjs from "dayjs";
 
 const stages = [
   "Filed",
@@ -95,43 +76,22 @@ export const Dashboard: React.FC = () => {
   const [search, setSearch] = useState("");
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const location = useLocation();
-  const allBills = useSelector(
+  const { bills } = useAppSelector(billsSelector);
+  const watchedBills = useSelector(
     (state: RootState) => state.watchedBills.watchedBills
   );
-  const handleBillClick = () => {
-    navigate("/dashboard/bill");
-  };
 
-  const { control, handleSubmit, watch } = useForm<TBillSearchForm>({
+  console.log("bills", bills);
+
+  const { control, handleSubmit } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
   });
 
   const { control: watchedBillsControl } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
   });
-
-  const selectedBillStatus = watch("billStatus");
-  const selectedBillType = watch("billType");
-  const selectedChamber = watch("chamber");
-  const selectedYear = watch("year");
-  const searchValue = watch("searchValue");
-
-  const filteredBills = useMemo(() => {
-    return watchedBills.filter(
-      (bill) =>
-        isBillStatus(bill.status, selectedBillStatus ?? "") &&
-        isBillType(bill.billType, selectedBillType ?? "") &&
-        isBillChamber(bill.chamber, selectedChamber ?? "") &&
-        isBillYear(bill.year, selectedYear ?? "")
-    );
-  }, [selectedBillStatus, selectedBillType, selectedChamber, selectedYear]);
-
-  const searchedBills = useMemo(
-    () =>
-      searchObjects(filteredBills, searchValue, Object.keys(watchedBills[0])),
-    [filteredBills, searchValue]
-  );
 
   const updates = [
     {
@@ -213,6 +173,10 @@ export const Dashboard: React.FC = () => {
     if (location.pathname) window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  useEffect(() => {
+    dispatch(getBills({ page: 1, size: 6 }));
+  }, [dispatch]);
+
   return (
     <PageContainer title="Dashboard">
       {/* Main Content */}
@@ -275,15 +239,46 @@ export const Dashboard: React.FC = () => {
             </div>
             {/** All bills */}
             <div className="row gap-5 flex-wrap mt-8">
-              {searchedBills.map((watchedBill) => {
-                const bill = watchedBill as (typeof watchedBills)[0];
+              {bills.map((bill) => {
+                const lastActionDate = bill.latest_action_date as string;
+
+                // First part of the date is year
+                const year =
+                  lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
+                const author = bill.contributors[0];
+                const coAuthorImages = bill.contributors.map(
+                  (contributor) => contributor.image
+                );
+                const coAuthorsCount = bill.contributors.length - 1;
+                const supportersCount = 0;
+                const relativeTime = dayjs(bill.latest_action_date).fromNow();
 
                 return (
-                  <Bill
-                    key={watchedBill.state + watchedBill.description}
-                    onClick={onClickBill}
-                    {...bill}
-                  />
+                  <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
+                    <BillCard
+                      id={bill.id}
+                      onClick={onClickBill}
+                      isListView={false}
+                      title={bill.title}
+                      description={bill.summary}
+                      billType="All"
+                      chamber="House"
+                      year={Number(year)}
+                      relativeTime={relativeTime}
+                      name={author.name}
+                      image={author.image}
+                      coAuthor1={coAuthorImages[1]}
+                      coAuthor2={coAuthorImages[2]}
+                      coAuthor3={coAuthorImages[3]}
+                      count1={coAuthorsCount > 0 ? `+${coAuthorsCount}` : ""}
+                      count2={supportersCount > 0 ? `+${supportersCount}` : ""}
+                      state={bill.state}
+                      status={bill.status}
+                      supporter1=""
+                      supporter2=""
+                      supporter3=""
+                    />
+                  </div>
                 );
               })}
             </div>
@@ -296,7 +291,7 @@ export const Dashboard: React.FC = () => {
               <div className="row gap-3">
                 <h4 className="font-extrabold">My Watched Bills</h4>
                 <div className="py-1 px-2 rounded-xl border border-primary">
-                  <h6 className="text-primary">{searchedBills.length}</h6>
+                  <h6 className="text-primary">{watchedBills.length}</h6>
                 </div>
               </div>
               <button
@@ -369,11 +364,17 @@ export const Dashboard: React.FC = () => {
               className="row gap-5 flex-wrap mt-8"
               style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
             >
-              {allBills.map((bill) => (
+              {watchedBills.map((bill) => (
                 <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
                   <BillCard
-                    onClick={handleBillClick}
+                    onClick={onClickBill}
                     isListView={false}
+                    coAuthor1={bill.coAuthor1 as string}
+                    coAuthor2={bill.coAuthor2 as string}
+                    coAuthor3={bill.coAuthor3 as string}
+                    supporter1={bill.supporter1 as string}
+                    supporter2={bill.supporter2 as string}
+                    supporter3={bill.supporter3 as string}
                     {...bill}
                   />
                 </div>

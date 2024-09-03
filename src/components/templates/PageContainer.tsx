@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import notification from "assets/notification.svg";
-import profilePicture from "assets/rep18.svg";
+import profilePicture from "assets/profile_picture.jpg";
 import { Routes } from "types/routes";
 import classNames from "classnames";
 import { ArrowRight } from "assets/ArrowRight";
@@ -31,6 +31,9 @@ export function PageContainer({
   const navigate = useNavigate();
   const userData = useAppSelector(userDataSelector);
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
+  const [avatar, setAvatar] = useState<string>(
+    userData?.avatar ?? profilePicture
+  );
 
   // Chat with Bot modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -124,14 +127,16 @@ export function PageContainer({
             onClick={goToProfile}
           >
             <img
-              src={userData?.avatar ?? profilePicture}
+              src={avatar}
               alt="Profile"
               className="w-8 h-8 object-cover rounded md:w-12 md:h-12"
+              onError={() => {
+                setAvatar(profilePicture);
+              }}
             />
             <article className="col gap-1">
               <h6 className="text-neutral950 font-bold text-sm lg:text-base">
-                {userData?.first_name ?? "Seth"}{" "}
-                {userData?.last_name ?? "Rogan"}
+                {userData?.first_name ?? ""} {userData?.last_name ?? ""}
               </h6>
               <p>
                 <span className="text-primary text-sm font-extrabold pl-1">
