@@ -1,27 +1,16 @@
+// src/utils/api.ts
+
 import { AxiosResponse } from "axios";
 import { client } from "./client";
 import { endpoints } from "./endpoints";
 import { handleApiError } from "utils/helpers";
 
-// Define the types for the legislative sessions request parameters and response
-type TLegislativeSessionsParams = {
-  jurisdiction: string;
-  skip?: number;
-  limit?: number;
-};
-
-type TLegislativeSession = {
-  identifier: string;
-  name: string;
-  classification: string;
-  start_date: string;
-  end_date: string;
-  active: boolean;
-  id: string;
-};
-
-// Define the response type as an array of legislative sessions
-export type TGetLegislativeSessionsResponse = TLegislativeSession[];
+// Import types from the types file
+import {
+  TLegislativeSessionsParams,
+  TGetLegislativeSessionsResponse,
+  TGetJurisdictionsResponse
+} from "types/common.ts"; 
 
 // Existing function to fetch legislative sessions
 export const getLegislativeSessionsRequest = (
@@ -37,22 +26,6 @@ export const getLegislativeSessionsRequest = (
     })
     .catch(handleApiError);
 };
-
-// Define the types for the jurisdictions response
-interface TJurisdiction {
-  name: string;
-  classification: string;
-  created_at: string;
-  updated_at: string;
-  extras: Record<string, string>;
-  url: string;
-  division_id: string;
-  latest_bill_update: string;
-  latest_people_update: string;
-}
-
-// Define the response type as an array of jurisdictions
-export type TGetJurisdictionsResponse = TJurisdiction[];
 
 /**
  * Fetches jurisdictions with optional pagination parameters.

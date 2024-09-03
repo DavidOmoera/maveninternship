@@ -18,7 +18,7 @@ import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 import { representatives } from "constants/common";
 import { legislativeSessionsApi } from "api/index";
-import { TGetLegislativeSessionsResponse } from "api/legislativesessionsApi";
+import { TGetLegislativeSessionsResponse } from "types/common.ts";
 import { handleApiError } from "utils/helpers";
 import { AxiosError } from "axios";
 
@@ -72,7 +72,7 @@ export function HouseReps() {
   });
 
   const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data) => {
-    console.log(data);
+   
     setLoading(true);
     try {
       const response = await legislativeSessionsApi.getLegislativeSessionsRequest({

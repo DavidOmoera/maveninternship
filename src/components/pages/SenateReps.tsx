@@ -72,7 +72,7 @@ export function SenateReps() {
   });
 
   const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data) => {
-    console.log(data);
+    
     setLoading(true);
     try {
       const response = await legislativeSessionsApi.getLegislativeSessionsRequest({
