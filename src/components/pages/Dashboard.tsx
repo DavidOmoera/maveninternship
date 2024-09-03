@@ -268,7 +268,7 @@ export const Dashboard: React.FC = () => {
                 "mt-8": !isSearching,
               })}
             >
-              {bills.map((bill) => {
+              {bills.slice(0, 6).map((bill) => {
                 const lastActionDate = bill.latest_action_date as string;
 
                 // First part of the date is year
