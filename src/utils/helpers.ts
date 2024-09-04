@@ -70,38 +70,28 @@ export const handleApiError = (error: AxiosError): never => {
   if (error.response) {
     const data = error.response.data as ApiErrorResponse;
 
-    // Handle specific status codes or log the error
+    // Use handleError for displaying toast messages
     switch (error.response.status) {
       case 403:
-        console.error(
-          "403 Forbidden: Access is denied. Please check your API credentials or permissions."
-        );
+        handleError(error, "Access is denied. Please check your API credentials or permissions.");
         break;
       case 404:
-        console.error(
-          "404 Not Found: The requested resource could not be found."
-        );
+        handleError(error, "The requested resource could not be found.");
         break;
       case 422:
-        console.error("422 Validation Error:", data.detail);
+        handleError(error, `Validation Error: ${data.detail}`);
         break;
       case 500:
-        console.error(
-          "500 Internal Server Error: The server encountered an error."
-        );
+        handleError(error, "Internal Server Error: The server encountered an error.");
         break;
       default:
-        console.error(
-          "An unexpected error occurred:",
-          error.response.status,
-          error.response.data
-        );
+        handleError(error, "An unexpected error occurred.");
     }
   } else if (error.request) {
-    console.error("No response was received from the server:", error.request);
+    handleError(error, "No response was received from the server.");
   } else {
-    console.error("Error in setting up the request:", error.message);
+    handleError(error, `Error in setting up the request: ${error.message}`);
   }
-  // throw  error to match the 'never' return type
+  // Throw error to match the 'never' return type
   throw error;
 };

@@ -1,5 +1,6 @@
 import { store } from "store";
 import { AxiosInstance } from "axios";
+import { ReactNode } from "react";
 
 export type Representative = {
   image: string;
@@ -256,3 +257,43 @@ export enum BrowserStorageKeys {
 export type BrowserStorageOptions = {
   session: boolean;
 };
+export type Committee = {
+  createdAt: string;
+  updatedAt: string;
+  extras: {
+    additionalProp1: string;
+    additionalProp2: string;
+    additionalProp3: string;
+  };
+  name: string;
+  classification: string;
+  jurisdictionId: string;
+  parentId: string;
+  links: any[];
+  sources: any[];
+  otherNames: string[];
+  id: string;
+}
+
+export type CommitteeMembership = {
+  representative_id: number;
+  committee_id: string;
+  start_date: ReactNode;
+  end_date: string;
+  createdAt: string;
+  updatedAt: string;
+  extras: {
+    additionalProp1: string;
+    additionalProp2: string;
+    additionalProp3: string;
+  };
+  personName: string;
+  role: string;
+  startDate: string;
+  endDate: string;
+  organizationId: string;
+  personId: string;
+  postId: string;
+  id: string;
+}
+

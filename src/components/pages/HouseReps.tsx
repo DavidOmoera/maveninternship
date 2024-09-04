@@ -10,15 +10,19 @@ import { Pill } from "components/molecules/Pill";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes.ts";
 import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Representative } from "types/common.ts";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 import { representatives } from "constants/common";
-import { legislativeSessionsApi } from "api/index";
-import { TGetLegislativeSessionsResponse } from "types/common.ts";
+import { legislativeSessionsApi, committeesApi } from "api/index";
+import {
+  TGetLegislativeSessionsResponse,
+  Committee,
+  CommitteeMembership,
+} from "types/common.ts";
 import { handleApiError } from "utils/helpers";
 import { AxiosError } from "axios";
 
@@ -33,9 +37,33 @@ export function HouseReps() {
   const [legislativeSessions, setLegislativeSessions] =
     useState<TGetLegislativeSessionsResponse | null>(null);
   const [loading, setLoading] = useState(false);
+  const [committees, setCommittees] = useState<Committee[] | null>(null);
+  const [committeeMemberships, setCommitteeMemberships] = useState<
+    CommitteeMembership[] | null
+  >(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
+
+  useEffect(() => {
+    const fetchCommitteeData = async () => {
+      try {
+        setLoading(true);
+        const [committeesResponse, membershipsResponse] = await Promise.all([
+          committeesApi.getCommitteesRequest(),
+          committeesApi.getCommitteeMembershipsRequest(),
+        ]);
+        setCommittees(committeesResponse.data);
+        setCommitteeMemberships(membershipsResponse.data);
+      } catch (error) {
+        handleApiError(error as AxiosError);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCommitteeData();
+  }, []);
 
   const handleToggleExpand = (index: number) => {
     setExpandedIndexes((prev) => {
@@ -72,7 +100,6 @@ export function HouseReps() {
   });
 
   const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data) => {
-   
     setLoading(true);
     try {
       const response = await legislativeSessionsApi.getLegislativeSessionsRequest({
@@ -86,6 +113,11 @@ export function HouseReps() {
     }
   };
 
+  const getCommitteeForRep = (repId: number) => {
+    return committeeMemberships?.filter(
+      (membership) => membership.representative_id === repId
+    );
+  };
 
   return (
     <PageContainer title="House" className="w-full bg-gray-100">
@@ -193,13 +225,32 @@ export function HouseReps() {
                         </span>
                       )}
                     </p>
+
+                    {/* Display Committee Memberships */}
+{committees && getCommitteeForRep(rep.id) && getCommitteeForRep(rep.id)?.length > 0 && (
+  <div className="mt-4">
+    <h4 className="font-semibold">Committees:</h4>
+    {getCommitteeForRep(rep.id)?.map((membership, idx) => {
+      const committee = committees.find(
+        (committee) => committee.id === membership.committee_id
+      );
+      
+      return committee ? (
+        <div key={idx} className="mt-2 text-sm">
+          <strong>{committee.name}</strong> ({membership.role}) -{" "}
+          {membership.start_date} to {membership.end_date || "Present"}
+        </div>
+      ) : null;
+    })}
+  </div>
+)}
+
                   </div>
                   <button
                     className={classNames(
-                      "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none focus:outline-none text-xs lg:text-lg",
+                      "flex items-center absolute bottom-4 right-4",
                       {
-                        "text-error": isRepInTopReps(rep),
-                        "text-primary": !isRepInTopReps(rep),
+                        "text-red-500": isRepInTopReps(rep),
                       }
                     )}
                     onClick={(e) => {
@@ -207,31 +258,10 @@ export function HouseReps() {
                       handleAddToTopReps(rep);
                     }}
                   >
-                    <img
-                      src={bookmark}
-                      alt="Bookmark Icon"
-                      style={{
-                        marginRight: "0.5rem",
-                        width: "24px",
-                        height: "24px",
-                        filter: isRepInTopReps(rep)
-                          ? "invert(24%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(108%) contrast(112%)"
-                          : "none",
-                      }}
-                    />
-                    <span
-                      style={{
-                        fontFamily: "Mulish",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        lineHeight: "17.57px",
-                        textAlign: "left",
-                      }}
-                    >
-                      {isRepInTopReps(rep)
-                        ? "Remove from Top Representatives"
-                        : "Add to Top Representatives"}
-                    </span>
+                    <img src={bookmark} className="mr-2" alt="Bookmark" />
+                    {isRepInTopReps(rep)
+                      ? "Remove from Top Representatives"
+                      : "Add to Top Representatives"}
                   </button>
                 </div>
               ))}
