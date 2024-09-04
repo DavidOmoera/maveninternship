@@ -116,8 +116,9 @@ export function HouseReps() {
   const getCommitteeForRep = (repId: number) => {
     return committeeMemberships?.filter(
       (membership) => membership.representative_id === repId
-    );
+    ) || [];
   };
+  
 
   return (
     <PageContainer title="House" className="w-full bg-gray-100">
@@ -227,23 +228,23 @@ export function HouseReps() {
                     </p>
 
                     {/* Display Committee Memberships */}
-{committees && getCommitteeForRep(rep.id) && getCommitteeForRep(rep.id)?.length > 0 && (
+                    {committees && getCommitteeForRep(rep.id) && getCommitteeForRep(rep.id).length > 0 && (
   <div className="mt-4">
     <h4 className="font-semibold">Committees:</h4>
-    {getCommitteeForRep(rep.id)?.map((membership, idx) => {
-      const committee = committees.find(
+    {getCommitteeForRep(rep.id)!.map((membership, idx) => {
+      const committee = committees?.find(
         (committee) => committee.id === membership.committee_id
       );
-      
       return committee ? (
-        <div key={idx} className="mt-2 text-sm">
-          <strong>{committee.name}</strong> ({membership.role}) -{" "}
-          {membership.start_date} to {membership.end_date || "Present"}
+        <div key={idx}>
+          <span>{committee.name}</span>
         </div>
       ) : null;
     })}
   </div>
 )}
+
+
 
                   </div>
                   <button
