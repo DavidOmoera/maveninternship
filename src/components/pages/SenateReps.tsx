@@ -22,7 +22,7 @@ import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
 import { senators } from "constants/common";
-import { legislativeSessionsApi, committeesApi } from "api/index";
+import { legislativeSessionsApi, committeesApi } from "api/index.ts";
 import { handleApiError } from "utils/helpers";
 import { AxiosError } from "axios";
 
