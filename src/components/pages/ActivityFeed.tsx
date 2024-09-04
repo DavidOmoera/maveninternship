@@ -4,33 +4,34 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { activitySearchSchema } from "constants/schemas";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import SearchIcon from "@mui/icons-material/Search";
-import { ACTIVITIES, colors } from "constants/common";
+import { colors } from "constants/common";
 import { PageContainer } from "components/templates/PageContainer";
 import { Pill } from "components/molecules/Pill";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useEffect, useMemo } from "react";
 import { searchObjects } from "utils/helpers";
-dayjs.extend(relativeTime);
 import { getActivityLogs } from "store/slices/activity/thunks";
 import {
   activityError,
   activityLoading,
-  // getActivitySelector,
+  getActivitySelector,
 } from "store/slices/activity/selectors";
 import { useAppDispatch, useAppSelector } from "utils/helpers";
 
+dayjs.extend(relativeTime);
+
 const ACTIVITY_OPTIONS = [
   { id: 1, label: "All Activity", value: "All" },
-  { id: 1, label: "Added a bill", value: "Added" },
-  { id: 1, label: "Removed a bill", value: "Removed" },
-  { id: 1, label: "Edited a bill", value: "Edited" },
+  { id: 2, label: "Added a bill", value: "Added" },
+  { id: 3, label: "Removed a bill", value: "Removed" },
+  { id: 4, label: "Edited a bill", value: "Edited" },
 ];
 
 const PERIOD_OPTIONS = [
   { id: 1, label: "Last 180 days", value: "180" },
-  { id: 1, label: "Last 30 days", value: "30" },
-  { id: 1, label: "Last 7 days", value: "7" },
+  { id: 2, label: "Last 30 days", value: "30" },
+  { id: 3, label: "Last 7 days", value: "7" },
 ];
 
 function isActivityXDaysAgo(noOfDays: string, daysAgo: number) {
@@ -54,7 +55,7 @@ type TActivitySearchForm = Partial<{
 export function ActivityFeed() {
   const dispatch = useAppDispatch();
 
-  // const activities = useAppSelector(getActivitySelector);
+  const activities = useAppSelector(getActivitySelector) || [];
   const isLoading = useAppSelector(activityLoading);
   const error = useAppSelector(activityError);
 
@@ -74,33 +75,44 @@ export function ActivityFeed() {
   const searchValue = watch("searchValue");
   const noOfDays = watch("noOfDays");
 
-  const filteredActivities = useMemo(() => {
-    return ACTIVITIES.filter((activity) => {
-      const now = dayjs();
-      const activityDate = new Date(Number(activity.timestamp) * 1000);
+  const searchedActivities = useMemo(() => {
+    const now = dayjs();
+
+    const filteredActivities = (activities || []).filter((activity) => {
+      const activityDate = dayjs(activity.timestamp);
       const activityDaysAgo = now.diff(activityDate, "day");
 
       return (
-        isActivityXDaysAgo(noOfDays as string, activityDaysAgo) &&
-        isActivityType(activity.type, selectedActivityType as string)
+        isActivityXDaysAgo(noOfDays ?? "", activityDaysAgo) &&
+        isActivityType(activity.activity_type ?? "", selectedActivityType ?? "")
       );
     });
-  }, [noOfDays, selectedActivityType]);
 
-  const searchedActivities = useMemo(
-    () =>
-      searchObjects(filteredActivities, searchValue, ["type", "label", "link"]),
-    [filteredActivities, searchValue]
-  );
+    return searchObjects(
+      filteredActivities.map((activity) => ({
+        activity_type: activity.activity_type ?? "",
+        description: activity.description ?? "",
+        user_id: (activity.user_id ?? "").toString(),
+        id: (activity.id ?? "").toString(),
+        timestamp: (activity.timestamp ?? "").toString(),
+      })),
+      searchValue ?? "",
+      ["activity_type", "description", "user_id", "id", "timestamp"]
+    );
+  }, [activities, noOfDays, selectedActivityType, searchValue]);
 
   return (
     <PageContainer title="Activity Feed" className="w-full bg-gray-100 ">
-      {isLoading && <div>Loading activities...</div>}
-      {error && (
-        <div className="text-red-500">
-          Failed to load activities. Please try again.
-        </div>
-      )}
+      <div className="mb-2 mx-9">
+        {isLoading && (
+          <div className="text-blue-800">Loading activities...</div>
+        )}
+        {error && (
+          <div className="text-red-500">
+            Failed to load activities. Please try again.
+          </div>
+        )}
+      </div>
 
       <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
         {/** Input fields */}
@@ -136,18 +148,21 @@ export function ActivityFeed() {
         <div className="col gap-8">
           {searchedActivities.map(
             (
-              { timestamp, icon, type, label, iconBackgroundColor, link },
+              {
+                timestamp,
+                activity_type,
+                description,
+                icon,
+                iconBackgroundColor,
+                link,
+              },
               index
             ) => {
-              const date = new Date(Number(timestamp) * 1000);
-              const relTime = dayjs(date).fromNow(true);
+              const relTime = dayjs(timestamp).fromNow(true);
 
               return (
                 <div key={index} className="flex flex-col gap-2">
-                  <div
-                    className="row items-start lg:items-center p-2 rounded-lg bg-blue-50 min-h-16
-                "
-                  >
+                  <div className="row items-start lg:items-center p-2 rounded-lg bg-blue-50 min-h-16">
                     <div className="w-24 lg:w-1/6">
                       <p className="text-gray-500 text-sm font-medium">
                         {relTime}
@@ -159,12 +174,18 @@ export function ActivityFeed() {
                           className="p-1 rounded-full"
                           style={{ backgroundColor: iconBackgroundColor }}
                         >
-                          <img src={icon} alt={type} className="w-4 h-4" />
+                          <img
+                            src={icon}
+                            alt={activity_type}
+                            className="w-4 h-4"
+                          />
                         </div>
                         <span className=" text-gray-700 text-base font-semibold w-64 lg:w-fit">
                           You{" "}
-                          <strong className="text-neutral-950">{type}</strong>{" "}
-                          {label}
+                          <strong className="text-neutral-950">
+                            {activity_type}
+                          </strong>{" "}
+                          {description}
                         </span>
                       </div>
 
