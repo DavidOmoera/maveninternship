@@ -248,9 +248,10 @@ export function HouseReps() {
                   </div>
                   <button
                     className={classNames(
-                      "flex items-center absolute bottom-4 right-4",
+                     "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none focus:outline-none text-xs lg:text-lg",
                       {
-                        "text-red-500": isRepInTopReps(rep),
+                        "text-error": isRepInTopReps(rep),
+                        "text-primary": !isRepInTopReps(rep),
                       }
                     )}
                     onClick={(e) => {
@@ -258,10 +259,31 @@ export function HouseReps() {
                       handleAddToTopReps(rep);
                     }}
                   >
-                    <img src={bookmark} className="mr-2" alt="Bookmark" />
-                    {isRepInTopReps(rep)
-                      ? "Remove from Top Representatives"
-                      : "Add to Top Representatives"}
+                   <img
+                      src={bookmark}
+                      alt="Bookmark Icon"
+                      style={{
+                        marginRight: "0.5rem",
+                        width: "24px",
+                        height: "24px",
+                        filter: isRepInTopReps(rep)
+                          ? "invert(24%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(108%) contrast(112%)"
+                          : "none",
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontFamily: "Mulish",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        lineHeight: "17.57px",
+                        textAlign: "left",
+                      }}
+                    >
+                      {isRepInTopReps(rep)
+                        ? "Remove from Top Representatives"
+                        : "Add to Top Representatives"}
+                    </span>
                   </button>
                 </div>
               ))}
