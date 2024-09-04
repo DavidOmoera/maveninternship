@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/atoms/Button";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -6,12 +6,16 @@ import { ControlledSelect } from "components/organisms/ControlledSelect";
 import { PageContainer } from "components/templates/PageContainer";
 import SearchIcon from "@mui/icons-material/Search";
 import { Pill } from "components/molecules/Pill";
-import { allBills, BILL_TYPES, BILL_YEARS } from "constants/common";
+import { BILL_TYPES, BILL_YEARS } from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import gridIcon from "assets/grid.svg";
 import listIcon from "assets/listView.svg";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { billsSelector } from "store/slices/bill/selectors";
+import { getBills } from "store/slices/bill/thunks";
+import dayjs from "dayjs";
 
 interface TBillSearchForm {
   searchValue: string;
@@ -30,7 +34,12 @@ const pills = [
   { firstText: "Immigration", secondText: "(3)" },
 ];
 
+const isSearching = false;
+const searchResultsCount = 205;
+
 export const Bills: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { bills } = useAppSelector(billsSelector);
   const { control, handleSubmit } = useForm<TBillSearchForm>();
   const navigate = useNavigate();
 
@@ -52,19 +61,31 @@ export const Bills: React.FC = () => {
     setIsGridView(!isGridView);
   };
 
+  useEffect(() => {
+    dispatch(getBills({ page: 1, size: 50 }));
+  }, [dispatch]);
+
   return (
     <PageContainer title="Bills">
       <div className="p-9 bg-white rounded-xl mx-9">
-        <h3 className="text-primary font-normal text-2xl pb-2">
-          Search for:&nbsp;
-          <span className="text-blue-700 font-extrabold">
-            Secure Border Act
-          </span>
-        </h3>
-        <p className="pb-6 font-normal">
-          in <span className="font-bold">Texas</span> &{" "}
-          <span className="font-bold">Colorado</span>
-        </p>
+        {isSearching ? (
+          <>
+            <h3 className="text-primary font-normal text-2xl pb-2">
+              Search for:&nbsp;
+              <span className="text-blue-700 font-extrabold">
+                Secure Border Act
+              </span>
+            </h3>
+            <p className="pb-6 font-normal">
+              in <span className="font-bold">Texas</span> &{" "}
+              <span className="font-bold">Colorado</span>
+            </p>
+          </>
+        ) : (
+          <h3 className="text-primary font-extrabold text-xl pb-6">
+            All Bills
+          </h3>
+        )}
         <div className="flex flex-col lg:flex-row item-center w-full gap-3">
           <ControlledInput
             required
@@ -116,10 +137,24 @@ export const Bills: React.FC = () => {
         <div className="flex flex-col space-y-4">
           {/* Search results */}
           <div className="row justify-between my-9">
-            <div className="lg:flex gap-2 block">
-              <h4 className="text-neutral950">205</h4>
-              <span className="text-neutral950 text-xl">Results found</span>
-            </div>
+            {isSearching ? (
+              <div className="lg:flex gap-2 block">
+                <h4 className="text-neutral950">{searchResultsCount}</h4>
+                <span className="text-neutral950 text-xl">Results found</span>
+              </div>
+            ) : (
+              <div className="row gap-2 flex-wrap">
+                {pills.map((pill) => (
+                  <Pill
+                    key={pill.secondText}
+                    text={pill.firstText}
+                    secondText={pill.secondText}
+                    textClass="text-blue-600 font-semibold"
+                    secondTextClass="text-blue-600 font-bold"
+                  />
+                ))}
+              </div>
+            )}
 
             <div className="row items-center gap-6">
               <img
@@ -132,17 +167,19 @@ export const Bills: React.FC = () => {
           </div>
 
           {/** Pills */}
-          <div className="row gap-2 flex-wrap">
-            {pills.map((pill) => (
-              <Pill
-                key={pill.secondText}
-                text={pill.firstText}
-                secondText={pill.secondText}
-                textClass="text-blue-600 font-semibold"
-                secondTextClass="text-blue-600 font-bold"
-              />
-            ))}
-          </div>
+          {isSearching && (
+            <div className="row gap-2 flex-wrap">
+              {pills.map((pill) => (
+                <Pill
+                  key={pill.secondText}
+                  text={pill.firstText}
+                  secondText={pill.secondText}
+                  textClass="text-blue-600 font-semibold"
+                  secondTextClass="text-blue-600 font-bold"
+                />
+              ))}
+            </div>
+          )}
 
           {/* ListView Title */}
           {!isGridView && (
@@ -160,14 +197,47 @@ export const Bills: React.FC = () => {
 
           {/* BillCard */}
           <div className={`${isGridView ? "row gap-5 flex-wrap mt-8" : "col"}`}>
-            {allBills.map((allBill) => (
-              <BillCard
-                key={allBill.state + allBill.description}
-                onClick={onClickBill}
-                isListView={!isGridView}
-                {...allBill}
-              />
-            ))}
+            {bills.map((bill) => {
+              const lastActionDate = bill.latest_action_date as string;
+
+              // First part of the date is year
+              const year =
+                lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
+              const author = bill.contributors[0] ?? {};
+              const coAuthorImages = bill.contributors.map(
+                (contributor) => contributor.image
+              );
+              const coAuthorsCount = bill.contributors.length - 1;
+              const supportersCount = 0;
+              const relativeTime = dayjs(bill.latest_action_date).fromNow();
+
+              return (
+                <BillCard
+                  key={bill.id}
+                  id={bill.id}
+                  onClick={onClickBill}
+                  isListView={!isGridView}
+                  title={bill.title}
+                  description={bill.summary}
+                  billType="All"
+                  chamber="House"
+                  year={Number(year)}
+                  relativeTime={relativeTime}
+                  name={author.name}
+                  image={author.image}
+                  coAuthor1={coAuthorImages[1]}
+                  coAuthor2={coAuthorImages[2]}
+                  coAuthor3={coAuthorImages[3]}
+                  count1={coAuthorsCount > 0 ? `+${coAuthorsCount}` : ""}
+                  count2={supportersCount > 0 ? `+${supportersCount}` : ""}
+                  state={bill.state}
+                  status={bill.status}
+                  supporter1=""
+                  supporter2=""
+                  supporter3=""
+                />
+              );
+            })}
           </div>
         </div>
       </div>
