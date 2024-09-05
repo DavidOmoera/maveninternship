@@ -266,8 +266,8 @@ export type Committee = {
   classification: string;
   jurisdictionId: string;
   parentId: string;
-  links: any[];
-  sources: any[];
+  links: string[];
+  sources: string[];  
   otherNames: string[];
   id: string;
 }
