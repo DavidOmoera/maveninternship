@@ -49,12 +49,22 @@ export function HouseReps() {
     const fetchCommitteeData = async () => {
       try {
         setLoading(true);
-        const [committeesResponse, membershipsResponse] = await Promise.all([
-          committeesApi.getCommitteesRequest(),
-          committeesApi.getCommitteeMembershipsRequest(),
-        ]);
-        setCommittees(committeesResponse.data);
-        setCommitteeMemberships(membershipsResponse.data);
+
+        // Fetch committees first
+        const committeesResponse = await committeesApi.getCommitteesRequest();
+        const committees = committeesResponse.data.committees;
+
+        setCommittees(committees);
+
+        // Fetch memberships for each committee
+        const membershipsPromises = committees.map((committee) =>
+          committeesApi.getCommitteeMembershipsRequest(committee.id)
+        );
+        const membershipsResponses = await Promise.all(membershipsPromises);
+        const memberships = membershipsResponses.flatMap((response) => response.data);
+
+        setCommitteeMemberships(memberships);
+
       } catch (error) {
         handleApiError(error as AxiosError);
       } finally {
@@ -64,6 +74,7 @@ export function HouseReps() {
 
     fetchCommitteeData();
   }, []);
+
 
   const handleToggleExpand = (index: number) => {
     setExpandedIndexes((prev) => {
@@ -85,7 +96,7 @@ export function HouseReps() {
   };
 
   const isRepInTopReps = (rep: Representative) =>
-    topReps.some((existingRep) => existingRep.name === rep.name);
+    topReps.some((existingRep: { name: string; }) => existingRep.name === rep.name);
 
   const onClickRepresentative = (id: number, pageType: string) => {
     navigate(Routes.RepProfile + `/${id}`, { state: { pageType } });
@@ -99,7 +110,7 @@ export function HouseReps() {
     resolver: yupResolver(activitySearchSchema),
   });
 
-  const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data) => {
+  const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data: { searchValue: any; }) => {
     setLoading(true);
     try {
       const response = await legislativeSessionsApi.getLegislativeSessionsRequest({
@@ -118,7 +129,7 @@ export function HouseReps() {
       (membership) => membership.representative_id === repId
     ) || [];
   };
-  
+
 
   return (
     <PageContainer title="House" className="w-full bg-gray-100">
@@ -229,27 +240,27 @@ export function HouseReps() {
 
                     {/* Display Committee Memberships */}
                     {committees && getCommitteeForRep(rep.id) && getCommitteeForRep(rep.id).length > 0 && (
-  <div className="mt-4">
-    <h4 className="font-semibold">Committees:</h4>
-    {getCommitteeForRep(rep.id)!.map((membership, idx) => {
-      const committee = committees?.find(
-        (committee) => committee.id === membership.committee_id
-      );
-      return committee ? (
-        <div key={idx}>
-          <span>{committee.name}</span>
-        </div>
-      ) : null;
-    })}
-  </div>
-)}
+                      <div className="mt-4">
+                        <h4 className="font-semibold">Committees:</h4>
+                        {getCommitteeForRep(rep.id)!.map((membership, idx) => {
+                          const committee = committees?.find(
+                            (committee) => committee.id === membership.committee_id
+                          );
+                          return committee ? (
+                            <div key={idx}>
+                              <span>{committee.name}</span>
+                            </div>
+                          ) : null;
+                        })}
+                      </div>
+                    )}
 
 
 
                   </div>
                   <button
                     className={classNames(
-                     "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none focus:outline-none text-xs lg:text-lg",
+                      "flex items-center absolute bottom-4 right-4 border-none cursor-pointer bg-transparent outline-none focus:outline-none text-xs lg:text-lg",
                       {
                         "text-error": isRepInTopReps(rep),
                         "text-primary": !isRepInTopReps(rep),
@@ -260,7 +271,7 @@ export function HouseReps() {
                       handleAddToTopReps(rep);
                     }}
                   >
-                   <img
+                    <img
                       src={bookmark}
                       alt="Bookmark Icon"
                       style={{

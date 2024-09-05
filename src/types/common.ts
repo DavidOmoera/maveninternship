@@ -159,10 +159,10 @@ export type TUserParams = Partial<{
 
 export type TSearchUsersParams = Partial<
   TGetBillsParams &
-    TUserParams & {
-      account_class: string;
-      subscription_plan: string;
-    }
+  TUserParams & {
+    account_class: string;
+    subscription_plan: string;
+  }
 >;
 
 export type TOrganizationParams = Partial<{
@@ -260,11 +260,8 @@ export type BrowserStorageOptions = {
 export type Committee = {
   createdAt: string;
   updatedAt: string;
-  extras: {
-    additionalProp1: string;
-    additionalProp2: string;
-    additionalProp3: string;
-  };
+  extras: Record<string, any>;
+
   name: string;
   classification: string;
   jurisdictionId: string;
@@ -282,11 +279,8 @@ export type CommitteeMembership = {
   end_date: string;
   createdAt: string;
   updatedAt: string;
-  extras: {
-    additionalProp1: string;
-    additionalProp2: string;
-    additionalProp3: string;
-  };
+  extras: Record<string, any>;
+
   personName: string;
   role: string;
   startDate: string;
@@ -297,3 +291,13 @@ export type CommitteeMembership = {
   id: string;
 }
 
+export type TGetCommitteesResponse = {
+  committees: Committee[];
+  total: number;
+};
+
+
+export type TGetCommitteeResponse = Committee;
+
+
+export type TGetCommitteeMembershipsResponse = CommitteeMembership[];
