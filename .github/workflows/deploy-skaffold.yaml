@@ -4,7 +4,12 @@ on:
         types:
             - closed
         branches:
-            - dev
+            - main
+        paths-ignore:
+            - 'deploy/**'
+            - 'pipeline/**'
+    workflow_dispatch:
+        
 jobs:
     SET_ENVIRONMENT:
         runs-on: ubuntu-latest
@@ -53,17 +58,11 @@ jobs:
               with:
                   creds: "${{ secrets.AZURE_CREDENTIALS }}"
 
-            - name: Login to Docker  Hub
-              uses: docker/login-action@v3
-              with:
-                  username: ${{ secrets.DOCKERHUB_USERNAME }}
-                  password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-            # - name: Login to Azure Container Registry
-            #   run: |
-            #     docker login legisaidev.azurecr.io \
-            #     -u ${{ secrets.ACR_CLIENT_ID }} \
-            #     -p ${{ secrets.ACR_SECRET }}
+            - name: Login to Azure Container Registry
+              run: |
+                echo ${{ secrets.ACR_PASSWORD }} | docker login ${{ secrets.CONTAINER_REGISTRY }} \
+                -u ${{ secrets.ACR_USER }} \
+                --password-stdin
 
             - name: Copy Over ENV vars
               run: |-
@@ -79,7 +78,7 @@ jobs:
             - name: Build docker image
               run: |-
                   export COMMIT_SHA=$(git rev-parse --short=7 "$GITHUB_SHA")
-                  skaffold build --default-repo=${{ secrets.REPO }} --tag ${COMMIT_SHA} --push
+                  skaffold build --default-repo=${{ secrets.CONTAINER_REGISTRY }} --tag ${COMMIT_SHA} --push
 
     PREPARE_AND_COMPILE_MANIFEST:
         name: Compile And Generate Manifest with Kustomize
@@ -113,7 +112,7 @@ jobs:
                   export COMMIT_SHA=$(git rev-parse --short=7 "$GITHUB_SHA")
                   export MANIFEST_FILE=${{ github.workspace }}/pipeline/${ENV_NAME}/manifest.yaml
 
-                  kustomize edit set image webapp:1.0.0=${{ secrets.REPO }}/webapp:${COMMIT_SHA}
+                  kustomize edit set image webapp:1.0.0=${{ secrets.CONTAINER_REGISTRY }}/webapp:${COMMIT_SHA}
 
                   kustomize build . > ${MANIFEST_FILE}
                   popd

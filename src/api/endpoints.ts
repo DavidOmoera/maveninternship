@@ -1,7 +1,7 @@
 export const endpoints = {
   activity: {
     postActivity: (): string => `/activity_logs`,
-    getActivity: (user_id: number) => `/activity_logs/${user_id}`,
+    getActivity: (user_id: number) => `/activity_logs${user_id}`,
   },
 
   admin: {
@@ -26,14 +26,14 @@ export const endpoints = {
 
   auth: {
     register: (): string => `/register/`,
-    verifyEmail: (): string => `/verify-email`,
+    verifyEmail: (): string => `/verify-email/`,
     resendVerificationEmail: (): string => `/resend-verification`,
     login: (): string => `/token`,
     updateUserProfile: (): string => `/update_user_info`,
-    getUserData: (): string => `/users/me`, // For current user
+    getUserData: (): string => `/users/me/`, // For current user
     loginWithGoogle: (): string => `/google-login`,
     loginWithOutlook: (): string => `/outlook-login`,
-    logout: (): string => `/logout`,
+    logout: (): string => `/logout/`,
     initiatePasswordReset: (): string => `/password-reset-request`,
     resetPassword: (): string => `/password-reset`,
 
@@ -46,7 +46,7 @@ export const endpoints = {
   },
   bills: {
     getBill: (billId: string): string => `/bills/${billId}`,
-    getBills: (): string => `/bills`,
+    getBills: (): string => `/bills/`,
     searchBills: (): string => `/bills/filter`,
     getBillVotes: (billId: string): string => `/bills/${billId}/votes`,
     getBillActions: (billId: string): string => `/bills/${billId}/actions`,
@@ -68,6 +68,14 @@ export const endpoints = {
     updateNotificationSettings: (userId: string): string =>
       `/notifications/notification-settings/${userId}`,
   },
+
+  legislativeSessions: {
+    getSessions: (): string => `/legislativesessions`,
+  },
+  jurisdictions: {
+    getAll: () => `/jurisdictions`,
+  },
+
   subscription: {
     getPlans: (): string => `/subscription_plans`,
   },

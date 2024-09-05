@@ -28,6 +28,12 @@ export type ThunkAPI = {
   };
 };
 
+export type TbillState = {
+  bills: TBill[];
+  totalBillsCount: number;
+  isLoadingBills: boolean;
+};
+
 export type TUserData = {
   account_class: string;
   first_name: string;
@@ -77,38 +83,23 @@ export type TSignUpResponse = {
   user: TUserData;
 };
 
-export type TBill = {
-  created_at: Date | string;
-  updated_at: Date | string;
-  extras: Record<string, string>;
-  identifier: string;
+export type TBillContributor = {
+  name: string;
+  image: string;
+  entity_type: string;
   title: string;
-  classification: string[];
-  subject: string[];
-  first_action_date: string;
-  latest_action_date: string;
-  latest_action_description: string;
-  latest_passage_date: string;
-  latest_action_category: string[];
-  latest_action_category_date: string;
-  citations: string[];
-  opencivicdata_organization: {
-    name: string;
-    classification: string;
-    opencivicdata_jurisdiction: {
-      name: string;
-      classification: string;
-    };
-  };
-  opencivicdata_legislativesession: {
-    identifier: string;
-    name: string;
-    classification: string;
-    start_date: Date | string;
-    end_date: Date | string;
-    active: boolean;
-  };
+  primary: boolean;
+  classification: string;
+};
+
+export type TBill = {
   id: string;
+  title: string;
+  state: string;
+  status: string;
+  latest_action_date: Date | string;
+  summary: string;
+  contributors: TBillContributor[];
 };
 
 export type TUpdateUserRequestBody = {
@@ -122,8 +113,8 @@ type TBillStatus = "Introduced" | "Enrolled" | "Passed";
 type TBillChamber = "House" | "Senate";
 
 export type TGetBillsParams = Partial<{
-  skip: number;
-  limit: number;
+  page: number;
+  size: number;
 }>;
 
 export type TSearchBillsParams = Partial<
@@ -138,7 +129,13 @@ export type TSearchBillsParams = Partial<
   }
 >;
 
-export type TGetBillsResponse = TBill[];
+export type TGetBillsResponse = {
+  items: TBill[];
+  total: number;
+  page: number;
+  size: number;
+  pages: number;
+};
 
 export type TActivityLogs = Partial<{
   activity_type: string;
@@ -194,7 +191,7 @@ export type AdminState = {
   organizations: TUserData[];
   loading: boolean;
   error: string | undefined;
-}
+};
 
 export type TLoginRequestBody = {
   username: string;
@@ -216,6 +213,7 @@ export type TVerifyEmailRequestBody = {
   code: string;
 };
 
+<<<<<<< HEAD
 export type THelpAndSupportForm = {
   first_name: string;
   last_name: string;
@@ -225,3 +223,48 @@ export type THelpAndSupportForm = {
   message: string;
 };
 
+=======
+export type TLegislativeSessionsParams = {
+  jurisdiction: string;
+  skip?: number;
+  limit?: number;
+};
+
+export type TLegislativeSession = {
+  identifier: string;
+  name: string;
+  classification: string;
+  start_date: string;
+  end_date: string;
+  active: boolean;
+  id: string;
+};
+
+// Define the response type as an array of legislative sessions
+export type TGetLegislativeSessionsResponse = TLegislativeSession[];
+
+export type TJurisdiction = {
+  name: string;
+  classification: string;
+  created_at: string;
+  updated_at: string;
+  extras: Record<string, string>;
+  url: string;
+  division_id: string;
+  latest_bill_update: string;
+  latest_people_update: string;
+};
+
+// Define the response type as an array of jurisdictions
+export type TGetJurisdictionsResponse = TJurisdiction[];
+
+export type TDefaultResponse = { msg: string };
+
+export enum BrowserStorageKeys {
+  AccessToken = "accessToken",
+}
+
+export type BrowserStorageOptions = {
+  session: boolean;
+};
+>>>>>>> 92561131776958c49b796a508fc0fd81aa620aa8
