@@ -256,3 +256,18 @@ export enum BrowserStorageKeys {
 export type BrowserStorageOptions = {
   session: boolean;
 };
+
+//notifications
+export type TNotifications = Partial<{
+  message: string;
+  id: number;
+  user_id: number;
+  status: string;
+  created_at: Date | string;
+}>;
+
+export type NotificationsState = {
+  notifications: TNotifications[];
+  loading: boolean;
+  error: string | null;
+};

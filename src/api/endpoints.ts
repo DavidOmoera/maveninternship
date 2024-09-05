@@ -61,10 +61,14 @@ export const endpoints = {
   feedback: {
     getFeedback: (): string => `/feedback`,
   },
+
   notifications: {
-    getNotifications: (userId: string): string => `/notifications/${userId}`,
-    updateNotificationStatus: (notificationId: string): string =>
-      `/notifications/${notificationId}`,
+    createNotification: (): string => `/notifications`,
+    getNotifications: (user_id: string): string => `/notifications/${user_id}`,
+    updateNotificationStatus: (notification_id: string): string =>
+      `/notifications/${notification_id}`,
+    createNotificationSettings: (): string =>
+      `/notifications/notification-settings`,
     updateNotificationSettings: (userId: string): string =>
       `/notifications/notification-settings/${userId}`,
   },

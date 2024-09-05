@@ -102,8 +102,11 @@ export function ActivityFeed() {
   }, [activities, noOfDays, selectedActivityType, searchValue]);
 
   return (
-    <PageContainer title="Activity Feed" className="w-full bg-gray-100 ">
-      <div className="mb-2 mx-9">
+    <PageContainer
+      title="Activity Feed"
+      className="w-full lg:min-w-[1150px] bg-gray-100 "
+    >
+      <div className="mb-2 mx-9 ">
         {isLoading && (
           <div className="text-blue-800">Loading activities...</div>
         )}
@@ -114,7 +117,7 @@ export function ActivityFeed() {
         )}
       </div>
 
-      <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
+      <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl min-h-[900px]">
         {/** Input fields */}
         <div className="row justify-between mb-9 flex-wrap gap-3">
           <div className="flex gap-3 w-full lg:w-fit">
