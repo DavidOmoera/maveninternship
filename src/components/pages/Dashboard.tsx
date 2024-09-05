@@ -45,6 +45,7 @@ import { billsSelector } from "store/slices/bill/selectors";
 import { getBills } from "store/slices/bill/thunks";
 import dayjs from "dayjs";
 import classNames from "classnames";
+import { TBill } from "types/common";
 
 const stages = [
   "Filed",
@@ -137,7 +138,11 @@ export const Dashboard: React.FC = () => {
     );
   };
 
-  function onClickBill() {
+  function onClickBill(bill: TBill) {
+    navigate(Routes.DetailsOfBill, { state: { bill } });
+  }
+
+  function onClickWatchedBill() {
     navigate(Routes.DetailsOfBill);
   }
 
@@ -274,19 +279,27 @@ export const Dashboard: React.FC = () => {
                 // First part of the date is year
                 const year =
                   lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
-                const author = bill.contributors[0];
-                const coAuthorImages = bill.contributors.map(
+                const author = bill.contributors.find(
+                  (contributor) => contributor.classification === "author"
+                );
+                const coAuthors = bill.contributors.filter(
+                  (contributor) => contributor.classification === "coauthor"
+                );
+                const sponsors = bill.contributors.filter(
+                  (contributor) => contributor.classification === "sponsor"
+                );
+                const coAuthorImages = coAuthors.map(
                   (contributor) => contributor.image
                 );
-                const coAuthorsCount = bill.contributors.length - 1;
-                const supportersCount = 0;
+                const coAuthorsCount = coAuthors.length;
+                const supportersCount = sponsors.length;
                 const relativeTime = dayjs(bill.latest_action_date).fromNow();
 
                 return (
                   <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
                     <BillCard
                       id={bill.id}
-                      onClick={onClickBill}
+                      onClick={() => onClickBill(bill)}
                       isListView={false}
                       title={bill.title}
                       description={bill.summary}
@@ -294,8 +307,8 @@ export const Dashboard: React.FC = () => {
                       chamber="House"
                       year={Number(year)}
                       relativeTime={relativeTime}
-                      name={author.name}
-                      image={author.image}
+                      name={author?.name as string}
+                      image={author?.image as string}
                       coAuthor1={coAuthorImages[1]}
                       coAuthor2={coAuthorImages[2]}
                       coAuthor3={coAuthorImages[3]}
@@ -396,7 +409,7 @@ export const Dashboard: React.FC = () => {
               {watchedBills.map((bill) => (
                 <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
                   <BillCard
-                    onClick={onClickBill}
+                    onClick={onClickWatchedBill}
                     isListView={false}
                     coAuthor1={bill.coAuthor1 as string}
                     coAuthor2={bill.coAuthor2 as string}
