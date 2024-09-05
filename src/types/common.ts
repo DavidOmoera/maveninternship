@@ -213,17 +213,29 @@ export type TVerifyEmailRequestBody = {
   code: string;
 };
 
-<<<<<<< HEAD
 export type THelpAndSupportForm = {
-  first_name: string;
-  last_name: string;
-  company_name?: string;
-  email_address: string;
-  issue?: string;
+  issues: [
+    string
+  ];
+  duration: string;
+  learn_more: boolean;
+  id: number;
+  user_id: number;
+  submitted_at: Date;
+  // message type
   message: string;
+  detail?: [
+    {
+      loc: [ 
+        string, 
+        number
+      ],
+      message: string,
+      type: string
+    }
+  ]
 };
 
-=======
 export type TLegislativeSessionsParams = {
   jurisdiction: string;
   skip?: number;
@@ -267,4 +279,3 @@ export enum BrowserStorageKeys {
 export type BrowserStorageOptions = {
   session: boolean;
 };
->>>>>>> 92561131776958c49b796a508fc0fd81aa620aa8
