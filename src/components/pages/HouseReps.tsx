@@ -110,7 +110,7 @@ export function HouseReps() {
     resolver: yupResolver(activitySearchSchema),
   });
 
-  const onSearchBill: SubmitHandler<TActivitySearchForm> = async (data: { searchValue: string }) => {
+  const onSearchBill: SubmitHandler<Partial<{ searchValue: string; activity: string; noOfDays: string; }>> = async (data) => {
     setLoading(true);
     try {
       const response = await legislativeSessionsApi.getLegislativeSessionsRequest({
