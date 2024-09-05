@@ -89,7 +89,7 @@ export type TBillContributor = {
   entity_type: string;
   title: string;
   primary: boolean;
-  classification: string;
+  classification: "author" | "coauthor" | "sponsor";
 };
 
 export type TBill = {
@@ -100,6 +100,13 @@ export type TBill = {
   latest_action_date: Date | string;
   summary: string;
   contributors: TBillContributor[];
+};
+
+export type TBillVotesParams = { bill_id: string; limit?: number };
+export type TBillVotesResponse = {
+  votes_for: number;
+  votes_against: number;
+  abstained: number;
 };
 
 export type TUpdateUserRequestBody = {
