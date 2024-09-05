@@ -260,7 +260,7 @@ export type BrowserStorageOptions = {
 export type Committee = {
   createdAt: string;
   updatedAt: string;
-  extras: Record<string, any>;
+  extras: Record<string, string>;
 
   name: string;
   classification: string;
@@ -279,7 +279,7 @@ export type CommitteeMembership = {
   end_date: string;
   createdAt: string;
   updatedAt: string;
-  extras: Record<string, any>;
+  extras: Record<string, string>;
 
   personName: string;
   role: string;
