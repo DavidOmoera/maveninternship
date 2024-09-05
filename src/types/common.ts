@@ -109,6 +109,18 @@ export type TBillVotesResponse = {
   abstained: number;
 };
 
+export type TBillSummaryParams = {
+  bill_id: string;
+  version: string;
+  state: string;
+};
+
+export type TBillSummaryResponse = {
+  bill_id: string;
+  version: string;
+  summary: string;
+};
+
 export type TUpdateUserRequestBody = {
   email: string;
   first_name: string;

@@ -3,6 +3,8 @@ import { client } from "./client";
 import { endpoints } from "./endpoints";
 import {
   TBill,
+  TBillSummaryParams,
+  TBillSummaryResponse,
   TBillVotesParams,
   TBillVotesResponse,
   TGetBillsParams,
@@ -18,6 +20,15 @@ export const getBillVotesRequest = ({
   limit,
 }: TBillVotesParams): Promise<AxiosResponse<TBillVotesResponse>> =>
   client.get(endpoints.bills.getBillVotes(bill_id), { params: { limit } });
+
+export const getBillSummaryRequest = ({
+  bill_id,
+  version,
+  state,
+}: TBillSummaryParams): Promise<AxiosResponse<TBillSummaryResponse>> =>
+  client.get(endpoints.bills.getBillSummary(bill_id), {
+    params: { version, state },
+  });
 
 export const getBillsRequest = (
   params?: TGetBillsParams
