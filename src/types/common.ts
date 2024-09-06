@@ -128,25 +128,25 @@ export type TUpdateUserRequestBody = {
   phone_number: string;
 };
 
-type TBillStatus = "Introduced" | "Enrolled" | "Passed";
-type TBillChamber = "House" | "Senate";
+export type TBillStatus = "Introduced" | "Enrolled" | "Passed";
+export type TBillChamber = "House" | "Senate";
+export type TBillType = "resolution" | "bill";
 
 export type TGetBillsParams = Partial<{
   page: number;
   size: number;
 }>;
 
-export type TSearchBillsParams = Partial<
-  TGetBillsParams & {
+export type TSearchBillsParams = TGetBillsParams &
+  Partial<{
     search_term: string;
     identifier: string;
-    bill_type: string;
+    bill_type: TBillType;
     status: TBillStatus[];
     sessions: string[];
     jurisdiction: string[];
     chamber: TBillChamber;
-  }
->;
+  }>;
 
 export type TGetBillsResponse = {
   items: TBill[];
