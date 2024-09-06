@@ -6,3 +6,6 @@ export * as activityApi from "./activityApi";
 export * as adminApi from "./adminApi";
 export * as legislativeSessionsApi from "./legislativesessionsApi";
 export * as notificationsApi from "./notificationsApi";
+export * as legislativeSessionsApi from "./legislativesessionsApi"; 
+export * as committeesApi from "./committeesApi";
+

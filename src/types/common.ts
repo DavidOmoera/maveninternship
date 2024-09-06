@@ -1,5 +1,6 @@
 import { store } from "store";
 import { AxiosInstance } from "axios";
+import { ReactNode } from "react";
 
 export type Representative = {
   image: string;
@@ -89,7 +90,7 @@ export type TBillContributor = {
   entity_type: string;
   title: string;
   primary: boolean;
-  classification: string;
+  classification: "author" | "coauthor" | "sponsor";
 };
 
 export type TBill = {
@@ -102,6 +103,25 @@ export type TBill = {
   contributors: TBillContributor[];
 };
 
+export type TBillVotesParams = { bill_id: string; limit?: number };
+export type TBillVotesResponse = {
+  votes_for: number;
+  votes_against: number;
+  abstained: number;
+};
+
+export type TBillSummaryParams = {
+  bill_id: string;
+  version: string;
+  state: string;
+};
+
+export type TBillSummaryResponse = {
+  bill_id: string;
+  version: string;
+  summary: string;
+};
+
 export type TUpdateUserRequestBody = {
   email: string;
   first_name: string;
@@ -109,25 +129,25 @@ export type TUpdateUserRequestBody = {
   phone_number: string;
 };
 
-type TBillStatus = "Introduced" | "Enrolled" | "Passed";
-type TBillChamber = "House" | "Senate";
+export type TBillStatus = "Introduced" | "Enrolled" | "Passed";
+export type TBillChamber = "House" | "Senate";
+export type TBillType = "resolution" | "bill";
 
 export type TGetBillsParams = Partial<{
   page: number;
   size: number;
 }>;
 
-export type TSearchBillsParams = Partial<
-  TGetBillsParams & {
+export type TSearchBillsParams = TGetBillsParams &
+  Partial<{
     search_term: string;
     identifier: string;
-    bill_type: string;
+    bill_type: TBillType;
     status: TBillStatus[];
     sessions: string[];
     jurisdiction: string[];
     chamber: TBillChamber;
-  }
->;
+  }>;
 
 export type TGetBillsResponse = {
   items: TBill[];
@@ -158,10 +178,10 @@ export type TUserParams = Partial<{
 
 export type TSearchUsersParams = Partial<
   TGetBillsParams &
-    TUserParams & {
-      account_class: string;
-      subscription_plan: string;
-    }
+  TUserParams & {
+    account_class: string;
+    subscription_plan: string;
+  }
 >;
 
 export type TOrganizationParams = Partial<{
@@ -271,3 +291,47 @@ export type NotificationsState = {
   loading: boolean;
   error: string | null;
 };
+
+export type Committee = {
+  createdAt: string;
+  updatedAt: string;
+  extras: Record<string, string>;
+
+  name: string;
+  classification: string;
+  jurisdictionId: string;
+  parentId: string;
+  links: string[];
+  sources: string[];  
+  otherNames: string[];
+  id: string;
+}
+
+export type CommitteeMembership = {
+  representative_id: number;
+  committee_id: string;
+  start_date: ReactNode;
+  end_date: string;
+  createdAt: string;
+  updatedAt: string;
+  extras: Record<string, string>;
+
+  personName: string;
+  role: string;
+  startDate: string;
+  endDate: string;
+  organizationId: string;
+  personId: string;
+  postId: string;
+  id: string;
+}
+
+export type TGetCommitteesResponse = {
+  committees: Committee[];
+  total: number;
+};
+
+export type TGetCommitteeResponse = Committee;
+
+export type TGetCommitteeMembershipsResponse = CommitteeMembership[];
+

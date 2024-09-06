@@ -1,11 +1,18 @@
 import { Tooltip } from "@mui/material";
+import { getBillSummaryRequest } from "api/billsApi";
 import copy from "assets/copy.svg";
 import download2 from "assets/download2.svg";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { handleError } from "utils/helpers";
 
-const billTitle = "Summary of “Secure the Border Act of 2023”";
-
-export function BillSummary() {
+export function BillSummary({
+  billId,
+  title,
+}: {
+  billId: string;
+  title: string;
+}) {
+  const [summary, setSummary] = useState<string>();
   const copyTooltipTimeoutRef = useRef<number>();
   const [showCopyTooltip, setShowCopyTooltip] = useState<boolean>(false);
 
@@ -35,6 +42,20 @@ export function BillSummary() {
       );
     }
   }
+
+  useLayoutEffect(() => {
+    if (billId) {
+      getBillSummaryRequest({
+        bill_id: billId,
+        version: "1",
+        state: "Texas",
+      })
+        .then((res) => {
+          setSummary(res.data.summary);
+        })
+        .catch(handleError);
+    }
+  }, [billId]);
 
   useEffect(() => {
     if (showCopyTooltip)
@@ -72,7 +93,7 @@ export function BillSummary() {
           id="download-bill-summary"
           className="row items-center gap-1 cursor-pointer"
           href=""
-          download={`${billTitle} summary.txt`}
+          download={`${title} summary.txt`}
           onClick={onClickDownload}
         >
           <img src={download2} className="w-4 h-4" />
@@ -81,32 +102,12 @@ export function BillSummary() {
       </div>
 
       <article>
-        <h2 className="text-black">{billTitle}</h2>
+        <h2 className="text-black">{title}</h2>
         <p
           id="bill-summary"
           className="text-neutral500 my-6 whitespace-pre-line"
         >
-          Donec sed tellus ut risus ultrices condimentum. Vestibulum at ipsum
-          blandit, posuere enim at, pharetra ex. Aenean nec leo sapien.
-          Vestibulum in mattis ipsum, ut condimentum turpis. Mauris lorem dolor,
-          scelerisque a nisl in, malesuada sagittis risus. Duis mauris ex,
-          malesuada id purus at, venenatis euismod libero. Praesent fringilla
-          porta semper. Duis interdum dolor magna, tempus vulputate tortor
-          pharetra sed. Cras non sem dolor.&#10;&#13;&#10;&#13; 1. Maecenas
-          dapibus, arcu at fringillaornare&#10;&#13; 2. est libero viverra dui,
-          quis imperdiet sem ex ac lectus&#10;&#13; 3. Suspendisse auctor
-          interdum finibus. Nunc varius aliquam metus&#10;&#13; 4. id tincidunt
-          dolor ornare at. Donec ut massa ut&#10;&#13; 5. libero congue
-          consectetur&#10;&#13;&#10;&#13; Sed id augue felis. Morbi nec ultrices
-          dolor, a hendrerit tellus. Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Nulla erat metus, vestibulum sit amet porttitor eget,
-          suscipit rhoncus velit. Vestibulum semper tincidunt eleifend. Aliquam
-          blandit ipsum leo, suscipit tincidunt erat volutpat eu. Integer ut
-          porta est. Nam vestibulum condimentum justo, eu hendrerit justo
-          pretium id. Duis eleifend felis quis nibh aliquam, ut hendrerit mi
-          sagittis. Suspendisse potenti. Morbi vitae lorem leo. Curabitur orci
-          ipsum, scelerisque a augue sit amet, laoreet eleifend metus. Ut sit
-          amet turpis ac lorem aliquam sagittis ut a tellus.
+          {summary}
         </p>
       </article>
     </div>

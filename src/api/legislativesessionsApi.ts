@@ -1,18 +1,18 @@
-// src/utils/api.ts
+
 
 import { AxiosResponse } from "axios";
 import { client } from "./client";
 import { endpoints } from "./endpoints";
 import { handleApiError } from "utils/helpers";
 
-// Import types from the types file
+
 import {
   TLegislativeSessionsParams,
   TGetLegislativeSessionsResponse,
   TGetJurisdictionsResponse
 } from "types/common.ts"; 
 
-// Existing function to fetch legislative sessions
+// function to fetch legislative sessions
 export const getLegislativeSessionsRequest = (
   params: TLegislativeSessionsParams
 ): Promise<AxiosResponse<TGetLegislativeSessionsResponse>> => {

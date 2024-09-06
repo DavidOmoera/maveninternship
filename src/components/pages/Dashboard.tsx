@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   List,
   ListItem,
@@ -40,11 +40,13 @@ import { PageContainer } from "components/templates/PageContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { BillCard } from "components/organisms/BillCard.tsx";
-import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { handleError, useAppDispatch, useAppSelector } from "utils/helpers";
 import { billsSelector } from "store/slices/bill/selectors";
 import { getBills } from "store/slices/bill/thunks";
 import dayjs from "dayjs";
 import classNames from "classnames";
+import { TBill, TBillChamber, TBillStatus, TBillType } from "types/common";
+import { searchBillsRequest } from "api/billsApi";
 
 const stages = [
   "Filed",
@@ -70,8 +72,7 @@ type TBillSearchForm = {
   year: string;
 }>;
 
-const isSearching = false;
-const searchResultsCount = 205;
+const jurisdiction = "Texas";
 
 export const Dashboard: React.FC = () => {
   const [openBillStatusDialog, setOpenBillStatusDialog] = useState(false);
@@ -86,14 +87,28 @@ export const Dashboard: React.FC = () => {
   const watchedBills = useSelector(
     (state: RootState) => state.watchedBills.watchedBills
   );
+  const [billsSearchResults, setBillsSearchResults] = useState<TBill[]>();
 
-  const { control, handleSubmit } = useForm<TBillSearchForm>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid: billSearchFormIsValid },
+    watch: watchBillsForm,
+  } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
   });
+
+  const billsSearchValue = watchBillsForm("searchValue");
 
   const { control: watchedBillsControl } = useForm<TBillSearchForm>({
     resolver: yupResolver(billSearchSchema),
   });
+
+  const billsToView = useMemo(
+    () =>
+      billsSearchValue && billsSearchResults ? billsSearchResults ?? [] : bills,
+    [bills, billsSearchResults, billsSearchValue]
+  );
 
   const updates = [
     {
@@ -137,7 +152,11 @@ export const Dashboard: React.FC = () => {
     );
   };
 
-  function onClickBill() {
+  function onClickBill(bill: TBill) {
+    navigate(Routes.DetailsOfBill, { state: { bill } });
+  }
+
+  function onClickWatchedBill() {
     navigate(Routes.DetailsOfBill);
   }
 
@@ -168,8 +187,29 @@ export const Dashboard: React.FC = () => {
   const onSearchBill: SubmitHandler<TBillSearchForm> = (
     formData: TBillSearchForm
   ) => {
-    console.log("search form data", formData);
+    const { searchValue, chamber, billStatus, billType } = formData;
+    if (billSearchFormIsValid) {
+      searchBillsRequest({
+        search_term: searchValue,
+        chamber: chamber as TBillChamber,
+        status: [billStatus as TBillStatus],
+        bill_type: billType as TBillType,
+        jurisdiction: [jurisdiction],
+      })
+        .then((res) => {
+          setBillsSearchResults(res.data.items);
+        })
+        .catch((e) => {
+          setBillsSearchResults([]);
+          handleError(e);
+        });
+    }
   };
+
+  useEffect(() => {
+    // If user clears search, clear their search results
+    if (!billsSearchValue) setBillsSearchResults(undefined);
+  }, [billsSearchValue]);
 
   useEffect(() => {
     if (location.pathname) window.scrollTo(0, 0);
@@ -187,17 +227,16 @@ export const Dashboard: React.FC = () => {
           {/* Search and Filter Section */}
           <section className="p-9 bg-white rounded-xl">
             <div>
-              {isSearching ? (
+              {billsSearchValue ? (
                 <>
                   <h3 className="text-primary font-normal text-2xl pb-2">
                     Search for:&nbsp;
                     <span className="text-blue-700 font-extrabold">
-                      Secure Border Act
+                      {billsSearchValue}
                     </span>
                   </h3>
                   <p className="pb-6 font-normal">
-                    in <span className="font-bold">Texas</span> &{" "}
-                    <span className="font-bold">Colorado</span>
+                    in <span className="font-bold">{jurisdiction}</span>
                   </p>
                 </>
               ) : (
@@ -256,37 +295,45 @@ export const Dashboard: React.FC = () => {
               />
             </div>
 
-            {isSearching && (
+            {billsSearchResults && billsSearchValue && (
               <div className="lg:flex gap-2 block mt-8">
-                <h4 className="text-neutral950">{searchResultsCount}</h4>
+                <h4 className="text-neutral950">{billsSearchResults.length}</h4>
                 <span className="text-neutral950 text-xl">Results found</span>
               </div>
             )}
             {/** All bills */}
             <div
               className={classNames("row gap-5 flex-wrap", {
-                "mt-8": !isSearching,
+                "mt-8": !billsSearchResults,
               })}
             >
-              {bills.slice(0, 6).map((bill) => {
+              {billsToView.slice(0, 6).map((bill) => {
                 const lastActionDate = bill.latest_action_date as string;
 
                 // First part of the date is year
                 const year =
                   lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
-                const author = bill.contributors[0];
-                const coAuthorImages = bill.contributors.map(
+                const author = bill.contributors.find(
+                  (contributor) => contributor.classification === "author"
+                );
+                const coAuthors = bill.contributors.filter(
+                  (contributor) => contributor.classification === "coauthor"
+                );
+                const sponsors = bill.contributors.filter(
+                  (contributor) => contributor.classification === "sponsor"
+                );
+                const coAuthorImages = coAuthors.map(
                   (contributor) => contributor.image
                 );
-                const coAuthorsCount = bill.contributors.length - 1;
-                const supportersCount = 0;
+                const coAuthorsCount = coAuthors.length;
+                const supportersCount = sponsors.length;
                 const relativeTime = dayjs(bill.latest_action_date).fromNow();
 
                 return (
                   <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
                     <BillCard
                       id={bill.id}
-                      onClick={onClickBill}
+                      onClick={() => onClickBill(bill)}
                       isListView={false}
                       title={bill.title}
                       description={bill.summary}
@@ -294,8 +341,8 @@ export const Dashboard: React.FC = () => {
                       chamber="House"
                       year={Number(year)}
                       relativeTime={relativeTime}
-                      name={author.name}
-                      image={author.image}
+                      name={author?.name as string}
+                      image={author?.image as string}
                       coAuthor1={coAuthorImages[1]}
                       coAuthor2={coAuthorImages[2]}
                       coAuthor3={coAuthorImages[3]}
@@ -396,7 +443,7 @@ export const Dashboard: React.FC = () => {
               {watchedBills.map((bill) => (
                 <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
                   <BillCard
-                    onClick={onClickBill}
+                    onClick={onClickWatchedBill}
                     isListView={false}
                     coAuthor1={bill.coAuthor1 as string}
                     coAuthor2={bill.coAuthor2 as string}
