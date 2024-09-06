@@ -3,66 +3,88 @@ import CloseIcon from "assets/start.svg";
 import SettingsIcon from "assets/setting-notif.svg";
 import SenMat from "assets/sen-adams.svg";
 import { Pill } from "components/molecules/Pill";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { getNotifications } from "store/slices/notification/thunks";
+import {
+  getNotificationsSelector,
+  getNotificationsLoadingSelector,
+  getNotificationsErrorSelector,
+} from "store/slices/notification/selectors";
 
-interface NotificationItems {
-  title: string;
-  status: string;
-  time: string;
-}
+// interface NotificationItems {
+//   title: string;
+//   status: string;
+//   time: string;
+// }
 
-const notifications: NotificationItems[] = [
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "Level 1",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has been Rejected",
-    status: "Rejected",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Signing",
-    status: "Signing",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced been Passed",
-    status: "Passed",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 2",
-    status: "Level 2",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "Level 1",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "Level 1",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "Level 1",
-    time: "2w ago",
-  },
-];
+// const notifications: NotificationItems[] = [
+//   {
+//     title: "Secure the Border Act of 2023 has commenced to Level 1",
+//     status: "Level 1",
+//     time: "2w ago",
+//   },
+//   {
+//     title: "Secure the Border Act of 2023 has been Rejected",
+//     status: "Rejected",
+//     time: "2w ago",
+//   },
+//   {
+//     title: "Secure the Border Act of 2023 has commenced to Signing",
+//     status: "Signing",
+//     time: "2w ago",
+//   },
+//   {
+//     title: "Secure the Border Act of 2023 has commenced been Passed",
+//     status: "Passed",
+//     time: "2w ago",
+//   },
+//   {
+//     title: "Secure the Border Act of 2023 has commenced to Level 2",
+//     status: "Level 2",
+//     time: "2w ago",
+//   },
+//   {
+//     title: "Secure the Border Act of 2023 has commenced to Level 1",
+//     status: "Level 1",
+//     time: "2w ago",
+//   },
+//   {
+//     title: "Secure the Border Act of 2023 has commenced to Level 1",
+//     status: "Level 1",
+//     time: "2w ago",
+//   },
+//   {
+//     title: "Secure the Border Act of 2023 has commenced to Level 1",
+//     status: "Level 1",
+//     time: "2w ago",
+//   },
+// ];
 
 type TNotificationsProps = {
   open: boolean;
   onClose: () => void;
   onClickSettings: () => void;
+  userId: string;
 };
+
 export function Notifications({
   open,
   onClose,
   onClickSettings,
+  userId,
 }: TNotificationsProps) {
+  const dispatch = useAppDispatch();
+  const notifications = useAppSelector(getNotificationsSelector);
+  const loading = useAppSelector(getNotificationsLoadingSelector);
+  const error = useAppSelector(getNotificationsErrorSelector);
+
+  useEffect(() => {
+    if (open) {
+      dispatch(getNotifications(userId));
+    }
+  }, [open, dispatch, userId]);
+
   return (
     <Dialog open={open} onClose={onClose}>
       <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg overflow-scroll no-scrollbar">
@@ -89,6 +111,8 @@ export function Notifications({
         </div>
         <hr className="mb-4" />
         <ul>
+          {loading && <li>Loading...</li>}
+          {error && <li>Error loading notifications</li>}
           {notifications.map((notification, index) => (
             <li
               key={index}
@@ -136,7 +160,9 @@ export function Notifications({
                   <span className="text-gray-600 text-xs">Sen. Mat Adams</span>
                 </div>
               </div>
-              <span className="text-gray-500 text-xs">{notification.time}</span>
+              <span className="text-gray-500 text-xs">
+                {new Date(notification.created_at).toLocaleString()}
+              </span>
             </li>
           ))}
         </ul>

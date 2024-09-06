@@ -258,13 +258,13 @@ export type BrowserStorageOptions = {
 };
 
 //notifications
-export type TNotifications = Partial<{
+export type TNotifications = {
   message: string;
   id: number;
   user_id: number;
   status: string;
   created_at: Date | string;
-}>;
+};
 
 export type NotificationsState = {
   notifications: TNotifications[];

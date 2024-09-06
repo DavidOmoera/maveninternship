@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { client } from "./client";
 import { endpoints } from "./endpoints";
-import { TGetBillsResponse, TNotifications } from "types/common";
+import { TNotifications } from "types/common";
 
 export const createNotificationRequest = (): Promise<
   AxiosResponse<TNotifications>
@@ -9,19 +9,19 @@ export const createNotificationRequest = (): Promise<
 
 export const getNotificationsRequest = (
   user_id: string
-): Promise<AxiosResponse<TNotifications>> =>
+): Promise<AxiosResponse<TNotifications[]>> =>
   client.get(endpoints.notifications.getNotifications(user_id));
 
 export const updateNotificationStatusRequest = (
   notification_id: string
-): Promise<AxiosResponse<TGetBillsResponse>> =>
+): Promise<AxiosResponse<TNotifications>> =>
   client.get(endpoints.notifications.updateNotificationStatus(notification_id));
 
 export const createNotificationStatusRequest = (): Promise<
-  AxiosResponse<TGetBillsResponse>
+  AxiosResponse<TNotifications>
 > => client.get(endpoints.notifications.createNotificationSettings());
 
 export const updateNotificationSettingsRequest = (
   user_id: string
-): Promise<AxiosResponse<TGetBillsResponse>> =>
+): Promise<AxiosResponse<TNotifications>> =>
   client.get(endpoints.notifications.updateNotificationSettings(user_id));
