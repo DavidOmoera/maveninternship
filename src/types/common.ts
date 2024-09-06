@@ -1,5 +1,6 @@
 import { store } from "store";
 import { AxiosInstance } from "axios";
+import { ReactNode } from "react";
 
 export type Representative = {
   image: string;
@@ -177,10 +178,10 @@ export type TUserParams = Partial<{
 
 export type TSearchUsersParams = Partial<
   TGetBillsParams &
-    TUserParams & {
-      account_class: string;
-      subscription_plan: string;
-    }
+  TUserParams & {
+    account_class: string;
+    subscription_plan: string;
+  }
 >;
 
 export type TOrganizationParams = Partial<{
@@ -275,3 +276,47 @@ export enum BrowserStorageKeys {
 export type BrowserStorageOptions = {
   session: boolean;
 };
+export type Committee = {
+  createdAt: string;
+  updatedAt: string;
+  extras: Record<string, string>;
+
+  name: string;
+  classification: string;
+  jurisdictionId: string;
+  parentId: string;
+  links: string[];
+  sources: string[];  
+  otherNames: string[];
+  id: string;
+}
+
+export type CommitteeMembership = {
+  representative_id: number;
+  committee_id: string;
+  start_date: ReactNode;
+  end_date: string;
+  createdAt: string;
+  updatedAt: string;
+  extras: Record<string, string>;
+
+  personName: string;
+  role: string;
+  startDate: string;
+  endDate: string;
+  organizationId: string;
+  personId: string;
+  postId: string;
+  id: string;
+}
+
+export type TGetCommitteesResponse = {
+  committees: Committee[];
+  total: number;
+};
+
+
+export type TGetCommitteeResponse = Committee;
+
+
+export type TGetCommitteeMembershipsResponse = CommitteeMembership[];
