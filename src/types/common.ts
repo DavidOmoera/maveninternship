@@ -214,27 +214,13 @@ export type TVerifyEmailRequestBody = {
 };
 
 export type THelpAndSupportForm = {
-  issues: [
-    string
-  ];
-  duration: string;
-  learn_more: boolean;
-  id: number;
-  user_id: number;
-  submitted_at: Date;
-  // message type
-  message: string;
-  detail?: [
-    {
-      loc: [ 
-        string, 
-        number
-      ],
-      message: string,
-      type: string
-    }
-  ]
-};
+    first_name: string;
+    last_name: string;
+    company_name?: string;
+    email_address: string;
+    issue?: string;
+    message: string;
+  };
 
 export type TLegislativeSessionsParams = {
   jurisdiction: string;
