@@ -89,7 +89,7 @@ export type TBillContributor = {
   entity_type: string;
   title: string;
   primary: boolean;
-  classification: string;
+  classification: "author" | "coauthor" | "sponsor";
 };
 
 export type TBill = {
@@ -102,6 +102,25 @@ export type TBill = {
   contributors: TBillContributor[];
 };
 
+export type TBillVotesParams = { bill_id: string; limit?: number };
+export type TBillVotesResponse = {
+  votes_for: number;
+  votes_against: number;
+  abstained: number;
+};
+
+export type TBillSummaryParams = {
+  bill_id: string;
+  version: string;
+  state: string;
+};
+
+export type TBillSummaryResponse = {
+  bill_id: string;
+  version: string;
+  summary: string;
+};
+
 export type TUpdateUserRequestBody = {
   email: string;
   first_name: string;
@@ -109,25 +128,25 @@ export type TUpdateUserRequestBody = {
   phone_number: string;
 };
 
-type TBillStatus = "Introduced" | "Enrolled" | "Passed";
-type TBillChamber = "House" | "Senate";
+export type TBillStatus = "Introduced" | "Enrolled" | "Passed";
+export type TBillChamber = "House" | "Senate";
+export type TBillType = "resolution" | "bill";
 
 export type TGetBillsParams = Partial<{
   page: number;
   size: number;
 }>;
 
-export type TSearchBillsParams = Partial<
-  TGetBillsParams & {
+export type TSearchBillsParams = TGetBillsParams &
+  Partial<{
     search_term: string;
     identifier: string;
-    bill_type: string;
+    bill_type: TBillType;
     status: TBillStatus[];
     sessions: string[];
     jurisdiction: string[];
     chamber: TBillChamber;
-  }
->;
+  }>;
 
 export type TGetBillsResponse = {
   items: TBill[];

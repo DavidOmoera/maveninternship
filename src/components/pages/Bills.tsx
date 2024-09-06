@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/atoms/Button";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -12,10 +12,12 @@ import gridIcon from "assets/grid.svg";
 import listIcon from "assets/listView.svg";
 import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes";
-import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { handleError, useAppDispatch, useAppSelector } from "utils/helpers";
 import { billsSelector } from "store/slices/bill/selectors";
 import { getBills } from "store/slices/bill/thunks";
 import dayjs from "dayjs";
+import { searchBillsRequest } from "api/billsApi";
+import { TBill, TBillChamber, TBillStatus, TBillType } from "types/common";
 
 interface TBillSearchForm {
   searchValue: string;
@@ -34,19 +36,47 @@ const pills = [
   { firstText: "Immigration", secondText: "(3)" },
 ];
 
-const isSearching = false;
-const searchResultsCount = 205;
+const jurisdiction = "Texas";
 
 export const Bills: React.FC = () => {
   const dispatch = useAppDispatch();
   const { bills } = useAppSelector(billsSelector);
-  const { control, handleSubmit } = useForm<TBillSearchForm>();
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { isValid },
+  } = useForm<TBillSearchForm>();
   const navigate = useNavigate();
+  const searchValue = watch("searchValue");
+  const [searchResults, setSearchResults] = useState<TBill[]>();
 
   const [isGridView, setIsGridView] = useState(true);
 
+  const billsToView = useMemo(
+    () => (searchValue && searchResults ? searchResults ?? [] : bills),
+    [bills, searchResults, searchValue]
+  );
+
   const onSearchBill: SubmitHandler<TBillSearchForm> = (formData) => {
     console.log("search form data", formData);
+    const { searchValue, chamber, billStatus, billType } = formData;
+    if (isValid) {
+      searchBillsRequest({
+        search_term: searchValue,
+        chamber: chamber as TBillChamber,
+        status: [billStatus as TBillStatus],
+        bill_type: billType as TBillType,
+        jurisdiction: [jurisdiction],
+      })
+        .then((res) => {
+          setSearchResults(res.data.items);
+        })
+        .catch((e) => {
+          setSearchResults([]);
+          handleError(e);
+        });
+    }
   };
 
   const handleOpenBillStatusDialog = () => {
@@ -62,23 +92,27 @@ export const Bills: React.FC = () => {
   };
 
   useEffect(() => {
+    // If user clears search, clear their search results
+    if (!searchValue) setSearchResults(undefined);
+  }, [searchValue]);
+
+  useEffect(() => {
     dispatch(getBills({ page: 1, size: 50 }));
   }, [dispatch]);
 
   return (
     <PageContainer title="Bills">
       <div className="p-9 bg-white rounded-xl mx-9">
-        {isSearching ? (
+        {searchValue ? (
           <>
             <h3 className="text-primary font-normal text-2xl pb-2">
               Search for:&nbsp;
               <span className="text-blue-700 font-extrabold">
-                Secure Border Act
+                {searchValue}
               </span>
             </h3>
             <p className="pb-6 font-normal">
-              in <span className="font-bold">Texas</span> &{" "}
-              <span className="font-bold">Colorado</span>
+              in <span className="font-bold">{jurisdiction}</span>
             </p>
           </>
         ) : (
@@ -137,9 +171,9 @@ export const Bills: React.FC = () => {
         <div className="flex flex-col space-y-4">
           {/* Search results */}
           <div className="row justify-between my-9">
-            {isSearching ? (
+            {searchResults && searchValue ? (
               <div className="lg:flex gap-2 block">
-                <h4 className="text-neutral950">{searchResultsCount}</h4>
+                <h4 className="text-neutral950">{searchResults.length}</h4>
                 <span className="text-neutral950 text-xl">Results found</span>
               </div>
             ) : (
@@ -167,7 +201,7 @@ export const Bills: React.FC = () => {
           </div>
 
           {/** Pills */}
-          {isSearching && (
+          {searchResults && searchValue && (
             <div className="row gap-2 flex-wrap">
               {pills.map((pill) => (
                 <Pill
@@ -197,7 +231,7 @@ export const Bills: React.FC = () => {
 
           {/* BillCard */}
           <div className={`${isGridView ? "row gap-5 flex-wrap mt-8" : "col"}`}>
-            {bills.map((bill) => {
+            {billsToView.map((bill) => {
               const lastActionDate = bill.latest_action_date as string;
 
               // First part of the date is year
