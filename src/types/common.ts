@@ -157,8 +157,15 @@ export type TGetBillsResponse = {
   pages: number;
 };
 
+export type TActivityParams = Partial<{
+  search_term?: string;
+  skip: number;
+  limit: number;
+}>;
+
 export type TActivityLogs = Partial<{
   activity_type: string;
+  tag: string;
   description: string;
   user_id: number;
   id: number;
@@ -167,8 +174,9 @@ export type TActivityLogs = Partial<{
 
 export type ActivityState = Partial<{
   activities: TActivityLogs[];
-  activitiesLoading: boolean;
-  activitiesError: string | null;
+  searchResults: TActivityLogs[];
+  loading: boolean;
+  error: string | null;
 }>;
 
 export type TUserParams = Partial<{
@@ -178,10 +186,10 @@ export type TUserParams = Partial<{
 
 export type TSearchUsersParams = Partial<
   TGetBillsParams &
-  TUserParams & {
-    account_class: string;
-    subscription_plan: string;
-  }
+    TUserParams & {
+      account_class: string;
+      subscription_plan: string;
+    }
 >;
 
 export type TOrganizationParams = Partial<{
@@ -286,6 +294,14 @@ export type TNotifications = {
   created_at: Date | string;
 };
 
+export type TNotificationsSettings = Partial<{
+  notification_type: "email";
+  frequency: "string";
+  disabled: boolean;
+  id?: number;
+  user_id?: number;
+}>;
+
 export type NotificationsState = {
   notifications: TNotifications[];
   loading: boolean;
@@ -302,10 +318,10 @@ export type Committee = {
   jurisdictionId: string;
   parentId: string;
   links: string[];
-  sources: string[];  
+  sources: string[];
   otherNames: string[];
   id: string;
-}
+};
 
 export type CommitteeMembership = {
   representative_id: number;
@@ -324,7 +340,7 @@ export type CommitteeMembership = {
   personId: string;
   postId: string;
   id: string;
-}
+};
 
 export type TGetCommitteesResponse = {
   committees: Committee[];
@@ -334,4 +350,3 @@ export type TGetCommitteesResponse = {
 export type TGetCommitteeResponse = Committee;
 
 export type TGetCommitteeMembershipsResponse = CommitteeMembership[];
-

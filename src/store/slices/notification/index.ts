@@ -57,12 +57,14 @@ const notificationSlice = createSlice({
       })
       .addCase(updateNotificationStatus.fulfilled, (state, action) => {
         state.loading = false;
+        const notificationId = Number(action.meta.arg);
         state.notifications = state.notifications.map((notification) =>
-          notification.id === Number(action.meta.arg)
+          notification.id === notificationId
             ? { ...notification, status: action.payload.status }
             : notification
         );
       })
+
       .addCase(updateNotificationStatus.rejected, (state, action) => {
         state.loading = false;
         state.error =

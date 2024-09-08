@@ -17,7 +17,7 @@ export const createNotification = createAsyncThunk(
 
 export const getNotifications = createAsyncThunk(
   "notifications/getNotifications",
-  async (user_id: string) => {
+  async (user_id: number) => {
     try {
       const response = await notificationsApi.getNotificationsRequest(user_id);
       return response.data;
@@ -30,7 +30,7 @@ export const getNotifications = createAsyncThunk(
 
 export const updateNotificationStatus = createAsyncThunk(
   "notifications/updateNotificationStatus",
-  async (notification_id: string) => {
+  async (notification_id: number) => {
     try {
       const response = await notificationsApi.updateNotificationStatusRequest(
         notification_id
@@ -47,7 +47,8 @@ export const createNotificationSettings = createAsyncThunk(
   "notifications/createNotificationSettings",
   async () => {
     try {
-      const response = await notificationsApi.createNotificationStatusRequest();
+      const response =
+        await notificationsApi.createNotificationSettingsRequest();
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -58,7 +59,7 @@ export const createNotificationSettings = createAsyncThunk(
 
 export const updateNotificationSettings = createAsyncThunk(
   "notifications/updateNotificationSettings",
-  async (user_id: string) => {
+  async (user_id: number) => {
     try {
       const response = await notificationsApi.updateNotificationSettingsRequest(
         user_id

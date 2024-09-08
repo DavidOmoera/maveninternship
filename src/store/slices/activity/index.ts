@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ActivityState } from "types/common";
-import { getActivityLogs } from "./thunks";
+import { getActivityLogs, searchActivityLogs } from "./thunks";
 import { TActivityLogs } from "types/common";
 
 const initialState: ActivityState = {
   activities: [],
-  activitiesLoading: false,
-  activitiesError: null,
+  searchResults: [],
+  loading: false,
+  error: null,
 };
 
 const activitySlice = createSlice({
@@ -20,18 +21,30 @@ const activitySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getActivityLogs.pending, (state) => {
-      state.activitiesLoading = true;
-      state.activitiesError = null;
+      state.loading = true;
+      state.error = null;
     });
     builder.addCase(getActivityLogs.fulfilled, (state, action) => {
-      state.activitiesLoading = false;
+      state.loading = false;
       state.activities = action.payload;
-      state.activitiesError = null;
+      state.error = null;
     });
-    builder.addCase(getActivityLogs.rejected, (state, action) => {
-      state.activitiesLoading = false;
-      state.activitiesError = action.error.message;
-    });
+    builder
+      .addCase(getActivityLogs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(searchActivityLogs.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(searchActivityLogs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.searchResults = action.payload;
+      })
+      .addCase(searchActivityLogs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || null;
+      });
   },
 });
 

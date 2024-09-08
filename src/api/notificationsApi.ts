@@ -1,27 +1,27 @@
 import { AxiosResponse } from "axios";
 import { client } from "./client";
 import { endpoints } from "./endpoints";
-import { TNotifications } from "types/common";
+import { TNotifications, TNotificationsSettings } from "types/common";
 
 export const createNotificationRequest = (): Promise<
   AxiosResponse<TNotifications>
-> => client.get(endpoints.notifications.createNotification());
+> => client.post(endpoints.notifications.createNotification());
 
 export const getNotificationsRequest = (
-  user_id: string
+  user_id: number
 ): Promise<AxiosResponse<TNotifications[]>> =>
   client.get(endpoints.notifications.getNotifications(user_id));
 
 export const updateNotificationStatusRequest = (
-  notification_id: string
+  notification_id: number
 ): Promise<AxiosResponse<TNotifications>> =>
-  client.get(endpoints.notifications.updateNotificationStatus(notification_id));
+  client.put(endpoints.notifications.updateNotificationStatus(notification_id));
 
-export const createNotificationStatusRequest = (): Promise<
-  AxiosResponse<TNotifications>
-> => client.get(endpoints.notifications.createNotificationSettings());
+export const createNotificationSettingsRequest = (): Promise<
+  AxiosResponse<TNotificationsSettings>
+> => client.post(endpoints.notifications.createNotificationSettings());
 
 export const updateNotificationSettingsRequest = (
-  user_id: string
-): Promise<AxiosResponse<TNotifications>> =>
-  client.get(endpoints.notifications.updateNotificationSettings(user_id));
+  user_id: number
+): Promise<AxiosResponse<TNotificationsSettings>> =>
+  client.put(endpoints.notifications.updateNotificationSettings(user_id));
