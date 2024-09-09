@@ -85,14 +85,7 @@ export const endpoints = {
     getPlans: (): string => `/subscription_plans`,
   },
   committees: {
-    getCommittees: (
-      jurisdiction?: string,
-      skip: number = 0,
-      limit: number = 10
-    ): string =>
-      `/committees?jurisdiction=${
-        jurisdiction || ""
-      }&skip=${skip}&limit=${limit}`,
+    getCommittees: () => "/committees/",
     getCommittee: (committeeId: string): string => `/committees/${committeeId}`,
     getCommitteeMemberships: (committeeId: string): string =>
       `/committees/${committeeId}/memberships`,

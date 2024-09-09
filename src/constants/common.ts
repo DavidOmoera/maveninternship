@@ -2329,3 +2329,4 @@ export const representatives: Representative[] = [
 export const allRepresentatives = [...senators, ...representatives];
 
 export const BILL_ID_PREFIX = "ocd-bill/";
+export const COMMITTEE_ID_PREFIX = "ocd-organization/";

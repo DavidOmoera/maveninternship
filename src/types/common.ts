@@ -344,17 +344,16 @@ export type NotificationsState = {
 };
 
 export type Committee = {
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
   extras: Record<string, string>;
-
   name: string;
   classification: string;
-  jurisdictionId: string;
-  parentId: string;
+  jurisdiction_id: string;
+  parent_id: string;
   links: string[];
   sources: string[];
-  otherNames: string[];
+  other_names: string[];
   id: string;
 };
 
@@ -377,10 +376,13 @@ export type CommitteeMembership = {
   id: string;
 };
 
-export type TGetCommitteesResponse = {
-  committees: Committee[];
-  total: number;
-};
+export type TGetCommitteesRequestParams = Partial<{
+  jurisdiction: string;
+  skip: number;
+  limit: number;
+}>;
+
+export type TGetCommitteesResponse = Committee[];
 
 export type TGetCommitteeResponse = Committee;
 
