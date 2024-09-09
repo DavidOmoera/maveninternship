@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { activitySearchSchema } from "constants/schemas";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import SearchIcon from "@mui/icons-material/Search";
-import { colors } from "constants/common";
+import { ACTIVITY_TYPE_PROPERTIES, colors } from "constants/common";
 import { PageContainer } from "components/templates/PageContainer";
 import { Pill } from "components/molecules/Pill";
 import dayjs from "dayjs";
@@ -16,6 +16,7 @@ import {
   activityError,
   activityLoading,
   getActivitySelector,
+  getUserIdSelector,
 } from "store/slices/activity/selectors";
 import { useAppDispatch, useAppSelector } from "utils/helpers";
 
@@ -52,16 +53,27 @@ type TActivitySearchForm = Partial<{
   noOfDays: string;
 }>;
 
+function getActivityProperties(activityType: string) {
+  return (
+    ACTIVITY_TYPE_PROPERTIES[activityType] || {
+      icon: "",
+      iconBackgroundColor: "",
+    }
+  );
+}
 export function ActivityFeed() {
   const dispatch = useAppDispatch();
 
+  const userId = useAppSelector(getUserIdSelector);
   const activities = useAppSelector(getActivitySelector) || [];
   const isLoading = useAppSelector(activityLoading);
   const error = useAppSelector(activityError);
 
   useEffect(() => {
-    dispatch(getActivityLogs({ user_id: 1 }));
-  }, [dispatch]);
+    if (userId) {
+      dispatch(getActivityLogs({ user_id: userId }));
+    }
+  }, [dispatch, userId]);
 
   const {
     control: activityControl,
@@ -89,21 +101,33 @@ export function ActivityFeed() {
     });
 
     return searchObjects(
-      filteredActivities.map((activity) => ({
-        activity_type: activity.activity_type ?? "",
-        description: activity.description ?? "",
-        user_id: (activity.user_id ?? "").toString(),
-        id: (activity.id ?? "").toString(),
-        timestamp: (activity.timestamp ?? "").toString(),
-      })),
+      filteredActivities.map((activity) => {
+        const { icon, iconBackgroundColor } = getActivityProperties(
+          activity.activity_type ?? ""
+        );
+
+        return {
+          activity_type: activity.activity_type ?? "",
+          description: activity.description ?? "",
+          user_id: (activity.user_id ?? "").toString(),
+          id: (activity.id ?? "").toString(),
+          timestamp: (activity.timestamp ?? "").toString(),
+          icon,
+          iconBackgroundColor,
+          tag: activity.tag ?? "",
+        };
+      }),
       searchValue ?? "",
       ["activity_type", "description", "user_id", "id", "timestamp"]
     );
   }, [activities, noOfDays, selectedActivityType, searchValue]);
 
   return (
-    <PageContainer title="Activity Feed" className="w-full bg-gray-100 ">
-      <div className="mb-2 mx-9">
+    <PageContainer
+      title="Activity Feed"
+      className="w-full lg:min-w-[1150px] bg-gray-100 "
+    >
+      <div className="mb-2 mx-9 ">
         {isLoading && (
           <div className="text-blue-800">Loading activities...</div>
         )}
@@ -114,7 +138,7 @@ export function ActivityFeed() {
         )}
       </div>
 
-      <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl">
+      <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl min-h-[900px]">
         {/** Input fields */}
         <div className="row justify-between mb-9 flex-wrap gap-3">
           <div className="flex gap-3 w-full lg:w-fit">
@@ -152,9 +176,10 @@ export function ActivityFeed() {
                 timestamp,
                 activity_type,
                 description,
+                tag,
                 icon,
                 iconBackgroundColor,
-                link,
+                // link,
               },
               index
             ) => {
@@ -181,17 +206,17 @@ export function ActivityFeed() {
                           />
                         </div>
                         <span className=" text-gray-700 text-base font-semibold w-64 lg:w-fit">
-                          You{" "}
-                          <strong className="text-neutral-950">
+                          You
+                          <strong className="text-neutral-950 mx-1">
                             {activity_type}
-                          </strong>{" "}
+                          </strong>
                           {description}
                         </span>
                       </div>
 
-                      {link && (
+                      {tag && (
                         <Pill
-                          text={link}
+                          text={tag}
                           containerClassName="bg-blue-100 px-3 rounded-full"
                         />
                       )}

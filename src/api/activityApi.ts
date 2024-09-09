@@ -1,14 +1,15 @@
 import { AxiosResponse } from "axios";
 import { client } from "./client";
 import { endpoints } from "./endpoints";
-import { TActivityLogs, TGetBillsParams } from "types/common";
-
-export const postActivityLogRequest = (): Promise<
-  AxiosResponse<TActivityLogs>
-> => client.post(endpoints.activity.postActivity());
+import { TActivityLog, TActivityParams } from "types/common";
 
 export const getActivityLogRequest = (
   user_id: number,
-  params: TGetBillsParams
-): Promise<AxiosResponse<TActivityLogs>> =>
-  client.get(endpoints.activity.getActivity(user_id), { params });
+  params: TActivityParams
+): Promise<AxiosResponse<TActivityLog[]>> =>
+  client.get(endpoints.activity.getActivityLogs(user_id), { params });
+
+export const searchActivityLogRequest = (
+  params: TActivityParams
+): Promise<AxiosResponse<TActivityLog[]>> =>
+  client.get(endpoints.activity.searchActivity(), { params });

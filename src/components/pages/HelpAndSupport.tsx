@@ -51,7 +51,10 @@ export function HelpAndSupport() {
   }
 
   return (
-    <PageContainer title="Help & Support">
+    <PageContainer
+      title="Help & Support"
+      className="w-full lg:min-w-[1150px] bg-gray-100 "
+    >
       <div className="p-9 bg-white rounded-xl mx-9">
         <section className="w-full text-center h-[990px] lg:w-3/5 mx-auto p-9 sm:px-20 md:px-9 ">
           <article className="col gap-1">

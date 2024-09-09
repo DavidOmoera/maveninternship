@@ -1,7 +1,8 @@
 export const endpoints = {
   activity: {
-    postActivity: (): string => `/activity_logs`,
-    getActivity: (user_id: number) => `/activity_logs${user_id}`,
+    createActivity: (): string => `/activity_logs`,
+    getActivityLogs: (user_id: number) => `/activity_logs/${user_id}`,
+    searchActivity: () => `/search_activity_logs`,
   },
 
   admin: {
@@ -61,12 +62,16 @@ export const endpoints = {
   feedback: {
     getFeedback: (): string => `/feedback`,
   },
+
   notifications: {
-    getNotifications: (userId: string): string => `/notifications/${userId}`,
-    updateNotificationStatus: (notificationId: string): string =>
-      `/notifications/${notificationId}`,
-    updateNotificationSettings: (userId: string): string =>
-      `/notifications/notification-settings/${userId}`,
+    createNotification: (): string => `/notifications`,
+    getNotifications: (user_id: number): string => `/notifications/${user_id}`,
+    updateNotificationStatus: (notification_id: number): string =>
+      `/notifications/${notification_id}`,
+    createNotificationSettings: (): string =>
+      `/notifications/notification-settings`,
+    updateNotificationSettings: (user_id: number): string =>
+      `/notifications/notification-settings/${user_id}`,
   },
 
   legislativeSessions: {
@@ -80,9 +85,16 @@ export const endpoints = {
     getPlans: (): string => `/subscription_plans`,
   },
   committees: {
-    getCommittees: (jurisdiction?: string, skip: number = 0, limit: number = 10): string =>
-      `/committees?jurisdiction=${jurisdiction || ''}&skip=${skip}&limit=${limit}`,
+    getCommittees: (
+      jurisdiction?: string,
+      skip: number = 0,
+      limit: number = 10
+    ): string =>
+      `/committees?jurisdiction=${
+        jurisdiction || ""
+      }&skip=${skip}&limit=${limit}`,
     getCommittee: (committeeId: string): string => `/committees/${committeeId}`,
-    getCommitteeMemberships: (committeeId: string): string => `/committees/${committeeId}/memberships`,
+    getCommitteeMemberships: (committeeId: string): string =>
+      `/committees/${committeeId}/memberships`,
   },
 };

@@ -157,8 +157,15 @@ export type TGetBillsResponse = {
   pages: number;
 };
 
-export type TActivityLogs = Partial<{
+export type TActivityParams = Partial<{
+  search_term?: string;
+  skip: number;
+  limit: number;
+}>;
+
+export type TActivityLog = Partial<{
   activity_type: string;
+  tag: string;
   description: string;
   user_id: number;
   id: number;
@@ -166,9 +173,10 @@ export type TActivityLogs = Partial<{
 }>;
 
 export type ActivityState = Partial<{
-  activities: TActivityLogs[];
-  activitiesLoading: boolean;
-  activitiesError: string | null;
+  activities: TActivityLog[];
+  searchResults: TActivityLog[];
+  loading: boolean;
+  error: string | null;
 }>;
 
 export type TUserParams = Partial<{
@@ -178,10 +186,10 @@ export type TUserParams = Partial<{
 
 export type TSearchUsersParams = Partial<
   TGetBillsParams &
-  TUserParams & {
-    account_class: string;
-    subscription_plan: string;
-  }
+    TUserParams & {
+      account_class: string;
+      subscription_plan: string;
+    }
 >;
 
 export type TOrganizationParams = Partial<{
@@ -301,6 +309,30 @@ export enum BrowserStorageKeys {
 export type BrowserStorageOptions = {
   session: boolean;
 };
+
+//notifications
+export type TNotifications = {
+  message: string;
+  id: number;
+  user_id: number;
+  status: string;
+  created_at: Date | string;
+};
+
+export type TNotificationsSettings = Partial<{
+  notification_type: "email";
+  frequency: "string";
+  disabled: boolean;
+  id?: number;
+  user_id?: number;
+}>;
+
+export type NotificationsState = {
+  notifications: TNotifications[];
+  loading: boolean;
+  error: string | null;
+};
+
 export type Committee = {
   createdAt: string;
   updatedAt: string;
@@ -311,10 +343,10 @@ export type Committee = {
   jurisdictionId: string;
   parentId: string;
   links: string[];
-  sources: string[];  
+  sources: string[];
   otherNames: string[];
   id: string;
-}
+};
 
 export type CommitteeMembership = {
   representative_id: number;
@@ -333,15 +365,13 @@ export type CommitteeMembership = {
   personId: string;
   postId: string;
   id: string;
-}
+};
 
 export type TGetCommitteesResponse = {
   committees: Committee[];
   total: number;
 };
 
-
 export type TGetCommitteeResponse = Committee;
-
 
 export type TGetCommitteeMembershipsResponse = CommitteeMembership[];

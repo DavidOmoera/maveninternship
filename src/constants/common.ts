@@ -896,6 +896,31 @@ export const ACTIVITIES = [
     icon: minuscirlce,
   },
 ];
+export const ACTIVITY_TYPE_PROPERTIES: Record<
+  string,
+  { icon: string; iconBackgroundColor: string }
+> = {
+  Added: {
+    icon: archiveadd,
+    iconBackgroundColor: "#E9F3FF",
+  },
+  Removed: {
+    icon: archiveminus,
+    iconBackgroundColor: "#FDEAEC",
+  },
+  Edited: {
+    icon: useredit,
+    iconBackgroundColor: "#E1F8FD",
+  },
+  "Logged in": {
+    icon: login,
+    iconBackgroundColor: "#E4F9ED",
+  },
+  "Logged out": {
+    icon: logout,
+    iconBackgroundColor: "#FFEAF1",
+  },
+};
 
 export const REPRESENTATIVES = [
   {
