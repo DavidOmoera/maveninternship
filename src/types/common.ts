@@ -233,6 +233,31 @@ export type TVerifyEmailRequestBody = {
   code: string;
 };
 
+export type THelpAndSupportForm = {
+  first_name: string;
+  last_name: string;
+  company_name?: string;
+  email_address: string;
+  issue?: string;
+  message: string;
+};
+
+export type TCreateFeedbackRequestBody = {
+  issues: string[];
+  duration: string;
+  learn_more: boolean;
+  user_id: number;
+};
+
+export type TCreateFeedbackResponse = {
+  issues: string[];
+  duration: string;
+  learn_more: boolean;
+  id: number;
+  user_id: number;
+  submitted_at: string;
+};
+
 export type TLegislativeSessionsParams = {
   jurisdiction: string;
   skip?: number;
