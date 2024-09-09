@@ -204,17 +204,21 @@ const DetailsOfBill: React.FC = () => {
 
   useEffect(() => {
     if (bill_id) {
-      getBillVotesRequest({ bill_id }).then((res) => {
-        setVotesSummary(res.data);
-      });
+      getBillVotesRequest({ bill_id })
+        .then((res) => {
+          setVotesSummary(res.data);
+        })
+        .catch(() => {});
     }
   }, [bill_id]);
 
   useEffect(() => {
     if (bill_id) {
-      getBillVersionsRequest(bill_id).then((res) => {
-        setBillVersionsCount(res.data.length);
-      });
+      getBillVersionsRequest(bill_id)
+        .then((res) => {
+          setBillVersionsCount(res.data.length);
+        })
+        .catch(() => {});
     }
   }, [bill_id]);
 
