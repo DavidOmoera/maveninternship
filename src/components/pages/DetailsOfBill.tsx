@@ -110,7 +110,7 @@ const DetailsOfBill: React.FC = () => {
   );
 
   const [authorAvatar, setAuthorAvatar] = useState<string>(
-    billAuthor?.image as string
+    billAuthor?.image ?? ""
   );
   const [votesSummary, setVotesSummary] = useState<TBillVotesResponse>();
   const [billVersionsCount, setBillVersionsCount] = useState<number>();
@@ -272,54 +272,60 @@ const DetailsOfBill: React.FC = () => {
 
             <hr className="bg-neutral500 my-6" />
 
-            {/** Votes Summary */}
-            <div className="bg-gray-50 p-6 rounded-xl">
-              {votesSummary && (
-                <>
-                  <p className="text-5xl font-extrabold">{totalVoteCount}</p>
-                  <h6 className="text-sm text-neutral400 mt-1">
-                    Votes for bill:
-                  </h6>
-                  <div className="col gap-2 mt-5 mb-6">
-                    {VOTES_SUMMARY.map((vote) => (
-                      <div
-                        key={vote.key}
-                        className="row w-full justify-between items-center flex-wrap"
-                      >
-                        <div className="row gap-2 items-center flex-wrap">
-                          <div
-                            className="h-3 w-3 rounded-full border-2"
-                            style={{ borderColor: vote.iconColor }}
-                          />
-                          <p className="text-sm text-neutral950">{vote.key}</p>
+            {/* * Votes Summary and */}
+            {(votesSummary ?? billAuthor) && (
+              <div className="bg-gray-50 p-6 rounded-xl">
+                {votesSummary && (
+                  <>
+                    <p className="text-5xl font-extrabold">{totalVoteCount}</p>
+                    <h6 className="text-sm text-neutral400 mt-1">
+                      Votes for bill:
+                    </h6>
+                    <div className="col gap-2 mt-5 mb-6">
+                      {VOTES_SUMMARY.map((vote) => (
+                        <div
+                          key={vote.key}
+                          className="row w-full justify-between items-center flex-wrap"
+                        >
+                          <div className="row gap-2 items-center flex-wrap">
+                            <div
+                              className="h-3 w-3 rounded-full border-2"
+                              style={{ borderColor: vote.iconColor }}
+                            />
+                            <p className="text-sm text-neutral950">
+                              {vote.key}
+                            </p>
+                          </div>
+                          <h6 className="text-sm text-neutral950">
+                            {getVoteCountByType(votesSummary, vote.type)}
+                          </h6>
                         </div>
-                        <h6 className="text-sm text-neutral950">
-                          {getVoteCountByType(votesSummary, vote.type)}
-                        </h6>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
+                      ))}
+                    </div>
+                  </>
+                )}
 
-              <div>
-                <strong>Author:</strong>
-                <div className="flex items-center mt-3 py-2 bg-white">
-                  <img
-                    src={authorAvatar}
-                    alt="Author"
-                    className="w-10 h-10 rounded-full mr-3"
-                    onError={() => {
-                      setAuthorAvatar(defaultAvatar);
-                    }}
-                  />
+                {billAuthor?.name && (
                   <div>
-                    <p className="font-bold">{billAuthor?.name}</p>
-                    <p className="text-neutral600">{billAuthor?.title}</p>
+                    <strong>Author:</strong>
+                    <div className="flex items-center mt-3 py-2 bg-white">
+                      <img
+                        src={authorAvatar}
+                        alt="Author"
+                        className="w-10 h-10 rounded-full mr-3"
+                        onError={() => {
+                          setAuthorAvatar(defaultAvatar);
+                        }}
+                      />
+                      <div>
+                        <p className="font-bold">{billAuthor?.name}</p>
+                        <p className="text-neutral600">{billAuthor?.title}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
-            </div>
+            )}
           </div>
 
           {/* Main Tabs */}
