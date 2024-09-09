@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { Tabs } from "components/molecules/Tabs";
-import {
-  ABSTAINED_VOTERS,
-  colors,
-  NO_VOTERS,
-  YES_VOTERS,
-} from "constants/common";
+import { colors } from "constants/common";
 import classNames from "classnames";
 import { ArrowRight } from "assets/ArrowRight";
 import { Inbox } from "assets/Inbox";
@@ -13,6 +8,7 @@ import { Like } from "assets/Like";
 import { Dislike } from "assets/Dislike";
 import { LikeDislike } from "assets/LikeDislike";
 import { getTabSVGColor } from "utils/helpers";
+import { TBillVotesResponse, TVote } from "types/common";
 
 enum ETabs {
   ALL = "all",
@@ -23,12 +19,7 @@ enum ETabs {
 
 type TVotingSectionProps = {
   title: string;
-  voters: {
-    name: string;
-    designation: string;
-    dateVoted: string;
-    profilePicture: string;
-  }[];
+  voters: TVote[];
   className?: string;
 };
 
@@ -37,17 +28,17 @@ function VotingSection({ title, voters, className }: TVotingSectionProps) {
     <div className={classNames("col gap-3 bg-white", className)}>
       <h4 className="text-neutral950">{title}</h4>
       <div className="row flex-wrap gap-3">
-        {voters.map((voter) => (
+        {voters?.map((voter) => (
           <div
-            key={voter.name}
+            key={voter.voter_name}
             className="row justify-between items-center p-3 rounded-lg bg-grey flex-wrap"
           >
             <div className="gap-2 row items-center ">
-              <img src={voter.profilePicture} className="w-8 h-8" />
+              <img src={voter.image} className="w-8 h-8" />
               <div className="col text-start">
-                <h6 className="text-sm">{voter.name}</h6>
+                <h6 className="text-sm">{voter.voter_name}</h6>
                 <p className="text-neutral400">
-                  {voter.designation} &#183; {voter.dateVoted}
+                  {voter.role} &#183; {voter.date}
                 </p>
               </div>
             </div>
@@ -64,7 +55,14 @@ function VotingSection({ title, voters, className }: TVotingSectionProps) {
   );
 }
 
-export function Voting() {
+export function Voting(props: TBillVotesResponse) {
+  const {
+    voters,
+    votes_against = 0,
+    votes_for = 0,
+    abstained = 0,
+  } = props ?? {};
+
   const [activeTab, setActiveTab] = useState<ETabs>(ETabs.ALL);
 
   function onChangeTab(value: string) {
@@ -98,16 +96,16 @@ export function Voting() {
 
   const VOTING_SECTIONS = [
     {
-      title: `Voted Yes (${YES_VOTERS.length})`,
-      voters: YES_VOTERS,
+      title: `Voted Yes (${votes_for})`,
+      voters: voters?.voted_yes,
     },
     {
-      title: `Voted No (${NO_VOTERS.length})`,
-      voters: NO_VOTERS,
+      title: `Voted No (${votes_against})`,
+      voters: voters?.voted_no,
     },
     {
-      title: `Abstained (${ABSTAINED_VOTERS.length})`,
-      voters: ABSTAINED_VOTERS,
+      title: `Abstained (${abstained})`,
+      voters: voters?.abstained,
     },
   ];
 
@@ -138,22 +136,22 @@ export function Voting() {
       ) : null}
       {activeTab === ETabs.YES ? (
         <VotingSection
-          title={`Voted Yes (${YES_VOTERS.length})`}
-          voters={YES_VOTERS}
+          title={`Voted Yes (${votes_for})`}
+          voters={voters?.voted_yes}
           className="py-6"
         />
       ) : null}
       {activeTab === ETabs.NO ? (
         <VotingSection
-          title={`Voted No (${NO_VOTERS.length})`}
-          voters={NO_VOTERS}
+          title={`Voted No (${votes_against})`}
+          voters={voters?.voted_no}
           className="py-6"
         />
       ) : null}
       {activeTab === ETabs.ABSTAINED ? (
         <VotingSection
-          title={`Abstained (${ABSTAINED_VOTERS.length})`}
-          voters={ABSTAINED_VOTERS}
+          title={`Abstained (${abstained})`}
+          voters={voters?.abstained}
           className="py-6"
         />
       ) : null}

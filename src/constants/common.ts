@@ -548,11 +548,8 @@ export const allBills = [
 export const DEFAULT_FONT_NAME = "Mulish";
 
 export const BILL_TYPES = [
-  { id: 1, value: "All", label: "All" },
-  { id: 1, value: "Proposed", label: "Proposed" },
-  { id: 1, value: "Amended", label: "Amended" },
-  { id: 1, value: "Vetoed", label: "Vetoed" },
-  { id: 1, value: "Passed", label: "Passed" },
+  { id: 1, value: "bill", label: "Bill" },
+  { id: 1, value: "resolution", label: "Resolution" },
 ];
 
 export const BILL_STATUSES = [
@@ -2332,3 +2329,4 @@ export const representatives: Representative[] = [
 export const allRepresentatives = [...senators, ...representatives];
 
 export const BILL_ID_PREFIX = "ocd-bill/";
+export const COMMITTEE_ID_PREFIX = "ocd-organization/";

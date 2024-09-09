@@ -48,9 +48,10 @@ export const endpoints = {
   bills: {
     getBill: (billId: string): string => `/bills/${billId}`,
     getBills: (): string => `/bills/`,
-    searchBills: (): string => `/bills/filter`,
+    searchBills: (): string => `/bills/filter/`,
     getBillVotes: (billId: string): string => `/bills/${billId}/votes`,
     getBillActions: (billId: string): string => `/bills/${billId}/actions`,
+    getBillVersions: (bill_id: string): string => `/bills/${bill_id}/versions`,
     getBillContributors: (billId: string): string =>
       `/bills/${billId}/contributors`,
     getBillSummary: (billId: string): string => `/bills/${billId}/summary`,
@@ -85,14 +86,7 @@ export const endpoints = {
     getPlans: (): string => `/subscription_plans`,
   },
   committees: {
-    getCommittees: (
-      jurisdiction?: string,
-      skip: number = 0,
-      limit: number = 10
-    ): string =>
-      `/committees?jurisdiction=${
-        jurisdiction || ""
-      }&skip=${skip}&limit=${limit}`,
+    getCommittees: () => "/committees/",
     getCommittee: (committeeId: string): string => `/committees/${committeeId}`,
     getCommitteeMemberships: (committeeId: string): string =>
       `/committees/${committeeId}/memberships`,
