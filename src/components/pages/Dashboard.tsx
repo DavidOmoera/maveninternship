@@ -88,6 +88,8 @@ export const Dashboard: React.FC = () => {
     (state: RootState) => state.watchedBills.watchedBills
   );
   const [billsSearchResults, setBillsSearchResults] = useState<TBill[]>();
+  const [billsSearchResultsCount, setBillsSearchResultsCount] =
+    useState<number>();
 
   const {
     control,
@@ -187,7 +189,7 @@ export const Dashboard: React.FC = () => {
   const onSearchBill: SubmitHandler<TBillSearchForm> = (
     formData: TBillSearchForm
   ) => {
-    const { searchValue, chamber, billStatus, billType } = formData;
+    const { searchValue, chamber, billStatus, billType, year } = formData;
     if (billSearchFormIsValid) {
       searchBillsRequest({
         search_term: searchValue,
@@ -195,9 +197,13 @@ export const Dashboard: React.FC = () => {
         status: [billStatus as TBillStatus],
         bill_type: billType as TBillType,
         jurisdiction: [jurisdiction],
+        sessions: [year as string],
+        skip: 0,
+        limit: 50,
       })
         .then((res) => {
           setBillsSearchResults(res.data.items);
+          setBillsSearchResultsCount(res.data.total);
         })
         .catch((e) => {
           setBillsSearchResults([]);
@@ -295,12 +301,14 @@ export const Dashboard: React.FC = () => {
               />
             </div>
 
-            {billsSearchResults && billsSearchValue && (
-              <div className="lg:flex gap-2 block mt-8">
-                <h4 className="text-neutral950">{billsSearchResults.length}</h4>
-                <span className="text-neutral950 text-xl">Results found</span>
-              </div>
-            )}
+            {billsSearchResults &&
+              billsSearchValue &&
+              billsSearchResultsCount && (
+                <div className="lg:flex gap-2 block mt-8">
+                  <h4 className="text-neutral950">{billsSearchResultsCount}</h4>
+                  <span className="text-neutral950 text-xl">Results found</span>
+                </div>
+              )}
             {/** All bills */}
             <div
               className={classNames("row gap-5 flex-wrap", {

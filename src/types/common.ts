@@ -96,6 +96,7 @@ export type TBillContributor = {
 export type TBill = {
   id: string;
   title: string;
+  legislative_type: TBillType;
   state: string;
   status: string;
   latest_action_date: Date | string;
@@ -104,10 +105,26 @@ export type TBill = {
 };
 
 export type TBillVotesParams = { bill_id: string; limit?: number };
+
+export type TVote = {
+  voter_name: string;
+  full_name: string;
+  role: string;
+  image: string;
+  date: string;
+  voter_id: string;
+};
+
 export type TBillVotesResponse = {
   votes_for: number;
   votes_against: number;
   abstained: number;
+  total_votes: number;
+  voters: {
+    voted_yes: TVote[];
+    voted_no: TVote[];
+    abstained: TVote[];
+  };
 };
 
 export type TBillSummaryParams = {
@@ -120,6 +137,15 @@ export type TBillSummaryResponse = {
   bill_id: string;
   version: string;
   summary: string;
+};
+
+export type TBillVersion = {
+  id: string;
+  note: string;
+  date: string;
+  extras: Record<string, string>;
+  bill_id: string;
+  classification: string;
 };
 
 export type TUpdateUserRequestBody = {
@@ -140,6 +166,8 @@ export type TGetBillsParams = Partial<{
 
 export type TSearchBillsParams = TGetBillsParams &
   Partial<{
+    skip: number;
+    limit: number;
     search_term: string;
     identifier: string;
     bill_type: TBillType;
@@ -148,6 +176,13 @@ export type TSearchBillsParams = TGetBillsParams &
     jurisdiction: string[];
     chamber: TBillChamber;
   }>;
+
+export type TGetBillsSearchResponse = {
+  items: TBill[];
+  total: number;
+  limit: number;
+  offset: number;
+};
 
 export type TGetBillsResponse = {
   items: TBill[];
@@ -334,17 +369,16 @@ export type NotificationsState = {
 };
 
 export type Committee = {
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
   extras: Record<string, string>;
-
   name: string;
   classification: string;
-  jurisdictionId: string;
-  parentId: string;
+  jurisdiction_id: string;
+  parent_id: string;
   links: string[];
   sources: string[];
-  otherNames: string[];
+  other_names: string[];
   id: string;
 };
 
@@ -367,10 +401,13 @@ export type CommitteeMembership = {
   id: string;
 };
 
-export type TGetCommitteesResponse = {
-  committees: Committee[];
-  total: number;
-};
+export type TGetCommitteesRequestParams = Partial<{
+  jurisdiction: string;
+  skip: number;
+  limit: number;
+}>;
+
+export type TGetCommitteesResponse = Committee[];
 
 export type TGetCommitteeResponse = Committee;
 

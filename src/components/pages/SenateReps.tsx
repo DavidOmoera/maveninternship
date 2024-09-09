@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index.ts";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
 import classNames from "classnames";
-import { senators } from "constants/common";
+import { COMMITTEE_ID_PREFIX, senators } from "constants/common";
 import { legislativeSessionsApi, committeesApi } from "api/index.ts";
 import { handleApiError } from "utils/helpers";
 import { AxiosError } from "axios";
@@ -52,19 +52,22 @@ export function SenateReps() {
 
         // Fetch committees first
         const committeesResponse = await committeesApi.getCommitteesRequest();
-        const committees = committeesResponse.data.committees;
+        const committees = committeesResponse.data;
 
         setCommittees(committees);
 
         // Fetch memberships for each committee
         const membershipsPromises = committees.map((committee) =>
-          committeesApi.getCommitteeMembershipsRequest(committee.id)
+          committeesApi.getCommitteeMembershipsRequest(
+            committee.id.replace(COMMITTEE_ID_PREFIX, "")
+          )
         );
         const membershipsResponses = await Promise.all(membershipsPromises);
-        const memberships = membershipsResponses.flatMap((response) => response.data);
+        const memberships = membershipsResponses.flatMap(
+          (response) => response.data
+        );
 
         setCommitteeMemberships(memberships);
-
       } catch (error) {
         handleApiError(error as AxiosError);
       } finally {
@@ -95,7 +98,9 @@ export function SenateReps() {
   };
 
   const isRepInTopReps = (rep: Representative) =>
-    topReps.some((existingRep: { name: string; }) => existingRep.name === rep.name);
+    topReps.some(
+      (existingRep: { name: string }) => existingRep.name === rep.name
+    );
 
   const onClickRepresentative = (id: number, pageType: string) => {
     navigate(Routes.RepProfile + `/${id}`, { state: { pageType } });
@@ -109,12 +114,15 @@ export function SenateReps() {
     resolver: yupResolver(activitySearchSchema),
   });
 
-  const onSearchBill: SubmitHandler<Partial<{ searchValue: string; activity: string; noOfDays: string; }>> = async (data) => {
+  const onSearchBill: SubmitHandler<
+    Partial<{ searchValue: string; activity: string; noOfDays: string }>
+  > = async (data) => {
     setLoading(true);
     try {
-      const response = await legislativeSessionsApi.getLegislativeSessionsRequest({
-        jurisdiction: data.searchValue || "default_jurisdiction",
-      });
+      const response =
+        await legislativeSessionsApi.getLegislativeSessionsRequest({
+          jurisdiction: data.searchValue || "default_jurisdiction",
+        });
       setLegislativeSessions(response.data);
     } catch (error) {
       handleApiError(error as AxiosError);
@@ -124,11 +132,12 @@ export function SenateReps() {
   };
 
   const getCommitteeForRep = (repId: number) => {
-    return committeeMemberships?.filter(
-      (membership) => membership.representative_id === repId
-    ) || [];
+    return (
+      committeeMemberships?.filter(
+        (membership) => membership.representative_id === repId
+      ) || []
+    );
   };
-
 
   return (
     <PageContainer title="Senate" className="w-full bg-gray-100">
@@ -238,24 +247,26 @@ export function SenateReps() {
                     </p>
 
                     {/* Display Committee Memberships */}
-                    {committees && getCommitteeForRep(rep.id) && getCommitteeForRep(rep.id).length > 0 && (
-                      <div className="mt-4">
-                        <h4 className="font-semibold">Committees:</h4>
-                        {getCommitteeForRep(rep.id)!.map((membership, idx) => {
-                          const committee = committees?.find(
-                            (committee) => committee.id === membership.committee_id
-                          );
-                          return committee ? (
-                            <div key={idx}>
-                              <span>{committee.name}</span>
-                            </div>
-                          ) : null;
-                        })}
-                      </div>
-                    )}
-
-
-
+                    {committees &&
+                      getCommitteeForRep(rep.id) &&
+                      getCommitteeForRep(rep.id).length > 0 && (
+                        <div className="mt-4">
+                          <h4 className="font-semibold">Committees:</h4>
+                          {getCommitteeForRep(rep.id)!.map(
+                            (membership, idx) => {
+                              const committee = committees?.find(
+                                (committee) =>
+                                  committee.id === membership.committee_id
+                              );
+                              return committee ? (
+                                <div key={idx}>
+                                  <span>{committee.name}</span>
+                                </div>
+                              ) : null;
+                            }
+                          )}
+                        </div>
+                      )}
                   </div>
                   <button
                     className={classNames(

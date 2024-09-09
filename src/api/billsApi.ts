@@ -5,10 +5,12 @@ import {
   TBill,
   TBillSummaryParams,
   TBillSummaryResponse,
+  TBillVersion,
   TBillVotesParams,
   TBillVotesResponse,
   TGetBillsParams,
   TGetBillsResponse,
+  TGetBillsSearchResponse,
   TSearchBillsParams,
 } from "types/common";
 
@@ -30,6 +32,11 @@ export const getBillSummaryRequest = ({
     params: { version, state },
   });
 
+export const getBillVersionsRequest = (
+  bill_id: string
+): Promise<AxiosResponse<TBillVersion[]>> =>
+  client.get(endpoints.bills.getBillVersions(bill_id));
+
 export const getBillsRequest = (
   params?: TGetBillsParams
 ): Promise<AxiosResponse<TGetBillsResponse>> =>
@@ -37,5 +44,5 @@ export const getBillsRequest = (
 
 export const searchBillsRequest = (
   params: TSearchBillsParams
-): Promise<AxiosResponse<TGetBillsResponse>> =>
+): Promise<AxiosResponse<TGetBillsSearchResponse>> =>
   client.get(endpoints.bills.searchBills(), { params });
