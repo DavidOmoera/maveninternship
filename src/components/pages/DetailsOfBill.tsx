@@ -115,25 +115,6 @@ const DetailsOfBill: React.FC = () => {
   const [votesSummary, setVotesSummary] = useState<TBillVotesResponse>();
   const [billVersionsCount, setBillVersionsCount] = useState<number>();
 
-  const totalVoteCount = useMemo(() => {
-    if (
-      votesSummary?.abstained &&
-      votesSummary.votes_against &&
-      votesSummary.votes_for
-    ) {
-      return (
-        votesSummary.abstained +
-        votesSummary.votes_against +
-        votesSummary.votes_for
-      );
-    }
-    return 0;
-  }, [
-    votesSummary?.abstained,
-    votesSummary?.votes_against,
-    votesSummary?.votes_for,
-  ]);
-
   const details = useMemo(
     () => [
       {
@@ -281,7 +262,9 @@ const DetailsOfBill: React.FC = () => {
               <div className="bg-gray-50 p-6 rounded-xl">
                 {votesSummary && (
                   <>
-                    <p className="text-5xl font-extrabold">{totalVoteCount}</p>
+                    <p className="text-5xl font-extrabold">
+                      {votesSummary.total_votes ?? 0}
+                    </p>
                     <h6 className="text-sm text-neutral400 mt-1">
                       Votes for bill:
                     </h6>

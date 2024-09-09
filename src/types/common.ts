@@ -105,10 +105,26 @@ export type TBill = {
 };
 
 export type TBillVotesParams = { bill_id: string; limit?: number };
+
+export type TVote = {
+  voter_name: string;
+  full_name: string;
+  role: string;
+  image: string;
+  date: string;
+  voter_id: string;
+};
+
 export type TBillVotesResponse = {
   votes_for: number;
   votes_against: number;
   abstained: number;
+  total_votes: number;
+  voters: {
+    voted_yes: TVote[];
+    voted_no: TVote[];
+    abstained: TVote[];
+  };
 };
 
 export type TBillSummaryParams = {
