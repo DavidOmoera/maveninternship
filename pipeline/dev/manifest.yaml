@@ -35,7 +35,7 @@ spec:
         app: webapp
     spec:
       containers:
-      - image: legisaiacrdev.azurecr.io/webapp:47d9925
+      - image: legisaiacrdev.azurecr.io/webapp:9926b26
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
