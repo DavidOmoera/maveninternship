@@ -7,6 +7,7 @@ import watchedBillsReducer from "store/slices/watchedBillsSlice.ts";
 import billSlice from "./bill";
 import activitySlice from "./activity";
 import adminSlice from "./admin";
+import notificationSlice from "./notification";
 
 export const rootReducer = combineReducers({
   auth: authSlice,
@@ -16,6 +17,7 @@ export const rootReducer = combineReducers({
   organization: organizationSlice,
   topReps: topRepsSlice,
   watchedBills: watchedBillsReducer,
+  notification: notificationSlice,
 });
 
 const store = configureStore({

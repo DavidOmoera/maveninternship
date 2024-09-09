@@ -1,71 +1,46 @@
 import { Dialog } from "@mui/material";
 import CloseIcon from "assets/start.svg";
 import SettingsIcon from "assets/setting-notif.svg";
-import SenMat from "assets/sen-adams.svg";
+import defaultProfilePicture from "assets/profile_picture.jpg";
 import { Pill } from "components/molecules/Pill";
-
-interface NotificationItems {
-  title: string;
-  status: string;
-  time: string;
-}
-
-const notifications: NotificationItems[] = [
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "Level 1",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has been Rejected",
-    status: "Rejected",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Signing",
-    status: "Signing",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced been Passed",
-    status: "Passed",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 2",
-    status: "Level 2",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "Level 1",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "Level 1",
-    time: "2w ago",
-  },
-  {
-    title: "Secure the Border Act of 2023 has commenced to Level 1",
-    status: "Level 1",
-    time: "2w ago",
-  },
-];
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
+import { getNotifications } from "store/slices/notification/thunks";
+import {
+  getNotificationsSelector,
+  getNotificationsLoadingSelector,
+  getNotificationsErrorSelector,
+} from "store/slices/notification/selectors";
+import { getUserIdSelector } from "store/slices/activity/selectors";
 
 type TNotificationsProps = {
   open: boolean;
   onClose: () => void;
   onClickSettings: () => void;
+  user_id: number;
 };
+
 export function Notifications({
   open,
   onClose,
   onClickSettings,
 }: TNotificationsProps) {
+  const dispatch = useAppDispatch();
+
+  const notifications = useAppSelector(getNotificationsSelector);
+  const loading = useAppSelector(getNotificationsLoadingSelector);
+  const error = useAppSelector(getNotificationsErrorSelector);
+  const user_id = useAppSelector(getUserIdSelector);
+
+  useEffect(() => {
+    if (open && user_id) {
+      dispatch(getNotifications(user_id));
+    }
+  }, [open, dispatch, user_id]);
+
   return (
     <Dialog open={open} onClose={onClose}>
-      <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg overflow-scroll no-scrollbar">
+      <div className="w-full max-w-2xl p-6 bg-white rounded-xl shadow-lg overflow-scroll no-scrollbar min-w-96 min-h-96">
         <div className="row justify-end">
           <Pill
             text="Close"
@@ -89,6 +64,8 @@ export function Notifications({
         </div>
         <hr className="mb-4" />
         <ul>
+          {loading && <li>Loading...</li>}
+          {error && <li>Error loading notifications</li>}
           {notifications.map((notification, index) => (
             <li
               key={index}
@@ -132,11 +109,19 @@ export function Notifications({
                   </span>
                 </p>
                 <div className="flex items-center">
-                  <img src={SenMat} alt="mat-photo" className="w-8 h-8 mr-2" />
-                  <span className="text-gray-600 text-xs">Sen. Mat Adams</span>
+                  <img
+                    src={defaultProfilePicture}
+                    alt="mat-photo"
+                    className="w-8 h-8 mr-2"
+                  />
+                  <span className="text-gray-600 text-xs">
+                    User {notification.message}
+                  </span>
                 </div>
               </div>
-              <span className="text-gray-500 text-xs">{notification.time}</span>
+              <span className="text-gray-500 text-xs">
+                {new Date(notification.created_at).toLocaleString()}
+              </span>
             </li>
           ))}
         </ul>
