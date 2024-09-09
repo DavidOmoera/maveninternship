@@ -29,6 +29,11 @@ const routes = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
+        path: "",
+        element: <Auth />,
+        children: [{ path: "", element: <Login /> }],
+      },
+      {
         path: Routes.SignUp,
         element: <Auth />,
         children: [{ path: Routes.SignUp, element: <SignUp /> }],
