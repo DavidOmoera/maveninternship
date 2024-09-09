@@ -163,7 +163,7 @@ export type TActivityParams = Partial<{
   limit: number;
 }>;
 
-export type TActivityLogs = Partial<{
+export type TActivityLog = Partial<{
   activity_type: string;
   tag: string;
   description: string;
@@ -173,8 +173,8 @@ export type TActivityLogs = Partial<{
 }>;
 
 export type ActivityState = Partial<{
-  activities: TActivityLogs[];
-  searchResults: TActivityLogs[];
+  activities: TActivityLog[];
+  searchResults: TActivityLog[];
   loading: boolean;
   error: string | null;
 }>;

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ActivityState } from "types/common";
 import { getActivityLogs, searchActivityLogs } from "./thunks";
-import { TActivityLogs } from "types/common";
+import { TActivityLog } from "types/common";
 
 const initialState: ActivityState = {
   activities: [],
@@ -14,7 +14,7 @@ const activitySlice = createSlice({
   name: "activity",
   initialState,
   reducers: {
-    setActivity: (state, action: PayloadAction<TActivityLogs[]>) => {
+    setActivity: (state, action: PayloadAction<TActivityLog[]>) => {
       state.activities = action.payload;
     },
     clearActivity: () => ({ ...initialState }),
