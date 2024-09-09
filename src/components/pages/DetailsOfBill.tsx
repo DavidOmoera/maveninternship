@@ -335,7 +335,18 @@ const DetailsOfBill: React.FC = () => {
 
               {activeTab === BILL_TAB.ABOUT ? (
                 <Suspense fallback={null}>
-                  <AboutBill showBillSummary={showBillSummary} />
+                  <AboutBill
+                    title={currentBill.title}
+                    description={currentBill.summary}
+                    author={billAuthor?.name ?? ""}
+                    legislativeType={currentBill.legislative_type}
+                    status={currentBill.status}
+                    amendmentsCount={billVersionsCount ?? 0}
+                    votesFor={votesSummary?.votes_for ?? 0}
+                    votesAgainst={votesSummary?.votes_against ?? 0}
+                    votesAbstained={votesSummary?.abstained ?? 0}
+                    showBillSummary={showBillSummary}
+                  />
                 </Suspense>
               ) : null}
               {activeTab === BILL_TAB.ASK_AI ? (
