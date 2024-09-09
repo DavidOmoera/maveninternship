@@ -135,12 +135,16 @@ const DetailsOfBill: React.FC = () => {
 
   const details = useMemo(
     () => [
-      { key: "Legislative Type", value: "Joint Resolution", link: "" },
+      {
+        key: "Legislative Type",
+        value: currentBill.legislative_type,
+        link: "",
+      },
       { key: "Bill Status", value: currentBill.status, link: "" },
       // { key: "Current Status", value: "House Passage Report", link: "" },
       { key: "Amendments", value: "2 Views", link: Routes.DetailsOfBill },
     ],
-    [currentBill.status]
+    [currentBill.legislative_type, currentBill.status]
   );
 
   function onChangeTab(value: string) {
@@ -231,10 +235,13 @@ const DetailsOfBill: React.FC = () => {
                   >
                     <p className="text-sm text-neutral500">{detail.key}</p>
                     <h6
-                      className={classNames("text-sm text-neutral950", {
-                        "underline text-accent800 cursor-pointer":
-                          !!detail.link,
-                      })}
+                      className={classNames(
+                        "text-sm text-neutral950 capitalize",
+                        {
+                          "underline text-accent800 cursor-pointer":
+                            !!detail.link,
+                        }
+                      )}
                       onClick={() => {}}
                     >
                       {detail.value}
