@@ -772,7 +772,7 @@ export const ACTIVITIES = [
   {
     time: "20 mins ago",
     timestamp: "1723494528",
-    type: "Removed",
+    activity_type: "Removed",
     label: "a bill",
     link: "Secure the Border Act of 2023",
     iconBackgroundColor: "#FDEAEC",
@@ -781,7 +781,7 @@ export const ACTIVITIES = [
   {
     time: "4 hrs ago",
     timestamp: "1723408128",
-    type: "Added",
+    activity_type: "Added",
     label: "a bill",
     link: "Secure the Border Act of 2023",
     iconBackgroundColor: "#E9F3FF",
@@ -790,7 +790,7 @@ export const ACTIVITIES = [
   {
     time: "Yesterday, 5:34 pm",
     timestamp: "1723276800",
-    type: "Edited",
+    activity_type: "Edited",
     label: "your Profile",
     link: "",
     iconBackgroundColor: "#E1F8FD",
@@ -799,7 +799,7 @@ export const ACTIVITIES = [
   {
     time: "Yesterday, 2:45 pm",
     timestamp: "1723190400",
-    type: "Removed",
+    activity_type: "Removed",
     label: "a Legislature",
     link: "Texas",
     iconBackgroundColor: "#FFEAF1",
@@ -808,7 +808,7 @@ export const ACTIVITIES = [
   {
     time: "22/04/2023, 8:22 am",
     timestamp: "1723104000",
-    type: "Added",
+    activity_type: "Added",
     label: "a Legislature",
     link: "Alaska",
     iconBackgroundColor: "#E4F9ED",
@@ -817,7 +817,7 @@ export const ACTIVITIES = [
   {
     time: "21/04/2023, 8:19 am",
     timestamp: "1723017600",
-    type: "Logged in",
+    activity_type: "Logged in",
     label: "to your account",
     link: "",
     iconBackgroundColor: "#E4F9ED",
@@ -826,7 +826,7 @@ export const ACTIVITIES = [
   {
     time: "20/04/2023, 7:32 am",
     timestamp: "1722931200",
-    type: "Logged out",
+    activity_type: "Logged out",
     label: "of your account",
     link: "",
     iconBackgroundColor: "#FFEAF1",
@@ -835,7 +835,7 @@ export const ACTIVITIES = [
   {
     time: "4w ago",
     timestamp: "1722844800",
-    type: "Removed",
+    activity_type: "Removed",
     label: "a bill",
     link: "Secure the Border Act of 2023",
     iconBackgroundColor: "#FFEAF1",
@@ -844,7 +844,7 @@ export const ACTIVITIES = [
   {
     time: "5w ago",
     timestamp: "1722758400",
-    type: "Added",
+    activity_type: "Added",
     label: "a bill",
     link: "Secure the Border Act of 2023",
     iconBackgroundColor: "#E9F3FF",
@@ -853,7 +853,7 @@ export const ACTIVITIES = [
   {
     time: "2 months ago",
     timestamp: "1720598400",
-    type: "Added",
+    activity_type: "Added",
     label: "a Legislature",
     link: "Alaska",
     iconBackgroundColor: "#E4F9ED",
@@ -862,7 +862,7 @@ export const ACTIVITIES = [
   {
     time: "3 months ago",
     timestamp: "1720339200",
-    type: "Logged in",
+    activity_type: "Logged in",
     label: "to your account",
     link: "",
     iconBackgroundColor: "#E4F9ED",
@@ -871,7 +871,7 @@ export const ACTIVITIES = [
   {
     time: "6w ago",
     timestamp: "1712649600",
-    type: "Edited",
+    activity_type: "Edited",
     label: "your Profile",
     link: "",
     iconBackgroundColor: "#E1F8FD",
@@ -880,7 +880,7 @@ export const ACTIVITIES = [
   {
     time: "4 months ago",
     timestamp: "1715760000",
-    type: "Logged out",
+    activity_type: "Logged out",
     label: "of your account",
     link: "",
     iconBackgroundColor: "#FFEAF1",
@@ -889,13 +889,38 @@ export const ACTIVITIES = [
   {
     time: "7w ago",
     timestamp: "1697529600",
-    type: "Removed",
+    activity_type: "Removed",
     label: "a Legislature",
     link: "Texas",
     iconBackgroundColor: "#FFEAF1",
     icon: minuscirlce,
   },
 ];
+export const ACTIVITY_TYPE_PROPERTIES: Record<
+  string,
+  { icon: string; iconBackgroundColor: string }
+> = {
+  Added: {
+    icon: archiveadd,
+    iconBackgroundColor: "#E9F3FF",
+  },
+  Removed: {
+    icon: archiveminus,
+    iconBackgroundColor: "#FDEAEC",
+  },
+  Edited: {
+    icon: useredit,
+    iconBackgroundColor: "#E1F8FD",
+  },
+  "Logged in": {
+    icon: login,
+    iconBackgroundColor: "#E4F9ED",
+  },
+  "Logged out": {
+    icon: logout,
+    iconBackgroundColor: "#FFEAF1",
+  },
+};
 
 export const REPRESENTATIVES = [
   {
@@ -2305,3 +2330,5 @@ export const representatives: Representative[] = [
 ];
 
 export const allRepresentatives = [...senators, ...representatives];
+
+export const BILL_ID_PREFIX = "ocd-bill/";

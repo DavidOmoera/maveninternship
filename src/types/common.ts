@@ -1,5 +1,6 @@
 import { store } from "store";
 import { AxiosInstance } from "axios";
+import { ReactNode } from "react";
 
 export type Representative = {
   image: string;
@@ -89,7 +90,7 @@ export type TBillContributor = {
   entity_type: string;
   title: string;
   primary: boolean;
-  classification: string;
+  classification: "author" | "coauthor" | "sponsor";
 };
 
 export type TBill = {
@@ -102,6 +103,25 @@ export type TBill = {
   contributors: TBillContributor[];
 };
 
+export type TBillVotesParams = { bill_id: string; limit?: number };
+export type TBillVotesResponse = {
+  votes_for: number;
+  votes_against: number;
+  abstained: number;
+};
+
+export type TBillSummaryParams = {
+  bill_id: string;
+  version: string;
+  state: string;
+};
+
+export type TBillSummaryResponse = {
+  bill_id: string;
+  version: string;
+  summary: string;
+};
+
 export type TUpdateUserRequestBody = {
   email: string;
   first_name: string;
@@ -109,25 +129,25 @@ export type TUpdateUserRequestBody = {
   phone_number: string;
 };
 
-type TBillStatus = "Introduced" | "Enrolled" | "Passed";
-type TBillChamber = "House" | "Senate";
+export type TBillStatus = "Introduced" | "Enrolled" | "Passed";
+export type TBillChamber = "House" | "Senate";
+export type TBillType = "resolution" | "bill";
 
 export type TGetBillsParams = Partial<{
   page: number;
   size: number;
 }>;
 
-export type TSearchBillsParams = Partial<
-  TGetBillsParams & {
+export type TSearchBillsParams = TGetBillsParams &
+  Partial<{
     search_term: string;
     identifier: string;
-    bill_type: string;
+    bill_type: TBillType;
     status: TBillStatus[];
     sessions: string[];
     jurisdiction: string[];
     chamber: TBillChamber;
-  }
->;
+  }>;
 
 export type TGetBillsResponse = {
   items: TBill[];
@@ -137,8 +157,15 @@ export type TGetBillsResponse = {
   pages: number;
 };
 
-export type TActivityLogs = Partial<{
+export type TActivityParams = Partial<{
+  search_term?: string;
+  skip: number;
+  limit: number;
+}>;
+
+export type TActivityLog = Partial<{
   activity_type: string;
+  tag: string;
   description: string;
   user_id: number;
   id: number;
@@ -146,9 +173,10 @@ export type TActivityLogs = Partial<{
 }>;
 
 export type ActivityState = Partial<{
-  activities: TActivityLogs[];
-  activitiesLoading: boolean;
-  activitiesError: string | null;
+  activities: TActivityLog[];
+  searchResults: TActivityLog[];
+  loading: boolean;
+  error: string | null;
 }>;
 
 export type TUserParams = Partial<{
@@ -213,6 +241,31 @@ export type TVerifyEmailRequestBody = {
   code: string;
 };
 
+export type THelpAndSupportForm = {
+  first_name: string;
+  last_name: string;
+  company_name?: string;
+  email_address: string;
+  issue?: string;
+  message: string;
+};
+
+export type TCreateFeedbackRequestBody = {
+  issues: string[];
+  duration: string;
+  learn_more: boolean;
+  user_id: number;
+};
+
+export type TCreateFeedbackResponse = {
+  issues: string[];
+  duration: string;
+  learn_more: boolean;
+  id: number;
+  user_id: number;
+  submitted_at: string;
+};
+
 export type TLegislativeSessionsParams = {
   jurisdiction: string;
   skip?: number;
@@ -256,3 +309,69 @@ export enum BrowserStorageKeys {
 export type BrowserStorageOptions = {
   session: boolean;
 };
+
+//notifications
+export type TNotifications = {
+  message: string;
+  id: number;
+  user_id: number;
+  status: string;
+  created_at: Date | string;
+};
+
+export type TNotificationsSettings = Partial<{
+  notification_type: "email";
+  frequency: "string";
+  disabled: boolean;
+  id?: number;
+  user_id?: number;
+}>;
+
+export type NotificationsState = {
+  notifications: TNotifications[];
+  loading: boolean;
+  error: string | null;
+};
+
+export type Committee = {
+  createdAt: string;
+  updatedAt: string;
+  extras: Record<string, string>;
+
+  name: string;
+  classification: string;
+  jurisdictionId: string;
+  parentId: string;
+  links: string[];
+  sources: string[];
+  otherNames: string[];
+  id: string;
+};
+
+export type CommitteeMembership = {
+  representative_id: number;
+  committee_id: string;
+  start_date: ReactNode;
+  end_date: string;
+  createdAt: string;
+  updatedAt: string;
+  extras: Record<string, string>;
+
+  personName: string;
+  role: string;
+  startDate: string;
+  endDate: string;
+  organizationId: string;
+  personId: string;
+  postId: string;
+  id: string;
+};
+
+export type TGetCommitteesResponse = {
+  committees: Committee[];
+  total: number;
+};
+
+export type TGetCommitteeResponse = Committee;
+
+export type TGetCommitteeMembershipsResponse = CommitteeMembership[];

@@ -178,14 +178,16 @@ export function GridCard({
       </div>
 
       <div className="flex justify-between p-3">
-        <Tooltip title="Author">
-          <div className="flex items-center">
-            <AuthorAvatar imageUrl={image} alt={name} />
-            <div className="ml-3">
-              <h4 className="text-sm font-bold">{name}</h4>
+        {name && (
+          <Tooltip title="Author">
+            <div className="flex items-center">
+              <AuthorAvatar imageUrl={image} alt={name} />
+              <div className="ml-3">
+                <h4 className="text-sm font-bold">{name}</h4>
+              </div>
             </div>
-          </div>
-        </Tooltip>
+          </Tooltip>
+        )}
         <div className="flex space-x-2 rounded-b-3xl">
           <Tooltip title="Co-authors">
             <div className="flex items-center">
