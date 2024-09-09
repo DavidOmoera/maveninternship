@@ -377,7 +377,7 @@ const DetailsOfBill: React.FC = () => {
             ) : null}
             {activeTab === BILL_TAB.VOTING ? (
               <Suspense fallback={null}>
-                <Voting />
+                <Voting {...(votesSummary as TBillVotesResponse)} />
               </Suspense>
             ) : null}
           </div>
