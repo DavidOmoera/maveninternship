@@ -1,7 +1,7 @@
 import { Dialog } from "@mui/material";
 import CloseIcon from "assets/start.svg";
 import SettingsIcon from "assets/setting-notif.svg";
-import SenMat from "assets/sen-adams.svg";
+import defaultProfilePicture from "assets/profile_picture.jpg";
 import { Pill } from "components/molecules/Pill";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "utils/helpers";
@@ -109,9 +109,13 @@ export function Notifications({
                   </span>
                 </p>
                 <div className="flex items-center">
-                  <img src={SenMat} alt="mat-photo" className="w-8 h-8 mr-2" />
+                  <img
+                    src={defaultProfilePicture}
+                    alt="mat-photo"
+                    className="w-8 h-8 mr-2"
+                  />
                   <span className="text-gray-600 text-xs">
-                    Sen. Mat Adams {notification.message}
+                    User {notification.message}
                   </span>
                 </div>
               </div>
