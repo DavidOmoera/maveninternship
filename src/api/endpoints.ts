@@ -28,22 +28,27 @@ export const endpoints = {
   auth: {
     register: (): string => `/register/`,
     verifyEmail: (): string => `/verify-email/`,
-    resendVerificationEmail: (): string => `/resend-verification`,
     login: (): string => `/token`,
     updateUserProfile: (): string => `/update_user_info`,
-    getUserData: (): string => `/users/me/`, // For current user
+    getUserData: (): string => `/users/me`, // For current user
+    logout: (): string => `/logout`,
+    send_receipt: (): string => `/send_receipts`,
+    resendVerificationEmail: (): string => `/resend-verification`,
     loginWithGoogle: (): string => `/google-login`,
     loginWithOutlook: (): string => `/outlook-login`,
-    logout: (): string => `/logout/`,
     initiatePasswordReset: (): string => `/password-reset-request`,
     resetPassword: (): string => `/password-reset`,
-
+    createCheckoutSession: (): string =>
+      `/create-checkout-session-account-setup`,
+    stripeWebhook: (): string => `/webhook-account-setup`,
+    accountCreation: (): string => `/create_org_account`,
+    getUserDetails: (): string => `/user-details`,
     registerOrganization: (): string => `/register-org-account`,
+    resetPersonalAccount: (): string => `/create_personal_account`,
+
     getOrganization: (): string => `/organization-details`,
     updateOrganizationDetails: (): string => `/update_org_details`,
     updateOrganizationContactDetails: (): string => `/update_org_contact`,
-
-    resetPersonalAccount: (): string => `/create_personal_account`,
   },
   bills: {
     getBill: (billId: string): string => `/bills/${billId}`,

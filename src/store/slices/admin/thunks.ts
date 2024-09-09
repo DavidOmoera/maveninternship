@@ -3,7 +3,7 @@ import { adminApi } from "api";
 import { AxiosError } from "axios";
 import {
   TUserParams,
-  TGetBillsParams,
+  TActivityParams,
   TSearchUsersParams,
   TOrganizationParams,
   TRoleParams,
@@ -26,7 +26,7 @@ export const makeAdmin = createAsyncThunk(
 
 export const getAllUsers = createAsyncThunk(
   "admin/getAllUsers",
-  async (params: TGetBillsParams) => {
+  async (params: TActivityParams) => {
     try {
       const response = await adminApi.getAllUsersRequest(params);
       return response.data;
@@ -39,7 +39,7 @@ export const getAllUsers = createAsyncThunk(
 
 export const getAllOrganizations = createAsyncThunk(
   "admin/getAllOrganizations",
-  async (params: TGetBillsParams) => {
+  async (params: TActivityParams) => {
     try {
       const response = await adminApi.getAllOrganizationsRequest(params);
       return response.data;
