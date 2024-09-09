@@ -123,6 +123,15 @@ export type TBillSummaryResponse = {
   summary: string;
 };
 
+export type TBillVersion = {
+  id: string;
+  note: string;
+  date: string;
+  extras: Record<string, string>;
+  bill_id: string;
+  classification: string;
+};
+
 export type TUpdateUserRequestBody = {
   email: string;
   first_name: string;

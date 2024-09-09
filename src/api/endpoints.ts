@@ -51,6 +51,7 @@ export const endpoints = {
     searchBills: (): string => `/bills/filter/`,
     getBillVotes: (billId: string): string => `/bills/${billId}/votes`,
     getBillActions: (billId: string): string => `/bills/${billId}/actions`,
+    getBillVersions: (bill_id: string): string => `/bills/${bill_id}/versions`,
     getBillContributors: (billId: string): string =>
       `/bills/${billId}/contributors`,
     getBillSummary: (billId: string): string => `/bills/${billId}/summary`,

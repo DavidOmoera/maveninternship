@@ -5,6 +5,7 @@ import {
   TBill,
   TBillSummaryParams,
   TBillSummaryResponse,
+  TBillVersion,
   TBillVotesParams,
   TBillVotesResponse,
   TGetBillsParams,
@@ -30,6 +31,11 @@ export const getBillSummaryRequest = ({
   client.get(endpoints.bills.getBillSummary(bill_id), {
     params: { version, state },
   });
+
+export const getBillVersionsRequest = (
+  bill_id: string
+): Promise<AxiosResponse<TBillVersion[]>> =>
+  client.get(endpoints.bills.getBillVersions(bill_id));
 
 export const getBillsRequest = (
   params?: TGetBillsParams

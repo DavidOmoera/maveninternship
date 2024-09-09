@@ -15,7 +15,7 @@ import { useLocation } from "react-router-dom";
 import { TBill, TBillVotesResponse } from "types/common";
 import defaultAvatar from "assets/profile_picture.jpg";
 import dayjs from "dayjs";
-import { getBillVotesRequest } from "api/billsApi";
+import { getBillVersionsRequest, getBillVotesRequest } from "api/billsApi";
 const AboutBill = lazy(() =>
   import("components/organisms/AboutBill").then((module) => ({
     default: module.AboutBill,
@@ -113,6 +113,7 @@ const DetailsOfBill: React.FC = () => {
     billAuthor?.image as string
   );
   const [votesSummary, setVotesSummary] = useState<TBillVotesResponse>();
+  const [billVersionsCount, setBillVersionsCount] = useState<number>();
 
   const totalVoteCount = useMemo(() => {
     if (
@@ -142,9 +143,19 @@ const DetailsOfBill: React.FC = () => {
       },
       { key: "Bill Status", value: currentBill.status, link: "" },
       // { key: "Current Status", value: "House Passage Report", link: "" },
-      { key: "Amendments", value: "2 Views", link: Routes.DetailsOfBill },
+      ...(billVersionsCount
+        ? [
+            {
+              key: "Amendments",
+              value: `${billVersionsCount} View${
+                billVersionsCount > 1 ? "s" : ""
+              }`,
+              link: Routes.DetailsOfBill,
+            },
+          ]
+        : []),
     ],
-    [currentBill.legislative_type, currentBill.status]
+    [billVersionsCount, currentBill.legislative_type, currentBill.status]
   );
 
   function onChangeTab(value: string) {
@@ -195,6 +206,14 @@ const DetailsOfBill: React.FC = () => {
     if (bill_id) {
       getBillVotesRequest({ bill_id }).then((res) => {
         setVotesSummary(res.data);
+      });
+    }
+  }, [bill_id]);
+
+  useEffect(() => {
+    if (bill_id) {
+      getBillVersionsRequest(bill_id).then((res) => {
+        setBillVersionsCount(res.data.length);
       });
     }
   }, [bill_id]);
