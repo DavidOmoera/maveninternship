@@ -1,6 +1,6 @@
 import { Button } from "components/atoms/Button";
 import email from "assets/email-logo.svg";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Routes } from "types/routes";
 import { useEffect } from "react";
 import { verifyEmailRequest } from "api/authApi";
@@ -8,8 +8,10 @@ import { handleError, showSuccessToast } from "utils/helpers";
 import { AuthToastMessages } from "constants/toastMessages";
 
 export function ConfirmEmail() {
-  const params = useParams();
-  const { email: emailAddress, code } = params ?? {};
+  const [searchParams] = useSearchParams();
+  const emailAddress = searchParams.get("email");
+  const code = searchParams.get("code");
+
   const navigate = useNavigate();
 
   useEffect(() => {

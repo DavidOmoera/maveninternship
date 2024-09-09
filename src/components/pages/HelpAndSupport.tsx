@@ -52,8 +52,8 @@ export function HelpAndSupport() {
 
   return (
     <PageContainer title="Help & Support">
-      <div className="row justify-between bg-white mx-9 md:mx-9 rounded-xl p-9 lg:py-10 lg:px-16 xl:py-20 xl:px-32 gap-32 md:max-w-[780px] lg:max-w-full">
-        <section className="col w-full sm:w-[500px] md:w-full xl:w-[700px]">
+      <div className="p-9 bg-white rounded-xl mx-9">
+        <section className="w-full text-center h-[990px] lg:w-3/5 mx-auto p-9 sm:px-20 md:px-9 ">
           <article className="col gap-1">
             <h1 className="text-black font-bold text-4xl">Get in Touch</h1>
             <p className="text-neutral500 text-lg">
@@ -125,7 +125,7 @@ export function HelpAndSupport() {
             text="Send Message"
             onClick={handleSubmit(onSubmitMessage)}
             disabled={isSubmitDisabled}
-            className="mt-6"
+            className="mt-6 w-full"
           />
         </section>
       </div>

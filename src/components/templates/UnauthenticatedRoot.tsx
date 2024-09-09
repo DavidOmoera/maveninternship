@@ -1,15 +1,15 @@
-import { useEffect } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { Routes } from "types/routes";
 import sideImage from "assets/side_image.svg";
+import BrowserStorageService from "utils/browserStorage";
+import { BrowserStorageKeys } from "types/common";
 
 export function UnauthenticatedRoot() {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const token = BrowserStorageService.get(BrowserStorageKeys.AccessToken);
 
-  useEffect(() => {
-    if (location.pathname === Routes.Home) navigate(Routes.Login);
-  }, [location.pathname, navigate]);
+  if (token) {
+    return <Navigate to={Routes.Dashboard} replace />;
+  }
 
   return (
     <main className="md:flex md:flex-row w-full overflow-hidden">

@@ -1,6 +1,12 @@
 import { Logo } from "components/atoms/Logo";
 import { useState } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import {
+  Outlet,
+  useNavigate,
+  useLocation,
+  redirect,
+  Navigate,
+} from "react-router-dom";
 import { Routes } from "types/routes";
 import {
   Typography,
@@ -33,10 +39,16 @@ import expand from "assets/expand.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useEffect, useRef } from "react";
+import { useAppDispatch } from "utils/helpers";
+import { clearUserData } from "store/slices/auth";
+import BrowserStorageService from "utils/browserStorage";
+import { BrowserStorageKeys } from "types/common";
+import { getUserData } from "store/slices/auth/thunks";
 
 const allStates = [{ name: "US Congress", code: "US" }, ...STATES];
 
 export function AuthenticatedRoot() {
+  const dispatch = useAppDispatch();
   const [activeMenuItem, setActiveMenuItem] = useState<string>("Dashboard");
   const [isLegislatureModalOpen, setIsLegislatureModalOpen] =
     useState<boolean>(false);
@@ -79,6 +91,28 @@ export function AuthenticatedRoot() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSidebarOpen]);
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
+
+  function logUserOut() {
+    BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
+    dispatch(clearUserData());
+    redirect(Routes.Login);
+
+    // Put this back when the logout endpoint starts working again
+    // logoutRequest()
+    //   .then((res) => {
+    //     BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
+    //     dispatch(clearUserData());
+    //     redirect(Routes.Login);
+
+    //     const message = res.data.msg;
+    //     if (message) showSuccessToast(message);
+    //   })
+    //   .catch(handleError);
+  }
 
   const sideNavItems = [
     {
@@ -143,7 +177,7 @@ export function AuthenticatedRoot() {
           icon: Logout,
           link: Routes.Login,
           iconColor: "#FF2A58",
-          onClick: () => {},
+          onClick: logUserOut,
         },
       ],
     },
@@ -205,6 +239,12 @@ export function AuthenticatedRoot() {
 
       return isChecked ? filteredStates : filteredStates.concat(selectedState);
     });
+  }
+
+  const token = BrowserStorageService.get(BrowserStorageKeys.AccessToken);
+
+  if (!token) {
+    return <Navigate to={Routes.Login} replace />;
   }
 
   return (
@@ -428,7 +468,7 @@ export function AuthenticatedRoot() {
         </aside>
       </div>
 
-      <div className="md:basis-[79%]">
+      <div>
         <Outlet />
       </div>
 

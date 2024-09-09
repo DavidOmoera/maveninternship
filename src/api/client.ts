@@ -4,6 +4,9 @@ import axios, {
   AxiosResponse,
   isAxiosError,
 } from "axios";
+import { BrowserStorageKeys } from "types/common";
+import { Routes } from "types/routes";
+import BrowserStorageService from "utils/browserStorage";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -13,14 +16,14 @@ export const client: AxiosInstance = axios.create({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 client.interceptors.request.use((config: any) => {
-  const token = localStorage.getItem("accessToken");
+  const token = BrowserStorageService.get(BrowserStorageKeys.AccessToken);
 
   if (token) {
     config.headers = {
       ...config.headers,
       ...(token
         ? {
-            Authorization: `Bearer ${JSON.parse(token)}`,
+            Authorization: `Bearer ${token}`,
           }
         : {}),
     };
@@ -36,6 +39,8 @@ client.interceptors.response.use(
 
     if (isAxiosError(error) && error.response?.status === 401) {
       // refresh token
+      BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
+      window.location.href = `${window.location.origin}${Routes.Login}`;
     }
 
     return Promise.reject(error);
