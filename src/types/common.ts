@@ -96,6 +96,7 @@ export type TBillContributor = {
 export type TBill = {
   id: string;
   title: string;
+  legislative_type: TBillType;
   state: string;
   status: string;
   latest_action_date: Date | string;
@@ -140,6 +141,8 @@ export type TGetBillsParams = Partial<{
 
 export type TSearchBillsParams = TGetBillsParams &
   Partial<{
+    skip: number;
+    limit: number;
     search_term: string;
     identifier: string;
     bill_type: TBillType;
@@ -148,6 +151,13 @@ export type TSearchBillsParams = TGetBillsParams &
     jurisdiction: string[];
     chamber: TBillChamber;
   }>;
+
+export type TGetBillsSearchResponse = {
+  items: TBill[];
+  total: number;
+  limit: number;
+  offset: number;
+};
 
 export type TGetBillsResponse = {
   items: TBill[];

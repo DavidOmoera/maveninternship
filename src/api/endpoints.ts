@@ -48,7 +48,7 @@ export const endpoints = {
   bills: {
     getBill: (billId: string): string => `/bills/${billId}`,
     getBills: (): string => `/bills/`,
-    searchBills: (): string => `/bills/filter`,
+    searchBills: (): string => `/bills/filter/`,
     getBillVotes: (billId: string): string => `/bills/${billId}/votes`,
     getBillActions: (billId: string): string => `/bills/${billId}/actions`,
     getBillContributors: (billId: string): string =>

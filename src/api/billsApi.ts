@@ -9,6 +9,7 @@ import {
   TBillVotesResponse,
   TGetBillsParams,
   TGetBillsResponse,
+  TGetBillsSearchResponse,
   TSearchBillsParams,
 } from "types/common";
 
@@ -37,5 +38,5 @@ export const getBillsRequest = (
 
 export const searchBillsRequest = (
   params: TSearchBillsParams
-): Promise<AxiosResponse<TGetBillsResponse>> =>
+): Promise<AxiosResponse<TGetBillsSearchResponse>> =>
   client.get(endpoints.bills.searchBills(), { params });
