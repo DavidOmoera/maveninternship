@@ -17,7 +17,6 @@ type TNotificationsProps = {
   open: boolean;
   onClose: () => void;
   onClickSettings: () => void;
-  user_id: number;
 };
 
 export function Notifications({
