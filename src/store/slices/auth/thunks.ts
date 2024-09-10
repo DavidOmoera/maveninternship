@@ -11,7 +11,10 @@ import {
   TSendReceiptParams,
 } from "types/common";
 import BrowserStorageService from "utils/browserStorage";
-import { handleError } from "utils/helpers";
+import { handleError, showSuccessToast } from "utils/helpers";
+import { clearUserData } from ".";
+import { redirect, Routes } from "react-router-dom";
+import { Login } from "components/pages/Login";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -75,16 +78,25 @@ export const signUp = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  try {
-    const response = await authApi.logoutRequest();
-    BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
-    return response.data;
-  } catch (e) {
-    const error = e as AxiosError;
-    throw error;
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { dispatch }) => {
+    try {
+      const response = await authApi.logoutRequest();
+      BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
+      dispatch(clearUserData());
+      const message = response.data?.msg;
+      if (message) {
+        showSuccessToast(message);
+      }
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      handleError(error);
+      throw error;
+    }
   }
-});
+);
 
 export const verifyEmail = createAsyncThunk(
   "auth/verifyEmail",

@@ -1,7 +1,6 @@
 import { store } from "store";
 import { AxiosInstance } from "axios";
 import { ReactNode } from "react";
-import { number } from "yup";
 
 export type Representative = {
   image: string;
