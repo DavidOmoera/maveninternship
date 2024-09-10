@@ -1,6 +1,6 @@
 import { store } from "store";
 import { AxiosInstance } from "axios";
-import { Key, ReactNode } from "react";
+import { ReactNode } from "react";
 
 export type Representative = {
   image: string;
@@ -439,7 +439,6 @@ export type TPersonResponse = {
 
 
 export type TPersonOfficesResponse = {
-  role: ReactNode;
   classification: string;
   address: string;
   voice: string;
@@ -450,8 +449,6 @@ export type TPersonOfficesResponse = {
 };
 
 export type TPersonMembershipsResponse = {
-  committee_id: Key | null | undefined;
-  committee_name: ReactNode;
   created_at: string;
   updated_at: string;
   extras: Record<string, string>;

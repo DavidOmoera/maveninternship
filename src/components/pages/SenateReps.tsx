@@ -357,14 +357,14 @@ export function SenateReps() {
                 <h3 className="font-semibold mt-4">Offices</h3>
                 {personOffices && personOffices.map((office) => (
                   <div key={office.id} className="mb-2">
-                    <p>{office.name} - {office.role}</p>
+                    <p>{office.name} - {office.classification}</p>
                   </div>
                 ))}
 
                 <h3 className="font-semibold mt-4">Committee Memberships</h3>
                 {personMemberships && personMemberships.map((membership) => (
-                  <div key={membership.committee_id} className="mb-2">
-                    <p>{membership.committee_name}</p>
+                  <div key={membership.id} className="mb-2">
+                    <p>{membership.person_name}</p>
                   </div>
                 ))}
               </div>
