@@ -13,6 +13,8 @@ import { signUp } from "store/slices/auth/thunks";
 import { signingUpSelector } from "store/slices/auth/selectors";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import { AuthToastMessages } from "constants/toastMessages";
+import { IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type TSignUpForm = {
   first_name: string;
@@ -28,6 +30,7 @@ export function SignUp() {
   const isSigningUp = useAppSelector(signingUpSelector);
   const [accountType, setAccountType] = useState<TAccountClass>("personal");
   const [hasAgreedTerms, setHasAgreedTerms] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     control,
@@ -92,6 +95,10 @@ export function SignUp() {
   function selectCompanyAccountType() {
     setAccountType("corporate");
   }
+
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <div className="w-full col justify-center items-center h-full px-4 md:px-10">
@@ -170,20 +177,66 @@ export function SignUp() {
             required
             name="password"
             label="Create Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Create Password"
             error={!!errors?.password}
             helperText={(errors?.password?.message as string) ?? ""}
+            rightIcon={
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                edge="end"
+                sx={{
+                  border: "none",
+                  outline: "none",
+                  "&:focus": {
+                    outline: "none",
+                  },
+                  "&:hover": {
+                    outline: "none",
+                  },
+                }}
+              >
+                {showPassword ? (
+                  <VisibilityOff className="text-blue-950 p-1 " />
+                ) : (
+                  <Visibility className="text-blue-950 p-1 " />
+                )}
+              </IconButton>
+            }
           />
           <ControlledInput
             control={control}
             required
             name="confirm_password"
             label="Confirm Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Confirm Password"
             error={!!errors?.confirm_password}
             helperText={(errors?.confirm_password?.message as string) ?? ""}
+            rightIcon={
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                edge="end"
+                sx={{
+                  border: "none",
+                  outline: "none",
+                  "&:focus": {
+                    outline: "none",
+                  },
+                  "&:hover": {
+                    outline: "none",
+                  },
+                }}
+              >
+                {showPassword ? (
+                  <VisibilityOff className="text-blue-950 p-1 " />
+                ) : (
+                  <Visibility className="text-blue-950 p-1 " />
+                )}
+              </IconButton>
+            }
           />
         </div>
         <div className="w-full flex flex-row items-center mb-4 gap-1">
