@@ -109,7 +109,7 @@ export function SenateReps() {
     }
   };
 
-  const isRepInTopReps = (rep: Representative) => topReps.some(existingRep => existingRep.name === rep.name);
+  const isRepInTopReps = (rep: Representative) => topReps.some((existingRep: { name: string; }) => existingRep.name === rep.name);
 
   const onClickRepresentative = async (repId: number, pageType: string) => {
     try {

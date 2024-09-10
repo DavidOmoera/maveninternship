@@ -437,6 +437,7 @@ export type TPersonResponse = {
   id: string;
 };
 
+
 export type TPersonOfficesResponse = {
   role: ReactNode;
   classification: string;
@@ -453,6 +454,7 @@ export type TPersonMembershipsResponse = {
   committee_name: ReactNode;
   created_at: string;
   updated_at: string;
+  extras: Record<string, string>;
   person_name: string;
   role: string;
   start_date: string;
@@ -461,4 +463,12 @@ export type TPersonMembershipsResponse = {
   person_id: string;
   post_id: string;
   id: string;
+};
+
+export type TValidationErrorResponse = {
+  detail: Array<{
+    loc: (string | number)[];
+    msg: string;
+    type: string;
+  }>;
 };
