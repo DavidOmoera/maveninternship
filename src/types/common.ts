@@ -280,15 +280,6 @@ export type TUserParams = Partial<{
   email: string;
 }>;
 
-
-export type TSearchUsersParams = Partial<
-  TGetBillsParams &
-  TUserParams & {
-    account_class: string;
-    subscription_plan: string;
-  }
->;
-
 export type TSearchUsersParams = Partial<{
   name: string;
   email: string;
@@ -297,7 +288,6 @@ export type TSearchUsersParams = Partial<{
   skip: number;
   limit: number;
 }>;
-
 
 export type TOrganizationParams = Partial<{
   org_id: number;
@@ -481,7 +471,6 @@ export type TGetCommitteeResponse = Committee;
 
 export type TGetCommitteeMembershipsResponse = CommitteeMembership[];
 
-
 export type TPersonResponse = {
   created_at: string;
   updated_at: string;
@@ -505,7 +494,6 @@ export type TPersonResponse = {
   email: string;
   id: string;
 };
-
 
 export type TPersonOfficesResponse = {
   classification: string;
@@ -531,10 +519,8 @@ export type TPersonMembershipsResponse = {
   id: string;
 };
 
-
 export type TResetPasswordRequestBody = {
   email: string;
   token: string;
   new_password: string;
 };
-
