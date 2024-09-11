@@ -13,8 +13,6 @@ import {
 import BrowserStorageService from "utils/browserStorage";
 import { handleError, showSuccessToast } from "utils/helpers";
 import { clearUserData } from ".";
-import { redirect, Routes } from "react-router-dom";
-import { Login } from "components/pages/Login";
 
 export const login = createAsyncThunk(
   "auth/login",
