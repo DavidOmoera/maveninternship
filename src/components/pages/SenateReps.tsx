@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Representative, TPersonMembershipsResponse, TPersonOfficesResponse, TPersonResponse } from "types/common";
+import { Representative, TPersonMembershipsResponse, TPersonOfficesResponse, TPersonResponse, TValidationErrorResponse } from "types/common";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
@@ -43,12 +43,23 @@ export function SenateReps() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
+  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
+
+  const handleValidationErrors = (validationErrors: TValidationErrorResponse) => {
+    const errors: { [key: string]: string } = {};
+    validationErrors.detail.forEach((error) => {
+
+      const field = Array.isArray(error.loc) ? error.loc.join('.') : 'unknown';
+      errors[field] = error.msg;
+    });
+    setValidationErrors(errors);
+  };
+
 
   useEffect(() => {
     const fetchCommitteeData = async () => {
       try {
         setLoading(true);
-
         const committeesResponse = await committeesApi.getCommitteesRequest();
         setCommittees(committeesResponse.data);
 
@@ -58,7 +69,12 @@ export function SenateReps() {
         const membershipsResponses = await Promise.all(membershipsPromises);
         setCommitteeMemberships(membershipsResponses.flatMap(response => response.data));
       } catch (error) {
-        handleApiError(error as AxiosError);
+        if (error instanceof AxiosError && error.response && error.response.data) {
+          const validationErrors: TValidationErrorResponse = error.response.data;
+          handleValidationErrors(validationErrors);
+        } else {
+          handleApiError(error as AxiosError);
+        }
       } finally {
         setLoading(false);
       }
@@ -77,16 +93,23 @@ export function SenateReps() {
         getPersonMembershipsRequest(personId)
       ]);
 
-
       const officesArray = Array.isArray(officesData.data) ? officesData.data : [officesData.data];
       const membershipsArray = Array.isArray(membershipsData.data) ? membershipsData.data : [membershipsData.data];
 
       setPersonOffices(officesArray as TPersonOfficesResponse[]);
       setPersonMemberships(membershipsArray as TPersonMembershipsResponse[]);
     } catch (error) {
-      handleApiError(error as AxiosError);
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        const validationErrors: TValidationErrorResponse = error.response.data;
+        handleValidationErrors(validationErrors);
+      } else {
+        handleApiError(error as AxiosError);
+      }
+    } finally {
+      setLoading(false);
     }
   };
+
 
   useEffect(() => {
     if (personId) {
@@ -147,7 +170,6 @@ export function SenateReps() {
     setLoading(true);
     try {
       if (data.searchValue) {
-
         const searchType = 'person';
 
         if (searchType === 'person') {
@@ -163,12 +185,16 @@ export function SenateReps() {
         }
       }
     } catch (error) {
-      handleApiError(error as AxiosError);
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        const validationErrors: TValidationErrorResponse = error.response.data;
+        handleValidationErrors(validationErrors);
+      } else {
+        handleApiError(error as AxiosError);
+      }
     } finally {
       setLoading(false);
     }
   };
-
 
 
   const getCommitteeForRep = (repId: number) => {
@@ -198,6 +224,20 @@ export function SenateReps() {
                 disabled={loading}
               />
             </div>
+
+            {/* Display validation errors */}
+            {Object.keys(validationErrors).length > 0 && (
+              <div className="bg-red-100 text-red-800 p-4 rounded-lg mt-4">
+                <h4 className="font-semibold">Validation Errors:</h4>
+                <ul>
+                  {Object.entries(validationErrors).map(([field, message]) => (
+                    <li key={field}>
+                      <strong>{field}:</strong> {message}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* Display legislative sessions  */}
@@ -373,7 +413,7 @@ export function SenateReps() {
         </div>
       </div>
       <Outlet />
-    </PageContainer>
+    </PageContainer >
   );
 
 }
