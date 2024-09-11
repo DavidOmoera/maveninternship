@@ -280,6 +280,15 @@ export type TUserParams = Partial<{
   email: string;
 }>;
 
+
+export type TSearchUsersParams = Partial<
+  TGetBillsParams &
+  TUserParams & {
+    account_class: string;
+    subscription_plan: string;
+  }
+>;
+
 export type TSearchUsersParams = Partial<{
   name: string;
   email: string;
@@ -288,6 +297,7 @@ export type TSearchUsersParams = Partial<{
   skip: number;
   limit: number;
 }>;
+
 
 export type TOrganizationParams = Partial<{
   org_id: number;
@@ -471,8 +481,60 @@ export type TGetCommitteeResponse = Committee;
 
 export type TGetCommitteeMembershipsResponse = CommitteeMembership[];
 
+
+export type TPersonResponse = {
+  created_at: string;
+  updated_at: string;
+  extras: Record<string, string>;
+  name: string;
+  family_name: string;
+  given_name: string;
+  image: string;
+  gender: string;
+  biography: string;
+  birth_date: string;
+  death_date?: string;
+  primary_party: string;
+  current_jurisdiction_id: string;
+  serving_role: {
+    title: string;
+    district: number;
+    division_id: string;
+    org_classification: string;
+  };
+  email: string;
+  id: string;
+};
+
+
+export type TPersonOfficesResponse = {
+  classification: string;
+  address: string;
+  voice: string;
+  fax?: string;
+  name: string;
+  person_id: string;
+  id: string;
+};
+
+export type TPersonMembershipsResponse = {
+  created_at: string;
+  updated_at: string;
+  extras: Record<string, string>;
+  person_name: string;
+  role: string;
+  start_date: string;
+  end_date?: string;
+  organization_id: string;
+  person_id: string;
+  post_id: string;
+  id: string;
+};
+
+
 export type TResetPasswordRequestBody = {
   email: string;
   token: string;
   new_password: string;
 };
+

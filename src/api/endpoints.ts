@@ -96,4 +96,10 @@ export const endpoints = {
     getCommitteeMemberships: (committeeId: string): string =>
       `/committees/${committeeId}/memberships`,
   },
+  person: {
+    getPerson: (personId: string): string => `/persons/${personId}`,
+    getPersonOffices: (personId: string): string => `/persons/${personId}/offices`,
+    getPersonMemberships: (personId: string): string => `/persons/${personId}/memberships`,
+    searchPerson: (): string => `/persons/search/`,
+  },
 };
