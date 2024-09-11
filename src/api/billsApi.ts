@@ -3,14 +3,18 @@ import { client } from "./client";
 import { endpoints } from "./endpoints";
 import {
   TBill,
+  TBillChatRequestParams,
   TBillSummaryParams,
   TBillSummaryResponse,
   TBillVersion,
   TBillVotesParams,
   TBillVotesResponse,
+  TGetBillChatResponse,
   TGetBillsParams,
   TGetBillsResponse,
   TGetBillsSearchResponse,
+  TPostBillChatRequestBody,
+  TPostBillChatResponse,
   TSearchBillsParams,
 } from "types/common";
 
@@ -46,3 +50,13 @@ export const searchBillsRequest = (
   params: TSearchBillsParams
 ): Promise<AxiosResponse<TGetBillsSearchResponse>> =>
   client.get(endpoints.bills.searchBills(), { params });
+
+export const postBillChatRequest = (
+  requestBody: TPostBillChatRequestBody
+): Promise<AxiosResponse<TPostBillChatResponse>> =>
+  client.post(endpoints.bills.chatAboutBill(), null, { params: requestBody });
+
+export const getBillChatRequest = (
+  params: TBillChatRequestParams
+): Promise<AxiosResponse<TGetBillChatResponse>> =>
+  client.get(endpoints.bills.getBillChat(), { params });
