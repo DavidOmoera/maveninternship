@@ -31,6 +31,7 @@ export type ThunkAPI = {
 
 export type TbillState = {
   bills: TBill[];
+  trackedBills: TBill[];
   totalBillsCount: number;
   isLoadingBills: boolean;
 };
@@ -562,3 +563,15 @@ export type TPostBillChatResponse = {
   processing_time: string;
   response: string;
 };
+
+export type TTrackBillResponse = {
+  bill_id: string;
+  user_id: number;
+  status: string;
+};
+
+export type TGetTrackedBillsRequestParams = Partial<{
+  skip: number;
+  limit: number;
+  offset: number;
+}>;

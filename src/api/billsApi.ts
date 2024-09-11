@@ -13,9 +13,11 @@ import {
   TGetBillsParams,
   TGetBillsResponse,
   TGetBillsSearchResponse,
+  TGetTrackedBillsRequestParams,
   TPostBillChatRequestBody,
   TPostBillChatResponse,
   TSearchBillsParams,
+  TTrackBillResponse,
 } from "types/common";
 
 export const getBillRequest = (billId: string): Promise<AxiosResponse<TBill>> =>
@@ -60,3 +62,18 @@ export const getBillChatRequest = (
   params: TBillChatRequestParams
 ): Promise<AxiosResponse<TGetBillChatResponse>> =>
   client.get(endpoints.bills.getBillChat(), { params });
+
+export const trackBillRequest = (
+  bill_id: string
+): Promise<AxiosResponse<TTrackBillResponse>> =>
+  client.post(endpoints.bills.trackBill(), null, { params: { bill_id } });
+
+export const untrackBillRequest = (
+  bill_id: string
+): Promise<AxiosResponse<TTrackBillResponse>> =>
+  client.delete(endpoints.bills.stopTrackingBill(), { params: { bill_id } });
+
+export const getTrackedBillsRequest = (
+  params?: TGetTrackedBillsRequestParams
+): Promise<AxiosResponse<TGetBillsSearchResponse>> =>
+  client.get(endpoints.bills.getTrackedBills(), { params });

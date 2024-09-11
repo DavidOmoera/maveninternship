@@ -60,7 +60,7 @@ export const endpoints = {
     getBillContributors: (billId: string): string =>
       `/bills/${billId}/contributors`,
     getBillSummary: (billId: string): string => `/bills/${billId}/summary`,
-    trackBill: (): string => `/bills/track_bill`,
+    trackBill: (): string => `/bills/track_bill/`,
     stopTrackingBill: (): string => `/bills/stop_tracking_bill`,
     getTrackedBills: (): string => `/bills/tracked_bills`,
     chatAboutBill: (): string => `/bills/chat`,

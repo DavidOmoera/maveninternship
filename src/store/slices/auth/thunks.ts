@@ -12,7 +12,6 @@ import {
 } from "types/common";
 import BrowserStorageService from "utils/browserStorage";
 import { handleError, showSuccessToast } from "utils/helpers";
-import { clearUserData } from ".";
 
 export const login = createAsyncThunk(
   "auth/login",
