@@ -7,7 +7,6 @@ import chevronRight from "assets/chevron_right.svg";
 import mastercard from "assets/mastercard.svg";
 import pencil from "assets/pencil.svg";
 import successCheck from "assets/success_check.svg";
-import orgLogo from "assets/org_logo.png";
 import visaLogo from "assets/visa_logo.svg";
 import { Pill } from "components/molecules/Pill";
 import { ISSUES_OPTIONS } from "constants/common";
@@ -26,7 +25,7 @@ import {
   editProfileSchema,
   managePaymentMethodSchema,
 } from "constants/schemas";
-import { useState, useRef, useMemo, useEffect } from "react";
+import { useState, useRef, useMemo } from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
