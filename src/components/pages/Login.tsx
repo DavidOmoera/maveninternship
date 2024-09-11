@@ -7,6 +7,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ControlledInput } from "components/organisms/ControlledInput";
 import { useAppDispatch } from "utils/helpers";
 import { login } from "store/slices/auth/thunks";
+import { IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 type TSignInForm = {
   email: string;
@@ -18,6 +21,7 @@ export function Login() {
   const signedUpEmail = location.state?.email as string;
   const navigate = useNavigate(); // Initialize useNavigate
   const dispatch = useAppDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     control,
@@ -37,6 +41,10 @@ export function Login() {
     if (isValid) {
       dispatch(login({ username, password, successCallback }));
     }
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -65,10 +73,33 @@ export function Login() {
             required
             name="password"
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Password"
             error={!!errors?.password}
             helperText={(errors?.password?.message as string) ?? ""}
+            rightIcon={
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                edge="end"
+                sx={{
+                  border: "none",
+                  outline: "none",
+                  "&:focus": {
+                    outline: "none",
+                  },
+                  "&:hover": {
+                    outline: "none",
+                  },
+                }}
+              >
+                {showPassword ? (
+                  <VisibilityOff className="text-blue-950 p-1 " />
+                ) : (
+                  <Visibility className="text-blue-950 p-1 " />
+                )}
+              </IconButton>
+            }
           />
           <div className="flex flex-row justify-end">
             <a href={Routes.ResetPassword}>

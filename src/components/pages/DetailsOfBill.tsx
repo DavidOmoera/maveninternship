@@ -210,9 +210,9 @@ const DetailsOfBill: React.FC = () => {
         <div className="w-full flex flex-wrap gap-4">
           {/* Bill Details Section */}
           <div className="flex-1 p-6 bg-white rounded-xl mb-6 min-w-[320px]">
-            <h2 className="text-neutral950 font-extrabold pb-6 line-clamp-1">
+            <h3 className="text-neutral950 font-extrabold pb-6 truncate">
               {currentBill?.title}
-            </h2>
+            </h3>
             <p className="text-sm text-neutral950">
               {dayjs(currentBill.latest_action_date).format("MMMM DD, YYYY")}
             </p>

@@ -79,9 +79,70 @@ export type TSignUpRequestBody = {
   account_type: TAccountType;
 };
 
+export type TRegisterOrg = {
+  message: string;
+  organization: TSignUpRequestBody;
+};
 export type TSignUpResponse = {
   message: string;
   user: TUserData;
+};
+
+export type TSendReceiptParams = {
+  message: string;
+  invoice_type: string;
+  user_name: string;
+  order_number: string;
+  order_date: Date | string;
+  plan: string;
+  plan_price: string;
+  start_date: Date | string;
+  renewal_date: Date | string;
+};
+
+export type TCheckoutParams = {
+  plan: string;
+  user_id: string;
+  org_id: string;
+};
+
+export type TCheckoutResponse = {
+  checkout_session_url: string;
+};
+
+export type TCreateOrgAccount = Partial<{
+  account_class: string;
+  organization_name: string;
+  business_type: string;
+  industry: string;
+  organization_size: string;
+  contact_first_name: string;
+  contact_last_name: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  subscription_plan: string;
+  logo: string;
+}>;
+
+export type TOrgDetails = TCreateOrgAccount & {
+  registration_method: string;
+  stripe_subscription_id: string;
+  subscription_start_date: Date | string;
+  subscription_end_date: Date | string;
+  card_number: number;
+  id: number;
+};
+
+export type TPersonDetails = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  industry_affiliation: string;
+  industry_size: number;
+  id: number;
 };
 
 export type TBillContributor = {
@@ -219,29 +280,36 @@ export type TUserParams = Partial<{
   email: string;
 }>;
 
+
 export type TSearchUsersParams = Partial<
   TGetBillsParams &
-    TUserParams & {
-      account_class: string;
-      subscription_plan: string;
-    }
+  TUserParams & {
+    account_class: string;
+    subscription_plan: string;
+  }
 >;
+
+export type TSearchUsersParams = Partial<{
+  name: string;
+  email: string;
+  account_class: string;
+  subscription_plan: string;
+  skip: number;
+  limit: number;
+}>;
+
 
 export type TOrganizationParams = Partial<{
   org_id: number;
   email: string;
 }>;
 
-export type TRoleParams = Partial<
-  TUserDetailsParams & {
-    role: string;
-  }
->;
+export type TRoleParams = Partial<TUserParams & TRole>;
 
 export type TUserDetailsParams = Partial<{
   account_type: string;
-  exp_date: string;
-  subscription_start_date: string;
+  exp_date: Date | string;
+  subscription_start_date: Date | string;
   subscription_id: string;
   subscription: string;
 }>;
@@ -412,3 +480,61 @@ export type TGetCommitteesResponse = Committee[];
 export type TGetCommitteeResponse = Committee;
 
 export type TGetCommitteeMembershipsResponse = CommitteeMembership[];
+
+
+export type TPersonResponse = {
+  created_at: string;
+  updated_at: string;
+  extras: Record<string, string>;
+  name: string;
+  family_name: string;
+  given_name: string;
+  image: string;
+  gender: string;
+  biography: string;
+  birth_date: string;
+  death_date?: string;
+  primary_party: string;
+  current_jurisdiction_id: string;
+  serving_role: {
+    title: string;
+    district: number;
+    division_id: string;
+    org_classification: string;
+  };
+  email: string;
+  id: string;
+};
+
+
+export type TPersonOfficesResponse = {
+  classification: string;
+  address: string;
+  voice: string;
+  fax?: string;
+  name: string;
+  person_id: string;
+  id: string;
+};
+
+export type TPersonMembershipsResponse = {
+  created_at: string;
+  updated_at: string;
+  extras: Record<string, string>;
+  person_name: string;
+  role: string;
+  start_date: string;
+  end_date?: string;
+  organization_id: string;
+  person_id: string;
+  post_id: string;
+  id: string;
+};
+
+
+export type TResetPasswordRequestBody = {
+  email: string;
+  token: string;
+  new_password: string;
+};
+

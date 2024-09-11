@@ -3,7 +3,7 @@ export enum Routes {
   Home = "/",
   SignUp = "/sign-up",
   Login = "/login",
-  ConfirmEmail = "/email-confirmation-page",
+  ConfirmEmail = "/confirm-email",
   AccountSetup = "/account-setup",
   ResetPassword = "/reset-password",
 
