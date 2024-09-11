@@ -68,6 +68,7 @@ export const signUp = createAsyncThunk(
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
+      handleError(error, AuthToastMessages.SIGNUP_FAILURE);
       throw error;
     }
   }
