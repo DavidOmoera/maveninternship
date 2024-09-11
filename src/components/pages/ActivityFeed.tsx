@@ -138,10 +138,10 @@ export function ActivityFeed() {
         )}
       </div>
 
-      <div className="p-6 lg:p-8 mb-9 mx-9 bg-white rounded-xl min-h-[900px] lg:min-w-[1110px]">
+      <div className="p-6 lg:p-8 mb-9 mx-9  bg-white rounded-xl min-h-[900px] xl:min-w-[1110px] lg:max-w-[800px] md:max-w-[600px]">
         {/** Input fields */}
-        <div className="row justify-between mb-9 flex-wrap gap-3">
-          <div className="flex gap-3 w-full lg:w-fit">
+        <div className="row justify-between mb-9 flex-wrap gap-3 md:mx-2 sm:mx-20">
+          <div className="flex gap-3 w-full xl:w-fit">
             <ControlledSelect
               name="noOfDays"
               control={activityControl}
@@ -163,13 +163,13 @@ export function ActivityFeed() {
             control={activityControl}
             leftIcon={<SearchIcon />}
             backgroundColor={colors.neutral50}
-            containerClasses="w-full bg-neutral50 lg:w-52"
+            containerClasses="w-full bg-neutral50 xl:w-52"
             helperText={activityFormErrors.searchValue?.message as string}
           />
         </div>
 
         {/** Activity feed */}
-        <div className="col gap-8">
+        <div className="col gap-8 ">
           {searchedActivities.map(
             (
               {
