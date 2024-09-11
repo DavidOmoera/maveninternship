@@ -7,9 +7,12 @@ import {
   TLoginRequestBody,
   TSignUpRequestBody,
   TUpdateUserRequestBody,
+  TVerifyEmailRequestBody,
+  TSendReceiptParams,
 } from "types/common";
 import BrowserStorageService from "utils/browserStorage";
-import { handleError } from "utils/helpers";
+import { handleError, showSuccessToast } from "utils/helpers";
+import { clearUserData } from ".";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -65,6 +68,117 @@ export const signUp = createAsyncThunk(
   async (requestBody: TSignUpRequestBody) => {
     try {
       const response = await authApi.signUpRequest(requestBody);
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { dispatch }) => {
+    try {
+      const response = await authApi.logoutRequest();
+      BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
+      dispatch(clearUserData());
+      const message = response.data?.msg;
+      if (message) {
+        showSuccessToast(message);
+      }
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      handleError(error);
+      throw error;
+    }
+  }
+);
+
+export const verifyEmail = createAsyncThunk(
+  "auth/verifyEmail",
+  async (requestBody: TVerifyEmailRequestBody) => {
+    try {
+      const response = await authApi.verifyEmailRequest(requestBody);
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const resendVerificationEmail = createAsyncThunk(
+  "auth/resendVerificationEmail",
+  async (email: string) => {
+    try {
+      const response = await authApi.resendVerificationEmailRequest(email);
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const sendReceipt = createAsyncThunk(
+  "auth/sendReceipt",
+  async (params: TSendReceiptParams) => {
+    try {
+      const response = await authApi.sendReceiptRequest(params);
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const initiatePasswordReset = createAsyncThunk(
+  "auth/initiatePasswordReset",
+  async () => {
+    try {
+      const response = await authApi.initiatePasswordResetRequest();
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async () => {
+    try {
+      const response = await authApi.resetPasswordRequest();
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const getOrganization = createAsyncThunk(
+  "auth/getOrganization",
+  async (identifier: string) => {
+    try {
+      const response = await authApi.getOrganizationRequest(identifier);
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const updateOrganizationDetails = createAsyncThunk(
+  "auth/updateOrganizationDetails",
+  async (email: string) => {
+    try {
+      const response = await authApi.updateOrganizationDetailsRequest(email);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
