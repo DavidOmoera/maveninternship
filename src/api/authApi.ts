@@ -5,6 +5,7 @@ import {
   TDefaultResponse,
   TLoginRequestBody,
   TLoginResponse,
+  TResetPasswordRequestBody,
   TSignUpRequestBody,
   TSignUpResponse,
   TUpdateUserRequestBody,
@@ -47,6 +48,16 @@ export const updateUserRequest = (
   client.put(endpoints.auth.updateUserProfile(), body, {
     params: { email: body.email },
   });
+
+export const initiatePasswordResetRequest = (
+  email: string
+): Promise<AxiosResponse<string>> =>
+  client.post(endpoints.auth.initiatePasswordReset(), { email });
+
+export const resetPasswordRequest = (
+  requestBody: TResetPasswordRequestBody
+): Promise<AxiosResponse<string>> =>
+  client.post(endpoints.auth.resetPassword(), requestBody);
 
 export const logoutRequest = (): Promise<AxiosResponse<TDefaultResponse>> =>
   client.post(endpoints.auth.logout());

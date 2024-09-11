@@ -8,11 +8,10 @@ import { TAccountClass } from "types/common";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signUpSchema } from "constants/schemas";
-import { handleError, useAppDispatch, useAppSelector } from "utils/helpers";
+import { useAppDispatch, useAppSelector } from "utils/helpers";
 import { signUp } from "store/slices/auth/thunks";
 import { signingUpSelector } from "store/slices/auth/selectors";
 import { ControlledInput } from "components/organisms/ControlledInput";
-import { AuthToastMessages } from "constants/toastMessages";
 import { IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -69,9 +68,6 @@ export function SignUp() {
         .unwrap()
         .then(() => {
           navigate(Routes.ConfirmEmail);
-        })
-        .catch((e) => {
-          handleError(e, AuthToastMessages.SIGNUP_FAILURE);
         });
     }
   };

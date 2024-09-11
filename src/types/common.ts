@@ -470,3 +470,9 @@ export type TGetCommitteesResponse = Committee[];
 export type TGetCommitteeResponse = Committee;
 
 export type TGetCommitteeMembershipsResponse = CommitteeMembership[];
+
+export type TResetPasswordRequestBody = {
+  email: string;
+  token: string;
+  new_password: string;
+};
