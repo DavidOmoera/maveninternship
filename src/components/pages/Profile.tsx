@@ -152,6 +152,12 @@ export function Profile() {
     }
   }, [dispatch, avatarUrl, organizationUrl]);
 
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      dispatch(updateUserData(JSON.parse(storedUserData)));
+    }
+  }, [dispatch]);
   const orgDetails = useMemo(
     () => [
       {

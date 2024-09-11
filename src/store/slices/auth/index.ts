@@ -25,9 +25,19 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      //get user data
       .addCase(getUserData.fulfilled, (state, action) => {
-        state.userData = action.payload;
+        if (action.payload) {
+          const user = action.payload;
+          state.userData = { ...state.userData, ...user };
+          localStorage.setItem("userData", JSON.stringify(user));
+        }
       })
+      .addCase(getUserData.rejected, (state, action) => {
+        state.userDataError = action.error.message;
+      })
+
+      //sign up
       .addCase(signUp.pending, (state) => {
         state.isSigningUp = true;
       })
@@ -38,11 +48,17 @@ const authSlice = createSlice({
       .addCase(signUp.rejected, (state) => {
         state.isSigningUp = false;
       });
-    builder.addCase(getOrganization.fulfilled, (state, action) => {
-      state.organizationData = action.payload;
-    });
+    //get organization details
+    builder
+      .addCase(getOrganization.fulfilled, (state, action) => {
+        state.organizationData = action.payload;
+      })
+      .addCase(getOrganization.rejected, (state, action) => {
+        state.userDataError = action.error.message;
+      });
   },
 });
 
-export const { updateUserData, clearUserData } = authSlice.actions;
+export const { updateUserData, clearUserData, updateOrganizationData } =
+  authSlice.actions;
 export default authSlice.reducer;

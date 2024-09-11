@@ -37,14 +37,12 @@ export function PageContainer({
   );
 
   useEffect(() => {
-    if (avatarUrl) {
+    const storedAvatar = localStorage.getItem("profileImage");
+    if (storedAvatar) {
+      setAvatar(storedAvatar);
+    } else if (avatarUrl) {
       setAvatar(avatarUrl);
       localStorage.setItem("profileImage", avatarUrl);
-    } else {
-      const storedAvatar = localStorage.getItem("profileImage");
-      if (storedAvatar) {
-        setAvatar(storedAvatar);
-      }
     }
   }, [avatarUrl]);
 
