@@ -88,13 +88,13 @@ export function PageContainer({
             />
           ) : null}
           <div className="row gap-2">
-            <h1 className="text-base text-neutral950 font-extrabold md:text-2xl lg:text-4xl line-clamp-1 max-w-[500px]">
+            <h1 className="text-base text-neutral950 font-extrabold md:text-2xl lg:text-3xl truncate max-w-[500px]">
               {title}
             </h1>
             {previousPageTitle ? (
               <>
-                <h1 className="text-neutral500 font-bold text-4xl">/</h1>
-                <h1 className="text-neutral500 font-medium text-4xl">
+                <h1 className="text-neutral500 font-bold text-3.5xl">/</h1>
+                <h1 className="text-neutral500 font-medium text-3.5xl">
                   {previousPageTitle}
                 </h1>
               </>
