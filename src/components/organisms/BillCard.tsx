@@ -81,6 +81,8 @@ export function GridCard({
   );
   const [isWatched, setIsWatched] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const hasCoauthors = !!coAuthor1 || !!coAuthor2 || !!coAuthor3;
+  const hasSupporters = !!supporter1 || !!supporter2 || !!supporter3;
 
   useEffect(() => {
     // Check if this bill is in the watchedBills list
@@ -134,14 +136,14 @@ export function GridCard({
         <p className="text-neutral500 text-xs capitalize">{relativeTime}</p>
       </div>
 
-      <div className="px-4 bg-white pb-1">
-        <h4 className="line-clamp-2 py-2 font-bold text-xl" onClick={onClick}>
+      <div className="px-4 bg-white pb-1 h-52">
+        <h4 className="py-2 font-bold text-xl truncate" onClick={onClick}>
           {title}
         </h4>
         <h6 className="text-blue-600 text-sm font-semibold mb-2 -mt-1">
           {status}
         </h6>
-        <p className="text-sm text-neutral500" onClick={onClick}>
+        <p className="text-sm text-neutral500 h-16" onClick={onClick}>
           {isExpanded ? description : `${description.slice(0, 200)}`}
           {description.length > 200 && (
             <span
@@ -177,7 +179,7 @@ export function GridCard({
         </div>
       </div>
 
-      <div className="flex justify-between p-3">
+      <div className="flex justify-between p-3 h-16">
         {name && (
           <Tooltip title="Author">
             <div className="flex items-center">
@@ -188,41 +190,55 @@ export function GridCard({
             </div>
           </Tooltip>
         )}
-        <div className="flex space-x-2 rounded-b-3xl">
-          <Tooltip title="Co-authors">
-            <div className="flex items-center">
-              {coAuthor1 && (
-                <ContributorAvatar imageUrl={coAuthor1} alt="Co-Author" />
+        {hasCoauthors ||
+          (hasSupporters && (
+            <div className="flex space-x-2 rounded-b-3xl">
+              {hasCoauthors && (
+                <Tooltip title="Co-authors">
+                  <div className="flex items-center">
+                    {coAuthor1 && (
+                      <ContributorAvatar imageUrl={coAuthor1} alt="Co-Author" />
+                    )}
+                    {coAuthor2 && (
+                      <ContributorAvatar imageUrl={coAuthor2} alt="Co-Author" />
+                    )}
+                    {coAuthor3 && (
+                      <ContributorAvatar imageUrl={coAuthor3} alt="Co-Author" />
+                    )}
+                    <p className="text-xs font-bold">{count1}</p>
+                  </div>
+                </Tooltip>
               )}
-              {coAuthor2 && (
-                <ContributorAvatar imageUrl={coAuthor2} alt="Co-Author" />
+              {hasSupporters && (
+                <>
+                  <span className="bg-gray-200 h-full w-1 border rounded-full"></span>
+                  <Tooltip title="Supporters">
+                    <div className="flex items-center">
+                      {supporter1 && (
+                        <ContributorAvatar
+                          imageUrl={supporter1}
+                          alt="Supporter"
+                        />
+                      )}
+                      {supporter2 && (
+                        <ContributorAvatar
+                          imageUrl={supporter2}
+                          alt="Supporter"
+                        />
+                      )}
+                      {supporter3 && (
+                        <ContributorAvatar
+                          imageUrl={supporter3}
+                          alt="Supporter"
+                        />
+                      )}
+                      <p className="ml-1 text-xs font-bold">{count2}</p>
+                    </div>
+                  </Tooltip>
+                </>
               )}
-              {coAuthor3 && (
-                <ContributorAvatar imageUrl={coAuthor3} alt="Co-Author" />
-              )}
-              <p className="text-xs font-bold">{count1}</p>
             </div>
-          </Tooltip>
-          {typeof supporter1 === "undefined" && (
-            <>
-              <span className="bg-gray-200 h-full w-1 border rounded-full"></span>
-              <Tooltip title="Supporters">
-                <div className="flex items-center">
-                  {supporter1 && (
-                    <ContributorAvatar imageUrl={supporter1} alt="Supporter" />
-                  )}
-                  {supporter2 && (
-                    <ContributorAvatar imageUrl={supporter2} alt="Supporter" />
-                  )}
-                  {supporter3 && (
-                    <ContributorAvatar imageUrl={supporter3} alt="Supporter" />
-                  )}
-                  <p className="ml-1 text-xs font-bold">{count2}</p>
-                </div>
-              </Tooltip>
-            </>
-          )}
-        </div>
+          ))}
       </div>
     </div>
   );

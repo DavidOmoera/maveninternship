@@ -28,29 +28,35 @@ export const endpoints = {
   auth: {
     register: (): string => `/register/`,
     verifyEmail: (): string => `/verify-email/`,
-    resendVerificationEmail: (): string => `/resend-verification`,
     login: (): string => `/token`,
     updateUserProfile: (): string => `/update_user_info`,
-    getUserData: (): string => `/users/me/`, // For current user
+    getUserData: (): string => `/users/me`, // For current user
+    logout: (): string => `/logout`,
+    send_receipt: (): string => `/send_receipts`,
+    resendVerificationEmail: (): string => `/resend-verification`,
     loginWithGoogle: (): string => `/google-login`,
     loginWithOutlook: (): string => `/outlook-login`,
-    logout: (): string => `/logout/`,
     initiatePasswordReset: (): string => `/password-reset-request`,
     resetPassword: (): string => `/password-reset`,
-
+    createCheckoutSession: (): string =>
+      `/create-checkout-session-account-setup`,
+    stripeWebhook: (): string => `/webhook-account-setup`,
+    accountCreation: (): string => `/create_org_account`,
+    getUserDetails: (): string => `/user-details`,
     registerOrganization: (): string => `/register-org-account`,
+    resetPersonalAccount: (): string => `/create_personal_account`,
+
     getOrganization: (): string => `/organization-details`,
     updateOrganizationDetails: (): string => `/update_org_details`,
     updateOrganizationContactDetails: (): string => `/update_org_contact`,
-
-    resetPersonalAccount: (): string => `/create_personal_account`,
   },
   bills: {
     getBill: (billId: string): string => `/bills/${billId}`,
     getBills: (): string => `/bills/`,
-    searchBills: (): string => `/bills/filter`,
+    searchBills: (): string => `/bills/filter/`,
     getBillVotes: (billId: string): string => `/bills/${billId}/votes`,
     getBillActions: (billId: string): string => `/bills/${billId}/actions`,
+    getBillVersions: (bill_id: string): string => `/bills/${bill_id}/versions`,
     getBillContributors: (billId: string): string =>
       `/bills/${billId}/contributors`,
     getBillSummary: (billId: string): string => `/bills/${billId}/summary`,
@@ -85,16 +91,15 @@ export const endpoints = {
     getPlans: (): string => `/subscription_plans`,
   },
   committees: {
-    getCommittees: (
-      jurisdiction?: string,
-      skip: number = 0,
-      limit: number = 10
-    ): string =>
-      `/committees?jurisdiction=${
-        jurisdiction || ""
-      }&skip=${skip}&limit=${limit}`,
+    getCommittees: () => "/committees/",
     getCommittee: (committeeId: string): string => `/committees/${committeeId}`,
     getCommitteeMemberships: (committeeId: string): string =>
       `/committees/${committeeId}/memberships`,
+  },
+  person: {
+    getPerson: (personId: string): string => `/persons/${personId}`,
+    getPersonOffices: (personId: string): string => `/persons/${personId}/offices`,
+    getPersonMemberships: (personId: string): string => `/persons/${personId}/memberships`,
+    searchPerson: (): string => `/persons/search/`,
   },
 };

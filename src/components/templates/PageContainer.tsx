@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/profile_picture.jpg";
@@ -31,9 +31,22 @@ export function PageContainer({
   const navigate = useNavigate();
   const userData = useAppSelector(userDataSelector);
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
+  const avatarUrl = useAppSelector((state) => state.auth.userData?.avatar);
   const [avatar, setAvatar] = useState<string>(
     userData?.avatar ?? profilePicture
   );
+
+  useEffect(() => {
+    if (avatarUrl) {
+      setAvatar(avatarUrl);
+      localStorage.setItem("profileImage", avatarUrl);
+    } else {
+      const storedAvatar = localStorage.getItem("profileImage");
+      if (storedAvatar) {
+        setAvatar(storedAvatar);
+      }
+    }
+  }, [avatarUrl]);
 
   // Chat with Bot modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -88,13 +101,13 @@ export function PageContainer({
             />
           ) : null}
           <div className="row gap-2">
-            <h1 className="text-base text-neutral950 font-extrabold md:text-2xl lg:text-4xl line-clamp-1 max-w-[500px]">
+            <h1 className="text-base text-neutral950 font-extrabold md:text-2xl lg:text-3xl truncate max-w-[500px]">
               {title}
             </h1>
             {previousPageTitle ? (
               <>
-                <h1 className="text-neutral500 font-bold text-4xl">/</h1>
-                <h1 className="text-neutral500 font-medium text-4xl">
+                <h1 className="text-neutral500 font-bold text-3.5xl">/</h1>
+                <h1 className="text-neutral500 font-medium text-3.5xl">
                   {previousPageTitle}
                 </h1>
               </>
