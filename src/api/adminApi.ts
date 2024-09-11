@@ -5,7 +5,7 @@ import {
   TUserData,
   TUserParams,
   TUpdateUserParams,
-  TGetBillsParams,
+  TActivityParams,
   TSearchUsersParams,
   TOrganizationParams,
   TUpdateOrgParams,
@@ -18,12 +18,12 @@ export const makeAdminRequest = (
   client.post(endpoints.admin.makeAdmin(), { params });
 
 export const getAllUsersRequest = (
-  params: TGetBillsParams
+  params: TActivityParams
 ): Promise<AxiosResponse<TUserData[]>> =>
   client.post(endpoints.admin.getAllUsers(), { params });
 
 export const getAllOrganizationsRequest = (
-  params: TGetBillsParams
+  params: TActivityParams
 ): Promise<AxiosResponse<TUserData[]>> =>
   client.post(endpoints.admin.getAllOrganizations(), { params });
 

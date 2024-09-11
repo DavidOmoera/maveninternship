@@ -235,3 +235,24 @@ export const signInSchema = yup.object().shape({
     .required("Please enter your email address"),
   password: yup.string().trim().required("Please enter a password"),
 });
+
+export const initiateResetPasswordSchema = yup.object().shape({
+  email: yup
+    .string()
+    .trim()
+    .email("Please enter a valid email address")
+    .required("Please enter your email address"),
+});
+
+export const resetPasswordSchema = yup.object().shape({
+  password: yup
+    .string()
+    .trim()
+    .min(6, "Password must be at least 6 characters long")
+    .required("Please enter a password"),
+  confirm_password: yup
+    .string()
+    .trim()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Please confirm your password"),
+});

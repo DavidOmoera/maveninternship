@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TAuthState } from "./types";
-import { getUserData, signUp } from "./thunks";
+import { getOrganization, getUserData, signUp } from "./thunks";
 
 const initialState: TAuthState = {
   accessToken: "",
@@ -8,6 +8,7 @@ const initialState: TAuthState = {
   userDataError: undefined,
   userDataLoading: false,
   isSigningUp: false,
+  organizationData: undefined,
 };
 
 const authSlice = createSlice({
@@ -16,6 +17,9 @@ const authSlice = createSlice({
   reducers: {
     updateUserData: (state, action) => {
       state.userData = { ...state.userData, ...action.payload };
+    },
+    updateOrganizationData: (state, action) => {
+      state.organizationData = action.payload;
     },
     clearUserData: () => ({ ...initialState }),
   },
@@ -34,6 +38,9 @@ const authSlice = createSlice({
       .addCase(signUp.rejected, (state) => {
         state.isSigningUp = false;
       });
+    builder.addCase(getOrganization.fulfilled, (state, action) => {
+      state.organizationData = action.payload;
+    });
   },
 });
 

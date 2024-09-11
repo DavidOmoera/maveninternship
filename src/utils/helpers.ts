@@ -73,7 +73,10 @@ export const handleApiError = (error: AxiosError): never => {
     // Use handleError for displaying toast messages
     switch (error.response.status) {
       case 403:
-        handleError(error, "Access is denied. Please check your API credentials or permissions.");
+        handleError(
+          error,
+          "Access is denied. Please check your API credentials or permissions."
+        );
         break;
       case 404:
         handleError(error, "The requested resource could not be found.");
@@ -82,7 +85,10 @@ export const handleApiError = (error: AxiosError): never => {
         handleError(error, `Validation Error: ${data.detail}`);
         break;
       case 500:
-        handleError(error, "Internal Server Error: The server encountered an error.");
+        handleError(
+          error,
+          "Internal Server Error: The server encountered an error."
+        );
         break;
       default:
         handleError(error, "An unexpected error occurred.");
