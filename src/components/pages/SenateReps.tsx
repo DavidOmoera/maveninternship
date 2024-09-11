@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Routes } from "types/routes";
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Representative, TPersonMembershipsResponse, TPersonOfficesResponse, TPersonResponse, TValidationErrorResponse } from "types/common";
+import { Representative, TPersonMembershipsResponse, TPersonOfficesResponse, TPersonResponse } from "types/common";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/slices/index";
 import { addTopRep, removeTopRep } from "store/slices/topRepsSlice";
@@ -19,7 +19,7 @@ import classNames from "classnames";
 import { COMMITTEE_ID_PREFIX, senators } from "constants/common";
 import { legislativeSessionsApi, committeesApi } from "api/index";
 import { TGetLegislativeSessionsResponse, Committee, CommitteeMembership } from "types/common";
-import { handleApiError } from "utils/helpers";
+import { handleApiError, handleError } from "utils/helpers";
 import { AxiosError } from "axios";
 import { getPersonRequest, getPersonOfficesRequest, getPersonMembershipsRequest, searchPersonRequest } from "api/personsApi";
 
@@ -43,17 +43,8 @@ export function SenateReps() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
-  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
+  const [validationErrors] = useState<{ [key: string]: string }>({});
 
-  const handleValidationErrors = (validationErrors: TValidationErrorResponse) => {
-    const errors: { [key: string]: string } = {};
-    validationErrors.detail.forEach((error) => {
-
-      const field = Array.isArray(error.loc) ? error.loc.join('.') : 'unknown';
-      errors[field] = error.msg;
-    });
-    setValidationErrors(errors);
-  };
 
 
   useEffect(() => {
@@ -69,16 +60,12 @@ export function SenateReps() {
         const membershipsResponses = await Promise.all(membershipsPromises);
         setCommitteeMemberships(membershipsResponses.flatMap(response => response.data));
       } catch (error) {
-        if (error instanceof AxiosError && error.response && error.response.data) {
-          const validationErrors: TValidationErrorResponse = error.response.data;
-          handleValidationErrors(validationErrors);
-        } else {
-          handleApiError(error as AxiosError);
-        }
+        handleError(error as AxiosError);
       } finally {
         setLoading(false);
       }
     };
+
 
     fetchCommitteeData();
   }, []);
@@ -99,12 +86,7 @@ export function SenateReps() {
       setPersonOffices(officesArray as TPersonOfficesResponse[]);
       setPersonMemberships(membershipsArray as TPersonMembershipsResponse[]);
     } catch (error) {
-      if (error instanceof AxiosError && error.response && error.response.data) {
-        const validationErrors: TValidationErrorResponse = error.response.data;
-        handleValidationErrors(validationErrors);
-      } else {
-        handleApiError(error as AxiosError);
-      }
+      handleError(error as AxiosError);
     } finally {
       setLoading(false);
     }
@@ -185,12 +167,7 @@ export function SenateReps() {
         }
       }
     } catch (error) {
-      if (error instanceof AxiosError && error.response && error.response.data) {
-        const validationErrors: TValidationErrorResponse = error.response.data;
-        handleValidationErrors(validationErrors);
-      } else {
-        handleApiError(error as AxiosError);
-      }
+      handleError(error as AxiosError);
     } finally {
       setLoading(false);
     }

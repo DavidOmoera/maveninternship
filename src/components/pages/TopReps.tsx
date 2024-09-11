@@ -18,10 +18,10 @@ import { Routes } from "types/routes.ts";
 import { COMMITTEE_ID_PREFIX, } from "constants/common";
 import { legislativeSessionsApi, committeesApi } from "api/index";
 import { TGetLegislativeSessionsResponse, Committee, CommitteeMembership } from "types/common";
-import { handleApiError } from "utils/helpers";
+import { handleApiError, handleError } from "utils/helpers";
 import { AxiosError } from "axios";
 import { getPersonRequest, getPersonOfficesRequest, getPersonMembershipsRequest, searchPersonRequest } from "api/personsApi";
-import { TPersonMembershipsResponse, TPersonOfficesResponse, TPersonResponse, TValidationErrorResponse } from "types/common";
+import { TPersonMembershipsResponse, TPersonOfficesResponse, TPersonResponse } from "types/common";
 type TActivitySearchForm = Partial<{
   searchValue: string;
 }>;
@@ -43,17 +43,8 @@ const TopReps: React.FC = () => {
   const [personOffices, setPersonOffices] = useState<TPersonOfficesResponse[]>([]);
   const [personMemberships, setPersonMemberships] = useState<TPersonMembershipsResponse[]>([]);
   const [personId, setPersonId] = useState<string | null>(null);
-  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
+  const [validationErrors] = useState<{ [key: string]: string }>({});
 
-  const handleValidationErrors = (validationErrors: TValidationErrorResponse) => {
-    const errors: { [key: string]: string } = {};
-    validationErrors.detail.forEach((error) => {
-
-      const field = Array.isArray(error.loc) ? error.loc.join('.') : 'unknown';
-      errors[field] = error.msg;
-    });
-    setValidationErrors(errors);
-  };
 
 
   useEffect(() => {
@@ -69,16 +60,12 @@ const TopReps: React.FC = () => {
         const membershipsResponses = await Promise.all(membershipsPromises);
         setCommitteeMemberships(membershipsResponses.flatMap(response => response.data));
       } catch (error) {
-        if (error instanceof AxiosError && error.response && error.response.data) {
-          const validationErrors: TValidationErrorResponse = error.response.data;
-          handleValidationErrors(validationErrors);
-        } else {
-          handleApiError(error as AxiosError);
-        }
+        handleError(error as AxiosError);
       } finally {
         setLoading(false);
       }
     };
+
 
     fetchCommitteeData();
   }, []);
@@ -99,16 +86,12 @@ const TopReps: React.FC = () => {
       setPersonOffices(officesArray as TPersonOfficesResponse[]);
       setPersonMemberships(membershipsArray as TPersonMembershipsResponse[]);
     } catch (error) {
-      if (error instanceof AxiosError && error.response && error.response.data) {
-        const validationErrors: TValidationErrorResponse = error.response.data;
-        handleValidationErrors(validationErrors);
-      } else {
-        handleApiError(error as AxiosError);
-      }
+      handleError(error as AxiosError);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     if (personId) {
       fetchAndSetPersonDetails(personId);
@@ -142,12 +125,7 @@ const TopReps: React.FC = () => {
         }
       }
     } catch (error) {
-      if (error instanceof AxiosError && error.response && error.response.data) {
-        const validationErrors: TValidationErrorResponse = error.response.data;
-        handleValidationErrors(validationErrors);
-      } else {
-        handleApiError(error as AxiosError);
-      }
+      handleError(error as AxiosError);
     } finally {
       setLoading(false);
     }

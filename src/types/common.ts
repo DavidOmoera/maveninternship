@@ -462,10 +462,3 @@ export type TPersonMembershipsResponse = {
   id: string;
 };
 
-export type TValidationErrorResponse = {
-  detail: Array<{
-    loc: (string | number)[];
-    msg: string;
-    type: string;
-  }>;
-};
