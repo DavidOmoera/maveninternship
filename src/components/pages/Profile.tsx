@@ -7,7 +7,6 @@ import chevronRight from "assets/chevron_right.svg";
 import mastercard from "assets/mastercard.svg";
 import pencil from "assets/pencil.svg";
 import successCheck from "assets/success_check.svg";
-import orgLogo from "assets/org_logo.png";
 import visaLogo from "assets/visa_logo.svg";
 import { Pill } from "components/molecules/Pill";
 import { ISSUES_OPTIONS } from "constants/common";
@@ -39,6 +38,7 @@ import { updateOrganizationData } from "store/slices/organization";
 import { updateUserData } from "store/slices/auth";
 import { Routes } from "types/routes";
 import { useNavigate } from "react-router-dom";
+import { getUserData } from "store/slices/auth/thunks";
 
 const DURATION_OPTIONS = [
   { id: 1, label: "Less than a year", value: "less_than_year" },
@@ -112,11 +112,9 @@ type TManagePaymentMethodForm = {
 export function Profile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userDataSelector);
-  const avatarUrl = useAppSelector(
-    (state) => state.auth.userData?.avatar || profilePicture
-  );
+  const avatarUrl = useAppSelector((state) => state.auth.userData?.avatar);
   const organizationUrl = useAppSelector(
-    (state) => state.organization.organizationData?.logo || profilePicture
+    (state) => state.organization.organizationData?.logo
   );
 
   const organizationData = useAppSelector(organizationDataSelector);
@@ -134,6 +132,25 @@ export function Profile() {
     useState<boolean>(false);
   const [showManagePaymentMethodForm, setShowManagePaymentMethodForm] =
     useState(false);
+
+  useEffect(() => {
+    if (!avatarUrl) {
+      const storedProfileImage = localStorage.getItem("profileImage");
+      const displayImage = storedProfileImage
+        ? storedProfileImage
+        : profilePicture;
+      dispatch(updateUserData({ avatar: displayImage }));
+    }
+
+    if (!organizationUrl) {
+      const storedOrganizationLogo = localStorage.getItem("organizationLogo");
+
+      const displayLogo = organizationUrl
+        ? storedOrganizationLogo
+        : profilePicture;
+      dispatch(updateUserData({ logo: displayLogo }));
+    }
+  }, [dispatch, avatarUrl, organizationUrl]);
 
   const orgDetails = useMemo(
     () => [
@@ -446,7 +463,7 @@ export function Profile() {
           </h6>
         </section>
 
-        <section className="col gap-4 p-9 rounded-xl bg-white md:mb-4">
+        <section className="col gap-4 p-9 rounded-xl bg-white mb-4 lg:mb-0">
           <div className="row justify-between items-center w-full flex-wrap">
             <h4 className="text-neutral950">Your Plan</h4>
             <Pill
@@ -488,7 +505,7 @@ export function Profile() {
             </div>
           </div>
         </section>
-        <section className="p-9 rounded-xl bg-white md:mb-4">
+        <section className="p-9 rounded-xl bg-white mb-4 lg:mb-0">
           <div className="row justify-between flex-wrap">
             <h4 className="text-neutral950">Organization Details</h4>
             <div
@@ -545,7 +562,8 @@ export function Profile() {
             </div>
           </div>
         </section>
-        <section className="p-9 rounded-xl bg-white md:mb-4">
+
+        <section className="p-9 rounded-xl bg-white mb-4 lg:mb-0">
           <h4 className="text-neutral950">Organization Details</h4>
 
           <hr className="bg-neutral100 mt-3" />
