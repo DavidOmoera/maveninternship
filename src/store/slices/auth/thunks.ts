@@ -77,25 +77,22 @@ export const signUp = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async (_, { dispatch }) => {
-    try {
-      const response = await authApi.logoutRequest();
-      BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
-      dispatch(clearUserData());
-      const message = response.data?.msg;
-      if (message) {
-        showSuccessToast(message);
-      }
-      return response.data;
-    } catch (e) {
-      const error = e as AxiosError;
-      handleError(error);
-      throw error;
+export const logout = createAsyncThunk("auth/logout", async () => {
+  try {
+    const response = await authApi.logoutRequest();
+    BrowserStorageService.clear({ session: true });
+    BrowserStorageService.clear({ session: false });
+    const message = response.data?.msg;
+    if (message) {
+      showSuccessToast(message);
     }
+    return response.data;
+  } catch (e) {
+    const error = e as AxiosError;
+    handleError(error);
+    throw error;
   }
-);
+});
 
 export const verifyEmail = createAsyncThunk(
   "auth/verifyEmail",
