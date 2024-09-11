@@ -82,13 +82,6 @@ export const loginWithOutlookRequest = (
 ): Promise<AxiosResponse<TLoginResponse>> =>
   client.post(endpoints.auth.loginWithOutlook(), email);
 
-export const initiatePasswordResetRequest = (): Promise<
-  AxiosResponse<string>
-> => client.post(endpoints.auth.initiatePasswordReset());
-
-export const resetPasswordRequest = (): Promise<AxiosResponse<string>> =>
-  client.post(endpoints.auth.resetPassword());
-
 export const createCheckoutSessionRequest = (
   params: TCheckoutParams
 ): Promise<AxiosResponse<TCheckoutResponse>> =>

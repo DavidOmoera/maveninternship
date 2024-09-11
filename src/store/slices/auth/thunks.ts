@@ -136,32 +136,6 @@ export const sendReceipt = createAsyncThunk(
   }
 );
 
-export const initiatePasswordReset = createAsyncThunk(
-  "auth/initiatePasswordReset",
-  async () => {
-    try {
-      const response = await authApi.initiatePasswordResetRequest();
-      return response.data;
-    } catch (e) {
-      const error = e as AxiosError;
-      throw error;
-    }
-  }
-);
-
-export const resetPassword = createAsyncThunk(
-  "auth/resetPassword",
-  async () => {
-    try {
-      const response = await authApi.resetPasswordRequest();
-      return response.data;
-    } catch (e) {
-      const error = e as AxiosError;
-      throw error;
-    }
-  }
-);
-
 export const getOrganization = createAsyncThunk(
   "auth/getOrganization",
   async (identifier: string) => {
