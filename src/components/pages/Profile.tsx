@@ -26,7 +26,7 @@ import {
   editProfileSchema,
   managePaymentMethodSchema,
 } from "constants/schemas";
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { Dialog, IconButton } from "@mui/material";
 import { ArrowRight } from "assets/ArrowRight";
 import { ControlledInput } from "components/organisms/ControlledInput";
@@ -112,6 +112,7 @@ type TManagePaymentMethodForm = {
 export function Profile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userDataSelector);
+
   const organizationData = useAppSelector(organizationDataSelector);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -127,9 +128,11 @@ export function Profile() {
     useState<boolean>(false);
   const [showManagePaymentMethodForm, setShowManagePaymentMethodForm] =
     useState(false);
-  const [avatar, setAvatar] = useState<string>(userData?.avatar as string);
+  const [avatar, setAvatar] = useState<string>(
+    (userData?.avatar as string) || profilePicture
+  );
   const [organizationLogo, setOrganizationLogo] = useState<string>(
-    organizationData?.logo as string
+    (organizationData?.logo as string) || profilePicture
   );
 
   const orgDetails = useMemo(
@@ -193,6 +196,25 @@ export function Profile() {
       organizationData?.contact?.zipCode,
     ]
   );
+
+  useEffect(() => {
+    const storedAvatar = localStorage.getItem("profileImage");
+    const storedLogo = localStorage.getItem("organizationLogo");
+
+    if (userData?.avatar) {
+      setAvatar(userData.avatar);
+      localStorage.setItem("profileImage", userData.avatar);
+    } else if (storedAvatar) {
+      setAvatar(storedAvatar);
+    }
+
+    if (organizationData?.logo) {
+      setOrganizationLogo(organizationData.logo);
+      localStorage.setItem("organizationLogo", organizationData.logo);
+    } else if (storedLogo) {
+      setOrganizationLogo(storedLogo);
+    }
+  }, [userData?.avatar, organizationData?.logo]);
 
   const {
     control: feedbackControl,
@@ -261,7 +283,10 @@ export function Profile() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        dispatch(updateUserData({ avatar: e.target?.result as string }));
+        const newAvatar = e.target?.result as string;
+        setAvatar(newAvatar);
+        localStorage.setItem("profileImage", newAvatar);
+        dispatch(updateUserData({ avatar: newAvatar }));
       };
       reader.readAsDataURL(file);
     }
@@ -388,7 +413,7 @@ export function Profile() {
   return (
     <PageContainer title="My Profile">
       <div className=" rounded-xl mx-9 xl:grid grid-cols-2 gap-4">
-        <section className="col gap-5 p-9 rounded-xl bg-white md:mb-4">
+        <section className="col gap-5 p-9 rounded-xl bg-white mb-4 lg:mb-0">
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4 flex-wrap">
             <img

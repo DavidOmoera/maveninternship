@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import notification from "assets/notification.svg";
 import profilePicture from "assets/profile_picture.jpg";
@@ -31,9 +31,22 @@ export function PageContainer({
   const navigate = useNavigate();
   const userData = useAppSelector(userDataSelector);
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
+  const avatarUrl = useAppSelector((state) => state.auth.userData?.avatar);
   const [avatar, setAvatar] = useState<string>(
     userData?.avatar ?? profilePicture
   );
+
+  useEffect(() => {
+    if (avatarUrl) {
+      setAvatar(avatarUrl);
+      localStorage.setItem("profileImage", avatarUrl);
+    } else {
+      const storedAvatar = localStorage.getItem("profileImage");
+      if (storedAvatar) {
+        setAvatar(storedAvatar);
+      }
+    }
+  }, [avatarUrl]);
 
   // Chat with Bot modal
   const [isModalOpen, setIsModalOpen] = useState(false);
