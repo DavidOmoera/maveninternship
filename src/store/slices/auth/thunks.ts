@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authApi } from "api";
+import { authApi, profilesApi } from "api";
 import { AxiosError } from "axios";
 import { AuthToastMessages } from "constants/toastMessages";
 import {
@@ -52,9 +52,8 @@ export const updateUser = createAsyncThunk(
   "auth/updateUser",
   async (requestBody: TUpdateUserRequestBody, { dispatch }) => {
     try {
-      const response = await authApi.updateUserRequest(requestBody);
+      const response = await profilesApi.updateUserRequest(requestBody);
       dispatch(getUserData());
-
       return response.data;
     } catch (e) {
       const error = e as AxiosError;

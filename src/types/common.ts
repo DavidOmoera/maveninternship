@@ -190,6 +190,13 @@ export type TUpdateUserRequestBody = {
   phone_number: string;
 };
 
+export type TUpdateOrganizationRequestBody = {
+  organization_name: string;
+  business_type: string;
+  industry: string;
+  organization_size: string;
+};
+
 export type TBillStatus = "Introduced" | "Enrolled" | "Passed";
 export type TBillChamber = "House" | "Senate";
 export type TBillType = "resolution" | "bill";
