@@ -128,20 +128,29 @@ export const Dashboard: React.FC = () => {
 
   const searchedWatchedBills = useMemo(
     () =>
-      filteredWatchedBills?.filter((item) =>
-        ["title", "legislative_type", "state", "status"].some((prop) => {
-          const toCompare = item[prop as keyof TBill];
+      watchedBillsSearchValue ||
+      selectedWatchedBillStatus ||
+      selectedWatchedBillType
+        ? filteredWatchedBills?.filter((item) =>
+            ["title", "legislative_type", "state", "status"].some((prop) => {
+              const toCompare = item[prop as keyof TBill];
 
-          if (typeof toCompare === "string") {
-            return toCompare
-              ?.toLowerCase()
-              .includes(watchedBillsSearchValue?.trim().toLowerCase());
-          }
+              if (typeof toCompare === "string") {
+                return toCompare
+                  ?.toLowerCase()
+                  .includes(watchedBillsSearchValue?.trim().toLowerCase());
+              }
 
-          return true;
-        })
-      ),
-    [filteredWatchedBills, watchedBillsSearchValue]
+              return true;
+            })
+          )
+        : filteredWatchedBills,
+    [
+      filteredWatchedBills,
+      selectedWatchedBillStatus,
+      selectedWatchedBillType,
+      watchedBillsSearchValue,
+    ]
   );
 
   const billsToView = useMemo(
