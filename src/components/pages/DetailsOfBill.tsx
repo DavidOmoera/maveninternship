@@ -15,7 +15,7 @@ import { useLocation } from "react-router-dom";
 import { TBill, TBillVotesResponse } from "types/common";
 import defaultAvatar from "assets/profile_picture.jpg";
 import dayjs from "dayjs";
-import { getBillVotesRequest } from "api/billsApi";
+import { getBillVersionsRequest, getBillVotesRequest } from "api/billsApi";
 const AboutBill = lazy(() =>
   import("components/organisms/AboutBill").then((module) => ({
     default: module.AboutBill,
@@ -110,37 +110,33 @@ const DetailsOfBill: React.FC = () => {
   );
 
   const [authorAvatar, setAuthorAvatar] = useState<string>(
-    billAuthor?.image as string
+    billAuthor?.image ?? ""
   );
   const [votesSummary, setVotesSummary] = useState<TBillVotesResponse>();
-
-  const totalVoteCount = useMemo(() => {
-    if (
-      votesSummary?.abstained &&
-      votesSummary.votes_against &&
-      votesSummary.votes_for
-    ) {
-      return (
-        votesSummary.abstained +
-        votesSummary.votes_against +
-        votesSummary.votes_for
-      );
-    }
-    return 0;
-  }, [
-    votesSummary?.abstained,
-    votesSummary?.votes_against,
-    votesSummary?.votes_for,
-  ]);
+  const [billVersionsCount, setBillVersionsCount] = useState<number>();
 
   const details = useMemo(
     () => [
-      { key: "Legislative Type", value: "Joint Resolution", link: "" },
+      {
+        key: "Legislative Type",
+        value: currentBill.legislative_type,
+        link: "",
+      },
       { key: "Bill Status", value: currentBill.status, link: "" },
       // { key: "Current Status", value: "House Passage Report", link: "" },
-      { key: "Amendments", value: "2 Views", link: Routes.DetailsOfBill },
+      ...(billVersionsCount
+        ? [
+            {
+              key: "Amendments",
+              value: `${billVersionsCount} View${
+                billVersionsCount > 1 ? "s" : ""
+              }`,
+              link: Routes.DetailsOfBill,
+            },
+          ]
+        : []),
     ],
-    [currentBill.status]
+    [billVersionsCount, currentBill.legislative_type, currentBill.status]
   );
 
   function onChangeTab(value: string) {
@@ -189,9 +185,21 @@ const DetailsOfBill: React.FC = () => {
 
   useEffect(() => {
     if (bill_id) {
-      getBillVotesRequest({ bill_id }).then((res) => {
-        setVotesSummary(res.data);
-      });
+      getBillVotesRequest({ bill_id })
+        .then((res) => {
+          setVotesSummary(res.data);
+        })
+        .catch(() => {});
+    }
+  }, [bill_id]);
+
+  useEffect(() => {
+    if (bill_id) {
+      getBillVersionsRequest(bill_id)
+        .then((res) => {
+          setBillVersionsCount(res.data.length);
+        })
+        .catch(() => {});
     }
   }, [bill_id]);
 
@@ -202,9 +210,9 @@ const DetailsOfBill: React.FC = () => {
         <div className="w-full flex flex-wrap gap-4">
           {/* Bill Details Section */}
           <div className="flex-1 p-6 bg-white rounded-xl mb-6 min-w-[320px]">
-            <h2 className="text-neutral950 font-extrabold pb-6 line-clamp-1">
+            <h3 className="text-neutral950 font-extrabold pb-6 truncate">
               {currentBill?.title}
-            </h2>
+            </h3>
             <p className="text-sm text-neutral950">
               {dayjs(currentBill.latest_action_date).format("MMMM DD, YYYY")}
             </p>
@@ -231,10 +239,13 @@ const DetailsOfBill: React.FC = () => {
                   >
                     <p className="text-sm text-neutral500">{detail.key}</p>
                     <h6
-                      className={classNames("text-sm text-neutral950", {
-                        "underline text-accent800 cursor-pointer":
-                          !!detail.link,
-                      })}
+                      className={classNames(
+                        "text-sm text-neutral950 capitalize",
+                        {
+                          "underline text-accent800 cursor-pointer":
+                            !!detail.link,
+                        }
+                      )}
                       onClick={() => {}}
                     >
                       {detail.value}
@@ -246,54 +257,62 @@ const DetailsOfBill: React.FC = () => {
 
             <hr className="bg-neutral500 my-6" />
 
-            {/** Votes Summary */}
-            <div className="bg-gray-50 p-6 rounded-xl">
-              {votesSummary && (
-                <>
-                  <p className="text-5xl font-extrabold">{totalVoteCount}</p>
-                  <h6 className="text-sm text-neutral400 mt-1">
-                    Votes for bill:
-                  </h6>
-                  <div className="col gap-2 mt-5 mb-6">
-                    {VOTES_SUMMARY.map((vote) => (
-                      <div
-                        key={vote.key}
-                        className="row w-full justify-between items-center flex-wrap"
-                      >
-                        <div className="row gap-2 items-center flex-wrap">
-                          <div
-                            className="h-3 w-3 rounded-full border-2"
-                            style={{ borderColor: vote.iconColor }}
-                          />
-                          <p className="text-sm text-neutral950">{vote.key}</p>
+            {/* * Votes Summary and */}
+            {(votesSummary ?? billAuthor) && (
+              <div className="bg-gray-50 p-6 rounded-xl">
+                {votesSummary && (
+                  <>
+                    <p className="text-5xl font-extrabold">
+                      {votesSummary.total_votes ?? 0}
+                    </p>
+                    <h6 className="text-sm text-neutral400 mt-1">
+                      Votes for bill:
+                    </h6>
+                    <div className="col gap-2 mt-5 mb-6">
+                      {VOTES_SUMMARY.map((vote) => (
+                        <div
+                          key={vote.key}
+                          className="row w-full justify-between items-center flex-wrap"
+                        >
+                          <div className="row gap-2 items-center flex-wrap">
+                            <div
+                              className="h-3 w-3 rounded-full border-2"
+                              style={{ borderColor: vote.iconColor }}
+                            />
+                            <p className="text-sm text-neutral950">
+                              {vote.key}
+                            </p>
+                          </div>
+                          <h6 className="text-sm text-neutral950">
+                            {getVoteCountByType(votesSummary, vote.type)}
+                          </h6>
                         </div>
-                        <h6 className="text-sm text-neutral950">
-                          {getVoteCountByType(votesSummary, vote.type)}
-                        </h6>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
+                      ))}
+                    </div>
+                  </>
+                )}
 
-              <div>
-                <strong>Author:</strong>
-                <div className="flex items-center mt-3 py-2 bg-white">
-                  <img
-                    src={authorAvatar}
-                    alt="Author"
-                    className="w-10 h-10 rounded-full mr-3"
-                    onError={() => {
-                      setAuthorAvatar(defaultAvatar);
-                    }}
-                  />
+                {billAuthor?.name && (
                   <div>
-                    <p className="font-bold">{billAuthor?.name}</p>
-                    <p className="text-neutral600">{billAuthor?.title}</p>
+                    <strong>Author:</strong>
+                    <div className="flex items-center mt-3 py-2 bg-white">
+                      <img
+                        src={authorAvatar}
+                        alt="Author"
+                        className="w-10 h-10 rounded-full mr-3"
+                        onError={() => {
+                          setAuthorAvatar(defaultAvatar);
+                        }}
+                      />
+                      <div>
+                        <p className="font-bold">{billAuthor?.name}</p>
+                        <p className="text-neutral600">{billAuthor?.title}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
-            </div>
+            )}
           </div>
 
           {/* Main Tabs */}
@@ -309,7 +328,18 @@ const DetailsOfBill: React.FC = () => {
 
               {activeTab === BILL_TAB.ABOUT ? (
                 <Suspense fallback={null}>
-                  <AboutBill showBillSummary={showBillSummary} />
+                  <AboutBill
+                    title={currentBill.title}
+                    description={currentBill.summary}
+                    author={billAuthor?.name ?? ""}
+                    legislativeType={currentBill.legislative_type}
+                    status={currentBill.status}
+                    amendmentsCount={billVersionsCount ?? 0}
+                    votesFor={votesSummary?.votes_for ?? 0}
+                    votesAgainst={votesSummary?.votes_against ?? 0}
+                    votesAbstained={votesSummary?.abstained ?? 0}
+                    showBillSummary={showBillSummary}
+                  />
                 </Suspense>
               ) : null}
               {activeTab === BILL_TAB.ASK_AI ? (
@@ -329,7 +359,12 @@ const DetailsOfBill: React.FC = () => {
               ) : null}
               {activeTab === BILL_TAB.VOTING ? (
                 <Suspense fallback={null}>
-                  <VotingSummary />
+                  <VotingSummary
+                    totalVotes={votesSummary?.total_votes ?? 0}
+                    yesVotes={votesSummary?.votes_for ?? 0}
+                    noVotes={votesSummary?.votes_against ?? 0}
+                    abstained={votesSummary?.abstained ?? 0}
+                  />
                 </Suspense>
               ) : null}
             </div>
@@ -342,7 +377,7 @@ const DetailsOfBill: React.FC = () => {
             ) : null}
             {activeTab === BILL_TAB.VOTING ? (
               <Suspense fallback={null}>
-                <Voting />
+                <Voting {...(votesSummary as TBillVotesResponse)} />
               </Suspense>
             ) : null}
           </div>

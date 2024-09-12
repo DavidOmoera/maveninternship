@@ -55,6 +55,11 @@ export default {
         ".no-scrollbar::-webkit-scrollbar": {
           display: "none",
         },
+        "text-3.5xl": {
+          "font-size": "32px",
+          "line-height": "38.4px",
+          "line-spacing": "0.25%",
+        },
       });
     },
   ],
