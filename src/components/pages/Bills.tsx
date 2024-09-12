@@ -6,7 +6,7 @@ import { ControlledSelect } from "components/organisms/ControlledSelect";
 import { PageContainer } from "components/templates/PageContainer";
 import SearchIcon from "@mui/icons-material/Search";
 import { Pill } from "components/molecules/Pill";
-import { BILL_TYPES, BILL_YEARS } from "constants/common";
+import { BILL_ID_PREFIX, BILL_TYPES, BILL_YEARS } from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import gridIcon from "assets/grid.svg";
 import listIcon from "assets/listView.svg";
@@ -40,7 +40,7 @@ const jurisdiction = "Texas";
 
 export const Bills: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { bills } = useAppSelector(billsSelector);
+  const { bills, trackedBills } = useAppSelector(billsSelector);
   const {
     control,
     handleSubmit,
@@ -59,7 +59,6 @@ export const Bills: React.FC = () => {
   );
 
   const onSearchBill: SubmitHandler<TBillSearchForm> = (formData) => {
-    console.log("search form data", formData);
     const { searchValue, chamber, billStatus, billType } = formData;
     if (isValid) {
       searchBillsRequest({
@@ -83,8 +82,8 @@ export const Bills: React.FC = () => {
     console.log("Open Bill Status Dialog");
   };
 
-  function onClickBill() {
-    navigate(Routes.DetailsOfBill);
+  function onClickBill(bill: TBill) {
+    navigate(Routes.DetailsOfBill, { state: { bill } });
   }
 
   const toggleView = () => {
@@ -237,28 +236,39 @@ export const Bills: React.FC = () => {
               // First part of the date is year
               const year =
                 lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
-              const author = bill.contributors[0] ?? {};
-              const coAuthorImages = bill.contributors.map(
+              const author = bill.contributors.find(
+                (contributor) => contributor.classification === "author"
+              );
+              const coAuthors = bill.contributors.filter(
+                (contributor) => contributor.classification === "coauthor"
+              );
+              const sponsors = bill.contributors.filter(
+                (contributor) => contributor.classification === "sponsor"
+              );
+              const coAuthorImages = coAuthors.map(
                 (contributor) => contributor.image
               );
-              const coAuthorsCount = bill.contributors.length - 1;
-              const supportersCount = 0;
+              const coAuthorsCount = coAuthors.length;
+              const supportersCount = sponsors.length;
               const relativeTime = dayjs(bill.latest_action_date).fromNow();
+              const isWatched = !!trackedBills.find(
+                (trackedBill) => trackedBill.id === bill.id
+              );
 
               return (
                 <BillCard
                   key={bill.id}
-                  id={bill.id}
-                  onClick={onClickBill}
-                  isListView={!isGridView}
+                  id={bill.id.replace(BILL_ID_PREFIX, "")}
+                  onClick={() => onClickBill(bill)}
+                  isListView={false}
                   title={bill.title}
                   description={bill.summary}
                   billType="All"
                   chamber="House"
                   year={Number(year)}
                   relativeTime={relativeTime}
-                  name={author.name}
-                  image={author.image}
+                  name={author?.name as string}
+                  image={author?.image as string}
                   coAuthor1={coAuthorImages[1]}
                   coAuthor2={coAuthorImages[2]}
                   coAuthor3={coAuthorImages[3]}
@@ -269,6 +279,7 @@ export const Bills: React.FC = () => {
                   supporter1=""
                   supporter2=""
                   supporter3=""
+                  isWatched={isWatched}
                 />
               );
             })}
