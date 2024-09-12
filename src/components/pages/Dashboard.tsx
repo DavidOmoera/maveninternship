@@ -292,14 +292,12 @@ export const Dashboard: React.FC = () => {
               />
             </div>
 
-            {billsSearchResults &&
-              billsSearchValue &&
-              billsSearchResultsCount && (
-                <div className="lg:flex gap-2 block mt-8">
-                  <h4 className="text-neutral950">{billsSearchResultsCount}</h4>
-                  <span className="text-neutral950 text-xl">Results found</span>
-                </div>
-              )}
+            {billsSearchResults && billsSearchValue && (
+              <div className="lg:flex gap-2 block mt-8">
+                <h4 className="text-neutral950">{billsSearchResultsCount}</h4>
+                <span className="text-neutral950 text-xl">Results found</span>
+              </div>
+            )}
             {/** All bills */}
             <div
               className={classNames("row gap-5 flex-wrap", {
