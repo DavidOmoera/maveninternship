@@ -72,7 +72,7 @@ type TBillSearchForm = {
 }>;
 
 const jurisdiction = "Texas";
-
+const HIDE = true;
 export const Dashboard: React.FC = () => {
   const [openBillStatusDialog, setOpenBillStatusDialog] = useState(false);
   const [areUpdatesVisible, setAreUpdatesVisible] = useState(false);
@@ -426,15 +426,17 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** Bill Types */}
-            <div className="row gap-2 flex-wrap">
-              {pills.map((pill) => (
-                <Pill
-                  key={pill.secondText}
-                  text={pill.firstText}
-                  secondText={pill.secondText}
-                />
-              ))}
-            </div>
+            {!HIDE && (
+              <div className="row gap-2 flex-wrap">
+                {pills.map((pill) => (
+                  <Pill
+                    key={pill.secondText}
+                    text={pill.firstText}
+                    secondText={pill.secondText}
+                  />
+                ))}
+              </div>
+            )}
 
             {/** All bills */}
             <div
