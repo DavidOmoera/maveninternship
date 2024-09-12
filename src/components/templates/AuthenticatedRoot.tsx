@@ -262,7 +262,7 @@ export function AuthenticatedRoot() {
           ref={sidebarRef}
           className={`${
             isSidebarOpen ? "block" : "hidden"
-          } md:block fixed md:relative top-0 left-0 min-h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto xl:w-full no-scrollbar shadow-2xl`}
+          } md:block fixed md:relative top-0 left-0 h-full xl:min-h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto xl:w-full no-scrollbar shadow-2xl`}
         >
           <button
             className="block md:hidden absolute top-4 right-4 p-3 text-primary bg-transparent"
