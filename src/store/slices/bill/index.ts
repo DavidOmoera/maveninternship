@@ -32,7 +32,9 @@ const billSlice = createSlice({
       .addCase(getTrackedBills.fulfilled, (state, action) => {
         state.trackedBills = action.payload.items;
       })
-      .addCase(getTrackedBills.rejected, () => {});
+      .addCase(getTrackedBills.rejected, (state) => {
+        state.trackedBills = [];
+      });
   },
 });
 
