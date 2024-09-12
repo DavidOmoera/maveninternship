@@ -6,7 +6,12 @@ import { ControlledSelect } from "components/organisms/ControlledSelect";
 import { PageContainer } from "components/templates/PageContainer";
 import SearchIcon from "@mui/icons-material/Search";
 import { Pill } from "components/molecules/Pill";
-import { BILL_ID_PREFIX, BILL_TYPES, BILL_YEARS } from "constants/common";
+import {
+  BILL_ID_PREFIX,
+  BILL_STATUSES,
+  BILL_TYPES,
+  BILL_YEARS,
+} from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import gridIcon from "assets/grid.svg";
 import listIcon from "assets/listView.svg";
@@ -50,6 +55,7 @@ export const Bills: React.FC = () => {
   const navigate = useNavigate();
   const searchValue = watch("searchValue");
   const [searchResults, setSearchResults] = useState<TBill[]>();
+  const [searchResultsCount, setSearchResultsCount] = useState<number>();
 
   const [isGridView, setIsGridView] = useState(true);
 
@@ -59,7 +65,7 @@ export const Bills: React.FC = () => {
   );
 
   const onSearchBill: SubmitHandler<TBillSearchForm> = (formData) => {
-    const { searchValue, chamber, billStatus, billType } = formData;
+    const { searchValue, chamber, billStatus, billType, year } = formData;
     if (isValid) {
       searchBillsRequest({
         search_term: searchValue,
@@ -67,19 +73,19 @@ export const Bills: React.FC = () => {
         status: [billStatus as TBillStatus],
         bill_type: billType as TBillType,
         jurisdiction: [jurisdiction],
+        sessions: [year as string],
+        skip: 0,
+        limit: 50,
       })
         .then((res) => {
           setSearchResults(res.data.items);
+          setSearchResultsCount(res.data.total);
         })
         .catch((e) => {
           setSearchResults([]);
           handleError(e);
         });
     }
-  };
-
-  const handleOpenBillStatusDialog = () => {
-    console.log("Open Bill Status Dialog");
   };
 
   function onClickBill(bill: TBill) {
@@ -147,9 +153,8 @@ export const Bills: React.FC = () => {
               control={control}
               name="billStatus"
               label="Bill Status"
-              options={[]}
+              options={BILL_STATUSES}
               defaultValue=""
-              onClick={handleOpenBillStatusDialog}
             />
             <ControlledSelect
               control={control}
@@ -172,7 +177,7 @@ export const Bills: React.FC = () => {
           <div className="row justify-between my-9">
             {searchResults && searchValue ? (
               <div className="lg:flex gap-2 block">
-                <h4 className="text-neutral950">{searchResults.length}</h4>
+                <h4 className="text-neutral950">{searchResultsCount}</h4>
                 <span className="text-neutral950 text-xl">Results found</span>
               </div>
             ) : (
