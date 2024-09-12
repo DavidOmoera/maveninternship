@@ -105,7 +105,7 @@ export function PageContainer({
             {previousPageTitle ? (
               <>
                 <h1 className="text-neutral500 font-bold text-4xl">/</h1>
-                <h1 className="text-neutral500 font-medium text-4xl">
+                <h1 className="text-neutral500 font-medium text-base sm:text-xl lg:text-3xl xl:text-4xl ">
                   {previousPageTitle}
                 </h1>
               </>
