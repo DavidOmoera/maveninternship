@@ -333,30 +333,22 @@ export const BILL_TYPES = [
 ];
 
 export const BILL_STATUSES = [
-  { id: 1, value: "Filed", label: "Filed" },
-  { id: 2, value: "Enrolled", label: "Enrolled" },
-  { id: 3, value: "Reading-1", label: "Reading-1" },
-  { id: 4, value: "Passed", label: "Passed" },
-  { id: 5, value: "Introduced", label: "Introduced" },
-  { id: 6, value: "Reading-2", label: "Reading-2" },
-  { id: 7, value: "Referred to committee", label: "Referred to committee" },
-  { id: 8, value: "Amendment-failure", label: "Amendment-failure" },
-  { id: 9, value: "Executive-receipt", label: "Executive-receipt" },
-  { id: 10, value: "Amendment-introduction", label: "Amendment-introduction" },
-  { id: 11, value: "Amendment-passage", label: "Amendment-passage" },
-  { id: 12, value: "Amendment-withdrawal", label: "Amendment-withdrawal" },
+  { id: 1, value: "Enrolled", label: "Enrolled" },
+  { id: 2, value: "Passed", label: "Passed" },
+  { id: 3, value: "Introduced", label: "Introduced" },
 ];
 
 export const BILL_YEARS = [
-  { id: 1, value: "2016", label: "2016" },
-  { id: 1, value: "2017", label: "2017" },
-  { id: 1, value: "2018", label: "2018" },
-  { id: 1, value: "2019", label: "2019" },
-  { id: 1, value: "2020", label: "2020" },
-  { id: 1, value: "2021", label: "2021" },
-  { id: 1, value: "2022", label: "2022" },
-  { id: 1, value: "2023", label: "2023" },
   { id: 1, value: "2024", label: "2024" },
+
+  { id: 2, value: "2023", label: "2023" },
+  { id: 3, value: "2022", label: "2022" },
+  { id: 4, value: "2021", label: "2021" },
+  { id: 5, value: "2020", label: "2020" },
+  { id: 6, value: "2019", label: "2019" },
+  { id: 7, value: "2018", label: "2018" },
+  { id: 8, value: "2017", label: "2017" },
+  { id: 9, value: "2016", label: "2016" },
 ];
 
 export const ACTIVITIES = [
