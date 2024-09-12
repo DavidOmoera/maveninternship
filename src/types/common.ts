@@ -31,6 +31,7 @@ export type ThunkAPI = {
 
 export type TbillState = {
   bills: TBill[];
+  trackedBills: TBill[];
   totalBillsCount: number;
   isLoadingBills: boolean;
 };
@@ -524,3 +525,53 @@ export type TResetPasswordRequestBody = {
   token: string;
   new_password: string;
 };
+
+export type TChatMessage = {
+  id: number;
+  session_id: number;
+  content: string;
+  role: string;
+  created_at: string | Date;
+};
+
+export type TBillChatRequestParams = { session_id: number } & Partial<{
+  limit: number;
+  offset: number;
+}>;
+
+export type TGetBillChatResponse = {
+  messages: TChatMessage[];
+  total_count: number;
+  limit: number;
+  offset: number;
+};
+
+export type TPostBillChatRequestBody = {
+  message: string;
+  version: string;
+} & Partial<{
+  session_id: number;
+  bill_id: string;
+}>;
+
+export type TPostBillChatResponse = {
+  bill_id: string;
+  version_id: string;
+  state: string;
+  session_id: number;
+  version: string;
+  processing_time: string;
+  response: string;
+};
+
+export type TTrackBillResponse = {
+  bill_id: string;
+  user_id: number;
+  status: string;
+};
+
+export type TGetTrackedBillsRequestParams = Partial<{
+  skip: number;
+  limit: number;
+  offset: number;
+}>;

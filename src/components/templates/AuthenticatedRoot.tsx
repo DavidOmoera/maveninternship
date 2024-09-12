@@ -40,7 +40,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useEffect, useRef } from "react";
 import { useAppDispatch } from "utils/helpers";
-import { clearUserData } from "store/slices/auth";
 import BrowserStorageService from "utils/browserStorage";
 import { BrowserStorageKeys } from "types/common";
 import { getUserData } from "store/slices/auth/thunks";
@@ -97,8 +96,8 @@ export function AuthenticatedRoot() {
   }, [dispatch]);
 
   function logUserOut() {
-    BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
-    dispatch(clearUserData());
+    BrowserStorageService.clear({ session: true });
+    BrowserStorageService.clear({ session: false });
     redirect(Routes.Login);
 
     // Put this back when the logout endpoint starts working again
