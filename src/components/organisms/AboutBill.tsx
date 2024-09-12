@@ -2,28 +2,47 @@ import { ArrowRight } from "assets/ArrowRight";
 import { Button } from "components/atoms/Button";
 import download from "assets/download.svg";
 
-const billTitle = "Secure the Border Act of 2023";
+type TAboutBillProps = {
+  title: string;
+  author: string;
+  description: string;
+  legislativeType: string;
+  status: string;
+  amendmentsCount: number;
+  showBillSummary: () => void;
+  votesFor: number;
+  votesAgainst: number;
+  votesAbstained: number;
+};
 
-type TAboutBillProps = { showBillSummary: () => void };
-
-export function AboutBill({ showBillSummary }: TAboutBillProps) {
+export function AboutBill({
+  title,
+  description,
+  author,
+  legislativeType,
+  status,
+  amendmentsCount,
+  votesFor,
+  votesAgainst,
+  votesAbstained,
+  showBillSummary,
+}: TAboutBillProps) {
   function onClickDownload() {
     const downloadButton = document.getElementById("download-bill");
     const billText = `
-    ${billTitle}
+    ${title}
 
-    Author: Senator Mat Adams
-    Legislative type: Joint Resolution
-    Bill Status: Passed
-    Current Status: House Passage Report
-    Amendments: 2 views
+    Author: ${author}
+    Legislative type: ${legislativeType}
+    Bill Status: ${status}
+    Amendments: ${amendmentsCount} view${amendmentsCount > 1 ? "s" : ""}
 
     Voting
-    Votes for: 18
-    Votes against: 9
-    Abstained: 2
+    Votes for: ${votesFor}
+    Votes against: ${votesAgainst}
+    Abstained: ${votesAbstained}
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique lectus non quam euismod cursus. Nam eleifend, urna in pretium posuere, massa dui sagittis nulla, molestie mollis mi leo vel neque. Nunc gravida tristique orci at hendrerit. Sed erat elit, egestas a nisl vel, gravida vehicula magna.
+    ${description}
     `;
 
     downloadButton?.setAttribute(
@@ -40,20 +59,14 @@ export function AboutBill({ showBillSummary }: TAboutBillProps) {
           id="download-bill"
           className="btn btn-secondary gap-2 cursor-pointer"
           href=""
-          download={`${billTitle}.txt`}
+          download={`${title}.txt`}
           onClick={onClickDownload}
         >
           <img src={download} className="w-4 h-4" />
           Download Bill
         </a>
       </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique
-        lectus non quam euismod cursus. Nam eleifend, urna in pretium posuere,
-        massa dui sagittis nulla, molestie mollis mi leo vel neque. Nunc gravida
-        tristique orci at hendrerit. Sed erat elit, egestas a nisl vel, gravida
-        vehicula magna.
-      </p>
+      <p>{description}</p>
       <div className="mt-9 p-6 bg-neutral50 rounded-lg flex justify-between items-center flex-wrap gap-4">
         <div>
           <h5 className="font-bold">Skip the Jargon!</h5>

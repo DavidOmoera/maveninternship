@@ -71,6 +71,7 @@ export const signUp = createAsyncThunk(
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
+      handleError(error, AuthToastMessages.SIGNUP_FAILURE);
       throw error;
     }
   }
@@ -127,32 +128,6 @@ export const sendReceipt = createAsyncThunk(
   async (params: TSendReceiptParams) => {
     try {
       const response = await authApi.sendReceiptRequest(params);
-      return response.data;
-    } catch (e) {
-      const error = e as AxiosError;
-      throw error;
-    }
-  }
-);
-
-export const initiatePasswordReset = createAsyncThunk(
-  "auth/initiatePasswordReset",
-  async () => {
-    try {
-      const response = await authApi.initiatePasswordResetRequest();
-      return response.data;
-    } catch (e) {
-      const error = e as AxiosError;
-      throw error;
-    }
-  }
-);
-
-export const resetPassword = createAsyncThunk(
-  "auth/resetPassword",
-  async () => {
-    try {
-      const response = await authApi.resetPasswordRequest();
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
