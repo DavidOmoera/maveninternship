@@ -17,7 +17,7 @@ import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
 import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "components/atoms/Button";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import edited from "assets/edited.svg";
 import closed from "assets/closed.svg";
 import done from "assets/done.svg";
@@ -81,7 +81,6 @@ export const Dashboard: React.FC = () => {
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const location = useLocation();
   const { bills, trackedBills } = useAppSelector(billsSelector);
   const [billsSearchResults, setBillsSearchResults] = useState<TBill[]>();
   const [billsSearchResultsCount, setBillsSearchResultsCount] =
@@ -208,10 +207,6 @@ export const Dashboard: React.FC = () => {
     // If user clears search, clear their search results
     if (!billsSearchValue) setBillsSearchResults(undefined);
   }, [billsSearchValue]);
-
-  useEffect(() => {
-    if (location.pathname) window.scrollTo(0, 0);
-  }, [location.pathname]);
 
   useEffect(() => {
     dispatch(getBills({ page: 1, size: 6 }));
