@@ -27,6 +27,11 @@ const userSlice = createSlice({
       })
       .addCase(getUserData.fulfilled, (state, action) => {
         state.userData = action.payload;
+        if (action.payload) {
+          const user = action.payload;
+          state.userData = { ...state.userData, ...user };
+          localStorage.setItem("userData", JSON.stringify(user));
+        }
         state.userDataLoading = false;
       })
       .addCase(getUserData.rejected, (state, action) => {

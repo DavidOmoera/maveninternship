@@ -138,7 +138,9 @@ export function ActivityFeed() {
         )}
       </div>
 
-      <div className="p-6 lg:p-8 mb-9 mx-9  bg-white rounded-xl min-h-[900px] xl:min-w-[1110px] lg:max-w-[800px] md:max-w-[600px]">
+      <div className="p-6 lg:p-8 mb-9 mx-9  bg-white rounded-xl min-h-screen">
+        {/* <div className="p-6 lg:p-8 mb-9 mx-9  bg-white rounded-xl min-h-[900px] xl:min-w-[1110px] lg:max-w-[800px] md:max-w-[600px] xl:w-full"> */}
+
         {/** Input fields */}
         <div className="row justify-between mb-9 flex-wrap gap-3 md:mx-2 sm:mx-20">
           <div className="flex gap-3 w-full xl:w-fit">

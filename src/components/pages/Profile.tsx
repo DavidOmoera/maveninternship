@@ -38,6 +38,7 @@ import { updateOrganizationData } from "store/slices/organization";
 import { updateUserData } from "store/slices/user";
 import { Routes } from "types/routes";
 import { useNavigate } from "react-router-dom";
+import { updateUser } from "store/slices/auth/thunks";
 
 const DURATION_OPTIONS = [
   { id: 1, label: "Less than a year", value: "less_than_year" },
@@ -390,10 +391,10 @@ export function Profile() {
       formData ?? {};
     if (isEditProfileFormValid) {
       dispatch(
-        updateUserData({
-          firstName: first_name,
-          lastName: last_name,
-          phone: phone_number,
+        updateUser({
+          first_name,
+          last_name,
+          phone_number,
           email: email_address,
         })
       );
@@ -410,8 +411,8 @@ export function Profile() {
 
   return (
     <PageContainer title="My Profile">
-      <div className=" rounded-xl mx-9 xl:grid grid-cols-2 gap-4">
-        <section className="col gap-5 p-9 rounded-xl bg-white mb-4 lg:mb-0">
+      <div className=" rounded-xl mx-9 xl:grid grid-cols-2 gap-4 min-h-screen">
+        <section className="col justify-evenly gap-5 p-9 rounded-xl bg-white mb-4 lg:mb-0">
           <h4 className="text-neutral950">Personal Details</h4>
           <div className="row items-center gap-4 flex-wrap">
             <img src={avatarUrl} className="w-20 h-20 object-cover rounded" />
@@ -462,7 +463,7 @@ export function Profile() {
           </h6>
         </section>
 
-        <section className="col gap-4 p-9 rounded-xl bg-white mb-4 lg:mb-0">
+        <section className="col justify-evenly gap-4 p-9 rounded-xl bg-white mb-4 lg:mb-0">
           <div className="row justify-between items-center w-full flex-wrap">
             <h4 className="text-neutral950">Your Plan</h4>
             <Pill
@@ -504,7 +505,8 @@ export function Profile() {
             </div>
           </div>
         </section>
-        <section className="p-9 rounded-xl bg-white mb-4 lg:mb-0">
+
+        <section className="col p-9 justify-evenly rounded-xl bg-white mb-4 lg:mb-0">
           <div className="row justify-between flex-wrap">
             <h4 className="text-neutral950">Organization Details</h4>
             <div
@@ -562,7 +564,7 @@ export function Profile() {
           </div>
         </section>
 
-        <section className="p-9 rounded-xl bg-white mb-4 lg:mb-0">
+        <section className="col p-9 justify-evenly rounded-xl bg-white mb-4 lg:mb-0">
           <h4 className="text-neutral950">Organization Details</h4>
 
           <hr className="bg-neutral100 mt-3" />

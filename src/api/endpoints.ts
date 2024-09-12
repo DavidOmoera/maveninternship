@@ -29,7 +29,7 @@ export const endpoints = {
     register: (): string => `/register/`,
     verifyEmail: (): string => `/verify-email/`,
     login: (): string => `/token`,
-    updateUserProfile: (): string => `/update_user_info`,
+    updateUserProfile: (): string => `/update_user_info/`,
     getUserData: (): string => `/users/me`, // For current user
     logout: (): string => `/logout`,
     send_receipt: (): string => `/send_receipts`,
@@ -98,8 +98,10 @@ export const endpoints = {
   },
   person: {
     getPerson: (personId: string): string => `/persons/${personId}`,
-    getPersonOffices: (personId: string): string => `/persons/${personId}/offices`,
-    getPersonMemberships: (personId: string): string => `/persons/${personId}/memberships`,
+    getPersonOffices: (personId: string): string =>
+      `/persons/${personId}/offices`,
+    getPersonMemberships: (personId: string): string =>
+      `/persons/${personId}/memberships`,
     searchPerson: (): string => `/persons/search/`,
   },
 };
