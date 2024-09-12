@@ -47,6 +47,18 @@ import classNames from "classnames";
 import { TBill, TBillChamber, TBillStatus, TBillType } from "types/common";
 import { searchBillsRequest } from "api/billsApi";
 
+function isBillStatus(billStatus: string, selectedBillStatus: string) {
+  return selectedBillStatus ? billStatus === selectedBillStatus : true;
+}
+
+function isBillType(billType: string, selectedBillType: string) {
+  return !selectedBillType
+    ? true
+    : selectedBillType === "All"
+    ? true
+    : billType === selectedBillType;
+}
+
 const stages = [
   "Filed",
   "Enrolled",
@@ -97,9 +109,40 @@ export const Dashboard: React.FC = () => {
 
   const billsSearchValue = watchBillsForm("searchValue");
 
-  const { control: watchedBillsControl } = useForm<TBillSearchForm>({
-    resolver: yupResolver(billSearchSchema),
-  });
+  const { control: watchedBillsControl, watch: watchTrackedBills } =
+    useForm<TBillSearchForm>({
+      resolver: yupResolver(billSearchSchema),
+    });
+
+  const watchedBillsSearchValue = watchTrackedBills("searchValue");
+  const selectedWatchedBillStatus = watchTrackedBills("billStatus");
+  const selectedWatchedBillType = watchTrackedBills("billType");
+
+  const filteredWatchedBills = useMemo(() => {
+    return trackedBills.filter(
+      (bill) =>
+        isBillStatus(bill.status, selectedWatchedBillStatus ?? "") &&
+        isBillType(bill.legislative_type, selectedWatchedBillType ?? "")
+    );
+  }, [selectedWatchedBillStatus, selectedWatchedBillType, trackedBills]);
+
+  const searchedWatchedBills = useMemo(
+    () =>
+      filteredWatchedBills?.filter((item) =>
+        ["title", "legislative_type", "state", "status"].some((prop) => {
+          const toCompare = item[prop as keyof TBill];
+
+          if (typeof toCompare === "string") {
+            return toCompare
+              ?.toLowerCase()
+              .includes(watchedBillsSearchValue?.trim().toLowerCase());
+          }
+
+          return true;
+        })
+      ),
+    [filteredWatchedBills, watchedBillsSearchValue]
+  );
 
   const billsToView = useMemo(
     () =>
@@ -443,7 +486,7 @@ export const Dashboard: React.FC = () => {
               className="row gap-5 flex-wrap mt-8"
               style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
             >
-              {trackedBills.map((bill) => {
+              {searchedWatchedBills.map((bill) => {
                 const lastActionDate = bill.latest_action_date as string;
 
                 // First part of the date is year
