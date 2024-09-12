@@ -14,6 +14,7 @@ import {
   TCheckoutResponse,
   TCreateOrgAccount,
   TRegisterOrg,
+  TResetPasswordRequestBody,
 } from "types/common";
 
 export const getUserDataRequest = (): Promise<AxiosResponse<TUserData>> =>
@@ -32,12 +33,15 @@ export const verifyEmailRequest = (
 ): Promise<AxiosResponse<string>> =>
   client.post(endpoints.auth.verifyEmail(), body);
 
-export const initiatePasswordResetRequest = (): Promise<
-  AxiosResponse<string>
-> => client.post(endpoints.auth.initiatePasswordReset());
+export const initiatePasswordResetRequest = (
+  email: string
+): Promise<AxiosResponse<string>> =>
+  client.post(endpoints.auth.initiatePasswordReset(), { email });
 
-export const resetPasswordRequest = (): Promise<AxiosResponse<string>> =>
-  client.post(endpoints.auth.resetPassword());
+export const resetPasswordRequest = (
+  requestBody: TResetPasswordRequestBody
+): Promise<AxiosResponse<string>> =>
+  client.post(endpoints.auth.resetPassword(), requestBody);
 
 export const loginRequest = (
   body: TLoginRequestBody
