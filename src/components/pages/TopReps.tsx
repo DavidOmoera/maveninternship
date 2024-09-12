@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PageContainer } from "components/templates/PageContainer";
-import { Representative } from 'types/common';
+import { Representative, TPersonMembershipsResponse, TPersonOfficesResponse, TPersonResponse } from 'types/common';
 import { ControlledInput } from "components/organisms/ControlledInput";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "components/atoms/Button";
@@ -16,12 +16,12 @@ import bookmark from "assets/bookmark.svg";
 import classNames from "classnames";
 import { Routes } from "types/routes.ts";
 import { COMMITTEE_ID_PREFIX, } from "constants/common";
-import { legislativeSessionsApi, committeesApi } from "api/index";
+import { legislativeSessionsApi, committeesApi, } from "api/index";
 import { TGetLegislativeSessionsResponse, Committee, CommitteeMembership } from "types/common";
 import { handleApiError, handleError } from "utils/helpers";
 import { AxiosError } from "axios";
 import { getPersonRequest, getPersonOfficesRequest, getPersonMembershipsRequest, searchPersonRequest } from "api/personsApi";
-import { TPersonMembershipsResponse, TPersonOfficesResponse, TPersonResponse } from "types/common";
+
 type TActivitySearchForm = Partial<{
   searchValue: string;
 }>;
@@ -34,57 +34,31 @@ const TopReps: React.FC = () => {
   const pageType = (state?.pageType as "House" | "Senate") || "House";
   const dispatch = useDispatch();
   const topReps = useSelector((state: RootState) => state.topReps.topReps);
-  const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
-  const [legislativeSessions, setLegislativeSessions] = useState<TGetLegislativeSessionsResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [committees, setCommittees] = useState<Committee[] | null>(null);
-  const [committeeMemberships, setCommitteeMemberships] = useState<CommitteeMembership[] | null>(null);
-  const [personDetails, setPersonDetails] = useState<TPersonResponse | null>(null);
-  const [personOffices, setPersonOffices] = useState<TPersonOfficesResponse[]>([]);
-  const [personMemberships, setPersonMemberships] = useState<TPersonMembershipsResponse[]>([]);
-  const [personId, setPersonId] = useState<string | null>(null);
-  const [validationErrors] = useState<{ [key: string]: string }>({});
+const [expandedIndexes, setExpandedIndexes] = useState<number[]>([]);
+const [legislativeSessions, setLegislativeSessions] = useState<TGetLegislativeSessionsResponse | null>(null);
+const [loading, setLoading] = useState(false);
+const [committees, setCommittees] = useState<Committee[] | null>(null);
+const [committeeMemberships, setCommitteeMemberships] = useState<CommitteeMembership[] | null>(null);
+const [personDetails, setPersonDetails] = useState<TPersonResponse | null>(null);
+const [personOffices, setPersonOffices] = useState<TPersonOfficesResponse[]>([]);
+const [personMemberships, setPersonMemberships] = useState<TPersonMembershipsResponse[]>([]);
+const [personId, setPersonId] = useState<string | null>(null);
+const [validationErrors] = useState<{ [key: string]: string }>({});
 
 
 
-  useEffect(() => {
-    const fetchCommitteeData = async () => {
-      try {
-        setLoading(true);
-        const committeesResponse = await committeesApi.getCommitteesRequest();
-        setCommittees(committeesResponse.data);
-
-        const membershipsPromises = committeesResponse.data.map((committee) =>
-          committeesApi.getCommitteeMembershipsRequest(committee.id.replace(COMMITTEE_ID_PREFIX, ""))
-        );
-        const membershipsResponses = await Promise.all(membershipsPromises);
-        setCommitteeMemberships(membershipsResponses.flatMap(response => response.data));
-      } catch (error) {
-        handleError(error as AxiosError);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-
-    fetchCommitteeData();
-  }, []);
-
-  const fetchAndSetPersonDetails = async (personId: string) => {
+useEffect(() => {
+  const fetchCommitteeData = async () => {
     try {
-      const personData = await getPersonRequest(personId);
-      setPersonDetails(personData.data);
+      setLoading(true);
+      const committeesResponse = await committeesApi.getCommitteesRequest();
+      setCommittees(committeesResponse.data);
 
-      const [officesData, membershipsData] = await Promise.all([
-        getPersonOfficesRequest(personId),
-        getPersonMembershipsRequest(personId)
-      ]);
-
-      const officesArray = Array.isArray(officesData.data) ? officesData.data : [officesData.data];
-      const membershipsArray = Array.isArray(membershipsData.data) ? membershipsData.data : [membershipsData.data];
-
-      setPersonOffices(officesArray as TPersonOfficesResponse[]);
-      setPersonMemberships(membershipsArray as TPersonMembershipsResponse[]);
+      const membershipsPromises = committeesResponse.data.map((committee) =>
+        committeesApi.getCommitteeMembershipsRequest(committee.id.replace(COMMITTEE_ID_PREFIX, ""))
+      );
+      const membershipsResponses = await Promise.all(membershipsPromises);
+      setCommitteeMemberships(membershipsResponses.flatMap(response => response.data));
     } catch (error) {
       handleError(error as AxiosError);
     } finally {
@@ -92,11 +66,39 @@ const TopReps: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (personId) {
-      fetchAndSetPersonDetails(personId);
-    }
-  }, [personId]);
+
+  fetchCommitteeData();
+}, []);
+
+
+const fetchAndSetPersonDetails = async (personId: string) => {
+  try {
+    const personData = await getPersonRequest(personId);
+    setPersonDetails(personData.data);
+
+    const [officesData, membershipsData] = await Promise.all([
+      getPersonOfficesRequest(personId),
+      getPersonMembershipsRequest(personId)
+    ]);
+
+    const officesArray = Array.isArray(officesData.data) ? officesData.data : [officesData.data];
+    const membershipsArray = Array.isArray(membershipsData.data) ? membershipsData.data : [membershipsData.data];
+
+    setPersonOffices(officesArray as TPersonOfficesResponse[]);
+    setPersonMemberships(membershipsArray as TPersonMembershipsResponse[]);
+  } catch (error) {
+    handleError(error as AxiosError);
+  } finally {
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  if (personId) {
+    fetchAndSetPersonDetails(personId);
+  }
+}, [personId]);
+
 
   const {
     control,
@@ -201,7 +203,7 @@ const TopReps: React.FC = () => {
               onClick={handleSubmit(onSearchPerson)}
             />
           </div>
-
+  
           {/* Display validation errors */}
           {Object.keys(validationErrors).length > 0 && (
             <div className="bg-red-100 text-red-800 p-4 rounded-lg mt-4">
@@ -216,6 +218,7 @@ const TopReps: React.FC = () => {
             </div>
           )}
         </div>
+  
         {/* Display legislative sessions */}
         {legislativeSessions && (
           <div className="bg-white rounded-xl p-4 mt-4">
@@ -232,7 +235,7 @@ const TopReps: React.FC = () => {
             ))}
           </div>
         )}
-
+  
         {/* Display loading state */}
         {loading && (
           <div className="flex justify-center mt-4">
@@ -240,6 +243,7 @@ const TopReps: React.FC = () => {
           </div>
         )}
 
+      
         {/* Display the selected representative */}
         {representative && (
           <div className="p-6 rounded-xl shadow mb-4">
@@ -309,7 +313,7 @@ const TopReps: React.FC = () => {
             </button>
           </div>
         )}
-
+  
         {/* Display top representatives */}
         <div className="bg-white rounded-xl p-4">
           <div className="flex flex-wrap gap-5 mt-8">
@@ -318,7 +322,9 @@ const TopReps: React.FC = () => {
                 <div
                   key={index}
                   className="flex flex-col p-6 rounded-xl shadow relative max-w-[460px]"
-                  onClick={() => onClickRepresentative(rep.id, rep.pageType as "House" | "Senate")}
+                  onClick={() =>
+                    onClickRepresentative(rep.id, rep.pageType as "House" | "Senate")
+                  }
                   style={{ cursor: "pointer" }}
                 >
                   <div>
@@ -409,46 +415,37 @@ const TopReps: React.FC = () => {
             )}
           </div>
         </div>
-
+  
         {/* Display Person Details */}
         {personDetails && (
           <div className="person-details bg-white rounded-xl p-4 mt-4">
             <h2 className="text-lg font-bold">{personDetails.name}</h2>
             <p>{personDetails.biography}</p>
-
+  
             <h3 className="font-semibold mt-4">Offices</h3>
-            {personOffices && personOffices.map((office) => (
-              <div key={office.id} className="mb-2">
-                <p>{office.name} - {office.classification}</p>
-              </div>
-            ))}
-
-            <h3 className="font-semibold mt-4">Committee Memberships</h3>
-            {personMemberships && personMemberships.map((membership) => (
-              <div key={membership.id} className="mb-2">
-                <p>{membership.person_name}</p>
-              </div>
-            ))}
+            {personOffices &&
+              personOffices.map((office) => (
+                <div key={office.id} className="mb-2">
+                 
+                    {office.name} - {office.classification}
+                    </div>
+                  ))}
+  
+            <h3 className="font-semibold mt-4">Memberships</h3>
+            {personMemberships &&
+              personMemberships.map((membership) => (
+                <div key={membership.id} className="mb-2">
+                  <p>{membership.person_name}</p>
+                  <p>Role: {membership.role}</p>
+                </div>
+              ))}
           </div>
         )}
       </div>
-
-      {/* Display Committee Memberships */}
-      {committees && getCommitteeForRep(representative?.id) && getCommitteeForRep(representative.id).length > 0 && (
-        <div className="mt-4">
-          <h4 className="font-semibold">Committees:</h4>
-          {getCommitteeForRep(representative.id).map((membership, idx) => {
-            const committee = committees.find((committee) => committee.id === membership.committee_id);
-            return committee ? (
-              <div key={idx}>
-                <span>{committee.name}</span>
-              </div>
-            ) : null;
-          })}
-        </div>
-      )}
     </PageContainer>
   );
+  
+
 }
 
 export default TopReps;
