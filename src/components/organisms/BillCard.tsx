@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Pill } from "components/molecules/Pill";
 import BookmarkRemoveOutlinedIcon from "@mui/icons-material/BookmarkRemoveOutlined";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import { Tooltip } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { addBill, removeBill } from "store/slices/watchedBillsSlice";
-import { RootState } from "store/slices/index.ts";
-import { allBills } from "constants/common";
 import defaultAvatar from "assets/profile_picture.jpg";
+import { trackBill, untrackBill } from "store/slices/bill/thunks";
+import { useAppDispatch } from "utils/helpers";
 
 type TBillProps = {
   onClick: () => void;
@@ -15,7 +13,24 @@ type TBillProps = {
   billType: string;
   chamber: string;
   year: number;
-} & (typeof allBills)[0];
+  isWatched: boolean;
+  id: string;
+  state: string;
+  relativeTime: string;
+  title: string;
+  status: string;
+  description: string;
+  name: string;
+  image: string;
+  coAuthor1: string;
+  coAuthor2: string;
+  coAuthor3: string;
+  supporter1: string;
+  supporter2: string;
+  supporter3: string;
+  count1: string;
+  count2: string;
+};
 
 function ContributorAvatar({
   imageUrl,
@@ -71,53 +86,20 @@ export function GridCard({
   supporter1,
   supporter2,
   supporter3,
-  billType,
-  chamber,
-  year,
+  isWatched,
 }: TBillProps) {
-  const dispatch = useDispatch();
-  const allBills = useSelector(
-    (state: RootState) => state.watchedBills.watchedBills
-  );
-  const [isWatched, setIsWatched] = useState(false);
+  const dispatch = useAppDispatch();
   const [isExpanded, setIsExpanded] = useState(false);
   const hasCoauthors = !!coAuthor1 || !!coAuthor2 || !!coAuthor3;
   const hasSupporters = !!supporter1 || !!supporter2 || !!supporter3;
 
-  useEffect(() => {
-    // Check if this bill is in the watchedBills list
-    setIsWatched(allBills.some((bill) => bill.id === id));
-  }, [allBills, id]);
-
   const handleToggleWatch = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    const billData = {
-      id,
-      title,
-      description,
-      state,
-      status,
-      relativeTime,
-      name,
-      image,
-      count1,
-      count2,
-      coAuthor1,
-      coAuthor2,
-      coAuthor3,
-      supporter1,
-      supporter2,
-      supporter3,
-      billType,
-      chamber,
-      year,
-    };
-
     if (isWatched) {
-      dispatch(removeBill(id));
+      dispatch(untrackBill(id));
     } else {
-      dispatch(addBill(billData));
+      dispatch(trackBill(id));
     }
   };
 
@@ -249,8 +231,6 @@ export function ListCard({
   title,
   description,
   state,
-  status,
-  relativeTime,
   onClick,
   name,
   image,
@@ -262,49 +242,16 @@ export function ListCard({
   supporter1,
   supporter2,
   supporter3,
-  billType,
-  chamber,
-  year,
+  isWatched,
 }: TBillProps) {
-  const dispatch = useDispatch();
-  const allBills = useSelector(
-    (state: RootState) => state.watchedBills.watchedBills
-  );
-  const [isWatched, setIsWatched] = useState(false);
-
-  useEffect(() => {
-    setIsWatched(allBills.some((bill) => bill.id === id));
-  }, [allBills, id]);
-
+  const dispatch = useAppDispatch();
   const handleToggleWatch = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    const billData = {
-      id,
-      title,
-      description,
-      state,
-      status,
-      relativeTime,
-      name,
-      image,
-      count1,
-      count2,
-      coAuthor1,
-      coAuthor2,
-      coAuthor3,
-      supporter1,
-      supporter2,
-      supporter3,
-      billType,
-      chamber,
-      year,
-    };
-
     if (isWatched) {
-      dispatch(removeBill(id));
+      dispatch(untrackBill(id));
     } else {
-      dispatch(addBill(billData));
+      dispatch(trackBill(id));
     }
   };
 

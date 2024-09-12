@@ -24,6 +24,7 @@ import done from "assets/done.svg";
 import { Pill } from "components/molecules/Pill";
 
 import {
+  BILL_ID_PREFIX,
   BILL_STATUSES,
   BILL_TYPES,
   BILL_YEARS,
@@ -37,12 +38,10 @@ import { ControlledSelect } from "components/organisms/ControlledSelect";
 import CustomTextField from "components/molecules/CustomTextField";
 import { Routes } from "types/routes";
 import { PageContainer } from "components/templates/PageContainer";
-import { useSelector } from "react-redux";
-import { RootState } from "store/slices/index.ts";
 import { BillCard } from "components/organisms/BillCard.tsx";
 import { handleError, useAppDispatch, useAppSelector } from "utils/helpers";
 import { billsSelector } from "store/slices/bill/selectors";
-import { getBills } from "store/slices/bill/thunks";
+import { getBills, getTrackedBills } from "store/slices/bill/thunks";
 import dayjs from "dayjs";
 import classNames from "classnames";
 import { TBill, TBillChamber, TBillStatus, TBillType } from "types/common";
@@ -83,10 +82,7 @@ export const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const { bills } = useAppSelector(billsSelector);
-  const watchedBills = useSelector(
-    (state: RootState) => state.watchedBills.watchedBills
-  );
+  const { bills, trackedBills } = useAppSelector(billsSelector);
   const [billsSearchResults, setBillsSearchResults] = useState<TBill[]>();
   const [billsSearchResultsCount, setBillsSearchResultsCount] =
     useState<number>();
@@ -158,10 +154,6 @@ export const Dashboard: React.FC = () => {
     navigate(Routes.DetailsOfBill, { state: { bill } });
   }
 
-  function onClickWatchedBill() {
-    navigate(Routes.DetailsOfBill);
-  }
-
   const handleSaveBillStatus = () => {
     handleCloseBillStatusDialog();
   };
@@ -223,6 +215,10 @@ export const Dashboard: React.FC = () => {
 
   useEffect(() => {
     dispatch(getBills({ page: 1, size: 6 }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getTrackedBills());
   }, [dispatch]);
 
   return (
@@ -336,11 +332,14 @@ export const Dashboard: React.FC = () => {
                 const coAuthorsCount = coAuthors.length;
                 const supportersCount = sponsors.length;
                 const relativeTime = dayjs(bill.latest_action_date).fromNow();
+                const isWatched = !!trackedBills.find(
+                  (trackedBill) => trackedBill.id === bill.id
+                );
 
                 return (
                   <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
                     <BillCard
-                      id={bill.id}
+                      id={bill.id.replace(BILL_ID_PREFIX, "")}
                       onClick={() => onClickBill(bill)}
                       isListView={false}
                       title={bill.title}
@@ -361,6 +360,7 @@ export const Dashboard: React.FC = () => {
                       supporter1=""
                       supporter2=""
                       supporter3=""
+                      isWatched={isWatched}
                     />
                   </div>
                 );
@@ -375,7 +375,7 @@ export const Dashboard: React.FC = () => {
               <div className="row gap-3">
                 <h4 className="font-extrabold">My Watched Bills</h4>
                 <div className="py-1 px-2 rounded-xl border border-primary">
-                  <h6 className="text-primary">{watchedBills.length}</h6>
+                  <h6 className="text-primary">{trackedBills.length}</h6>
                 </div>
               </div>
               <button
@@ -448,21 +448,57 @@ export const Dashboard: React.FC = () => {
               className="row gap-5 flex-wrap mt-8"
               style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
             >
-              {watchedBills.map((bill) => (
-                <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
-                  <BillCard
-                    onClick={onClickWatchedBill}
-                    isListView={false}
-                    coAuthor1={bill.coAuthor1 as string}
-                    coAuthor2={bill.coAuthor2 as string}
-                    coAuthor3={bill.coAuthor3 as string}
-                    supporter1={bill.supporter1 as string}
-                    supporter2={bill.supporter2 as string}
-                    supporter3={bill.supporter3 as string}
-                    {...bill}
-                  />
-                </div>
-              ))}
+              {trackedBills.map((bill) => {
+                const lastActionDate = bill.latest_action_date as string;
+
+                // First part of the date is year
+                const year =
+                  lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
+                const author = bill.contributors.find(
+                  (contributor) => contributor.classification === "author"
+                );
+                const coAuthors = bill.contributors.filter(
+                  (contributor) => contributor.classification === "coauthor"
+                );
+                const sponsors = bill.contributors.filter(
+                  (contributor) => contributor.classification === "sponsor"
+                );
+                const coAuthorImages = coAuthors.map(
+                  (contributor) => contributor.image
+                );
+                const coAuthorsCount = coAuthors.length;
+                const supportersCount = sponsors.length;
+                const relativeTime = dayjs(bill.latest_action_date).fromNow();
+
+                return (
+                  <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
+                    <BillCard
+                      id={bill.id.replace(BILL_ID_PREFIX, "")}
+                      onClick={() => onClickBill(bill)}
+                      isListView={false}
+                      title={bill.title}
+                      description={bill.summary}
+                      billType="All"
+                      chamber="House"
+                      year={Number(year)}
+                      relativeTime={relativeTime}
+                      name={author?.name as string}
+                      image={author?.image as string}
+                      coAuthor1={coAuthorImages[1]}
+                      coAuthor2={coAuthorImages[2]}
+                      coAuthor3={coAuthorImages[3]}
+                      count1={coAuthorsCount > 0 ? `+${coAuthorsCount}` : ""}
+                      count2={supportersCount > 0 ? `+${supportersCount}` : ""}
+                      state={bill.state}
+                      status={bill.status}
+                      supporter1=""
+                      supporter2=""
+                      supporter3=""
+                      isWatched={true}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </section>
         </div>
