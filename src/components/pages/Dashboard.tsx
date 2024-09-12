@@ -373,7 +373,7 @@ export const Dashboard: React.FC = () => {
                 );
 
                 return (
-                  <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
+                  <div key={bill.id}>
                     <BillCard
                       id={bill.id.replace(BILL_ID_PREFIX, "")}
                       onClick={() => onClickBill(bill)}
@@ -482,10 +482,7 @@ export const Dashboard: React.FC = () => {
             )}
 
             {/** All bills */}
-            <div
-              className="row gap-5 flex-wrap mt-8"
-              style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
-            >
+            <div className="row gap-5 flex-wrap mt-8">
               {searchedWatchedBills.map((bill) => {
                 const lastActionDate = bill.latest_action_date as string;
 
@@ -509,7 +506,7 @@ export const Dashboard: React.FC = () => {
                 const relativeTime = dayjs(bill.latest_action_date).fromNow();
 
                 return (
-                  <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
+                  <div key={bill.id}>
                     <BillCard
                       id={bill.id.replace(BILL_ID_PREFIX, "")}
                       onClick={() => onClickBill(bill)}
