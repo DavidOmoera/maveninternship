@@ -111,7 +111,7 @@ type TManagePaymentMethodForm = {
 export function Profile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userDataSelector);
-  const avatarUrl = useAppSelector((state) => state.auth.userData?.avatar);
+  const avatarUrl = useAppSelector((state) => state.user.userData?.avatar);
   const organizationUrl = useAppSelector(
     (state) => state.organization.organizationData?.logo
   );

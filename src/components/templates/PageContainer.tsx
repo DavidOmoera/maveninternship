@@ -31,7 +31,7 @@ export function PageContainer({
   const navigate = useNavigate();
   const userData = useAppSelector(userDataSelector);
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
-  const avatarUrl = useAppSelector((state) => state.auth.userData?.avatar);
+  const avatarUrl = useAppSelector((state) => state.user.userData?.avatar);
   const [avatar, setAvatar] = useState<string>(
     userData?.avatar ?? profilePicture
   );
