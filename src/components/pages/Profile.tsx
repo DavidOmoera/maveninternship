@@ -35,7 +35,7 @@ import { useAppDispatch, useAppSelector } from "utils/helpers";
 import { userDataSelector } from "store/slices/auth/selectors";
 import { organizationDataSelector } from "store/slices/organization/selectors";
 import { updateOrganizationData } from "store/slices/organization";
-import { updateUserData } from "store/slices/auth";
+import { updateUserData } from "store/slices/user";
 import { Routes } from "types/routes";
 import { useNavigate } from "react-router-dom";
 

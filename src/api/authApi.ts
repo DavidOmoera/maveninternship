@@ -68,6 +68,14 @@ export const loginWithOutlookRequest = (
 ): Promise<AxiosResponse<TLoginResponse>> =>
   client.post(endpoints.auth.loginWithOutlook(), email);
 
+export const createCheckoutSessionRequest = (
+  params: TCheckoutParams
+): Promise<AxiosResponse<TCheckoutResponse>> =>
+  client.post(endpoints.auth.createCheckoutSession(), params);
+
+export const stripeWebhookRequest = (): Promise<AxiosResponse<string>> =>
+  client.post(endpoints.auth.stripeWebhook());
+
 export const accountCreationRequest = (): Promise<
   AxiosResponse<TCreateOrgAccount>
 > => client.post(endpoints.auth.accountCreation());
@@ -75,8 +83,3 @@ export const accountCreationRequest = (): Promise<
 export const registerOrganizationRequest = (): Promise<
   AxiosResponse<TRegisterOrg>
 > => client.post(endpoints.auth.registerOrganization());
-
-export const createCheckoutSessionRequest = (
-  params: TCheckoutParams
-): Promise<AxiosResponse<TCheckoutResponse>> =>
-  client.post(endpoints.auth.createCheckoutSession(), params);

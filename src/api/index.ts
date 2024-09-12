@@ -7,4 +7,4 @@ export * as adminApi from "./adminApi";
 export * as legislativeSessionsApi from "./legislativesessionsApi";
 export * as notificationsApi from "./notificationsApi";
 export * as committeesApi from "./committeesApi";
-export * as profilesApi from "./profileApi";
+export * as profileApi from "./profileApi";

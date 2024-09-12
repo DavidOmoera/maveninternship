@@ -7,7 +7,7 @@ import xIcon from "assets/X.svg";
 import { colors } from "constants/common";
 import { useAppDispatch, useAppSelector } from "utils/helpers";
 import { userDataSelector } from "store/slices/auth/selectors";
-import { updateUserData } from "store/slices/auth";
+import { updateUserData } from "store/slices/user";
 
 const PLANS = [
   {
