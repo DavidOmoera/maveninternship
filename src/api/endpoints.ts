@@ -30,8 +30,8 @@ export const endpoints = {
     verifyEmail: (): string => `/verify-email/`,
     login: (): string => `/token`,
     updateUserProfile: (): string => `/update_user_info`,
-    getUserData: (): string => `/users/me`, // For current user
-    logout: (): string => `/logout`,
+    getUserData: (): string => `/users/me/`,
+    logout: (): string => `/logout/`,
     send_receipt: (): string => `/send_receipts`,
     resendVerificationEmail: (): string => `/resend-verification`,
     loginWithGoogle: (): string => `/google-login`,
@@ -60,10 +60,11 @@ export const endpoints = {
     getBillContributors: (billId: string): string =>
       `/bills/${billId}/contributors`,
     getBillSummary: (billId: string): string => `/bills/${billId}/summary`,
-    trackBill: (): string => `/bills/track_bill`,
-    stopTrackingBill: (): string => `/bills/stop_tracking_bill`,
+    trackBill: (): string => `/bills/track_bill/`,
+    stopTrackingBill: (): string => `/bills/stop_tracking_bill/`,
     getTrackedBills: (): string => `/bills/tracked_bills`,
-    chatAboutBill: (): string => `/bills/coterieai`,
+    chatAboutBill: (): string => `/bills/chat`,
+    getBillChat: (): string => `/bills/chat_history`,
   },
   feedback: {
     getFeedback: (): string => `/feedback`,
@@ -98,8 +99,10 @@ export const endpoints = {
   },
   person: {
     getPerson: (personId: string): string => `/persons/${personId}`,
-    getPersonOffices: (personId: string): string => `/persons/${personId}/offices`,
-    getPersonMemberships: (personId: string): string => `/persons/${personId}/memberships`,
+    getPersonOffices: (personId: string): string =>
+      `/persons/${personId}/offices`,
+    getPersonMemberships: (personId: string): string =>
+      `/persons/${personId}/memberships`,
     searchPerson: (): string => `/persons/search/`,
   },
 };

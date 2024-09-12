@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TbillState } from "types/common";
-import { getBills } from "./thunks";
+import { getBills, getTrackedBills } from "./thunks";
 
 const initialState: TbillState = {
   bills: [],
+  trackedBills: [],
   isLoadingBills: false,
   totalBillsCount: 0,
 };
@@ -26,6 +27,13 @@ const billSlice = createSlice({
       })
       .addCase(getBills.rejected, (state) => {
         state.isLoadingBills = false;
+      })
+      .addCase(getTrackedBills.pending, () => {})
+      .addCase(getTrackedBills.fulfilled, (state, action) => {
+        state.trackedBills = action.payload.items;
+      })
+      .addCase(getTrackedBills.rejected, (state) => {
+        state.trackedBills = [];
       });
   },
 });

@@ -3,15 +3,21 @@ import { client } from "./client";
 import { endpoints } from "./endpoints";
 import {
   TBill,
+  TBillChatRequestParams,
   TBillSummaryParams,
   TBillSummaryResponse,
   TBillVersion,
   TBillVotesParams,
   TBillVotesResponse,
+  TGetBillChatResponse,
   TGetBillsParams,
   TGetBillsResponse,
   TGetBillsSearchResponse,
+  TGetTrackedBillsRequestParams,
+  TPostBillChatRequestBody,
+  TPostBillChatResponse,
   TSearchBillsParams,
+  TTrackBillResponse,
 } from "types/common";
 
 export const getBillRequest = (billId: string): Promise<AxiosResponse<TBill>> =>
@@ -46,3 +52,28 @@ export const searchBillsRequest = (
   params: TSearchBillsParams
 ): Promise<AxiosResponse<TGetBillsSearchResponse>> =>
   client.get(endpoints.bills.searchBills(), { params });
+
+export const postBillChatRequest = (
+  requestBody: TPostBillChatRequestBody
+): Promise<AxiosResponse<TPostBillChatResponse>> =>
+  client.post(endpoints.bills.chatAboutBill(), null, { params: requestBody });
+
+export const getBillChatRequest = (
+  params: TBillChatRequestParams
+): Promise<AxiosResponse<TGetBillChatResponse>> =>
+  client.get(endpoints.bills.getBillChat(), { params });
+
+export const trackBillRequest = (
+  bill_id: string
+): Promise<AxiosResponse<TTrackBillResponse>> =>
+  client.post(endpoints.bills.trackBill(), null, { params: { bill_id } });
+
+export const untrackBillRequest = (
+  bill_id: string
+): Promise<AxiosResponse<TTrackBillResponse>> =>
+  client.delete(endpoints.bills.stopTrackingBill(), { params: { bill_id } });
+
+export const getTrackedBillsRequest = (
+  params?: TGetTrackedBillsRequestParams
+): Promise<AxiosResponse<TGetBillsSearchResponse>> =>
+  client.get(endpoints.bills.getTrackedBills(), { params });

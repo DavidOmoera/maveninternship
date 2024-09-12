@@ -4,8 +4,54 @@ import sendIcon from "assets/send_icon.svg";
 import XAndShare from "assets/X_and_share.svg";
 import moreOptions from "assets/more_options.svg";
 import classNames from "classnames";
+import { createRef, KeyboardEvent, useEffect, useState } from "react";
+import { getBillChatRequest, postBillChatRequest } from "api/billsApi";
+import { handleError } from "utils/helpers";
 
-export function ASK_AI() {
+type TAskAIProps = {
+  billVersion: string;
+  billId: string;
+};
+
+export function ASK_AI({ billVersion, billId }: TAskAIProps) {
+  const messageRef = createRef<HTMLInputElement>();
+  const [isSendingMessage, setIsSendingMessage] = useState<boolean>(false);
+  const [chatSessionId, setChatSessionId] = useState<number>();
+
+  function onSendMessage() {
+    setIsSendingMessage(true);
+    postBillChatRequest({
+      message: messageRef.current?.value as string,
+      version: billVersion,
+      bill_id: billId,
+      ...(chatSessionId ? { session_id: chatSessionId } : {}),
+    })
+      .then((res) => {
+        const session_id = res.data.session_id;
+        if (session_id) setChatSessionId(session_id);
+        if (messageRef.current) messageRef.current.value = ""; // Clear chat box
+        //update messages
+      })
+      .catch(handleError)
+      .finally(() => {
+        setIsSendingMessage(false);
+      });
+  }
+
+  function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    // Send message if user hits the enter/return key
+    if (e.key === "Enter") {
+      onSendMessage();
+    }
+  }
+
+  useEffect(() => {
+    if (chatSessionId)
+      getBillChatRequest({ session_id: chatSessionId })
+        .then()
+        .catch(handleError);
+  }, [chatSessionId]);
+
   const messages = [
     {
       text: "Vitae purus elementum arcu volutpat nunc ultricies lectus ultricies sit. Dignissim dictumst accumsan vitae senectus maecenas nunc feugiat gravida.",
@@ -122,12 +168,19 @@ export function ASK_AI() {
         <div className="w-full mt-4">
           <div className="flex items-center rounded-full p-2 h-12 max-w-[742px] bg-[#F5F6FB] gap-3">
             <input
+              ref={messageRef}
               type="text"
+              disabled={isSendingMessage}
               placeholder="Message Coterie"
               className="flex-grow p-2 rounded-full focus:outline-none"
               style={{ background: "#F5F6FB" }}
+              onKeyDown={onKeyDown}
             />
-            <button className="p-2 rounded-full text-white ml-2 bg-[#F5F6FB]">
+            <button
+              disabled={isSendingMessage}
+              className="p-2 rounded-full text-white ml-2 bg-[#F5F6FB]"
+              onClick={onSendMessage}
+            >
               <img src={sendIcon} alt="Send" className="w-6 h-6" />
             </button>
           </div>
