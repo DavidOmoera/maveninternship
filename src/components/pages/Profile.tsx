@@ -380,13 +380,6 @@ export function Profile() {
     }
   };
 
-  // const onSaveChangePassword: SubmitHandler<TChangePasswordForm> = (
-  //   formData: TChangePasswordForm
-  // ) => {
-  //   console.log("change password", formData);
-  //   if (isChangePasswordFormValid) setShowChangePasswordForm(false);
-  // };
-
   const onSaveChangePassword: SubmitHandler<TChangePasswordForm> = (
     formData: TChangePasswordForm
   ) => {
