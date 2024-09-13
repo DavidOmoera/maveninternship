@@ -3,7 +3,6 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "./auth";
 import organizationSlice from "./organization";
 import topRepsSlice from "./topRepsSlice";
-import watchedBillsReducer from "store/slices/watchedBillsSlice.ts";
 import billSlice from "./bill";
 import activitySlice from "./activity";
 import adminSlice from "./admin";
@@ -17,7 +16,6 @@ export const rootReducer = combineReducers({
   bill: billSlice,
   organization: organizationSlice,
   topReps: topRepsSlice,
-  watchedBills: watchedBillsReducer,
   notification: notificationSlice,
   user: userSlice,
 });
