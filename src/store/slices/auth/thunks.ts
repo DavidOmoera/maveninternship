@@ -10,6 +10,7 @@ import {
   TVerifyEmailRequestBody,
   TSendReceiptParams,
   TUpdateOrganizationRequestBody,
+  TPasswordRequestBody,
 } from "types/common";
 import BrowserStorageService from "utils/browserStorage";
 import { handleError, showSuccessToast } from "utils/helpers";
@@ -163,6 +164,19 @@ export const updateOrganizationDetails = createAsyncThunk(
         email,
         body
       );
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "user/changePassword",
+  async (body: TPasswordRequestBody) => {
+    try {
+      const response = await profileApi.changePasswordRequest(body);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;

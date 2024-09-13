@@ -287,6 +287,12 @@ export type TUserParams = Partial<{
   email: string;
 }>;
 
+export type TPasswordRequestBody = Partial<{
+  email: string;
+  current_password: string;
+  new_password: string;
+}>;
+
 export type TSearchUsersParams = Partial<{
   name: string;
   email: string;

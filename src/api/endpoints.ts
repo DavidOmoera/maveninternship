@@ -45,10 +45,10 @@ export const endpoints = {
     getUserDetails: (): string => `/user-details`,
     registerOrganization: (): string => `/register-org-account`,
     resetPersonalAccount: (): string => `/create_personal_account`,
-
     getOrganization: (): string => `/organization-details`,
     updateOrganizationDetails: (): string => `/update_org_details`,
     updateOrganizationContactDetails: (): string => `/update_org_contact`,
+    changePassword: (): string => `/change-password/`,
   },
   bills: {
     getBill: (billId: string): string => `/bills/${billId}`,

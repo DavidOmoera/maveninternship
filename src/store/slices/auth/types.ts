@@ -8,4 +8,7 @@ export type TAuthState = Partial<{
   userDataLoading: boolean;
   isSigningUp: boolean;
   updateMessage: string;
+  changePassword: string;
+  changePasswordLoading: boolean;
+  changePasswordError: boolean;
 }>;

@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUserData, updateUser } from "../auth/thunks";
+import { changePassword, getUserData, updateUser } from "../auth/thunks";
 
 import { TAuthState } from "../auth/types";
 
 const initialState: TAuthState = {
   userData: undefined,
-  userDataError: undefined,
   userDataLoading: false,
+  userDataError: undefined,
+  changePassword: undefined,
+  changePasswordLoading: false,
+  changePasswordError: undefined,
   updateMessage: "",
 };
 
@@ -38,9 +41,7 @@ const userSlice = createSlice({
         state.userDataLoading = false;
         state.userDataError =
           action.error.message || "Failed to fetch user data";
-      });
-
-    builder
+      })
       .addCase(updateUser.pending, (state) => {
         state.userDataLoading = true;
       })
@@ -51,6 +52,18 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.userDataError =
           action.error.message || "Failed to update user data";
+      })
+      .addCase(changePassword.pending, (state) => {
+        state.changePasswordLoading = true;
+        state.changePasswordError = false;
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.changePassword = action.payload;
+        state.changePasswordLoading = false;
+      })
+      .addCase(changePassword.rejected, (state) => {
+        state.changePasswordLoading = false;
+        state.changePasswordError = true || "Failed to update password";
       });
   },
 });

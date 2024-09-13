@@ -7,6 +7,7 @@ import {
   TPersonDetails,
   TUpdateOrganizationRequestBody,
   TUpdateUserRequestBody,
+  TPasswordRequestBody,
 } from "types/common";
 
 export const getUserDetailsRequest = (
@@ -43,3 +44,8 @@ export const updateOrganizationContactDetailsRequest = (
 
 export const stripeWebhookRequest = (): Promise<AxiosResponse<string>> =>
   client.post(endpoints.auth.stripeWebhook());
+
+export const changePasswordRequest = (
+  body: TPasswordRequestBody
+): Promise<AxiosResponse<string>> =>
+  client.post(endpoints.auth.changePassword(), body);
