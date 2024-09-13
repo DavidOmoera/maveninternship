@@ -119,10 +119,12 @@ export const Dashboard: React.FC = () => {
   const selectedWatchedBillType = watchTrackedBills("billType");
 
   const filteredWatchedBills = useMemo(() => {
-    return trackedBills.filter(
-      (bill) =>
-        isBillStatus(bill.status, selectedWatchedBillStatus ?? "") &&
-        isBillType(bill.legislative_type, selectedWatchedBillType ?? "")
+    return (
+      trackedBills?.filter(
+        (bill) =>
+          isBillStatus(bill.status, selectedWatchedBillStatus ?? "") &&
+          isBillType(bill.legislative_type, selectedWatchedBillType ?? "")
+      ) ?? []
     );
   }, [selectedWatchedBillStatus, selectedWatchedBillType, trackedBills]);
 
@@ -377,7 +379,7 @@ export const Dashboard: React.FC = () => {
                 const coAuthorsCount = coAuthors.length;
                 const supportersCount = sponsors.length;
                 const relativeTime = dayjs(bill.latest_action_date).fromNow();
-                const isWatched = !!trackedBills.find(
+                const isWatched = !!trackedBills?.find(
                   (trackedBill) => trackedBill.id === bill.id
                 );
 
@@ -420,7 +422,7 @@ export const Dashboard: React.FC = () => {
               <div className="row gap-3">
                 <h4 className="font-extrabold">My Watched Bills</h4>
                 <div className="py-1 px-2 rounded-xl border border-primary">
-                  <h6 className="text-primary">{trackedBills.length}</h6>
+                  <h6 className="text-primary">{trackedBills?.length ?? 0}</h6>
                 </div>
               </div>
               <button
