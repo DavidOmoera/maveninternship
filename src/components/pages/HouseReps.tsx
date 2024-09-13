@@ -133,7 +133,7 @@ export function HouseReps() {
       };
 
       navigate(Routes.RepProfile + `/${repId}`, { state: { pageType, personDetails } });
-    } catch (error) {
+
 
     } finally {
 

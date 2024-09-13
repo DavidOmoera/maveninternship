@@ -145,7 +145,7 @@ const TopReps: React.FC = () => {
       };
 
       navigate(Routes.RepProfile + `/${repId}`, { state: { pageType, personDetails } });
-    } catch (error) {
+
 
     } finally {
 

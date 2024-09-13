@@ -133,7 +133,7 @@ export function SenateReps() {
       };
 
       navigate(Routes.RepProfile + `/${repId}`, { state: { pageType, personDetails } });
-    } catch (error) {
+
 
     } finally {
 
