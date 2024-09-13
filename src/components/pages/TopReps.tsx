@@ -114,7 +114,7 @@ const TopReps: React.FC = () => {
   };
 
   const isRepInTopReps = (rep: Representative) =>
-    topReps.some(existingRep => existingRep.name === rep.name);
+    topReps.some((existingRep: { name: string; }) => existingRep.name === rep.name);
 
   const handleAddToTopReps = (rep: Representative) => {
     if (isRepInTopReps(rep)) {
@@ -133,11 +133,13 @@ const TopReps: React.FC = () => {
 
       setPersonId(repId.toString());
 
+
       const [personDetailsResponse, personOfficesResponse, personMembershipsResponse] = await Promise.all([
         getPersonRequest(repId.toString()),
         getPersonOfficesRequest(repId.toString()),
         getPersonMembershipsRequest(repId.toString())
       ]);
+
 
       const personDetails = {
         details: personDetailsResponse.data,
@@ -145,9 +147,14 @@ const TopReps: React.FC = () => {
         memberships: personMembershipsResponse.data
       };
 
+
       navigate(Routes.RepProfile + `/${repId}`, { state: { pageType, personDetails } });
     } catch (error) {
+
       handleApiError(error as AxiosError);
+    } finally {
+
+      navigate(Routes.RepProfile + `/${repId}`, { state: { pageType } });
     }
   };
 

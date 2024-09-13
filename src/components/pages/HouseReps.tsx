@@ -121,11 +121,13 @@ export function HouseReps() {
 
       setPersonId(repId.toString());
 
+
       const [personDetailsResponse, personOfficesResponse, personMembershipsResponse] = await Promise.all([
         getPersonRequest(repId.toString()),
         getPersonOfficesRequest(repId.toString()),
         getPersonMembershipsRequest(repId.toString())
       ]);
+
 
       const personDetails = {
         details: personDetailsResponse.data,
@@ -133,11 +135,17 @@ export function HouseReps() {
         memberships: personMembershipsResponse.data
       };
 
+
       navigate(Routes.RepProfile + `/${repId}`, { state: { pageType, personDetails } });
     } catch (error) {
+
       handleApiError(error as AxiosError);
+    } finally {
+
+      navigate(Routes.RepProfile + `/${repId}`, { state: { pageType } });
     }
   };
+
 
 
   const {
