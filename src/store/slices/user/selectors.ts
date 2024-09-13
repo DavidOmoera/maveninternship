@@ -1,13 +1,10 @@
 import { RootState } from "types/common";
 
-export const selectUserData = (state: RootState) => state.user.userData;
-export const selectIsUserLoading = (state: RootState) =>
-  state.user.userDataLoading;
-export const selectUserDataError = (state: RootState) =>
-  state.user.userDataError;
-export const selectChangePassword = (state: RootState) =>
+export const UserData = (state: RootState) => state.user.userData;
+export const IsUserLoading = (state: RootState) => state.user.userDataLoading;
+export const UserDataError = (state: RootState) => state.user.userDataError;
+export const ChangePassword = (state: RootState) => state.user.changePassword;
+export const ChangePasswordPending = (state: RootState) =>
   state.user.changePassword;
-export const selectChangePasswordPending = (state: RootState) =>
-  state.user.changePassword;
-export const selectChangePasswordError = (state: RootState) =>
+export const ChangePasswordError = (state: RootState) =>
   state.user.changePassword;

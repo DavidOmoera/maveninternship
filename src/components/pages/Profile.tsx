@@ -39,7 +39,6 @@ import { updateUserData } from "store/slices/user";
 import { Routes } from "types/routes";
 import { useNavigate } from "react-router-dom";
 import { changePassword, updateUser } from "store/slices/auth/thunks";
-import { selectChangePassword } from "store/slices/user/selectors";
 
 const DURATION_OPTIONS = [
   { id: 1, label: "Less than a year", value: "less_than_year" },
@@ -91,7 +90,6 @@ type TOrgContactForm = {
 };
 
 type TChangePasswordForm = {
-  email: string;
   current_password: string;
   new_password: string;
   confirm_password: string;
@@ -114,7 +112,6 @@ type TManagePaymentMethodForm = {
 export function Profile() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(userDataSelector);
-  const passwordChange = useAppSelector(selectChangePassword);
   const avatarUrl = useAppSelector((state) => state.user.userData?.avatar);
   const organizationUrl = useAppSelector(
     (state) => state.organization.organizationData?.logo
@@ -383,12 +380,11 @@ export function Profile() {
   const onSaveChangePassword: SubmitHandler<TChangePasswordForm> = (
     formData: TChangePasswordForm
   ) => {
-    const { email, current_password, new_password } = formData ?? {};
+    const { current_password, new_password } = formData ?? {};
 
     if (isChangePasswordFormValid) {
       dispatch(
         changePassword({
-          email,
           current_password,
           new_password,
         })
