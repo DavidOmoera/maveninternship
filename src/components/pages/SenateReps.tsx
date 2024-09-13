@@ -19,7 +19,7 @@ import classNames from "classnames";
 import { COMMITTEE_ID_PREFIX, senators } from "constants/common";
 import { legislativeSessionsApi, committeesApi } from "api/index";
 import { TGetLegislativeSessionsResponse, Committee, CommitteeMembership } from "types/common";
-import { handleApiError, handleError } from "utils/helpers";
+import { handleError } from "utils/helpers";
 import { AxiosError } from "axios";
 import { getPersonRequest, getPersonOfficesRequest, getPersonMembershipsRequest, searchPersonRequest } from "api/personsApi";
 
@@ -118,9 +118,7 @@ export function SenateReps() {
 
   const onClickRepresentative = async (repId: number, pageType: string) => {
     try {
-
       setPersonId(repId.toString());
-
 
       const [personDetailsResponse, personOfficesResponse, personMembershipsResponse] = await Promise.all([
         getPersonRequest(repId.toString()),
@@ -128,18 +126,15 @@ export function SenateReps() {
         getPersonMembershipsRequest(repId.toString())
       ]);
 
-
       const personDetails = {
         details: personDetailsResponse.data,
         offices: personOfficesResponse.data,
         memberships: personMembershipsResponse.data
       };
 
-
       navigate(Routes.RepProfile + `/${repId}`, { state: { pageType, personDetails } });
     } catch (error) {
 
-      handleApiError(error as AxiosError);
     } finally {
 
       navigate(Routes.RepProfile + `/${repId}`, { state: { pageType } });
