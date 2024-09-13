@@ -17,8 +17,6 @@ import classNames from "classnames";
 import { Routes } from "types/routes.ts";
 import { legislativeSessionsApi } from "api/index";
 import { TGetLegislativeSessionsResponse } from "types/common";
-import { handleError } from "utils/helpers";
-import { AxiosError } from "axios";
 import { getPersonRequest, getPersonOfficesRequest, getPersonMembershipsRequest, searchPersonRequest } from "api/personsApi";
 
 type TActivitySearchForm = Partial<{
@@ -58,8 +56,7 @@ const TopReps: React.FC = () => {
 
       setPersonOffices(officesArray as TPersonOfficesResponse[]);
       setPersonMemberships(membershipsArray as TPersonMembershipsResponse[]);
-    } catch (error) {
-      handleError(error as AxiosError);
+   
     } finally {
       setLoading(false);
     }
@@ -98,8 +95,7 @@ const TopReps: React.FC = () => {
           setLegislativeSessions(response.data);
         }
       }
-    } catch (error) {
-      handleError(error as AxiosError);
+    
     } finally {
       setLoading(false);
     }
