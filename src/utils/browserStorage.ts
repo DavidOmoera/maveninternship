@@ -26,6 +26,11 @@ const BrowserStorageService = {
     storage.removeItem(key);
   },
 
+  clear: (options?: BrowserStorageOptions): void => {
+    const storage = options?.session ? sessionStorage : localStorage;
+    storage.clear();
+  },
+
   update: (
     key: BrowserStorageKeys,
     value: string,
