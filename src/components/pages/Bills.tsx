@@ -259,7 +259,7 @@ export const Bills: React.FC = () => {
               const isWatched =
                 !!trackedBills?.find(
                   (trackedBill) => trackedBill.id === bill.id
-                ) ?? false;
+                ) || false;
 
               return (
                 <BillCard
