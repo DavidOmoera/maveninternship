@@ -17,7 +17,7 @@ import classNames from "classnames";
 import { Routes } from "types/routes.ts";
 import { legislativeSessionsApi } from "api/index";
 import { TGetLegislativeSessionsResponse } from "types/common";
-import { handleApiError, handleError } from "utils/helpers";
+import { handleError } from "utils/helpers";
 import { AxiosError } from "axios";
 import { getPersonRequest, getPersonOfficesRequest, getPersonMembershipsRequest, searchPersonRequest } from "api/personsApi";
 
@@ -114,7 +114,7 @@ const TopReps: React.FC = () => {
   };
 
   const isRepInTopReps = (rep: Representative) =>
-    topReps.some(existingRep => existingRep.name === rep.name);
+    topReps.some((existingRep: { name: string; }) => existingRep.name === rep.name);
 
   const handleAddToTopReps = (rep: Representative) => {
     if (isRepInTopReps(rep)) {
@@ -130,7 +130,6 @@ const TopReps: React.FC = () => {
 
   const onClickRepresentative = async (repId: number, pageType: string) => {
     try {
-
       setPersonId(repId.toString());
 
       const [personDetailsResponse, personOfficesResponse, personMembershipsResponse] = await Promise.all([
@@ -146,10 +145,14 @@ const TopReps: React.FC = () => {
       };
 
       navigate(Routes.RepProfile + `/${repId}`, { state: { pageType, personDetails } });
-    } catch (error) {
-      handleApiError(error as AxiosError);
+
+
+    } finally {
+
+      navigate(Routes.RepProfile + `/${repId}`, { state: { pageType } });
     }
   };
+
 
   return (
     <PageContainer title="My Top Reps" className="w-full bg-gray-100">
