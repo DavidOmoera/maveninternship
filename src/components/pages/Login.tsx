@@ -21,7 +21,8 @@ export function Login() {
   const signedUpEmail = location.state?.email as string;
   const navigate = useNavigate(); // Initialize useNavigate
   const dispatch = useAppDispatch();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
   const {
     control,
@@ -36,10 +37,14 @@ export function Login() {
     navigate(Routes.Dashboard);
   }
 
-  const handleLogin: SubmitHandler<TSignInForm> = (formData: TSignInForm) => {
+  const handleLogin: SubmitHandler<TSignInForm> = async (
+    formData: TSignInForm
+  ) => {
     const { email: username, password } = formData ?? {};
     if (isValid) {
-      dispatch(login({ username, password, successCallback }));
+      setIsLoggingIn(true);
+      await dispatch(login({ username, password, successCallback }));
+      setIsLoggingIn(false);
     }
   };
 
@@ -61,6 +66,7 @@ export function Login() {
           <ControlledInput
             control={control}
             required
+            disabled={isLoggingIn}
             name="email"
             label="Email Address"
             placeholder="Email Address"
@@ -71,6 +77,7 @@ export function Login() {
           <ControlledInput
             control={control}
             required
+            disabled={isLoggingIn}
             name="password"
             label="Password"
             type={showPassword ? "text" : "password"}
@@ -109,7 +116,7 @@ export function Login() {
         </div>
         <Button
           text="Log In"
-          disabled={!isDirty || isSubmitting}
+          disabled={!isDirty || isSubmitting || isLoggingIn}
           className="w-full flex flex-col justify-center items-center"
           onClick={handleSubmit(handleLogin)}
         />

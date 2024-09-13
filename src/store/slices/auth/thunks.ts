@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authApi } from "api";
+import { authApi, profileApi } from "api";
 import { AxiosError } from "axios";
 import { AuthToastMessages } from "constants/toastMessages";
 import {
@@ -9,10 +9,11 @@ import {
   TUpdateUserRequestBody,
   TVerifyEmailRequestBody,
   TSendReceiptParams,
+  TUpdateOrganizationRequestBody,
+  TPasswordRequestBody,
 } from "types/common";
 import BrowserStorageService from "utils/browserStorage";
 import { handleError, showSuccessToast } from "utils/helpers";
-import { clearUserData } from ".";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -52,9 +53,8 @@ export const updateUser = createAsyncThunk(
   "auth/updateUser",
   async (requestBody: TUpdateUserRequestBody, { dispatch }) => {
     try {
-      const response = await authApi.updateUserRequest(requestBody);
+      const response = await profileApi.updateUserRequest(requestBody);
       dispatch(getUserData());
-
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -77,25 +77,22 @@ export const signUp = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async (_, { dispatch }) => {
-    try {
-      const response = await authApi.logoutRequest();
-      BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
-      dispatch(clearUserData());
-      const message = response.data?.msg;
-      if (message) {
-        showSuccessToast(message);
-      }
-      return response.data;
-    } catch (e) {
-      const error = e as AxiosError;
-      handleError(error);
-      throw error;
+export const logout = createAsyncThunk("auth/logout", async () => {
+  try {
+    const response = await authApi.logoutRequest();
+    BrowserStorageService.clear({ session: true });
+    BrowserStorageService.clear({ session: false });
+    const message = response.data?.msg;
+    if (message) {
+      showSuccessToast(message);
     }
+    return response.data;
+  } catch (e) {
+    const error = e as AxiosError;
+    handleError(error);
+    throw error;
   }
-);
+});
 
 export const verifyEmail = createAsyncThunk(
   "auth/verifyEmail",
@@ -140,7 +137,7 @@ export const getOrganization = createAsyncThunk(
   "auth/getOrganization",
   async (identifier: string) => {
     try {
-      const response = await authApi.getOrganizationRequest(identifier);
+      const response = await profileApi.getOrganizationRequest(identifier);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -151,9 +148,31 @@ export const getOrganization = createAsyncThunk(
 
 export const updateOrganizationDetails = createAsyncThunk(
   "auth/updateOrganizationDetails",
-  async (email: string) => {
+  async ({
+    email,
+    body,
+  }: {
+    email: string;
+    body: TUpdateOrganizationRequestBody;
+  }) => {
     try {
-      const response = await authApi.updateOrganizationDetailsRequest(email);
+      const response = await profileApi.updateOrganizationDetailsRequest(
+        email,
+        body
+      );
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "user/changePassword",
+  async (body: TPasswordRequestBody) => {
+    try {
+      const response = await profileApi.changePasswordRequest(body);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;

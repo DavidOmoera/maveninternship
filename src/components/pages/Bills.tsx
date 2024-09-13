@@ -6,7 +6,12 @@ import { ControlledSelect } from "components/organisms/ControlledSelect";
 import { PageContainer } from "components/templates/PageContainer";
 import SearchIcon from "@mui/icons-material/Search";
 import { Pill } from "components/molecules/Pill";
-import { BILL_TYPES, BILL_YEARS } from "constants/common";
+import {
+  BILL_ID_PREFIX,
+  BILL_STATUSES,
+  BILL_TYPES,
+  BILL_YEARS,
+} from "constants/common";
 import { BillCard } from "components/organisms/BillCard";
 import gridIcon from "assets/grid.svg";
 import listIcon from "assets/listView.svg";
@@ -40,7 +45,7 @@ const jurisdiction = "Texas";
 
 export const Bills: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { bills } = useAppSelector(billsSelector);
+  const { bills, trackedBills } = useAppSelector(billsSelector);
   const {
     control,
     handleSubmit,
@@ -50,6 +55,7 @@ export const Bills: React.FC = () => {
   const navigate = useNavigate();
   const searchValue = watch("searchValue");
   const [searchResults, setSearchResults] = useState<TBill[]>();
+  const [searchResultsCount, setSearchResultsCount] = useState<number>();
 
   const [isGridView, setIsGridView] = useState(true);
 
@@ -59,8 +65,7 @@ export const Bills: React.FC = () => {
   );
 
   const onSearchBill: SubmitHandler<TBillSearchForm> = (formData) => {
-    console.log("search form data", formData);
-    const { searchValue, chamber, billStatus, billType } = formData;
+    const { searchValue, chamber, billStatus, billType, year } = formData;
     if (isValid) {
       searchBillsRequest({
         search_term: searchValue,
@@ -68,9 +73,13 @@ export const Bills: React.FC = () => {
         status: [billStatus as TBillStatus],
         bill_type: billType as TBillType,
         jurisdiction: [jurisdiction],
+        sessions: [year as string],
+        skip: 0,
+        limit: 50,
       })
         .then((res) => {
           setSearchResults(res.data.items);
+          setSearchResultsCount(res.data.total);
         })
         .catch((e) => {
           setSearchResults([]);
@@ -79,12 +88,8 @@ export const Bills: React.FC = () => {
     }
   };
 
-  const handleOpenBillStatusDialog = () => {
-    console.log("Open Bill Status Dialog");
-  };
-
-  function onClickBill() {
-    navigate(Routes.DetailsOfBill);
+  function onClickBill(bill: TBill) {
+    navigate(Routes.DetailsOfBill, { state: { bill } });
   }
 
   const toggleView = () => {
@@ -102,7 +107,7 @@ export const Bills: React.FC = () => {
 
   return (
     <PageContainer title="Bills">
-      <div className="p-9 bg-white rounded-xl mx-9">
+      <div className="p-9 bg-white rounded-xl mx-9 ">
         {searchValue ? (
           <>
             <h3 className="text-primary font-normal text-2xl pb-2">
@@ -120,7 +125,7 @@ export const Bills: React.FC = () => {
             All Bills
           </h3>
         )}
-        <div className="flex flex-col lg:flex-row item-center w-full gap-3">
+        <div className="flex flex-col lg:flex-row item-center w-full gap-3 ">
           <ControlledInput
             required
             control={control}
@@ -148,9 +153,8 @@ export const Bills: React.FC = () => {
               control={control}
               name="billStatus"
               label="Bill Status"
-              options={[]}
+              options={BILL_STATUSES}
               defaultValue=""
-              onClick={handleOpenBillStatusDialog}
             />
             <ControlledSelect
               control={control}
@@ -167,13 +171,13 @@ export const Bills: React.FC = () => {
           onClick={handleSubmit(onSearchBill)}
         />
       </div>
-      <div className="p-9 bg-white rounded-xl mt-3 mx-9">
+      <div className="p-9 bg-white rounded-xl mt-3 mx-9 min-h-screen">
         <div className="flex flex-col space-y-4">
           {/* Search results */}
           <div className="row justify-between my-9">
             {searchResults && searchValue ? (
               <div className="lg:flex gap-2 block">
-                <h4 className="text-neutral950">{searchResults.length}</h4>
+                <h4 className="text-neutral950">{searchResultsCount}</h4>
                 <span className="text-neutral950 text-xl">Results found</span>
               </div>
             ) : (
@@ -237,28 +241,39 @@ export const Bills: React.FC = () => {
               // First part of the date is year
               const year =
                 lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
-              const author = bill.contributors[0] ?? {};
-              const coAuthorImages = bill.contributors.map(
+              const author = bill.contributors.find(
+                (contributor) => contributor.classification === "author"
+              );
+              const coAuthors = bill.contributors.filter(
+                (contributor) => contributor.classification === "coauthor"
+              );
+              const sponsors = bill.contributors.filter(
+                (contributor) => contributor.classification === "sponsor"
+              );
+              const coAuthorImages = coAuthors.map(
                 (contributor) => contributor.image
               );
-              const coAuthorsCount = bill.contributors.length - 1;
-              const supportersCount = 0;
+              const coAuthorsCount = coAuthors.length;
+              const supportersCount = sponsors.length;
               const relativeTime = dayjs(bill.latest_action_date).fromNow();
+              const isWatched = !!trackedBills.find(
+                (trackedBill) => trackedBill.id === bill.id
+              );
 
               return (
                 <BillCard
                   key={bill.id}
-                  id={bill.id}
-                  onClick={onClickBill}
-                  isListView={!isGridView}
+                  id={bill.id.replace(BILL_ID_PREFIX, "")}
+                  onClick={() => onClickBill(bill)}
+                  isListView={false}
                   title={bill.title}
                   description={bill.summary}
                   billType="All"
                   chamber="House"
                   year={Number(year)}
                   relativeTime={relativeTime}
-                  name={author.name}
-                  image={author.image}
+                  name={author?.name as string}
+                  image={author?.image as string}
                   coAuthor1={coAuthorImages[1]}
                   coAuthor2={coAuthorImages[2]}
                   coAuthor3={coAuthorImages[3]}
@@ -269,6 +284,7 @@ export const Bills: React.FC = () => {
                   supporter1=""
                   supporter2=""
                   supporter3=""
+                  isWatched={isWatched}
                 />
               );
             })}

@@ -6,4 +6,4 @@ resources:
 images:
 - name: webapp:1.0.0
   newName: legisaiacrdev.azurecr.io/webapp
-  newTag: 0a4ed3c
+  newTag: 4b7c73b

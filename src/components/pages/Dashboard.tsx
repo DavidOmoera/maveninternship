@@ -17,13 +17,14 @@ import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
 import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "components/atoms/Button";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import edited from "assets/edited.svg";
 import closed from "assets/closed.svg";
 import done from "assets/done.svg";
 import { Pill } from "components/molecules/Pill";
 
 import {
+  BILL_ID_PREFIX,
   BILL_STATUSES,
   BILL_TYPES,
   BILL_YEARS,
@@ -37,16 +38,26 @@ import { ControlledSelect } from "components/organisms/ControlledSelect";
 import CustomTextField from "components/molecules/CustomTextField";
 import { Routes } from "types/routes";
 import { PageContainer } from "components/templates/PageContainer";
-import { useSelector } from "react-redux";
-import { RootState } from "store/slices/index.ts";
 import { BillCard } from "components/organisms/BillCard.tsx";
 import { handleError, useAppDispatch, useAppSelector } from "utils/helpers";
 import { billsSelector } from "store/slices/bill/selectors";
-import { getBills } from "store/slices/bill/thunks";
+import { getBills, getTrackedBills } from "store/slices/bill/thunks";
 import dayjs from "dayjs";
 import classNames from "classnames";
 import { TBill, TBillChamber, TBillStatus, TBillType } from "types/common";
 import { searchBillsRequest } from "api/billsApi";
+
+function isBillStatus(billStatus: string, selectedBillStatus: string) {
+  return selectedBillStatus ? billStatus === selectedBillStatus : true;
+}
+
+function isBillType(billType: string, selectedBillType: string) {
+  return !selectedBillType
+    ? true
+    : selectedBillType === "All"
+    ? true
+    : billType === selectedBillType;
+}
 
 const stages = [
   "Filed",
@@ -73,7 +84,7 @@ type TBillSearchForm = {
 }>;
 
 const jurisdiction = "Texas";
-
+const HIDE = true;
 export const Dashboard: React.FC = () => {
   const [openBillStatusDialog, setOpenBillStatusDialog] = useState(false);
   const [areUpdatesVisible, setAreUpdatesVisible] = useState(false);
@@ -82,11 +93,7 @@ export const Dashboard: React.FC = () => {
   const handleCloseBillStatusDialog = () => setOpenBillStatusDialog(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const { bills } = useAppSelector(billsSelector);
-  const watchedBills = useSelector(
-    (state: RootState) => state.watchedBills.watchedBills
-  );
+  const { bills, trackedBills } = useAppSelector(billsSelector);
   const [billsSearchResults, setBillsSearchResults] = useState<TBill[]>();
   const [billsSearchResultsCount, setBillsSearchResultsCount] =
     useState<number>();
@@ -102,9 +109,49 @@ export const Dashboard: React.FC = () => {
 
   const billsSearchValue = watchBillsForm("searchValue");
 
-  const { control: watchedBillsControl } = useForm<TBillSearchForm>({
-    resolver: yupResolver(billSearchSchema),
-  });
+  const { control: watchedBillsControl, watch: watchTrackedBills } =
+    useForm<TBillSearchForm>({
+      resolver: yupResolver(billSearchSchema),
+    });
+
+  const watchedBillsSearchValue = watchTrackedBills("searchValue");
+  const selectedWatchedBillStatus = watchTrackedBills("billStatus");
+  const selectedWatchedBillType = watchTrackedBills("billType");
+
+  const filteredWatchedBills = useMemo(() => {
+    return trackedBills.filter(
+      (bill) =>
+        isBillStatus(bill.status, selectedWatchedBillStatus ?? "") &&
+        isBillType(bill.legislative_type, selectedWatchedBillType ?? "")
+    );
+  }, [selectedWatchedBillStatus, selectedWatchedBillType, trackedBills]);
+
+  const searchedWatchedBills = useMemo(
+    () =>
+      watchedBillsSearchValue ||
+      selectedWatchedBillStatus ||
+      selectedWatchedBillType
+        ? filteredWatchedBills?.filter((item) =>
+            ["title", "legislative_type", "state", "status"].some((prop) => {
+              const toCompare = item[prop as keyof TBill];
+
+              if (typeof toCompare === "string") {
+                return toCompare
+                  ?.toLowerCase()
+                  .includes(watchedBillsSearchValue?.trim().toLowerCase());
+              }
+
+              return true;
+            })
+          )
+        : filteredWatchedBills,
+    [
+      filteredWatchedBills,
+      selectedWatchedBillStatus,
+      selectedWatchedBillType,
+      watchedBillsSearchValue,
+    ]
+  );
 
   const billsToView = useMemo(
     () =>
@@ -156,10 +203,6 @@ export const Dashboard: React.FC = () => {
 
   function onClickBill(bill: TBill) {
     navigate(Routes.DetailsOfBill, { state: { bill } });
-  }
-
-  function onClickWatchedBill() {
-    navigate(Routes.DetailsOfBill);
   }
 
   const handleSaveBillStatus = () => {
@@ -218,17 +261,17 @@ export const Dashboard: React.FC = () => {
   }, [billsSearchValue]);
 
   useEffect(() => {
-    if (location.pathname) window.scrollTo(0, 0);
-  }, [location.pathname]);
+    dispatch(getBills({ page: 1, size: 6 }));
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getBills({ page: 1, size: 6 }));
+    dispatch(getTrackedBills());
   }, [dispatch]);
 
   return (
     <PageContainer title="Dashboard">
       {/* Main Content */}
-      <div className="flex-1 bg-gray-100 px-9 flex pr-5 md:pr-9">
+      <div className="flex-1 bg-gray-100 px-9 flex pr-5 md:pr-9 ">
         <div className="flex-1 basis-[74%] pr-4">
           {/* Search and Filter Section */}
           <section className="p-9 bg-white rounded-xl">
@@ -301,14 +344,12 @@ export const Dashboard: React.FC = () => {
               />
             </div>
 
-            {billsSearchResults &&
-              billsSearchValue &&
-              billsSearchResultsCount && (
-                <div className="lg:flex gap-2 block mt-8">
-                  <h4 className="text-neutral950">{billsSearchResultsCount}</h4>
-                  <span className="text-neutral950 text-xl">Results found</span>
-                </div>
-              )}
+            {billsSearchResults && billsSearchValue && (
+              <div className="lg:flex gap-2 block mt-8">
+                <h4 className="text-neutral950">{billsSearchResultsCount}</h4>
+                <span className="text-neutral950 text-xl">Results found</span>
+              </div>
+            )}
             {/** All bills */}
             <div
               className={classNames("row gap-5 flex-wrap", {
@@ -336,11 +377,14 @@ export const Dashboard: React.FC = () => {
                 const coAuthorsCount = coAuthors.length;
                 const supportersCount = sponsors.length;
                 const relativeTime = dayjs(bill.latest_action_date).fromNow();
+                const isWatched = !!trackedBills.find(
+                  (trackedBill) => trackedBill.id === bill.id
+                );
 
                 return (
-                  <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
+                  <div key={bill.id}>
                     <BillCard
-                      id={bill.id}
+                      id={bill.id.replace(BILL_ID_PREFIX, "")}
                       onClick={() => onClickBill(bill)}
                       isListView={false}
                       title={bill.title}
@@ -361,6 +405,7 @@ export const Dashboard: React.FC = () => {
                       supporter1=""
                       supporter2=""
                       supporter3=""
+                      isWatched={isWatched}
                     />
                   </div>
                 );
@@ -369,13 +414,13 @@ export const Dashboard: React.FC = () => {
           </section>
 
           {/* Watched Bills */}
-          <section className="w-full bg-white p-9 rounded-xl my-6">
+          <section className="w-full bg-white p-9 rounded-xl my-6 ">
             {/** Bills Overview */}
             <div className="row justify-between items-center">
               <div className="row gap-3">
                 <h4 className="font-extrabold">My Watched Bills</h4>
                 <div className="py-1 px-2 rounded-xl border border-primary">
-                  <h6 className="text-primary">{watchedBills.length}</h6>
+                  <h6 className="text-primary">{trackedBills.length}</h6>
                 </div>
               </div>
               <button
@@ -433,36 +478,71 @@ export const Dashboard: React.FC = () => {
             </div>
 
             {/** Bill Types */}
-            <div className="row gap-2 flex-wrap">
-              {pills.map((pill) => (
-                <Pill
-                  key={pill.secondText}
-                  text={pill.firstText}
-                  secondText={pill.secondText}
-                />
-              ))}
-            </div>
+            {!HIDE && (
+              <div className="row gap-2 flex-wrap">
+                {pills.map((pill) => (
+                  <Pill
+                    key={pill.secondText}
+                    text={pill.firstText}
+                    secondText={pill.secondText}
+                  />
+                ))}
+              </div>
+            )}
 
             {/** All bills */}
-            <div
-              className="row gap-5 flex-wrap mt-8"
-              style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}
-            >
-              {watchedBills.map((bill) => (
-                <div key={bill.id} style={{ flex: "0 1 calc(50% - 50px)" }}>
-                  <BillCard
-                    onClick={onClickWatchedBill}
-                    isListView={false}
-                    coAuthor1={bill.coAuthor1 as string}
-                    coAuthor2={bill.coAuthor2 as string}
-                    coAuthor3={bill.coAuthor3 as string}
-                    supporter1={bill.supporter1 as string}
-                    supporter2={bill.supporter2 as string}
-                    supporter3={bill.supporter3 as string}
-                    {...bill}
-                  />
-                </div>
-              ))}
+            <div className="row gap-5 flex-wrap mt-8">
+              {searchedWatchedBills.map((bill) => {
+                const lastActionDate = bill.latest_action_date as string;
+
+                // First part of the date is year
+                const year =
+                  lastActionDate?.split("-")?.[0] ?? new Date().getFullYear();
+                const author = bill.contributors.find(
+                  (contributor) => contributor.classification === "author"
+                );
+                const coAuthors = bill.contributors.filter(
+                  (contributor) => contributor.classification === "coauthor"
+                );
+                const sponsors = bill.contributors.filter(
+                  (contributor) => contributor.classification === "sponsor"
+                );
+                const coAuthorImages = coAuthors.map(
+                  (contributor) => contributor.image
+                );
+                const coAuthorsCount = coAuthors.length;
+                const supportersCount = sponsors.length;
+                const relativeTime = dayjs(bill.latest_action_date).fromNow();
+
+                return (
+                  <div key={bill.id}>
+                    <BillCard
+                      id={bill.id.replace(BILL_ID_PREFIX, "")}
+                      onClick={() => onClickBill(bill)}
+                      isListView={false}
+                      title={bill.title}
+                      description={bill.summary}
+                      billType="All"
+                      chamber="House"
+                      year={Number(year)}
+                      relativeTime={relativeTime}
+                      name={author?.name as string}
+                      image={author?.image as string}
+                      coAuthor1={coAuthorImages[1]}
+                      coAuthor2={coAuthorImages[2]}
+                      coAuthor3={coAuthorImages[3]}
+                      count1={coAuthorsCount > 0 ? `+${coAuthorsCount}` : ""}
+                      count2={supportersCount > 0 ? `+${supportersCount}` : ""}
+                      state={bill.state}
+                      status={bill.status}
+                      supporter1=""
+                      supporter2=""
+                      supporter3=""
+                      isWatched={true}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </section>
         </div>

@@ -29,9 +29,9 @@ export const endpoints = {
     register: (): string => `/register/`,
     verifyEmail: (): string => `/verify-email/`,
     login: (): string => `/token`,
-    updateUserProfile: (): string => `/update_user_info`,
-    getUserData: (): string => `/users/me`, // For current user
-    logout: (): string => `/logout`,
+    updateUserProfile: (): string => `/update_user_info/`,
+    getUserData: (): string => `/users/me/`,
+    logout: (): string => `/logout/`,
     send_receipt: (): string => `/send_receipts`,
     resendVerificationEmail: (): string => `/resend-verification`,
     loginWithGoogle: (): string => `/google-login`,
@@ -45,10 +45,10 @@ export const endpoints = {
     getUserDetails: (): string => `/user-details`,
     registerOrganization: (): string => `/register-org-account`,
     resetPersonalAccount: (): string => `/create_personal_account`,
-
     getOrganization: (): string => `/organization-details`,
     updateOrganizationDetails: (): string => `/update_org_details`,
     updateOrganizationContactDetails: (): string => `/update_org_contact`,
+    changePassword: (): string => `/change-password/`,
   },
   bills: {
     getBill: (billId: string): string => `/bills/${billId}`,
@@ -60,10 +60,11 @@ export const endpoints = {
     getBillContributors: (billId: string): string =>
       `/bills/${billId}/contributors`,
     getBillSummary: (billId: string): string => `/bills/${billId}/summary`,
-    trackBill: (): string => `/bills/track_bill`,
-    stopTrackingBill: (): string => `/bills/stop_tracking_bill`,
+    trackBill: (): string => `/bills/track_bill/`,
+    stopTrackingBill: (): string => `/bills/stop_tracking_bill/`,
     getTrackedBills: (): string => `/bills/tracked_bills`,
-    chatAboutBill: (): string => `/bills/coterieai`,
+    chatAboutBill: (): string => `/bills/chat`,
+    getBillChat: (): string => `/bills/chat_history`,
   },
   feedback: {
     getFeedback: (): string => `/feedback`,
@@ -98,8 +99,10 @@ export const endpoints = {
   },
   person: {
     getPerson: (personId: string): string => `/persons/${personId}`,
-    getPersonOffices: (personId: string): string => `/persons/${personId}/offices`,
-    getPersonMemberships: (personId: string): string => `/persons/${personId}/memberships`,
+    getPersonOffices: (personId: string): string =>
+      `/persons/${personId}/offices`,
+    getPersonMemberships: (personId: string): string =>
+      `/persons/${personId}/memberships`,
     searchPerson: (): string => `/persons/search/`,
   },
 };
