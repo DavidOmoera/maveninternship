@@ -19,8 +19,6 @@ import classNames from "classnames";
 import { COMMITTEE_ID_PREFIX, senators } from "constants/common";
 import { legislativeSessionsApi, committeesApi } from "api/index";
 import { TGetLegislativeSessionsResponse, Committee, CommitteeMembership } from "types/common";
-import { handleError } from "utils/helpers";
-import { AxiosError } from "axios";
 import { getPersonRequest, getPersonOfficesRequest, getPersonMembershipsRequest, searchPersonRequest } from "api/personsApi";
 
 type TActivitySearchForm = Partial<{
@@ -59,8 +57,7 @@ export function SenateReps() {
         );
         const membershipsResponses = await Promise.all(membershipsPromises);
         setCommitteeMemberships(membershipsResponses.flatMap(response => response.data));
-      } catch (error) {
-        handleError(error as AxiosError);
+     
       } finally {
         setLoading(false);
       }
@@ -85,8 +82,7 @@ export function SenateReps() {
 
       setPersonOffices(officesArray as TPersonOfficesResponse[]);
       setPersonMemberships(membershipsArray as TPersonMembershipsResponse[]);
-    } catch (error) {
-      handleError(error as AxiosError);
+   
     } finally {
       setLoading(false);
     }
@@ -168,8 +164,7 @@ export function SenateReps() {
           setLegislativeSessions(response.data);
         }
       }
-    } catch (error) {
-      handleError(error as AxiosError);
+   
     } finally {
       setLoading(false);
     }

@@ -256,9 +256,10 @@ export const Bills: React.FC = () => {
               const coAuthorsCount = coAuthors.length;
               const supportersCount = sponsors.length;
               const relativeTime = dayjs(bill.latest_action_date).fromNow();
-              const isWatched = !!trackedBills.find(
-                (trackedBill) => trackedBill.id === bill.id
-              );
+              const isWatched =
+                !!trackedBills?.find(
+                  (trackedBill) => trackedBill.id === bill.id
+                ) || false;
 
               return (
                 <BillCard
