@@ -107,7 +107,7 @@ export const Bills: React.FC = () => {
 
   return (
     <PageContainer title="Bills">
-      <div className="p-9 bg-white rounded-xl mx-9">
+      <div className="p-9 bg-white rounded-xl mx-9 ">
         {searchValue ? (
           <>
             <h3 className="text-primary font-normal text-2xl pb-2">
@@ -125,7 +125,7 @@ export const Bills: React.FC = () => {
             All Bills
           </h3>
         )}
-        <div className="flex flex-col lg:flex-row item-center w-full gap-3">
+        <div className="flex flex-col lg:flex-row item-center w-full gap-3 ">
           <ControlledInput
             required
             control={control}
@@ -171,7 +171,7 @@ export const Bills: React.FC = () => {
           onClick={handleSubmit(onSearchBill)}
         />
       </div>
-      <div className="p-9 bg-white rounded-xl mt-3 mx-9">
+      <div className="p-9 bg-white rounded-xl mt-3 mx-9 min-h-screen">
         <div className="flex flex-col space-y-4">
           {/* Search results */}
           <div className="row justify-between my-9">

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { authApi } from "api";
+import { authApi, profileApi } from "api";
 import { AxiosError } from "axios";
 import { AuthToastMessages } from "constants/toastMessages";
 import {
@@ -9,6 +9,8 @@ import {
   TUpdateUserRequestBody,
   TVerifyEmailRequestBody,
   TSendReceiptParams,
+  TUpdateOrganizationRequestBody,
+  TPasswordRequestBody,
 } from "types/common";
 import BrowserStorageService from "utils/browserStorage";
 import { handleError, showSuccessToast } from "utils/helpers";
@@ -51,9 +53,8 @@ export const updateUser = createAsyncThunk(
   "auth/updateUser",
   async (requestBody: TUpdateUserRequestBody, { dispatch }) => {
     try {
-      const response = await authApi.updateUserRequest(requestBody);
+      const response = await profileApi.updateUserRequest(requestBody);
       dispatch(getUserData());
-
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -136,7 +137,7 @@ export const getOrganization = createAsyncThunk(
   "auth/getOrganization",
   async (identifier: string) => {
     try {
-      const response = await authApi.getOrganizationRequest(identifier);
+      const response = await profileApi.getOrganizationRequest(identifier);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -147,9 +148,31 @@ export const getOrganization = createAsyncThunk(
 
 export const updateOrganizationDetails = createAsyncThunk(
   "auth/updateOrganizationDetails",
-  async (email: string) => {
+  async ({
+    email,
+    body,
+  }: {
+    email: string;
+    body: TUpdateOrganizationRequestBody;
+  }) => {
     try {
-      const response = await authApi.updateOrganizationDetailsRequest(email);
+      const response = await profileApi.updateOrganizationDetailsRequest(
+        email,
+        body
+      );
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError;
+      throw error;
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "user/changePassword",
+  async (body: TPasswordRequestBody) => {
+    try {
+      const response = await profileApi.changePasswordRequest(body);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;

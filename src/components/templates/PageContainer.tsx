@@ -31,20 +31,18 @@ export function PageContainer({
   const navigate = useNavigate();
   const userData = useAppSelector(userDataSelector);
   const isBackButtonHidden = location.pathname === Routes.Dashboard;
-  const avatarUrl = useAppSelector((state) => state.auth.userData?.avatar);
+  const avatarUrl = useAppSelector((state) => state.user.userData?.avatar);
   const [avatar, setAvatar] = useState<string>(
     userData?.avatar ?? profilePicture
   );
 
   useEffect(() => {
-    if (avatarUrl) {
+    const storedAvatar = localStorage.getItem("profileImage");
+    if (storedAvatar) {
+      setAvatar(storedAvatar);
+    } else if (avatarUrl) {
       setAvatar(avatarUrl);
       localStorage.setItem("profileImage", avatarUrl);
-    } else {
-      const storedAvatar = localStorage.getItem("profileImage");
-      if (storedAvatar) {
-        setAvatar(storedAvatar);
-      }
     }
   }, [avatarUrl]);
 
@@ -106,8 +104,8 @@ export function PageContainer({
             </h1>
             {previousPageTitle ? (
               <>
-                <h1 className="text-neutral500 font-bold text-3.5xl">/</h1>
-                <h1 className="text-neutral500 font-medium text-3.5xl">
+                <h1 className="text-neutral500 font-bold text-4xl">/</h1>
+                <h1 className="text-neutral500 font-medium text-base sm:text-xl lg:text-3xl xl:text-4xl ">
                   {previousPageTitle}
                 </h1>
               </>

@@ -271,7 +271,7 @@ export const Dashboard: React.FC = () => {
   return (
     <PageContainer title="Dashboard">
       {/* Main Content */}
-      <div className="flex-1 bg-gray-100 px-9 flex pr-5 md:pr-9">
+      <div className="flex-1 bg-gray-100 px-9 flex pr-5 md:pr-9 ">
         <div className="flex-1 basis-[74%] pr-4">
           {/* Search and Filter Section */}
           <section className="p-9 bg-white rounded-xl">
@@ -414,7 +414,7 @@ export const Dashboard: React.FC = () => {
           </section>
 
           {/* Watched Bills */}
-          <section className="w-full bg-white p-9 rounded-xl my-6">
+          <section className="w-full bg-white p-9 rounded-xl my-6 ">
             {/** Bills Overview */}
             <div className="row justify-between items-center">
               <div className="row gap-3">

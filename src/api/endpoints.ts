@@ -29,7 +29,7 @@ export const endpoints = {
     register: (): string => `/register/`,
     verifyEmail: (): string => `/verify-email/`,
     login: (): string => `/token`,
-    updateUserProfile: (): string => `/update_user_info`,
+    updateUserProfile: (): string => `/update_user_info/`,
     getUserData: (): string => `/users/me/`,
     logout: (): string => `/logout/`,
     send_receipt: (): string => `/send_receipts`,
@@ -45,10 +45,10 @@ export const endpoints = {
     getUserDetails: (): string => `/user-details`,
     registerOrganization: (): string => `/register-org-account`,
     resetPersonalAccount: (): string => `/create_personal_account`,
-
     getOrganization: (): string => `/organization-details`,
     updateOrganizationDetails: (): string => `/update_org_details`,
     updateOrganizationContactDetails: (): string => `/update_org_contact`,
+    changePassword: (): string => `/change-password/`,
   },
   bills: {
     getBill: (billId: string): string => `/bills/${billId}`,
