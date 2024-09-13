@@ -314,6 +314,7 @@ export function Profile() {
   function onClickManagePaymentMethod() {
     setShowManagePaymentMethodForm(true);
   }
+
   function onClickEditOrgDetails() {
     setShowOrganizationDetailsForm(true);
   }
