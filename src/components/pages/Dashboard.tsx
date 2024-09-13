@@ -382,7 +382,7 @@ export const Dashboard: React.FC = () => {
                 const isWatched =
                   !!trackedBills?.find(
                     (trackedBill) => trackedBill.id === bill.id
-                  ) ?? false;
+                  ) || false;
 
                 return (
                   <div key={bill.id}>
