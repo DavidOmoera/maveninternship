@@ -56,7 +56,7 @@ export function HelpAndSupport() {
       className="w-full lg:min-w-[1150px] bg-gray-100 "
     >
       <div className="p-9 bg-white rounded-xl mx-9">
-        <section className="w-full text-center h-[990px] lg:w-3/5 mx-auto p-9 sm:px-20 md:px-9 ">
+        <section className="col justify-evenly w-full text-center lg:w-3/5 mx-auto p-9 sm:px-20 md:px-9 min-h-screen pb-64">
           <article className="col gap-1">
             <h1 className="text-black font-bold text-4xl">Get in Touch</h1>
             <p className="text-neutral500 text-lg">

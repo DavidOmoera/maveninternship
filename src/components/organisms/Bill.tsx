@@ -1,7 +1,16 @@
 import { Pill } from "components/molecules/Pill";
-import { watchedBills } from "constants/common";
 
-type TBillProps = { onClick: () => void } & (typeof watchedBills)[0];
+type TBillProps = {
+  onClick: () => void;
+  state: string;
+  title: string;
+  description: string;
+  status: string;
+  relativeTime: string;
+  chamber: string;
+  billType: string;
+  year: string;
+};
 
 export function Bill({
   title,

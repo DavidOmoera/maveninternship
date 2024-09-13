@@ -40,7 +40,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useEffect, useRef } from "react";
 import { useAppDispatch } from "utils/helpers";
-import { clearUserData } from "store/slices/auth";
 import BrowserStorageService from "utils/browserStorage";
 import { BrowserStorageKeys } from "types/common";
 import { getUserData } from "store/slices/auth/thunks";
@@ -97,8 +96,8 @@ export function AuthenticatedRoot() {
   }, [dispatch]);
 
   function logUserOut() {
-    BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
-    dispatch(clearUserData());
+    BrowserStorageService.clear({ session: true });
+    BrowserStorageService.clear({ session: false });
     redirect(Routes.Login);
 
     // Put this back when the logout endpoint starts working again
@@ -262,7 +261,7 @@ export function AuthenticatedRoot() {
           ref={sidebarRef}
           className={`${
             isSidebarOpen ? "block" : "hidden"
-          } md:block fixed md:relative top-0 left-0 h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto min-w-80 no-scrollbar shadow-2xl`}
+          } md:block fixed md:relative top-0 left-0 h-full xl:min-h-full z-40 basis-[21%] flex-1 bg-white px-4 py-9 overflow-y-auto xl:w-full no-scrollbar shadow-2xl`}
         >
           <button
             className="block md:hidden absolute top-4 right-4 p-3 text-primary bg-transparent"
@@ -468,7 +467,7 @@ export function AuthenticatedRoot() {
         </aside>
       </div>
 
-      <div>
+      <div className="w-full min-h-screen">
         <Outlet />
       </div>
 

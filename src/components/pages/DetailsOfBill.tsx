@@ -344,7 +344,7 @@ const DetailsOfBill: React.FC = () => {
               ) : null}
               {activeTab === BILL_TAB.ASK_AI ? (
                 <Suspense fallback={null}>
-                  <AskAi />
+                  <AskAi billId={bill_id} billVersion={"1"} />
                 </Suspense>
               ) : null}
               {activeTab === BILL_TAB.SUMMARY ? (

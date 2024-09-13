@@ -7,7 +7,7 @@ import xIcon from "assets/X.svg";
 import { colors } from "constants/common";
 import { useAppDispatch, useAppSelector } from "utils/helpers";
 import { userDataSelector } from "store/slices/auth/selectors";
-import { updateUserData } from "store/slices/auth";
+import { updateUserData } from "store/slices/user";
 
 const PLANS = [
   {
@@ -64,20 +64,23 @@ export function ChangePlan() {
 
   return (
     <PageContainer title="My Profile" previousPageTitle="Change Plan">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-white mx-9 mt-6 rounded-xl p-9">
-        {PLANS.map((plan) => (
-          <PlanCard
-            key={plan.title}
-            color={plan.color}
-            title={plan.title}
-            description={plan.description}
-            price={plan.price}
-            isCurrentPlan={plan.title === userData?.subscription_plan}
-            onCancelPlan={onCancelPlan}
-            onSelectPlan={onSelectPlan}
-          />
-        ))}
+      <div className="bg-white mx-9 mt-6 rounded-xl p-9 md:min-w-[400px] sm:min-w-[580px">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 px-12 sm:p-0 ]">
+          {PLANS.map((plan) => (
+            <PlanCard
+              key={plan.title}
+              color={plan.color}
+              title={plan.title}
+              description={plan.description}
+              price={plan.price}
+              isCurrentPlan={plan.title === userData?.subscription_plan}
+              onCancelPlan={onCancelPlan}
+              onSelectPlan={onSelectPlan}
+            />
+          ))}
+        </div>
       </div>
+
       <Dialog
         open={isConfirmationModalOpen}
         PaperProps={{ style: { padding: "24px", width: "430px" } }}
